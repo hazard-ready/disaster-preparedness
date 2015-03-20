@@ -32,3 +32,7 @@ class TsunamiZone(models.Model):
     type = models.CharField(max_length=50)
     geom = models.MultiPolygonField(srid=4326)
     objects = models.GeoManager()
+    
+        # Returns the string representation of the model.
+    def __str__(self):              # __unicode__ on Python 2
+        return self.name
