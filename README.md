@@ -39,3 +39,6 @@ This assumes 'python' is the command configured to run the correct python versio
 1. `python manage.py createsuperuser`
 2. `python manage.py runserver` (or configure another webserver) and visit http://server.ip/admin and log in with new user.
 3. Should see a list of content.  *Don't try to edit any DOGAMI data directly; those shapes are so complex with so many points that it's a guaranteed browser crash/freeze.*
+
+### Just check to see some very simple checking if a point falls within a shape in the DB
+1.  Visit http://server.ip/zonecheck
