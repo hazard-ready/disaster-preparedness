@@ -29,11 +29,11 @@ This assumes 'python' is the command configured to run the correct python versio
 4. Update secure_settings.py to point this django project to the correct databae.
 5. Generate a secret key and put it into the appropriate secure_settings.py variable.
   * See [google for ideas](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=django+generate+secret+key]) 
-  * Run `python manage.py migrate` to initialize the database's structure.
-6. Unzip the TsunamiEvacuationZones_2013.zip and [TM_WORLD_BORDERS-0.3.zip](http://thematicmapping.org/downloads/TM_WORLD_BORDERS-0.3.zip) into world/data
-7. Start a python shell with `python manage.py shell`
-8. Type `from world import load` and then `load.run()` to import the shapefile data into the DB
-9. Type `exit()` to exit the shell.
+6. Run `python manage.py migrate` to initialize the database's structure.
+7. Unzip the TsunamiEvacuationZones_2013.zip and [TM_WORLD_BORDERS-0.3.zip](http://thematicmapping.org/downloads/TM_WORLD_BORDERS-0.3.zip) into world/data
+8. Start a python shell with `python manage.py shell`
+9. Type `from world import load` and then `load.run()` to import the shapefile data into the DB
+10. Type `exit()` to exit the shell.
 
 ### Create a user and visit the admin screen to verify
 1. `python manage.py createsuperuser`
