@@ -65,14 +65,14 @@ WSGI_APPLICATION = 'cascadiaprepared.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',  # Or path to database file if using sqlite3.
-        'USER': '',  # Not used with sqlite3.
-        'PASSWORD': '',  # Not used with sqlite3.
-        'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',  # Set to empty string for default. Not used with sqlite3.
-    }
+    # 'default': {
+    #     'ENGINE': 'django.contrib.gis.db.backends.postgis',
+    #     'NAME': SECURE_SETTINGS_DB_NAME,
+    #     'USER': SECURE_SETTINGS_DB_USER,
+    #     'PASSWORD': SECURE_SETTINGS_DB_PASSWORD,
+    #     'HOST': SECURE_SETTINGS_DB_HOST,
+    #     'PORT': SECURE_SETTINGS_DB_PORT,
+    # }
 }
 
 # Internationalization
@@ -100,7 +100,7 @@ STATIC_URL = '/static/'
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
 DATABASES['default'] =  dj_database_url.config()
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+#DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
