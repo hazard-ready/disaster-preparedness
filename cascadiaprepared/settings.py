@@ -64,14 +64,14 @@ WSGI_APPLICATION = 'cascadiaprepared.wsgi.application'
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'geodjango',
-        # 'USER': SECURE_SETTINGS_DB_USER,
-        # 'PASSWORD': SECURE_SETTINGS_DB_PASSWORD,
-        # 'HOST': SECURE_SETTINGS_DB_HOST,
-        # 'PORT': SECURE_SETTINGS_DB_PORT,
-    }
+    # 'default': {
+    #     'ENGINE': 'django.contrib.gis.db.backends.postgis',
+    #     'NAME': 'geodjango',
+    #     # 'USER': SECURE_SETTINGS_DB_USER,
+    #     # 'PASSWORD': SECURE_SETTINGS_DB_PASSWORD,
+    #     # 'HOST': SECURE_SETTINGS_DB_HOST,
+    #     # 'PORT': SECURE_SETTINGS_DB_PORT,
+    # }
 }
 
 # Internationalization
@@ -100,7 +100,7 @@ STATIC_URL = '/static/'
 import dj_database_url
 DATABASES['default'] =  dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
-DATABASES['default']['NAME'] = 'da7foih8uihm7q'
+
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
