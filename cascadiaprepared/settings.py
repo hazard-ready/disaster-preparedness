@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from os import environ
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Import variables defined in a file that isn't in version control.
