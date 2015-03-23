@@ -63,15 +63,16 @@ WSGI_APPLICATION = 'cascadiaprepared.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
+
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.contrib.gis.db.backends.postgis',
-    #     'NAME': SECURE_SETTINGS_DB_NAME,
-    #     'USER': SECURE_SETTINGS_DB_USER,
-    #     'PASSWORD': SECURE_SETTINGS_DB_PASSWORD,
-    #     'HOST': SECURE_SETTINGS_DB_HOST,
-    #     'PORT': SECURE_SETTINGS_DB_PORT,
-    # }
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '',  # Or path to database file if using sqlite3.
+        'USER': '',  # Not used with sqlite3.
+        'PASSWORD': '',  # Not used with sqlite3.
+        'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',  # Set to empty string for default. Not used with sqlite3.
+    }
 }
 
 # Internationalization
