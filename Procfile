@@ -1,1 +1,1 @@
-web: python manage.py collectstatic --noinput; gunicorn cascadiaprepared.wsgi
+web: gunicorn cascadiaprepared.wsgi --log-file -
