@@ -14,13 +14,13 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Import variables defined in a file that isn't in version control.
-from .secure_settings import *
+#from .secure_settings import *
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = SECURE_SETTINGS_SECRET_KEY
+#SECRET_KEY = SECURE_SETTINGS_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
