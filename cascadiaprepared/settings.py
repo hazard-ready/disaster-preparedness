@@ -63,16 +63,16 @@ WSGI_APPLICATION = 'cascadiaprepared.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': SECURE_SETTINGS_DB_NAME,
-#         'USER': SECURE_SETTINGS_DB_USER,
-#         'PASSWORD': SECURE_SETTINGS_DB_PASSWORD,
-#         'HOST': SECURE_SETTINGS_DB_HOST,
-#         'PORT': SECURE_SETTINGS_DB_PORT,
-#     }
-# }
+DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.contrib.gis.db.backends.postgis',
+    #     'NAME': SECURE_SETTINGS_DB_NAME,
+    #     'USER': SECURE_SETTINGS_DB_USER,
+    #     'PASSWORD': SECURE_SETTINGS_DB_PASSWORD,
+    #     'HOST': SECURE_SETTINGS_DB_HOST,
+    #     'PORT': SECURE_SETTINGS_DB_PORT,
+    # }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
