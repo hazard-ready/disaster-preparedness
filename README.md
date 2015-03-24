@@ -25,13 +25,13 @@ without worrying about overwriting globally installed versions.  It's easy!
 
 1. `pip install virtualenv`
 2. Move to the project directory (e.g. `/Applications/MAMP/htdocs/cascadia`).
-3. `virtualenv venv`  (doesn't need to be venv, just remember what you pick)
+3. `virtualenv venv –no-site-packages`  (doesn't need to be venv, just remember what you pick)
 4. Wait for things to happen.
 5. `source venv/bin/activate`  (type `deactivate` to leave)
 6. `pip install -r requirements.txt` to automatically install whatever we have in
 our requirements.txt.
   * If you are in python3+, the wsgi install will fail.  But that's okay, because
-    you won't need it in python3.
+    you won't need it in python3.  Just remove it from your local copy of the text file.
  
 
 # "World" App

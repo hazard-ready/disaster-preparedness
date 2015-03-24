@@ -25,12 +25,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Secure_Settings secret key commented out for Heroku push. Does not need to be
 # changed to run locally, but would likely be changed in production.
 
-#SECRET_KEY = SECURE_SETTINGS_SECRET_KEY
-SECRET_KEY = "secure key gibberish goes here"
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -97,12 +96,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
-
-STATIC_URL = '/static/'
-
-
 ### HEROKU CONFIGURATIONS ###
 # Added per instructions at https://devcenter.heroku.com/articles/getting-started-with-django
 
@@ -120,6 +113,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.7/howto/static-files/
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
