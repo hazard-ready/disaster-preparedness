@@ -1,6 +1,6 @@
 from django.contrib.gis import admin
-from .models import TsunamiZone
-from .models import WorldBorder
+from .models import *
 
 admin.site.register(TsunamiZone, admin.GeoModelAdmin)
 admin.site.register(WorldBorder, admin.GeoModelAdmin)
+admin.site.register(ImpactZone, admin.GeoModelAdmin)
