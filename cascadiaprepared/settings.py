@@ -21,6 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
+# Secure_Settings secret key commented out for Heroku push. Does not need to be
+# changed to run locally, but would likely be changed in production.
+
 #SECRET_KEY = SECURE_SETTINGS_SECRET_KEY
 SECRET_KEY = "secure key gibberish goes here"
 
@@ -64,6 +68,10 @@ WSGI_APPLICATION = 'cascadiaprepared.wsgi.application'
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 
+# These are commmented out for Heroku configuration, as we're not pushing
+# secure_settings to Heroku. Uncomment these to run locally. Must also comment out 
+# two lines further below. See "Heroku Configuration" section.
+
 DATABASES = {
     # 'default': {
     #     'ENGINE': 'django.contrib.gis.db.backends.postgis',
@@ -96,12 +104,14 @@ STATIC_URL = '/static/'
 
 
 ### HEROKU CONFIGURATIONS ###
-# added per instructions at https://devcenter.heroku.com/articles/getting-started-with-django
+# Added per instructions at https://devcenter.heroku.com/articles/getting-started-with-django
+
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
+
+# Comment out these two DATABASES lines to run locally
 DATABASES['default'] =  dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
-
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
