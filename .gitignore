@@ -17,6 +17,10 @@ __pycache__/
 # C extensions
 *.so
 
+# Virtualenv for deploying to Heroku
+venv/
+
+
 # Distribution / packaging
 .Python
 env/
