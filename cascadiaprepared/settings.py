@@ -14,17 +14,14 @@ import os
 from os import environ
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-# Import variables defined in a file that isn't in version control.
+# Import variables defined in a file that isn't in version control. 
+# Commented out for push to Heroku. Uncomment to run
 #from .secure_settings import *
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
-# Secure_Settings secret key commented out for Heroku push. Does not need to be
-# changed to run locally, but would likely be changed in production.
-
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 
@@ -36,7 +33,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',

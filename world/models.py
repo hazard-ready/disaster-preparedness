@@ -36,3 +36,17 @@ class TsunamiZone(models.Model):
         # Returns the string representation of the model.
     def __str__(self):              # __unicode__ on Python 2
         return self.name
+
+# This is an auto-generated Django model module created by ogrinspect.
+class ImpactZone(models.Model):
+    area = models.IntegerField()
+    perimeter = models.IntegerField()
+    orbndy24 = models.IntegerField()
+    orbndy24i = models.IntegerField()
+    subjstate = models.CharField(max_length=50)
+    feature = models.IntegerField() #This is the field that tells us which DOGAMI designated zone.
+    geom = models.MultiPolygonField(srid=4326)
+    objects = models.GeoManager()
+
+    def __str__(self):
+        return str(self.feature)
