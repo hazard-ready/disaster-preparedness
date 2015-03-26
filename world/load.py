@@ -2,7 +2,7 @@ import os
 from django.contrib.gis.utils import LayerMapping
 
 from .models import TsunamiZone
-from .models import ImpactZone
+from .models import ImpactZoneData
 from .models import ExpectedGroundShaking
 
 # Auto-generated `LayerMapping` dictionary for TsunamiZone model,
@@ -43,7 +43,7 @@ def run(verbose=True):
    #                  unique=['scenario_id', 'location'])
    # lm2.save(strict=True, verbose=verbose)
 #
-#    lm3 = LayerMapping(ImpactZone, impact_shp, impactzone_mapping,
+#    lm3 = LayerMapping(ImpactZoneData, impact_shp, impactzone_mapping,
 #                      transform=True, encoding='iso-8859-1',
 #                      unique=['area', 'perimeter', 'orbndy24', 'orbndy24i', 'subjstate', 'feature', 'geom'])
 #    lm3.save(strict=True, verbose=verbose)

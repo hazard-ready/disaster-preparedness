@@ -9,7 +9,7 @@ def zoneCheck(request):
     lng = 45.9928274
     pnt = Point(lat, lng)    
     qs_t = TsunamiZone.objects.filter(geom__contains=pnt);
-    qs_i = ImpactZone.objects.filter(geom__contains=pnt);
+    qs_i = ImpactZoneData.objects.filter(geom__contains=pnt);
     qs_s = ExpectedGroundShaking.objects.filter(geom__contains=pnt);
 
     zonesStrings = list(chain(qs_t, qs_i, qs_s));
