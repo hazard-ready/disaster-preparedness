@@ -42,3 +42,13 @@ class ImpactZone(models.Model):
         zoneName = zoneOptions.get(self.feature, 'Undefined zone')
         label = "Impact Zone: " + zoneName + "(perim: " + str(self.perimeter) + " orbndy24: " + str(self.orbndy24) + " orbndy24i: " + str(self.orbndy24i) + ")"
         return label
+    
+ # This is an auto-generated Django model module created by ogrinspect.
+class ExpectedGroundShaking(models.Model):
+    rate = models.IntegerField()
+    shaking = models.CharField(max_length=11)
+    geom = models.MultiPolygonField(srid=2991)
+    objects = models.GeoManager()
+    
+    def __str__(self):
+        return self.shaking + " (rate: " + str(self.rate) + ")"

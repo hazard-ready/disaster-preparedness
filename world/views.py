@@ -10,7 +10,8 @@ def zoneCheck(request):
     pnt = Point(lat, lng)    
     qs_t = TsunamiZone.objects.filter(geom__contains=pnt);
     qs_i = ImpactZone.objects.filter(geom__contains=pnt);
+    qs_s = ExpectedGroundShaking.objects.filter(geom__contains=pnt);
 
-    zonesStrings = list(chain(qs_t, qs_i));
+    zonesStrings = list(chain(qs_t, qs_i, qs_s));
     context = {'lat': lat, 'lng': lng, 'areas': zonesStrings}
     return render(request, 'zonecheck.html', context)
