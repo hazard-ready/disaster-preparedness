@@ -3,6 +3,7 @@ from django.contrib.gis.utils import LayerMapping
 
 from .models import TsunamiZone
 from .models import ImpactZone
+from .models import ExpectedGroundShaking
 
 # Auto-generated `LayerMapping` dictionary for TsunamiZone model,
 # modified later by cool devs.
@@ -23,18 +24,31 @@ impactzone_mapping = {
     'geom' : 'Polygon',
 }
 
+# Auto-generated `LayerMapping` dictionary for ExpectedGroundShaking model
+expectedgroundshaking_mapping = {
+    'rate' : 'rate',
+    'shaking' : 'shaking',
+    'geom' : 'MULTIPOLYGON',
+}
+
 tsunami_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/DOGAMI_TsunamiEvacuationZones_2013.shp'))
 impact_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/ORP_Impact_zones.shp'))
+groundshaking_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/expectedGroundShaking.shp'))
 
 
 def run(verbose=True):
 
-    lm2 = LayerMapping(TsunamiZone, tsunami_shp, tsunamizone_mapping,
-                      transform=True, encoding='iso-8859-1')
-    lm2.save(strict=True, verbose=verbose)
+   # lm2 = LayerMapping(TsunamiZone, tsunami_shp, tsunamizone_mapping,
+   #                  transform=True, encoding='iso-8859-1',
+   #                  unique=['scenario_id', 'location'])
+   # lm2.save(strict=True, verbose=verbose)
+#
+#    lm3 = LayerMapping(ImpactZone, impact_shp, impactzone_mapping,
+#                      transform=True, encoding='iso-8859-1',
+#                      unique=['area', 'perimeter', 'orbndy24', 'orbndy24i', 'subjstate', 'feature', 'geom'])
+#    lm3.save(strict=True, verbose=verbose)
 
-    lm3 = LayerMapping(ImpactZone, impact_shp, impactzone_mapping,
+    lm4 = LayerMapping(ExpectedGroundShaking, groundshaking_shp, expectedgroundshaking_mapping,
                       transform=True, encoding='iso-8859-1')
-    lm3.save(strict=True, verbose=verbose)
-
+    lm4.save(strict=True, verbose=verbose)
 
