@@ -146,6 +146,7 @@ class Snugget(models.Model):
     type = models.ForeignKey(SnuggetType, related_name='+', on_delete=models.PROTECT)
     shaking_filter = models.ForeignKey(ExpectedGroundShaking, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     impact_zone_filter = models.ForeignKey(ImpactZone, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    tsunami_filter = models.ForeignKey(TsunamiZone, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     liquifaction_filter = models.ForeignKey(LiquefactionDeformation, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     landslide_filter = models.ForeignKey(LandslideDeformation, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     temp_text_field = models.TextField(null=True)
@@ -157,6 +158,7 @@ class Snugget(models.Model):
         pnt = Point(lat, lng)
         snuggets = []
         qs_impacts = ImpactZoneData.objects.filter(geom__contains=pnt);
+        qs_tsunami = TsunamiZone.objects.filter(geom__contains=pnt);
         qs_shaking = ExpectedGroundShaking.objects.filter(geom__contains=pnt);
         qs_liquifaction = LiquefactionDeformation.objects.filter(geom__contains=pnt)
         qs_landslide = LandslideDeformation.objects.filter(geom__contains=pnt)
