@@ -1,10 +1,58 @@
-<h1>Where does Seaside lie?</h1>
-<p>Point:</p>
-<p>{{ lat }}, {{ lng }}
-<h2>Areas/Zones</h2>
+{% load staticfiles %}
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Cascadia Earthquake Preparedness</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+  <link rel="stylesheet" href="{% static 'css/foundation.css' %}">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=true?key=AIzaSyBSZGyycuPZO0BBfJqO-RBFeKM7_icZUnk"></script>  
+  <script src="{% static 'js/vendor/modernizr.js' %}"></script>
+  <script src="{% static 'js/vendor/jquery.js' %}"></script>
+  <script src="{% static 'js/foundation.min.js' %}"></script>
+  <script src="{% static 'js/app.js' %}"></script>
+</head>
+<body>
+
+  <div id="home" class="row">
+    <div class="column">
+      <form>
+        <div class="row collapse">
+          <div class="medium-9 columns">
+            <input id="location-text" type="text" placeholder="Enter address" />
+          </div>
+          <div class="medium-3 columns">
+            <a id="location-submit" class="button postfix">Submit</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="map" class="row">
+    <div class="column">
+      <div id="map-image">
+        <!--<image src="http://api.tiles.mapbox.com/v4/meesterstump.8bf4e389/pin-s+08B(-123.9125932,45.9928274)/-123.9125932,45.9928274,15/970x300.png64?access_token=pk.eyJ1IjoibWVlc3RlcnN0dW1wIiwiYSI6IkdGVVFTSkkifQ.8_WCPGKmIImxpNy4dEWU1A">-->
+      </div>
+    </div>
+  </div>
+
+  <div id="results" class="row">
+    <div class="column">
+
+<h2>Where does Seaside lie?</h2>
+<p>Point: {{ lat }}, {{ lng }}</p>
+<h3>Areas/Zones</h3>
 <ul>
 {% for zone in areas %}
-    <li>{{ zone }}</li>
+  <li>{{ zone }}</li>
 {% endfor %}
-
 </ul>
+
+    </div>
+  </div>
+  
+</body>
+</html>
