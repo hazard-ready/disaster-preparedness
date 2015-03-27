@@ -58,7 +58,7 @@ class ImpactZoneData(models.Model):
 class ExpectedGroundShaking(models.Model):
     rate = models.IntegerField()
     shaking = models.CharField(max_length=11)
-    geom = models.MultiPolygonField(srid=2991)
+    geom = models.MultiPolygonField(srid=2992)
     objects = models.GeoManager()
     
     def __str__(self):
@@ -67,7 +67,7 @@ class ExpectedGroundShaking(models.Model):
 class LandslideDeformation(models.Model):
     score = models.IntegerField() # The number rating on the scale of ground deformation
     label = models.CharField(max_length=11) # The classification "Med, High, Low" etc. 
-    geom = models.MultiPolygonField(srid=2991)
+    geom = models.MultiPolygonField(srid=2992)
     objects = models.GeoManager()
 
     def __str__(self):
@@ -76,7 +76,7 @@ class LandslideDeformation(models.Model):
 class LiquefactionDeformation(models.Model):
     score = models.IntegerField() # The number rating on the scale of ground deformation
     label = models.CharField(max_length=11) # The classification "Med, High, Low" etc. 
-    geom = models.MultiPolygonField(srid=2991)
+    geom = models.MultiPolygonField(srid=2992)
     objects = models.GeoManager()
 
     def __str__(self):
