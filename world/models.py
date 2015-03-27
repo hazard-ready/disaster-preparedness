@@ -134,7 +134,7 @@ class Snugget(models.Model):
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
     
     @staticmethod
-    def findSnuggetsForPoint(self, lat=0, lng=0):
+    def findSnuggetsForPoint(lat=0, lng=0):
         pnt = Point(lat, lng) 
         qs_i = ImpactZoneData.objects.filter(geom__contains=pnt);
         zoneData = qs_i[0]
