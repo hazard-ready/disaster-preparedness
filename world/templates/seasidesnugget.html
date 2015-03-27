@@ -1,11 +1,19 @@
 <h1>What do we have to say about Seaside</h1>
 <h2>Snuggets Found</h2>
+<p>Impact Zone(s): {{ data.impactZones }}</p>
 <ul>
 
-{% for snugget in snuggets %}
+{% for groupname, group in data.groups.items %}
+  <li>
+  <p>Group: {{  groupname }}</p>
+  <ul>
+  {% for snugget in group %}
     <li><p>Snugget text: {{ snugget.temp_text_field }} </p>
-    <p>Object summary: {{ snugget }} </p>
+    <p>Internal label: {{ snugget }} </p>
     </li>
+  {% endfor %}
+  </ul>
+  </li>
 {% endfor %}
-
+ 
 </ul>

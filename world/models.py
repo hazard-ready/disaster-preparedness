@@ -162,16 +162,30 @@ class Snugget(models.Model):
         qs_shaking = ExpectedGroundShaking.objects.filter(geom__contains=pnt);
         qs_liquifaction = LiquefactionDeformation.objects.filter(geom__contains=pnt)
         qs_landslide = LandslideDeformation.objects.filter(geom__contains=pnt)
-
-        snuggets += Snugget.objects.filter(shaking_filter__shaking__in=qs_shaking.values_list('shaking'))
-        snuggets += Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('feature'))
-        snuggets += Snugget.objects.filter(liquifaction_filter__score__in=qs_liquifaction.values_list('score'))
-        snuggets += Snugget.objects.filter(landslide_filter__featureValue__in=qs_landslide.values_list('score'))
         
-        return snuggets
+        #world.models.Snugget.findSnuggetsForPoint(lat=-123.9125932, lng=45.9928274)
+
+        
+
+        tsunami_snuggets = Snugget.objects.filter(tsunami_filter__location__in=qs_tsunami.values_list('location'))
+        shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__in=qs_shaking.values_list('shaking'))
+        impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('feature'))
+        liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__in=qs_liquifaction.values_list('score'))
+        landslide_snuggets = Snugget.objects.filter(landslide_filter__score__in=qs_landslide.values_list('score'))
+        impactZones = qs_impacts.values()
+        
+        return {'groups' : {
+                            'tusnami_snugs': tsunami_snuggets,
+                            'shake_snugs' : shake_snuggets,
+                            'impact-snugs': impact_snuggets,
+                            'liqui_snugs': liquifaction_snuggets,
+                            'landslide_snugs': landslide_snuggets,
+                            },
+                'impactZones': impactZones
+                }
     
     def __str__(self):
-        return str(self.type) + " Snugget for section " + str(self.section) + "  (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + ")"
+        return str(self.type) + " Snugget for section " + str(self.section) + "  (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + " landslide: " + str(self.landslide_filter) + " liquefaction: " + str(self.liquifaction_filter) + " tsunami: " + str(self.tsunami_filter) + ")"
     
     
 class TextSnugget(models.Model):
