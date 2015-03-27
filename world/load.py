@@ -63,14 +63,14 @@ def run(verbose=True):
    #                   unique=['area', 'perimeter', 'orbndy24', 'orbndy24i', 'subjstate', 'feature', 'geom'])
    # lm3.save(strict=True, verbose=verbose)
 
-    # lm4 = LayerMapping(ExpectedGroundShaking, groundshaking_shp, expectedgroundshaking_mapping,
-    #                   transform=True, encoding='iso-8859-1')
-    # lm4.save(strict=True, verbose=verbose)
+    #lm4 = LayerMapping(ExpectedGroundShaking, groundshaking_shp, expectedgroundshaking_mapping,
+    #                  transform=True, encoding='iso-8859-1')
+    #lm4.save(strict=True, verbose=verbose)
 
-    lm5 = LayerMapping(LandslideDeformation, landslide_shp, landslidedeformation_mapping,
-                      transform=True, encoding='iso-8859-1')
-    lm5.save(strict=True, verbose=verbose)
+    #lm5 = LayerMapping(LandslideDeformation, landslide_shp, landslidedeformation_mapping,
+    #                  transform=True, encoding='iso-8859-1')
+    #lm5.save(strict=True, verbose=verbose)
 
-    lm6 = LayerMapping(LiquefactionDeformation, liquefaction_shp, liquefactiondeformation_mapping,
-                      transform=True, encoding='iso-8859-1')
-    lm6.save(strict=True, verbose=verbose)
+    #lm6 = LayerMapping(LiquefactionDeformation, liquefaction_shp, liquefactiondeformation_mapping,
+    #                  transform=True, encoding='iso-8859-1')
+    #lm6.save(strict=True, verbose=verbose)
