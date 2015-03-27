@@ -146,20 +146,27 @@ class Snugget(models.Model):
     type = models.ForeignKey(SnuggetType, related_name='+', on_delete=models.PROTECT)
     shaking_filter = models.ForeignKey(ExpectedGroundShaking, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     impact_zone_filter = models.ForeignKey(ImpactZone, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    liquifaction_filter = models.ForeignKey(LiquefactionDeformation, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    landslide_filter = models.ForeignKey(LandslideDeformation, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     temp_text_field = models.TextField(null=True)
-    # liquifaction_filter
-    # landslide_filter
-    
+
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
     
     @staticmethod
     def findSnuggetsForPoint(lat=0, lng=0):
-        pnt = Point(lat, lng) 
-        qs_i = ImpactZoneData.objects.filter(geom__contains=pnt);
-        zoneData = qs_i[0]
-        friendlyZone = ImpactZone.objects.filter(featureValue__exact=zoneData.feature)[0]
-        qs_t = Snugget.objects.filter(impact_zone_filter__exact=friendlyZone.id)
-        return qs_t
+        pnt = Point(lat, lng)
+        snuggets = []
+        qs_impacts = ImpactZoneData.objects.filter(geom__contains=pnt);
+        qs_shaking = ExpectedGroundShaking.objects.filter(geom__contains=pnt);
+        qs_liquifaction = LiquefactionDeformation.objects.filter(geom__contains=pnt)
+        qs_landslide = LandslideDeformation.objects.filter(geom__contains=pnt)
+
+        snuggets += Snugget.objects.filter(shaking_filter__shaking__in=qs_shaking.values_list('shaking'))
+        snuggets += Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('feature'))
+        snuggets += Snugget.objects.filter(liquifaction_filter__score__in=qs_liquifaction.values_list('score'))
+        snuggets += Snugget.objects.filter(landslide_filter__featureValue__in=qs_landslide.values_list('score'))
+        
+        return snuggets
     
     def __str__(self):
         return str(self.type) + " Snugget for section " + str(self.section) + "  (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + ")"
