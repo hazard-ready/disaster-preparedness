@@ -8,6 +8,15 @@ zoneOptions = {
                 4: 'Tsunami',
                 }
 
+
+SNUG_TEXT = 0 
+SNUG_AUDIO = 1
+SNUG_VID = 2
+
+SNUGGET_TYPES = (
+                 ('SNUG_TEXT', 'TextSnugget'),
+ )
+
 # This was originally an auto-generated Django model module created by ogrinspect,
 # updated and documented by the devs.
 class TsunamiZone(models.Model):
@@ -99,3 +108,37 @@ class InfrastructureCategory(models.Model):
     
     def __str__(self):
         return self.name + " in " + str(self.zone)
+    
+class SnuggetType(models.Model):
+    name = models.CharField(max_length=50)
+    model_name = models.CharField(max_length=255, choices=SNUGGET_TYPES)
+    
+    def __str__(self):
+        return self.name
+
+class SnuggetSection(models.Model):
+    name = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.name
+
+class Snugget(models.Model):
+    type = models.ForeignKey(SnuggetType, related_name='+', on_delete=models.PROTECT)
+    shaking_filter = models.ForeignKey(ExpectedGroundShaking, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    impact_zone_filter = models.ForeignKey(ImpactZone, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    temp_text_field = models.TextField(null=True)
+    # liquifaction_filter
+    # landslide_filter
+    
+    section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
+    
+    def __str__(self):
+        return str(self.type) + " Snugget for section " + str(self.section) + "  (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + ")"
+    
+    
+class TextSnugget(models.Model):
+    name = SNUGGET_TYPES[SNUG_TEXT]
+    content = models.TextField()
+    
+    def __str__(self):
+        return str(self.name)
