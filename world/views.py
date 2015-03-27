@@ -15,3 +15,10 @@ def zoneCheck(request):
     zonesStrings = list(chain(qs_t, qs_i, qs_s));
     context = {'lat': lat, 'lng': lng, 'areas': zonesStrings}
     return render(request, 'zonecheck.html', context)
+
+def snuggetCheck(request):
+    lat = -123.9125932
+    lng = 45.9928274
+    print("<pre>aldjahsdkajsdhadkdhaksdh</pre>")
+    snuggets = Snugget.findSnuggetsForPoint(lat=lat, lng=lng)
+    return render(request, 'seasidesnugget.html', {'snuggets': snuggets})

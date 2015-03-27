@@ -1,0 +1,11 @@
+<h1>What do we have to say about Seaside</h1>
+<h2>Snuggets Found</h2>
+<ul>
+
+{% for snugget in snuggets %}
+    <li><p>Snugget text: {{ snugget.temp_text_field }} </p>
+    <p>Object summary: {{ snugget }} </p>
+    </li>
+{% endfor %}
+
+</ul>
