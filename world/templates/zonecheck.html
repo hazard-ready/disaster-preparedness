@@ -13,46 +13,43 @@
   <script src="{% static 'js/vendor/jquery.js' %}"></script>
   <script src="{% static 'js/foundation.min.js' %}"></script>
   <script src="{% static 'js/app.js' %}"></script>
+  <style>
+
+  </style>
 </head>
 <body>
-
-  <div id="home" class="row">
-    <div class="column">
-      <form>
-        <div class="row collapse">
-          <div class="medium-9 columns">
-            <input id="location-text" type="text" placeholder="Enter address" />
-          </div>
-          <div class="medium-3 columns">
-            <a id="location-submit" class="button postfix">Submit</a>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div id="map" class="row">
-    <div class="column">
-      <div id="map-image">
-        <!--<image src="http://api.tiles.mapbox.com/v4/meesterstump.8bf4e389/pin-s+08B(-123.9125932,45.9928274)/-123.9125932,45.9928274,15/970x300.png64?access_token=pk.eyJ1IjoibWVlc3RlcnN0dW1wIiwiYSI6IkdGVVFTSkkifQ.8_WCPGKmIImxpNy4dEWU1A">-->
+  <div id="home">
+    <div class="row">
+      <div class="column">
+        <h2 id="project-title">Cascadia Earthquake Prepareness</h2>
       </div>
     </div>
-  </div>
-
-  <div id="results" class="row">
-    <div class="column">
-
-<h2>Where does Seaside lie?</h2>
-<p>Point: {{ lat }}, {{ lng }}</p>
-<h3>Areas/Zones</h3>
-<ul>
-{% for zone in areas %}
-  <li>{{ zone }}</li>
-{% endfor %}
-</ul>
-
+    <div id="map" class="row">
+      <div class="column">
+        <image id="map-image" src="">
+      </div>
     </div>
-  </div>
-  
+    <div id="location-form" class="row">
+      <div class="column">
+        <form>
+           <div class="row">
+            <div class="column">
+             <div class="row collapse postfix-radius">
+                <div class="small-10 columns form-text-input">
+                  <input id="location-text" type="text" placeholder="Enter address" />
+                </div>
+                <div class="small-1 column form-icon-button">
+                  <a id="location-submit" class="button postfix">&#128269;</a>
+                </div>
+                <div class="small-1 column form-icon-button">
+                  <a id="auto-location-submit" class="button postfix radius">&#9650;</a>
+                </div>
+              </div>
+            </div>
+           </div>
+        </form>
+      </div>
+    </div>
+
 </body>
 </html>
