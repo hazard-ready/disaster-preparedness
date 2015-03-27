@@ -53,7 +53,8 @@ class ImpactZoneData(models.Model):
         label = "Impact Zone Data: " + zoneName + "(perim: " + str(self.perimeter) + " orbndy24: " + str(self.orbndy24) + " orbndy24i: " + str(self.orbndy24i) + ")"
         return label
     
- # This is an auto-generated Django model module created by ogrinspect.
+# HAZARDS 
+# This is an auto-generated Django model module created by ogrinspect.
 class ExpectedGroundShaking(models.Model):
     rate = models.IntegerField()
     shaking = models.CharField(max_length=11)
@@ -62,7 +63,25 @@ class ExpectedGroundShaking(models.Model):
     
     def __str__(self):
         return self.shaking + " (rate: " + str(self.rate) + ")"
-    
+
+class LandslideDeformation(models.Model):
+    score = models.IntegerField() # The number rating on the scale of ground deformation
+    label = models.CharField(max_length=11) # The classification "Med, High, Low" etc. 
+    geom = models.MultiPolygonField(srid=2991)
+    objects = models.GeoManager()
+
+    def __str__(self):
+        return self.label
+
+class LiquefactionDeformation(models.Model):
+    score = models.IntegerField() # The number rating on the scale of ground deformation
+    label = models.CharField(max_length=11) # The classification "Med, High, Low" etc. 
+    geom = models.MultiPolygonField(srid=2991)
+    objects = models.GeoManager()
+
+    def __str__(self):
+        return self.label
+
 class ImpactZone(models.Model):
     name = models.CharField(max_length=50)
     featureValue = models.IntegerField() # If/when ImpactZoneData gets cleaned up this could become a ForeignKey
