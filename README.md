@@ -55,7 +55,7 @@ Note: This assumes you've got Postgres with PostGIS installed, which can be a
       challenge on its own!
 
 1. Clone repo.
-2. Create a Postgres database on the Postgres server. This needs to be PostGIS enabled. To do this, after creating the database type 'CREATE EXTENSION postgis;' and 'CREATE EXTENSION postgis_topology;' in psql. Second one is suggested by geodjango documentation but optional as geodjango currently doesn't support topology.
+2. Create a Postgres database on the Postgres server.
 3. Set up an environment variable `DATABASE_URL` that will be used by the Djando Database URL app to load our databse.
   * example on Mac/Linux: `export DATABASE_URL="postgres://USER:PASSWORD@HOST:PORT/NAME"` 
 6. Run `python manage.py migrate` to initialize the database's structure.
