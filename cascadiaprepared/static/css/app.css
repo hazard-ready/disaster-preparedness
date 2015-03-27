@@ -1,3 +1,15 @@
-body {
+#home {
   margin-top: 2em;
+}
+
+#map {
+  margin-bottom: 1em;
+}
+
+.form-icon-button {
+  width: 7.33%;
+}
+
+#auto-location-submit {
+  border-radius: 3px;
 }
