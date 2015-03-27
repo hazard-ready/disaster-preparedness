@@ -28,7 +28,7 @@ class TsunamiZone(models.Model):
 # additional clarification by the devs.
 # Our use of this data is primarily looking at the feature values.
 # We don't care about other polygons in this data beyond those 4 impact zones.
-class ImpactZone(models.Model):
+class ImpactZoneData(models.Model):
     area = models.IntegerField()      # An area number.  Who knows.
     perimeter = models.IntegerField() # A permimiter number.  Who knows.
     orbndy24 = models.IntegerField()  # Value identifies source of boundary: BLM-generated lines, USFS Cartographic Feature File, USGS Digital Line Graph, WA Dept. of Natural Resources, BLM Geographic Coordinate Data Base, BLM Landline Layer, Other; FIPS codes used to identify counties if from a county, BLM's Western Oregon Digital Data Base 
@@ -40,7 +40,7 @@ class ImpactZone(models.Model):
 
     def __str__(self):
         zoneName = zoneOptions.get(self.feature, 'Undefined zone')
-        label = "Impact Zone: " + zoneName + "(perim: " + str(self.perimeter) + " orbndy24: " + str(self.orbndy24) + " orbndy24i: " + str(self.orbndy24i) + ")"
+        label = "Impact Zone Data: " + zoneName + "(perim: " + str(self.perimeter) + " orbndy24: " + str(self.orbndy24) + " orbndy24i: " + str(self.orbndy24i) + ")"
         return label
     
  # This is an auto-generated Django model module created by ogrinspect.
@@ -52,3 +52,50 @@ class ExpectedGroundShaking(models.Model):
     
     def __str__(self):
         return self.shaking + " (rate: " + str(self.rate) + ")"
+    
+class ImpactZone(models.Model):
+    name = models.CharField(max_length=50)
+    featureValue = models.IntegerField() # If/when ImpactZoneData gets cleaned up this could become a ForeignKey
+    
+    def __str__(self):
+        return self.name
+
+class RecoveryLevels(models.Model):
+    name = models.CharField(max_length=50)
+    shortLabel = models.CharField(max_length=2)
+    description = models.TextField()
+    
+    def __str__(self):
+        return self.name
+    
+class Infrastructure(models.Model):
+    name = models.CharField(max_length=255)
+    zone = models.ForeignKey(ImpactZone, related_name='+', on_delete=models.PROTECT)
+    eventOccursRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
+    firstDayRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
+    threeDaysRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
+    sevenDaysRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
+    fourWeeksRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
+    threeMonthsRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
+    sixMonthsRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
+    twelveMonthsRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
+    threeYearsRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
+    threePlusYearsRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
+    
+    def __str__(self):
+        return self.name + " in " + str(self.zone)
+    
+class InfrastructureGroup(models.Model):
+    name = models.CharField(max_length=50)
+    items = models.ManyToManyField(Infrastructure)
+    
+    def __str__(self):
+        return self.name
+    
+class InfrastructureCategory(models.Model):
+    name = models.CharField(max_length=50)
+    zone = models.ForeignKey(ImpactZone, related_name='+', on_delete=models.PROTECT)
+    groups = models.ManyToManyField(InfrastructureGroup)
+    
+    def __str__(self):
+        return self.name + " in " + str(self.zone)
