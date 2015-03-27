@@ -19,6 +19,7 @@ def zoneCheck(request):
 def snuggetCheck(request):
     lat = -123.9125932
     lng = 45.9928274
-    print("<pre>aldjahsdkajsdhadkdhaksdh</pre>")
-    snuggets = Snugget.findSnuggetsForPoint(lat=lat, lng=lng)
-    return render(request, 'seasidesnugget.html', {'snuggets': snuggets})
+    
+    snuggetContent = Snugget.findSnuggetsForPoint(lat=lat, lng=lng)    
+        
+    return render(request, 'seasidesnugget.html', {'data': snuggetContent})
