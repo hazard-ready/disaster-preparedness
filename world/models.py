@@ -1,4 +1,5 @@
 from django.contrib.gis.db import models
+from django.contrib.gis.geos import Point
 
 
 zoneOptions = {
@@ -131,6 +132,16 @@ class Snugget(models.Model):
     # landslide_filter
     
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
+    
+    def findSnuggetsForPoint(lat=0, lng=0):
+        # Do stuff here
+        str = "do something exithere"
+        pnt = Point(lat, lng) 
+        qs_i = ImpactZoneData.objects.filter(geom__contains=pnt);
+        zoneData = qs_i[0]
+        friendlyZone = ImpactZone.objects.filter(featureValue__exact=zoneData.feature)[0]
+        qs_t = Snugget.objects.filter(impact_zone_filter__exact=friendlyZone.id)
+        return qs_t
     
     def __str__(self):
         return str(self.type) + " Snugget for section " + str(self.section) + "  (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + ")"
