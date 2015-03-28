@@ -192,7 +192,7 @@ class Snugget(models.Model):
                 }
     
     def __str__(self):
-        return str(self.type) + " Snugget for section " + str(self.section) + "  (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + " landslide: " + str(self.landslide_filter) + " liquefaction: " + str(self.liquifaction_filter) + " tsunami: " + str(self.tsunami_filter) + ")"
+        return str(self.type) + " Snugget for section " + str(self.section) + " subsection: " + str(self.sub_section) + " (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + " landslide: " + str(self.landslide_filter) + " liquefaction: " + str(self.liquifaction_filter) + " tsunami: " + str(self.tsunami_filter) + ")"
     
     
 class TextSnugget(models.Model):
