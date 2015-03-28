@@ -11,11 +11,11 @@ def app_view(request):
 
     if len(lat) > 0:
     
-      snugget_content = Snugget.findSnuggetsForPoint(lat=float(lng), lng=float(lat))    
+      snugget_content = Snugget.findSnuggetsForPoint(lat=float(lat), lng=float(lng))
         
-      return render(request, 'index.html', {'data': snugget_content, 'lat':lat, 'lng':lng})    
+      return render(request, 'index.html', {'data': snugget_content, 'has_location':True})
 
   # if not, we'll still serve up the same template without data
   else:
 
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'has_location':False})
