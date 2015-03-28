@@ -21,66 +21,56 @@ SNUGGET_TYPES = (
 # This was originally an auto-generated Django model module created by ogrinspect,
 # updated and documented by the devs.
 class TsunamiZone(models.Model):
-    scenario_id = models.IntegerField() # 1 = local scenario, 2 = distant scenario
-    location = models.CharField(max_length=80) # location and model grid name
-    scenario_type = models.CharField(max_length=50) # local or distant
-    geom = models.MultiPolygonField(srid=4326)
+    type = models.CharField(max_length=50)
+    typeid = models.IntegerField()
+    geom = models.MultiPolygonField(srid=4326) #This is for tsunamiZone
     objects = models.GeoManager()
-    
-    class Meta:
-        unique_together = ('scenario_id', 'location')
     
         # Returns the string representation of the model.
     def __str__(self):              # __unicode__ on Python 2
-        return self.location + " ("+ self.scenario_type + ")"
+        return self.type
 
-# This was an auto-generated Django model module created by ogrinspect with
-# additional clarification by the devs.
-# Our use of this data is primarily looking at the feature values.
-# We don't care about other polygons in this data beyond those 4 impact zones.
+# This was an auto-generated Django model module created by ogrinspect with.
 class ImpactZoneData(models.Model):
-    area = models.IntegerField()      # An area number.  Who knows.
-    perimeter = models.IntegerField() # A permimiter number.  Who knows.
-    orbndy24 = models.IntegerField()  # Value identifies source of boundary: BLM-generated lines, USFS Cartographic Feature File, USGS Digital Line Graph, WA Dept. of Natural Resources, BLM Geographic Coordinate Data Base, BLM Landline Layer, Other; FIPS codes used to identify counties if from a county, BLM's Western Oregon Digital Data Base 
-    orbndy24i = models.IntegerField() # User Defined automatically generated numbers.
-    subjstate = models.CharField(max_length=50) # User defined string.
-    feature = models.IntegerField()   # This is the field that tells us which of the 4 DOGAMI designated zones it is (or 0 for other data) 
+    shape_leng = models.FloatField()
+    shape_area = models.FloatField()
+    zoneid = models.IntegerField()
+    zone = models.CharField(max_length=10) 
     geom = models.MultiPolygonField(srid=4326)
     objects = models.GeoManager()
-
+    
     def __str__(self):
-        zoneName = zoneOptions.get(self.feature, 'Undefined zone')
-        label = "Impact Zone Data: " + zoneName + "(perim: " + str(self.perimeter) + " orbndy24: " + str(self.orbndy24) + " orbndy24i: " + str(self.orbndy24i) + ")"
-        return label
+        return self.zone
+
     
 # HAZARDS 
 # This is an auto-generated Django model module created by ogrinspect.
 class ExpectedGroundShaking(models.Model):
     rate = models.IntegerField()
     shaking = models.CharField(max_length=11)
-    geom = models.MultiPolygonField(srid=2992)
+    geom = models.MultiPolygonField(srid=2992) # This is for Groundshaking_Simple
     objects = models.GeoManager()
     
     def __str__(self):
-        return self.shaking + " (rate: " + str(self.rate) + ")"
+        return "Shaking: " + self.shaking + " (rate: " + str(self.rate) + ")"
 
 class LandslideDeformation(models.Model):
     score = models.IntegerField() # The number rating on the scale of ground deformation
     label = models.CharField(max_length=11) # The classification "Med, High, Low" etc. 
-    geom = models.MultiPolygonField(srid=2992)
+    geom = models.MultiPolygonField(srid=2992) # This is for Landlide_simple
     objects = models.GeoManager()
 
     def __str__(self):
-        return self.label
+        return "LandslideDeform: " + self.label
 
 class LiquefactionDeformation(models.Model):
     score = models.IntegerField() # The number rating on the scale of ground deformation
     label = models.CharField(max_length=11) # The classification "Med, High, Low" etc. 
-    geom = models.MultiPolygonField(srid=2992)
+    geom = models.MultiPolygonField(srid=2992) #This is for Liquefaction_simple
     objects = models.GeoManager()
 
     def __str__(self):
-        return self.label
+        return "LiquefactionDeform: " + self.label
 
 class ImpactZone(models.Model):
     name = models.CharField(max_length=50)
@@ -164,22 +154,28 @@ class Snugget(models.Model):
     def findSnuggetsForPoint(lat=0, lng=0):
         pnt = Point(lng, lat)
         snuggets = []
-        qs_impacts = ImpactZoneData.objects.filter(geom__contains=pnt);
-        qs_tsunami = TsunamiZone.objects.filter(geom__contains=pnt);
-        qs_shaking = ExpectedGroundShaking.objects.filter(geom__contains=pnt);
+        qs_impacts = ImpactZoneData.objects.filter(geom__contains=pnt)
+        print(qs_impacts)
+        qs_tsunami = TsunamiZone.objects.filter(geom__contains=pnt)
+        print(qs_tsunami)
+        qs_shaking = ExpectedGroundShaking.objects.filter(geom__contains=pnt)
+        print(qs_shaking)
         qs_liquifaction = LiquefactionDeformation.objects.filter(geom__contains=pnt)
+        print(qs_liquifaction)
         qs_landslide = LandslideDeformation.objects.filter(geom__contains=pnt)
+        print(qs_landslide)
         
-        #world.models.Snugget.findSnuggetsForPoint(lat=-123.9125932, lng=45.9928274)
+        #bend, or
+        #world.models.Snugget.findSnuggetsForPoint(lng=-121.3153096, lat=44.0581728)
+        # Near seaside
+        #world.models.Snugget.findSnuggetsForPoint(lng=-123.9125932, lat=45.9928274)
 
-        
-
-        tsunami_snuggets = Snugget.objects.filter(tsunami_filter__location__in=qs_tsunami.values_list('location'))
+        tsunami_snuggets = Snugget.objects.filter(tsunami_filter__typeid__in=qs_tsunami.values_list('typeid'))
         shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__in=qs_shaking.values_list('shaking'))
-        impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('feature'))
+        impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('zoneid'))
         liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__in=qs_liquifaction.values_list('score'))
         landslide_snuggets = Snugget.objects.filter(landslide_filter__score__in=qs_landslide.values_list('score'))
-        impact_zones = qs_impacts.values()
+        #impact_zones = qs_impacts.values()
         
         return {'groups' : {
                             'tusnami_snugs': tsunami_snuggets,
@@ -188,7 +184,7 @@ class Snugget(models.Model):
                             'liqui_snugs': liquifaction_snuggets,
                             'landslide_snugs': landslide_snuggets,
                             },
-                'impact_zones': impact_zones
+         #       'impact_zones': impact_zones
                 }
     
     def __str__(self):
