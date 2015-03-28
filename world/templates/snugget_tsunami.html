@@ -1,8 +1,10 @@
+{% load staticfiles %}
+
       <div class="row snugget">
         <div class="medium-3 columns icon tsunami">
-          [tsunami icon]
+          <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
         </div>
         <div class="medium-9 columns">
-          <p>{{ text }}</p>
+          <p class="serif-font">{{ text }}</p>
         </div>
       </div>

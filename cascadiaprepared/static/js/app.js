@@ -6,7 +6,7 @@ $( document ).ready(function() {
 
   var mapbox_access_token = "pk.eyJ1IjoibWVlc3RlcnN0dW1wIiwiYSI6IkdGVVFTSkkifQ.8_WCPGKmIImxpNy4dEWU1A";
   var mapbox_map = "meesterstump.8bf4e389";
-  var mapbox_pin_color = "08B";
+  var mapbox_pin_color = "F93";
   var mapbox_zoom_level = "15";
   var mapbox_image_size = "970x300";  
   var mapbox_initial_lng = "-120.5";
@@ -30,7 +30,7 @@ $( document ).ready(function() {
   // load up an appropriate mapbox image
   // TODO: better validation of lat/lon values
   if (lat && lng) {
-    var image_url = "http://api.tiles.mapbox.com/v4/" + mapbox_map + "/pin-s+" + mapbox_pin_color + "(" + lng + "," + lat + ")/" + lng + "," + lat + "," + mapbox_zoom_level + "/" + mapbox_image_size + ".png64?access_token=" + mapbox_access_token;
+    var image_url = "http://api.tiles.mapbox.com/v4/" + mapbox_map + "/pin-m+" + mapbox_pin_color + "(" + lng + "," + lat + ")/" + lng + "," + lat + "," + mapbox_zoom_level + "/" + mapbox_image_size + ".png64?access_token=" + mapbox_access_token;
     // request new map image
     $("#map-image").attr("src", image_url); 
   }

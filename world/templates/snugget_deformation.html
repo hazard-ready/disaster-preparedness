@@ -1,8 +1,59 @@
+{% load staticfiles %}
+
+{% for snugget in landslide_snugs %}
+  {% if snugget.section.name == "The Moment" and section == "The Moment" %}
       <div class="row snugget">
         <div class="medium-3 columns icon deformation">
-          [deformation icon]
+          {% if snugget.landslide_filter.score == 1 %}
+          <img src="{% static 'img/icon-deformation-1-5.svg' %}" alt="deformation icon">
+          {% elif snugget.landslide_filter.score == 2 %}
+          <img src="{% static 'img/icon-deformation-2-5.svg' %}" alt="deformation icon">
+          {% elif snugget.landslide_filter.score == 3 %}
+          <img src="{% static 'img/icon-deformation-3-5.svg' %}" alt="deformation icon">
+          {% elif snugget.landslide_filter.score == 4 %}
+          <img src="{% static 'img/icon-deformation-4-5.svg' %}" alt="deformation icon">
+          {% elif snugget.landslide_filter.score == 5 %}
+          <img src="{% static 'img/icon-deformation-5-5.svg' %}" alt="deformation icon">
+          {% endif %}
         </div>
         <div class="medium-9 columns">
-          <p>{{ text }}</p>
+          <p class="serif-font">{{ snugget.temp_text_field }}</p>
         </div>
       </div>
+  {% elif snugget.section.name == "How To Prepare" and section == "How To Prepare" %}
+      <div class="row snugget">
+        <div class="column">
+          <p class="serif-font">{{ snugget.temp_text_field }}</p>
+        </div>
+      </div>
+  {% endif %}
+{% endfor %}
+
+{% for snugget in liqui_snugs %}
+  {% if snugget.section.name == "The Moment" and section == "The Moment" %}
+      <div class="row snugget">
+        <div class="medium-3 columns icon deformation">
+          {% if snugget.liquifaction_filter.score == 1 %}
+          <img src="{% static 'img/icon-deformation-1-5.svg' %}" alt="deformation icon">
+          {% elif snugget.liquifaction_filter.score == 2 %}
+          <img src="{% static 'img/icon-deformation-2-5.svg' %}" alt="deformation icon">
+          {% elif snugget.liquifaction_filter.score == 3 %}
+          <img src="{% static 'img/icon-deformation-3-5.svg' %}" alt="deformation icon">
+          {% elif snugget.liquifaction_filter.score == 4 %}
+          <img src="{% static 'img/icon-deformation-4-5.svg' %}" alt="deformation icon">
+          {% elif snugget.liquifaction_filter.score == 5 %}
+          <img src="{% static 'img/icon-deformation-5-5.svg' %}" alt="deformation icon">
+          {% endif %}
+        </div>
+        <div class="medium-9 columns">
+          <p class="serif-font">{{ snugget.temp_text_field }}</p>
+        </div>
+      </div>
+  {% elif snugget.section.name == "How To Prepare" and section == "How To Prepare" %}
+      <div class="row snugget">
+        <div class="column">
+          <p class="serif-font">{{ snugget.temp_text_field }}</p>
+        </div>
+      </div>
+  {% endif %}
+{% endfor %}

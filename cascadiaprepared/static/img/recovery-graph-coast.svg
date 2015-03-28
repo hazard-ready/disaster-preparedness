@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="687px" height="214px" viewBox="0 0 687 214" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>Coast Recovery Graph</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Coast" sketch:type="MSLayerGroup" transform="translate(7.000000, 20.000000)">
+            <path d="M500,2.36587793 L500,192.622403" id="Line" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+            <text id="THREE-YEARS" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#FDA938">
+                <tspan x="504" y="10">THREE YEARS</tspan>
+            </text>
+            <path d="M334,2.36587793 L334,192.622403" id="Line" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+            <text id="TWO-YEARS" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#FDA938">
+                <tspan x="338" y="10">TWO YEARS</tspan>
+            </text>
+            <path d="M167,2.36587793 L167,192.622403" id="Line" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+            <text id="ONE-YEAR" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#FDA938">
+                <tspan x="170" y="10">ONE YEAR</tspan>
+            </text>
+            <path d="M14,2.36587793 L14,192.622403" id="Line" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+            <text id="ONE-MONTH" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#FDA938">
+                <tspan x="17" y="11">ONE MONTH</tspan>
+            </text>
+            <rect id="healthcare" fill="#81C6C2" sketch:type="MSShapeGroup" x="0" y="169" width="507" height="10" rx="8"></rect>
+            <rect id="natural-gas" fill="#81C6C2" sketch:type="MSShapeGroup" x="0" y="138" width="22" height="10" rx="8"></rect>
+            <rect id="electric" fill="#81C6C2" sketch:type="MSShapeGroup" x="0" y="106" width="125" height="10" rx="8"></rect>
+            <rect id="water-dist-center" fill="#81C6C2" sketch:type="MSShapeGroup" x="0" y="75" width="53" height="10" rx="8"></rect>
+            <rect id="water-&amp;-sewer" fill="#81C6C2" sketch:type="MSShapeGroup" x="0" y="42" width="680" height="10" rx="8"></rect>
+            <text id="WATER-&amp;-SEWER" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#003366">
+                <tspan x="3" y="38">WATER &amp; SEWER</tspan>
+            </text>
+            <text id="WATER-AT-DISTRIBUTIO" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#003366">
+                <tspan x="3" y="71">WATER AT DISTRIBUTION CENTERS</tspan>
+            </text>
+            <text id="ELECTRICITY" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#003366">
+                <tspan x="3" y="102">ELECTRICITY</tspan>
+            </text>
+            <text id="NATURAL-GAS" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#003366">
+                <tspan x="3" y="134">NATURAL GAS</tspan>
+            </text>
+            <text id="HEALTHCARE-FACILITIE" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#003366">
+                <tspan x="3" y="165">HEALTHCARE FACILITIES</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
