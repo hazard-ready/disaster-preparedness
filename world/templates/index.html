@@ -19,7 +19,7 @@
 
 
 <!-------------- TITLE AND MAP -------------->
-{% include "title_and_map.html" only %}
+{% include "title_and_map.html" %}
 
 
 <!-------------- WELCOME -------------->
@@ -53,28 +53,17 @@
 <div class="secondary label temp">Shaking</div>
 {% for snugget in data.groups.shake_snugs %}
   {% ifequal snugget.section.name "The Moment" %}
-    {% include "snugget_shaking.html" with text=snugget.temp_text_field %}
+    {% include "snugget_shaking.html" with text=snugget.temp_text_field level=snugget.shaking_filter.rate %}
   {% endifequal %}
 {% endfor %}
 
-<div class="secondary label temp">Landslide</div>
-{% for snugget in data.groups.landslide_snugs %}
-  {% ifequal snugget.section.name "The Moment" %}
-    {% include "snugget.html" with text=snugget.temp_text_field %}
-  {% endifequal %}
-{% endfor %}
-
-<div class="secondary label temp">Liqui</div>
-{% for snugget in data.groups.liqui_snugs %}
-  {% ifequal snugget.section.name "The Moment" %}
-    {% include "snugget.html" with text=snugget.temp_text_field %}
-  {% endifequal %}
-{% endfor %}
+<div class="secondary label temp">Land Deformation</div>
+{% include "snugget_deformation.html" with section="The Moment" landslide_snugs=data.groups.landslide_snugs liqui_snugs=data.groups.liqui_snugs %}
 
 <!-------------- COMMUNITY RECOVERY -------------->
       <div class="row">
         <div class="column">
-          <h3 class="chapter-title">Community Recovery</h3>
+          <h3 class="chapter-title">Your Community’s Recovery</h3>
         </div>
       </div>
  
@@ -84,7 +73,12 @@
     {% include "snugget.html" with text=snugget.temp_text_field %}
   {% endifequal %}
 {% endfor %}
-     
+
+      <div class="row">
+        <div class="column">
+          <img src="{% static 'img/recovery-graph-valley.svg' %}" alt="Recovery Graph">
+        </div>
+      </div>
      
 <!-------------- HOW TO PREPARE -------------->
       <div class="row">
@@ -100,6 +94,14 @@
   {% endifequal %}
 {% endfor %}
 
+{% include "supply-kit.html" %}
+
+      <div class="row">
+        <div class="column">
+          <h4 class="sub-title">Your Home</h4>
+        </div>
+      </div>
+
 <div class="secondary label temp">Shaking</div>
 {% for snugget in data.groups.shake_snugs %}
   {% ifequal snugget.section.name "How To Prepare" %}
@@ -107,21 +109,41 @@
   {% endifequal %}
 {% endfor %}
 
-<div class="secondary label temp">Landslide</div>
-{% for snugget in data.groups.landslide_snugs %}
-  {% ifequal snugget.section.name "How To Prepare" %}
-    {% include "snugget.html" with text=snugget.temp_text_field %}
-  {% endifequal %}
-{% endfor %}
+<div class="secondary label temp">Land Deformation</div>
+{% include "snugget_deformation.html" with section="How To Prepare" landslide_snugs=data.groups.landslide_snugs liqui_snugs=data.groups.liqui_snugs %}
 
-<div class="secondary label temp">Liqui</div>
-{% for snugget in data.groups.liqui_snugs %}
-  {% ifequal snugget.section.name "How To Prepare" %}
-    {% include "snugget.html" with text=snugget.temp_text_field %}
-  {% endifequal %}
-{% endfor %}
-      
+      <div class="row">
+        <div class="column">
+          <h4 class="sub-title">Know Your Leaders</h4>
+          <p class="serif-font">The best way to see your community be more prepared for a big earthquake or tsunami is to contact your local official.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <h4 class="sub-title">Know Your Routes</h4>
+          <p class="serif-font">Make sure your family and friends know where to gather after the earthquake and how to get there. You'll need a reconnection plan. Do you cross a bridge on your way to school or work? It could be unsafe to cross after an earthquake. Do you need an evacuation route? If you're in the tsunami zone, you do. <a href="http://www.oregon.gov/DOGAMI/pages/earthquakes/Coastal/Tsubrochures.aspx">Find your route.</a></p> 
+          <p class="serif-font">Know that some major roads won't be safe or passable during and after an earthquake. <a href="http://www.oregon.gov/ODOT/HWY/OOM/Pages/contact_us.aspx">Ask the Oregon Department of Transportation</a> to find out which routes in your area to expect will be down.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <h4 class="sub-title">The Importance of Community</h4>
+          <p class="serif-font">The most crucial thing you can do the increase the resiliency of your community is connect with your neighbors to plan as a group. One way to do this is through Community Emergency Response Teams. <a href="https://www.fema.gov/community-emergency-response-teams">Find out how to join or start a community team.</a></p>
+        </div>
+      </div>
+
+
 {% endif %}
+
+<!-------------- SOCIAL -------------->
+{% include "social.html" %}
+
+
+<!-------------- GEEK BOX -------------->
+{% include "geek_box.html" %}
+
 
   </div>
 

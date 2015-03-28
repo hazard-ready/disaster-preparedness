@@ -1,17 +1,20 @@
-    <div class="row">
+{% load staticfiles %}
+
+    <div class="row project-header">
       <div class="column">
-        <h2 id="project-title">Aftershock</h2>
+        <div class="project-title"><img src="{% static 'img/aftershock-title.svg' %}" alt="Aftershock"></div>
+        <h5 class="project-subtitle">Preparing for Your Cascadia Quake Scenario</h>
       </div>
     </div>
     
-    <div id="location-form" class="row">
+    <div class="row location-form">
       <div class="column">
         <form>
            <div class="row">
             <div class="column">
              <div class="row collapse postfix-radius">
                 <div class="small-10 columns form-text-input">
-                  <input id="location-text" type="text" placeholder="Enter address" />
+                  <input id="location-text" type="text" placeholder="Enter your location to get your scenario" />
                 </div>
                 <div class="small-1 column form-icon-button">
                   <a id="location-submit" class="button postfix">&#128269;</a>

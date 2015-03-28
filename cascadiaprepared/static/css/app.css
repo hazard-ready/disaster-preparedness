@@ -1,5 +1,46 @@
+body {
+  background-color: #E6EBDA;
+  color: #003366;
+}
+
+.serif-font {
+  font-family: "Times New Roman", Times, serif;
+}
+
 #home {
-  margin-top: 2em;
+  margin: 1.5em .7em 2em;
+}
+
+.project-header {
+  margin-bottom: .2em;
+}
+
+.project-title {
+  display: inline-block;
+  vertical-align: bottom;
+  padding-bottom: .7em;
+  padding-right: .7em;
+}
+.project-subtitle {
+  display: inline-block;
+  color: #003366;
+}
+
+#location-text {
+  border-color: #FF9933;
+  border-width: 3px;
+}
+::-webkit-input-placeholder {
+   color: #81C6C2;
+}
+:-moz-placeholder { /* Firefox 18- */
+   color: #81C6C2;  
+}
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #81C6C2;  
+}
+:-ms-input-placeholder {  
+   color: #81C6C2;  
 }
 
 #map {
@@ -16,15 +57,59 @@
 
 .chapter-title {
   margin-top: 1em;
+  margin-bottom: .5em;
+  color: #FF9933;
+}
+
+.snugget { 
   margin-bottom: 1em;
+}
+
+.snugget .icon {
+}
+
+h4.sub-title {
+  margin-bottom: 0;
+  color: #003366;
+}
+
+.social {
+  margin-top: 1em;
+  margin-bottom: 3em;
+}
+.social .title {
+  color: #FF9933;
+  margin-bottom: .7em;
+}
+
+.geek-box {
+  padding: 1em 1.5em .5em;
+  background-color: #81C6C2;
+}
+.geek-box .title,
+.geek-box p {
+  color: #FFF;
+  line-height: 1.4em;
+}
+.geek-box p {
+  font-size: .9em;
+}
+.geek-box .title {
+  margin-bottom: 0.1em;
 }
 
 .temp {
   margin-bottom: 5px;
   display: block;
-}
-.snugget {  
+  color: rgba(0,0,0,.4) !important;
+  background-color: transparent !important;
 }
 
-.snugget .icon {
+
+/* overriding foundation (should use sass/scss/less instead!) */
+a.button {
+  background-color: #FF9933;
+}
+a.button:hover {
+  background-color: #81C6C2;
 }
