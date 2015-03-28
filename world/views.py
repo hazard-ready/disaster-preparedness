@@ -11,7 +11,7 @@ def app_view(request):
 
     if len(lat) > 0:
     
-      snugget_content = Snugget.findSnuggetsForPoint(lat=float(lng), lng=float(lat))    
+      snugget_content = Snugget.findSnuggetsForPoint(lat=float(lat), lng=float(lng))    
         
       return render(request, 'index.html', {'data': snugget_content, 'lat':lat, 'lng':lng})    
 
