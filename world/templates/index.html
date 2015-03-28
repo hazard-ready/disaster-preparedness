@@ -3,7 +3,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Cascadia Earthquake Preparedness</title>
+  <title>Aftershock</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
   <link rel="stylesheet" href="{% static 'css/foundation.css' %}">
@@ -15,123 +15,115 @@
   <script src="{% static 'js/app.js' %}"></script>
 </head>
 <body>
-
   <div id="home">
-    
-    <div class="row">
-      <div class="column">
-        <h2 id="project-title">Cascadia Earthquake Preparedness</h2>
-      </div>
-    </div>
-    
-    <div id="map" class="row">
-      <div class="column">
-        <image id="map-image" src="">
-      </div>
-    </div>
-    
-    <div id="location-form" class="row">
-      <div class="column">
-        <form>
-           <div class="row">
-            <div class="column">
-             <div class="row collapse postfix-radius">
-                <div class="small-10 columns form-text-input">
-                  <input id="location-text" type="text" placeholder="Enter address" />
-                </div>
-                <div class="small-1 column form-icon-button">
-                  <a id="location-submit" class="button postfix">&#128269;</a>
-                </div>
-                <div class="small-1 column form-icon-button">
-                  <a id="auto-location-submit" class="button postfix radius">&#9650;</a>
-                </div>
-              </div>
-            </div>
-           </div>
-        </form>
-      </div>
-    </div>
 
 
+<!-------------- TITLE AND MAP -------------->
+{% include "title_and_map.html" only %}
+
+
+<!-------------- WELCOME -------------->
 {% if has_location == False %}
-    <div id="welcome">
-      <div class="row">
-        <div class="column">
-          <p>In nec tellus ultricies, varius tortor vel, malesuada neque. Duis finibus turpis id massa convallis imperdiet. Nam congue porta feugiat. Sed blandit mauris eget fermentum dictum. Duis ipsum nulla, mattis eget convallis et, semper a mi. Ut ac sem eros. Suspendisse dignissim leo vel rutrum aliquam. Donec eleifend velit vitae eros porta, a pellentesque ligula feugiat. Nam ultricies porta nulla, ac sodales nulla feugiat quis. Donec quis fringilla ipsum. Etiam gravida libero id efficitur vehicula. Morbi sed arcu felis. Sed quis sem magna. Quisque varius dignissim odio vel gravida. Nullam vestibulum convallis augue, ac rutrum turpis dapibus sit amet. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-        </div>
-      </div>
-    </div>
+  {% include "welcome.html" only %}
 {% endif %}
 
 
-{% if has_location == True %}
-    <div id="results">
-      
-      <!-------------- THE MOMENT -------------->
+{% if has_location == True %}      
+<!-------------- THE MOMENT -------------->
       <div class="row">
         <div class="column">
           <h3 class="chapter-title">The Moment</h3>
         </div>
       </div>
       
-      {% for snugget in data.groups.impact_snugs %}
-
-      <div class="row">
-        <div class="column">
-          <p>{{ snugget.temp_text_field }}</p>
-        </div>
-      </div>
-      {% endfor %}
+<div class="secondary label temp">Impact</div>
+{% for snugget in data.groups.impact_snugs %}
+  {% ifequal snugget.section.name "The Moment" %}
+    {% include "snugget.html" with text=snugget.temp_text_field %}
+  {% endifequal %}
+{% endfor %}
      
-      {% for snugget in data.groups.tsunami_snugs %}
-      <div class="row">
-        <div class="column">
-          <p>{{ snugget.temp_text_field }}</p>
-        </div>
-      </div>
-      {% endfor %}
+<div class="secondary label temp">Tsunami</div>
+{% for snugget in data.groups.tsunami_snugs %}
+  {% ifequal snugget.section.name "The Moment" %}
+    {% include "snugget_shaking.html" with text=snugget.temp_text_field %}
+  {% endifequal %}
+{% endfor %}
      
-      {% for snugget in data.groups.shake_snugs %}
-      <div class="row">
-        <div class="column">
-          <p>{{ snugget.temp_text_field }}</p>
-        </div>
-      </div>
-      {% endfor %}
+<div class="secondary label temp">Shaking</div>
+{% for snugget in data.groups.shake_snugs %}
+  {% ifequal snugget.section.name "The Moment" %}
+    {% include "snugget_shaking.html" with text=snugget.temp_text_field %}
+  {% endifequal %}
+{% endfor %}
 
-      {% for snugget in data.groups.landslide_snugs %}
-      <div class="row">
-        <div class="column">
-          <p>{{ snugget.temp_text_field }}</p>
-        </div>
-      </div>
-      {% endfor %}
+<div class="secondary label temp">Landslide</div>
+{% for snugget in data.groups.landslide_snugs %}
+  {% ifequal snugget.section.name "The Moment" %}
+    {% include "snugget.html" with text=snugget.temp_text_field %}
+  {% endifequal %}
+{% endfor %}
 
-      {% for snugget in data.groups.liqui_snugs %}
-      <div class="row">
-        <div class="column">
-          <p>{{ snugget.temp_text_field }}</p>
-        </div>
-      </div>
-      {% endfor %}
+<div class="secondary label temp">Liqui</div>
+{% for snugget in data.groups.liqui_snugs %}
+  {% ifequal snugget.section.name "The Moment" %}
+    {% include "snugget.html" with text=snugget.temp_text_field %}
+  {% endifequal %}
+{% endfor %}
 
-      <!-------------- COMMUNITY RECOVERY -------------->
+<!-------------- COMMUNITY RECOVERY -------------->
       <div class="row">
         <div class="column">
           <h3 class="chapter-title">Community Recovery</h3>
         </div>
       </div>
-      
-      <!-------------- HOW TO PREPARE -------------->
+ 
+<div class="secondary label temp">Impact</div>
+{% for snugget in data.groups.impact_snugs %}
+  {% ifequal snugget.section.name "Community Recovery" %}
+    {% include "snugget.html" with text=snugget.temp_text_field %}
+  {% endifequal %}
+{% endfor %}
+     
+     
+<!-------------- HOW TO PREPARE -------------->
       <div class="row">
         <div class="column">
-          <h3 class="chapter-title">How to Prepare</h3>
+          <h3 class="chapter-title">How To Prepare</h3>
         </div>
       </div>
+
+<div class="secondary label temp">Impact</div>
+{% for snugget in data.groups.impact_snugs %}
+  {% ifequal snugget.section.name "How To Prepare" %}
+    {% include "snugget.html" with text=snugget.temp_text_field %}
+  {% endifequal %}
+{% endfor %}
+
+<div class="secondary label temp">Shaking</div>
+{% for snugget in data.groups.shake_snugs %}
+  {% ifequal snugget.section.name "How To Prepare" %}
+    {% include "snugget.html" with text=snugget.temp_text_field %}
+  {% endifequal %}
+{% endfor %}
+
+<div class="secondary label temp">Landslide</div>
+{% for snugget in data.groups.landslide_snugs %}
+  {% ifequal snugget.section.name "How To Prepare" %}
+    {% include "snugget.html" with text=snugget.temp_text_field %}
+  {% endifequal %}
+{% endfor %}
+
+<div class="secondary label temp">Liqui</div>
+{% for snugget in data.groups.liqui_snugs %}
+  {% ifequal snugget.section.name "How To Prepare" %}
+    {% include "snugget.html" with text=snugget.temp_text_field %}
+  {% endifequal %}
+{% endfor %}
       
-    </div>
-  </div>
 {% endif %}
+
+  </div>
 
 </body>
 </html>
