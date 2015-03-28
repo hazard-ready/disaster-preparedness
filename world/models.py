@@ -21,18 +21,14 @@ SNUGGET_TYPES = (
 # This was originally an auto-generated Django model module created by ogrinspect,
 # updated and documented by the devs.
 class TsunamiZone(models.Model):
-    scenario_id = models.IntegerField() # 1 = local scenario, 2 = distant scenario
-    location = models.CharField(max_length=80) # location and model grid name
-    scenario_type = models.CharField(max_length=50) # local or distant
+    type = models.CharField(max_length=50)
+    typeid = models.IntegerField()
     geom = models.MultiPolygonField(srid=4326) #This is for tsunamiZone
     objects = models.GeoManager()
     
-    class Meta:
-        unique_together = ('scenario_id', 'location')
-    
         # Returns the string representation of the model.
     def __str__(self):              # __unicode__ on Python 2
-        return self.location + " ("+ self.scenario_type + ")"
+        return self.type
 
 # This was an auto-generated Django model module created by ogrinspect with.
 class ImpactZoneData(models.Model):
@@ -178,7 +174,7 @@ class Snugget(models.Model):
         # Near seaside
         #world.models.Snugget.findSnuggetsForPoint(lng=-123.9125932, lat=45.9928274)
 
-        tsunami_snuggets = Snugget.objects.filter(tsunami_filter__location__in=qs_tsunami.values_list('location'))
+        tsunami_snuggets = Snugget.objects.filter(tsunami_filter__typeid__in=qs_tsunami.values_list('typeid'))
         shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__in=qs_shaking.values_list('shaking'))
         impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('feature'))
         liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__in=qs_liquifaction.values_list('score'))
