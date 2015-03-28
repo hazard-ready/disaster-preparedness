@@ -32,19 +32,15 @@ class TsunamiZone(models.Model):
 
 # This was an auto-generated Django model module created by ogrinspect with.
 class ImpactZoneData(models.Model):
-    area = models.IntegerField()      # An area number.  Who knows.
-    perimeter = models.IntegerField() # A permimiter number.  Who knows.
-    orbndy24 = models.IntegerField()  # Value identifies source of boundary: BLM-generated lines, USFS Cartographic Feature File, USGS Digital Line Graph, WA Dept. of Natural Resources, BLM Geographic Coordinate Data Base, BLM Landline Layer, Other; FIPS codes used to identify counties if from a county, BLM's Western Oregon Digital Data Base 
-    orbndy24i = models.IntegerField() # User Defined automatically generated numbers.
-    subjstate = models.CharField(max_length=50) # User defined string.
-    feature = models.IntegerField()   # This is the field that tells us which of the 4 DOGAMI designated zones it is (or 0 for other data) 
+    shape_leng = models.FloatField()
+    shape_area = models.FloatField()
+    zoneid = models.IntegerField()
+    zone = models.CharField(max_length=10) 
     geom = models.MultiPolygonField(srid=4326)
     objects = models.GeoManager()
     
     def __str__(self):
-        zoneName = zoneOptions.get(self.feature, 'Undefined zone')
-        label = "Impact Zone Data: " + zoneName + "(perim: " + str(self.perimeter) + " orbndy24: " + str(self.orbndy24) + " orbndy24i: " + str(self.orbndy24i) + ")"
-        return label
+        return self.zone
 
     
 # HAZARDS 
@@ -176,7 +172,7 @@ class Snugget(models.Model):
 
         tsunami_snuggets = Snugget.objects.filter(tsunami_filter__typeid__in=qs_tsunami.values_list('typeid'))
         shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__in=qs_shaking.values_list('shaking'))
-        impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('feature'))
+        impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('zoneid'))
         liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__in=qs_liquifaction.values_list('score'))
         landslide_snuggets = Snugget.objects.filter(landslide_filter__score__in=qs_landslide.values_list('score'))
         #impact_zones = qs_impacts.values()
