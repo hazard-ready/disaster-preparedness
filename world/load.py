@@ -17,12 +17,7 @@ tsunamizone_mapping = {
 }
 
 impactzone_mapping = {
-    'area' : 'AREA',
-    'perimeter': 'PERIMETER',
-    'orbndy24' : 'ORBNDY24_',
-    'orbndy24i' : 'ORBNDY24_I',
-    'subjstate' : 'SUBJ_STATE',
-    'feature': 'FEATURE',
+    'zone' : 'Zone',
     'geom' : 'MULTIPOLYGON',
 }
 
@@ -59,10 +54,10 @@ def run(verbose=True):
     #                unique=['scenario_id', 'location'])
     #lm2.save(strict=True, verbose=verbose)
 
-    #lm3 = LayerMapping(ImpactZoneData, impact_shp, impactzone_mapping,
-    #                  transform=True, encoding='iso-8859-1',
-    #                  unique=['area', 'perimeter', 'orbndy24', 'orbndy24i', 'subjstate', 'feature', 'geom'])
-    #lm3.save(strict=True, verbose=verbose)
+    lm3 = LayerMapping(ImpactZoneData, impact_shp, impactzone_mapping,
+                      transform=True, encoding='iso-8859-1',
+                      unique=['zone'])
+    lm3.save(strict=True, verbose=verbose)
 
     #lm4 = LayerMapping(ExpectedGroundShaking, groundshaking_shp, expectedgroundshaking_mapping,
     #                   transform=True, encoding='iso-8859-1',

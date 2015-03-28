@@ -39,18 +39,12 @@ class TsunamiZone(models.Model):
 # Our use of this data is primarily looking at the feature values.
 # We don't care about other polygons in this data beyond those 4 impact zones.
 class ImpactZoneData(models.Model):
-    area = models.IntegerField()      # An area number.  Who knows.
-    perimeter = models.IntegerField() # A permimiter number.  Who knows.
-    orbndy24 = models.IntegerField()  # Value identifies source of boundary: BLM-generated lines, USFS Cartographic Feature File, USGS Digital Line Graph, WA Dept. of Natural Resources, BLM Geographic Coordinate Data Base, BLM Landline Layer, Other; FIPS codes used to identify counties if from a county, BLM's Western Oregon Digital Data Base 
-    orbndy24i = models.IntegerField() # User Defined automatically generated numbers.
-    subjstate = models.CharField(max_length=50) # User defined string.
-    feature = models.IntegerField()   # This is the field that tells us which of the 4 DOGAMI designated zones it is (or 0 for other data) 
+    zone = models.CharField(max_length=10)
     geom = models.MultiPolygonField(srid=4326)
     objects = models.GeoManager()
 
     def __str__(self):
-        zoneName = zoneOptions.get(self.feature, 'Undefined zone')
-        label = "Impact Zone Data: " + zoneName + "(perim: " + str(self.perimeter) + " orbndy24: " + str(self.orbndy24) + " orbndy24i: " + str(self.orbndy24i) + ")"
+        label = "Impact Zone Data: " + self.zone
         return label
     
 # HAZARDS 
@@ -151,7 +145,7 @@ class SnuggetSubSection(models.Model):
 class Snugget(models.Model):
     type = models.ForeignKey(SnuggetType, related_name='+', on_delete=models.PROTECT)
     shaking_filter = models.ForeignKey(ExpectedGroundShaking, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
-    impact_zone_filter = models.ForeignKey(ImpactZone, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    impact_zone_filter = models.ForeignKey(ImpactZoneData, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     tsunami_filter = models.ForeignKey(TsunamiZone, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     liquifaction_filter = models.ForeignKey(LiquefactionDeformation, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     landslide_filter = models.ForeignKey(LandslideDeformation, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
@@ -170,13 +164,11 @@ class Snugget(models.Model):
         qs_liquifaction = LiquefactionDeformation.objects.filter(geom__contains=pnt)
         qs_landslide = LandslideDeformation.objects.filter(geom__contains=pnt)
         
-        #world.models.Snugget.findSnuggetsForPoint(lat=-123.9125932, lng=45.9928274)
-
-        
+        #world.models.Snugget.findSnuggetsForPoint(lng=-123.9125932, lat=45.9928274)
 
         tsunami_snuggets = Snugget.objects.filter(tsunami_filter__location__in=qs_tsunami.values_list('location'))
         shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__in=qs_shaking.values_list('shaking'))
-        impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('feature'))
+        impact_snuggets = Snugget.objects.filter(impact_zone_filter__zone__in=qs_impacts.values_list('zone'))
         liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__in=qs_liquifaction.values_list('score'))
         landslide_snuggets = Snugget.objects.filter(landslide_filter__score__in=qs_landslide.values_list('score'))
         impact_zones = qs_impacts.values()
