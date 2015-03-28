@@ -155,7 +155,7 @@ class Snugget(models.Model):
     
     @staticmethod
     def findSnuggetsForPoint(lat=0, lng=0):
-        pnt = Point(lat, lng)
+        pnt = Point(lng, lat)
         snuggets = []
         qs_impacts = ImpactZoneData.objects.filter(geom__contains=pnt);
         qs_tsunami = TsunamiZone.objects.filter(geom__contains=pnt);
