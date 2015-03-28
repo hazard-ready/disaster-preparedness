@@ -37,7 +37,7 @@ class TsunamiZone(models.Model):
 # This was an auto-generated Django model module created by ogrinspect with.
 class ImpactZoneData(models.Model):
     zone = models.CharField(max_length=10)
-    geom = models.MultiPolygonField(srid=2992)
+    geom = models.MultiPolygonField(srid=4326)
     objects = models.GeoManager()
 
     def __str__(self):
@@ -161,7 +161,7 @@ class Snugget(models.Model):
         qs_liquifaction = LiquefactionDeformation.objects.filter(geom__contains=pnt)
         qs_landslide = LandslideDeformation.objects.filter(geom__contains=pnt)
         
-        #world.models.Snugget.findSnuggetsForPoint(lat=-123.9125932, lng=45.9928274)
+        #world.models.Snugget.findSnuggetsForPoint(lng=-123.9125932, lat=45.9928274)
 
         tsunami_snuggets = Snugget.objects.filter(tsunami_filter__location__in=qs_tsunami.values_list('location'))
         shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__in=qs_shaking.values_list('shaking'))

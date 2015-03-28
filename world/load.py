@@ -41,31 +41,35 @@ liquefactiondeformation_mapping = {
 }
 
 tsunami_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/DOGAMI_TsunamiEvacuationZones_2013.shp'))
-impact_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/ORP_Impact_zones_simple.shp'))
-groundshaking_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/GroundShaking_PGV.shp')) #Changed as per filename of updated shapefile
-landslide_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/landslide_pgd3.shp')) #Changed as per filename of updated shapefile
-liquefaction_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/Liquefaction_PGD.shp')) #Changed as per filename of updated shapefile
+impact_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/ORP_Impact_Zones_simple.shp'))
+groundshaking_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/GroundShaking_simple.shp')) #Changed as per filename of updated shapefile
+landslide_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/Landslide_simple.shp')) #Changed as per filename of updated shapefile
+liquefaction_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/Liquefaction_simple.shp')) #Changed as per filename of updated shapefile
 
 def run(verbose=True):
+    "Making stuff happen but this line is here because some/all stuff below here might get commented out."
 
-   # lm2 = LayerMapping(TsunamiZone, tsunami_shp, tsunamizone_mapping,
-   #                  transform=True, encoding='iso-8859-1',
-   #                  unique=['scenario_id', 'location'])
-   # lm2.save(strict=True, verbose=verbose)
+    #lm2 = LayerMapping(TsunamiZone, tsunami_shp, tsunamizone_mapping,
+    #                transform=True, encoding='iso-8859-1',
+    #                unique=['scenario_id', 'location'])
+    #lm2.save(strict=True, verbose=verbose)
 
     lm3 = LayerMapping(ImpactZoneData, impact_shp, impactzone_mapping,
-                       transform=True, encoding='iso-8859-1',
-                       unique=['zone'])
+                      transform=True, encoding='iso-8859-1',
+                      unique=['zone'])
     lm3.save(strict=True, verbose=verbose)
 
     #lm4 = LayerMapping(ExpectedGroundShaking, groundshaking_shp, expectedgroundshaking_mapping,
-    #                  transform=True, encoding='iso-8859-1')
+    #                   transform=True, encoding='iso-8859-1',
+    #                   unique=['rate'])
     #lm4.save(strict=True, verbose=verbose)
 
     #lm5 = LayerMapping(LandslideDeformation, landslide_shp, landslidedeformation_mapping,
-    #                  transform=True, encoding='iso-8859-1')
+    #                  transform=True, encoding='iso-8859-1',
+    #                  unique=['score'])
     #lm5.save(strict=True, verbose=verbose)
 
     #lm6 = LayerMapping(LiquefactionDeformation, liquefaction_shp, liquefactiondeformation_mapping,
-    #                  transform=True, encoding='iso-8859-1')
+    #                   transform=True, encoding='iso-8859-1',
+    #                   unique=['score'])
     #lm6.save(strict=True, verbose=verbose)
