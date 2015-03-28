@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
   <link rel="stylesheet" href="{% static 'css/foundation.css' %}">
   <link rel="stylesheet" href="{% static 'css/app.css' %}">
-  <script src="https://maps.googleapis.com/maps/api/js?sensor=true?key=AIzaSyBSZGyycuPZO0BBfJqO-RBFeKM7_icZUnk"></script>  
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>  
   <script src="{% static 'js/vendor/modernizr.js' %}"></script>
   <script src="{% static 'js/vendor/jquery.js' %}"></script>
   <script src="{% static 'js/foundation.min.js' %}"></script>
@@ -20,7 +20,7 @@
     
     <div class="row">
       <div class="column">
-        <h2 id="project-title">Cascadia Earthquake Prepareness</h2>
+        <h2 id="project-title">Cascadia Earthquake Preparedness</h2>
       </div>
     </div>
     
@@ -51,47 +51,87 @@
         </form>
       </div>
     </div>
-    
+
+
+{% if has_location == False %}
+    <div id="welcome">
+      <div class="row">
+        <div class="column">
+          <p>In nec tellus ultricies, varius tortor vel, malesuada neque. Duis finibus turpis id massa convallis imperdiet. Nam congue porta feugiat. Sed blandit mauris eget fermentum dictum. Duis ipsum nulla, mattis eget convallis et, semper a mi. Ut ac sem eros. Suspendisse dignissim leo vel rutrum aliquam. Donec eleifend velit vitae eros porta, a pellentesque ligula feugiat. Nam ultricies porta nulla, ac sodales nulla feugiat quis. Donec quis fringilla ipsum. Etiam gravida libero id efficitur vehicula. Morbi sed arcu felis. Sed quis sem magna. Quisque varius dignissim odio vel gravida. Nullam vestibulum convallis augue, ac rutrum turpis dapibus sit amet. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+        </div>
+      </div>
+    </div>
+{% endif %}
+
+
+{% if has_location == True %}
     <div id="results">
+      
+      <!-------------- THE MOMENT -------------->
       <div class="row">
         <div class="column">
           <h3 class="chapter-title">The Moment</h3>
         </div>
       </div>
+      
+      {% for snugget in data.groups.impact_snugs %}
+
+      <div class="row">
+        <div class="column">
+          <p>{{ snugget.temp_text_field }}</p>
+        </div>
+      </div>
+      {% endfor %}
+     
+      {% for snugget in data.groups.tsunami_snugs %}
+      <div class="row">
+        <div class="column">
+          <p>{{ snugget.temp_text_field }}</p>
+        </div>
+      </div>
+      {% endfor %}
+     
+      {% for snugget in data.groups.shake_snugs %}
+      <div class="row">
+        <div class="column">
+          <p>{{ snugget.temp_text_field }}</p>
+        </div>
+      </div>
+      {% endfor %}
+
+      {% for snugget in data.groups.landslide_snugs %}
+      <div class="row">
+        <div class="column">
+          <p>{{ snugget.temp_text_field }}</p>
+        </div>
+      </div>
+      {% endfor %}
+
+      {% for snugget in data.groups.liqui_snugs %}
+      <div class="row">
+        <div class="column">
+          <p>{{ snugget.temp_text_field }}</p>
+        </div>
+      </div>
+      {% endfor %}
+
+      <!-------------- COMMUNITY RECOVERY -------------->
       <div class="row">
         <div class="column">
           <h3 class="chapter-title">Community Recovery</h3>
         </div>
       </div>
+      
+      <!-------------- HOW TO PREPARE -------------->
       <div class="row">
         <div class="column">
           <h3 class="chapter-title">How to Prepare</h3>
         </div>
       </div>
-      <div class="row">
-        <div class="column">
-          <h4>Snuggets found:</h4>
-          <p>Impact Zone(s): {{ data.impact_zones }}</p>
-          <ul>
-          
-          {% for groupname, group in data.groups.items %}
-            <li>
-            <p>Group: {{  groupname }}</p>
-            <ul>
-            {% for snugget in group %}
-              <li><p>Snugget text: {{ snugget.temp_text_field }} </p>
-              <p>Internal label: {{ snugget }} </p>
-              </li>
-            {% endfor %}
-            </ul>
-            </li>
-          {% endfor %}
-           
-          </ul>
-        </div>
-      </div>
+      
     </div>
   </div>
+{% endif %}
 
 </body>
 </html>
