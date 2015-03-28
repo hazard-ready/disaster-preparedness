@@ -2,16 +2,43 @@ $( document ).ready(function() {
   
   // app constants
   var google_api_key = "AIzaSyBSZGyycuPZO0BBfJqO-RBFeKM7_icZUnk";
+  var google_bounds = "46.308136,-124.575575|41.974902,-116.456679";
 
   var mapbox_access_token = "pk.eyJ1IjoibWVlc3RlcnN0dW1wIiwiYSI6IkdGVVFTSkkifQ.8_WCPGKmIImxpNy4dEWU1A";
   var mapbox_map = "meesterstump.8bf4e389";
   var mapbox_pin_color = "08B";
   var mapbox_zoom_level = "15";
   var mapbox_image_size = "970x300";  
-  var mapbox_initial_lon = "-120.5";
+  var mapbox_initial_lng = "-120.5";
   var mapbox_initial_lat = "44.1";
   var mapbox_initial_zoom_level = "6";
   
+  // convenience function to extract url parameters
+  function getURLParameter(name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null) {
+       return null;
+    } else {
+       return results[1] || 0;
+    }
+  }
+
+  // grab the position, if possible  
+  var lat = getURLParameter('lat');
+  var lng = getURLParameter('lng');
+  
+  // load up an appropriate mapbox image
+  // TODO: better validation of lat/lon values
+  if (lat && lng) {
+    var image_url = "http://api.tiles.mapbox.com/v4/" + mapbox_map + "/pin-s+" + mapbox_pin_color + "(" + lng + "," + lat + ")/" + lng + "," + lat + "," + mapbox_zoom_level + "/" + mapbox_image_size + ".png64?access_token=" + mapbox_access_token;
+    // request new map image
+    $("#map-image").attr("src", image_url); 
+  }
+  // initially load a map of all of oregon
+  else {  
+    var image_url = "http://api.tiles.mapbox.com/v4/" + mapbox_map + "/" + mapbox_initial_lng + "," + mapbox_initial_lat + "," + mapbox_initial_zoom_level + "/" + mapbox_image_size + ".png64?access_token=" + mapbox_access_token;
+    $("#map-image").attr("src", image_url);
+  }
 
   /********** HOME VIEW (input form) **********/
   
@@ -39,9 +66,9 @@ $( document ).ready(function() {
     var geoOptions = { timeout: 8000 };
     var geoSuccess = function(position) {
       var lat = position.coords.latitude;
-      var lon = position.coords.longitude;
+      var lng = position.coords.longitude;
       // success! onwards to view the content
-      updateViewWithNewLocation(lat, lon);
+      submitLocation(lat, lng);
     };
     var geoError = function(error) {
       console.log('Error occurred. Error code: ' + error.code);
@@ -66,7 +93,7 @@ $( document ).ready(function() {
   // request geocoding from google
   function geocodeSend(query) {
     // call google api!
-    $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' + query + '&key=' + google_api_key, geocodeResponseHandler);
+    $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' + query + '&bounds=' + google_bounds + '&key=' + google_api_key, geocodeResponseHandler);
   }
   
   // handle google's json response
@@ -76,22 +103,17 @@ $( document ).ready(function() {
       enableForm();
       return;
     }
-    // save the lat and lon
+    // save the lat and lng
     var lat = data.results[0].geometry.location.lat;
-    var lon = data.results[0].geometry.location.lng;
+    var lng = data.results[0].geometry.location.lng;
     // success! onwards to view the content
-    updateViewWithNewLocation(lat, lon);
+    submitLocation(lat, lng);
   }
 
-  function updateViewWithNewLocation(lat,lon) {
-    // build the mapbox image url
-    var image_url = "http://api.tiles.mapbox.com/v4/" + mapbox_map + "/pin-s+" + mapbox_pin_color + "(" + lon + "," + lat + ")/" + lon + "," + lat + "," + mapbox_zoom_level + "/" + mapbox_image_size + ".png64?access_token=" + mapbox_access_token;
-    // request the new map image
-    $("#map-image").attr("src", image_url); 
+  function submitLocation(lat,lng) {
+    // reload the page with the lat,lng
+    document.location =  document.location.hash + "?lat=" + lat + "&lng=" + lng;
   }
   
-  // initially load a map of all of oregon
-  var image_url = "http://api.tiles.mapbox.com/v4/" + mapbox_map + "/" + mapbox_initial_lon + "," + mapbox_initial_lat + "," + mapbox_initial_zoom_level + "/" + mapbox_image_size + ".png64?access_token=" + mapbox_access_token;
-  $("#map-image").attr("src", image_url);
 
 });

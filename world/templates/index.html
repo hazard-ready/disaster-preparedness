@@ -13,22 +13,23 @@
   <script src="{% static 'js/vendor/jquery.js' %}"></script>
   <script src="{% static 'js/foundation.min.js' %}"></script>
   <script src="{% static 'js/app.js' %}"></script>
-  <style>
-
-  </style>
 </head>
 <body>
+
   <div id="home">
+    
     <div class="row">
       <div class="column">
         <h2 id="project-title">Cascadia Earthquake Prepareness</h2>
       </div>
     </div>
+    
     <div id="map" class="row">
       <div class="column">
         <image id="map-image" src="">
       </div>
     </div>
+    
     <div id="location-form" class="row">
       <div class="column">
         <form>
@@ -50,6 +51,47 @@
         </form>
       </div>
     </div>
+    
+    <div id="results">
+      <div class="row">
+        <div class="column">
+          <h3 class="chapter-title">The Moment</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <h3 class="chapter-title">Community Recovery</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <h3 class="chapter-title">How to Prepare</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <h4>Snuggets found:</h4>
+          <p>Impact Zone(s): {{ data.impact_zones }}</p>
+          <ul>
+          
+          {% for groupname, group in data.groups.items %}
+            <li>
+            <p>Group: {{  groupname }}</p>
+            <ul>
+            {% for snugget in group %}
+              <li><p>Snugget text: {{ snugget.temp_text_field }} </p>
+              <p>Internal label: {{ snugget }} </p>
+              </li>
+            {% endfor %}
+            </ul>
+            </li>
+          {% endfor %}
+           
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

@@ -1,25 +1,21 @@
 from django.shortcuts import render
-from django.contrib.gis.geos import Point
-from itertools import chain
 from .models import *
 
-# Create your views here.
-def zoneCheck(request):
-    lat = -123.9125932
-    lng = 45.9928274
-    pnt = Point(lat, lng)    
-    qs_t = TsunamiZone.objects.filter(geom__contains=pnt);
-    qs_i = ImpactZoneData.objects.filter(geom__contains=pnt);
-    qs_s = ExpectedGroundShaking.objects.filter(geom__contains=pnt);
+def app_view(request):
+  
+  # if user submitted lat/lng, find our snuggets and send them to our template
+  if 'lat' and 'lng' in request.GET:
 
-    zonesStrings = list(chain(qs_t, qs_i, qs_s));
-    context = {'lat': lat, 'lng': lng, 'areas': zonesStrings}
-    return render(request, 'zonecheck.html', context)
+    lat = request.GET['lat']
+    lng = request.GET['lng']
 
-def snuggetCheck(request):
-    lat = -123.9125932
-    lng = 45.9928274
+    if len(lat) > 0:
     
-    snuggetContent = Snugget.findSnuggetsForPoint(lat=lat, lng=lng)    
+      snugget_content = Snugget.findSnuggetsForPoint(lat=float(lng), lng=float(lat))    
         
-    return render(request, 'seasidesnugget.html', {'data': snuggetContent})
+      return render(request, 'index.html', {'data': snugget_content, 'lat':lat, 'lng':lng})    
+
+  # if not, we'll still serve up the same template without data
+  else:
+
+    return render(request, 'index.html')
