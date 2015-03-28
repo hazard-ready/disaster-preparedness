@@ -141,6 +141,12 @@ class SnuggetSection(models.Model):
     
     def __str__(self):
         return self.name
+    
+class SnuggetSubSection(models.Model):
+    name = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.name
 
 class Snugget(models.Model):
     type = models.ForeignKey(SnuggetType, related_name='+', on_delete=models.PROTECT)
@@ -152,10 +158,11 @@ class Snugget(models.Model):
     temp_text_field = models.TextField(null=True)
 
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
+    sub_section = models.ForeignKey(SnuggetSubSection, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
     
     @staticmethod
     def findSnuggetsForPoint(lat=0, lng=0):
-        pnt = Point(lat, lng)
+        pnt = Point(lng, lat)
         snuggets = []
         qs_impacts = ImpactZoneData.objects.filter(geom__contains=pnt);
         qs_tsunami = TsunamiZone.objects.filter(geom__contains=pnt);
@@ -185,7 +192,7 @@ class Snugget(models.Model):
                 }
     
     def __str__(self):
-        return str(self.type) + " Snugget for section " + str(self.section) + "  (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + " landslide: " + str(self.landslide_filter) + " liquefaction: " + str(self.liquifaction_filter) + " tsunami: " + str(self.tsunami_filter) + ")"
+        return str(self.type) + " Snugget for section " + str(self.section) + " subsection: " + str(self.sub_section) + " (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + " landslide: " + str(self.landslide_filter) + " liquefaction: " + str(self.liquifaction_filter) + " tsunami: " + str(self.tsunami_filter) + ")"
     
     
 class TextSnugget(models.Model):
