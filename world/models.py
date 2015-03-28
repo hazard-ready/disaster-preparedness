@@ -24,7 +24,7 @@ class TsunamiZone(models.Model):
     scenario_id = models.IntegerField() # 1 = local scenario, 2 = distant scenario
     location = models.CharField(max_length=80) # location and model grid name
     scenario_type = models.CharField(max_length=50) # local or distant
-    geom = models.MultiPolygonField(srid=4326)
+    geom = models.MultiPolygonField(srid=4326) #This is for tsunamiZone
     objects = models.GeoManager()
     
     class Meta:
@@ -37,7 +37,7 @@ class TsunamiZone(models.Model):
 # This was an auto-generated Django model module created by ogrinspect with.
 class ImpactZoneData(models.Model):
     zone = models.CharField(max_length=10)
-    geom = models.MultiPolygonField(srid=4326)
+    geom = models.MultiPolygonField(srid=2992) # This is for ORP_Impact_Zones_Simple
     objects = models.GeoManager()
 
     def __str__(self):
@@ -49,7 +49,7 @@ class ImpactZoneData(models.Model):
 class ExpectedGroundShaking(models.Model):
     rate = models.IntegerField()
     shaking = models.CharField(max_length=11)
-    geom = models.MultiPolygonField(srid=2992)
+    geom = models.MultiPolygonField(srid=2992) # This is for Groundshaking_Simple
     objects = models.GeoManager()
     
     def __str__(self):
@@ -58,7 +58,7 @@ class ExpectedGroundShaking(models.Model):
 class LandslideDeformation(models.Model):
     score = models.IntegerField() # The number rating on the scale of ground deformation
     label = models.CharField(max_length=11) # The classification "Med, High, Low" etc. 
-    geom = models.MultiPolygonField(srid=2992)
+    geom = models.MultiPolygonField(srid=2992) # This is for Landlide_simple
     objects = models.GeoManager()
 
     def __str__(self):
@@ -67,7 +67,7 @@ class LandslideDeformation(models.Model):
 class LiquefactionDeformation(models.Model):
     score = models.IntegerField() # The number rating on the scale of ground deformation
     label = models.CharField(max_length=11) # The classification "Med, High, Low" etc. 
-    geom = models.MultiPolygonField(srid=2992)
+    geom = models.MultiPolygonField(srid=2992) #This is for Liquefaction_simple
     objects = models.GeoManager()
 
     def __str__(self):

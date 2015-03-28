@@ -40,7 +40,7 @@ liquefactiondeformation_mapping = {
     'geom' : 'MULTIPOLYGON',
 }
 
-tsunami_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/DOGAMI_TsunamiEvacuationZones_2013.shp'))
+tsunami_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/tsunamiZone.shp'))
 impact_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/ORP_Impact_Zones_simple.shp'))
 groundshaking_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/GroundShaking_simple.shp')) #Changed as per filename of updated shapefile
 landslide_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/Landslide_simple.shp')) #Changed as per filename of updated shapefile
