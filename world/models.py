@@ -141,6 +141,12 @@ class SnuggetSection(models.Model):
     
     def __str__(self):
         return self.name
+    
+class SnuggetSubSection(models.Model):
+    name = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.name
 
 class Snugget(models.Model):
     type = models.ForeignKey(SnuggetType, related_name='+', on_delete=models.PROTECT)
@@ -152,6 +158,7 @@ class Snugget(models.Model):
     temp_text_field = models.TextField(null=True)
 
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
+    sub_section = models.ForeignKey(SnuggetSubSection, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
     
     @staticmethod
     def findSnuggetsForPoint(lat=0, lng=0):
