@@ -42,7 +42,7 @@
   {% endifequal %}
 {% endfor %}
      
-{% for zones in data.groups.tsunami_snugs %}
+{% for snugget in data.groups.tsunami_snugs %}
   {% ifequal snugget.section.name "The Moment" %}
     {% include "snugget_tsunami.html" with text=snugget.temp_text_field %}
   {% endifequal %}
