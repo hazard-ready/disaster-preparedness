@@ -36,28 +36,24 @@
         </div>
       </div>
       
-<div class="secondary label temp">Impact</div>
 {% for snugget in data.groups.impact_snugs %}
   {% ifequal snugget.section.name "The Moment" %}
     {% include "snugget.html" with text=snugget.temp_text_field %}
   {% endifequal %}
 {% endfor %}
      
-<div class="secondary label temp">Tsunami</div>
-{% for snugget in data.groups.tsunami_snugs %}
+{% for zones in data.groups.tsunami_snugs %}
   {% ifequal snugget.section.name "The Moment" %}
-    {% include "snugget_shaking.html" with text=snugget.temp_text_field %}
+    {% include "snugget_tsunami.html" with text=snugget.temp_text_field %}
   {% endifequal %}
 {% endfor %}
      
-<div class="secondary label temp">Shaking</div>
 {% for snugget in data.groups.shake_snugs %}
   {% ifequal snugget.section.name "The Moment" %}
     {% include "snugget_shaking.html" with text=snugget.temp_text_field level=snugget.shaking_filter.rate %}
   {% endifequal %}
 {% endfor %}
 
-<div class="secondary label temp">Land Deformation</div>
 {% include "snugget_deformation.html" with section="The Moment" landslide_snugs=data.groups.landslide_snugs liqui_snugs=data.groups.liqui_snugs %}
 
 <!-------------- COMMUNITY RECOVERY -------------->
@@ -67,18 +63,33 @@
         </div>
       </div>
  
-<div class="secondary label temp">Impact</div>
 {% for snugget in data.groups.impact_snugs %}
   {% ifequal snugget.section.name "Community Recovery" %}
     {% include "snugget.html" with text=snugget.temp_text_field %}
   {% endifequal %}
 {% endfor %}
 
+{% for zone in data.impact_zones %}
+  {% if zone.zoneid == 2 %}
+      <div class="row">
+        <div class="column">
+          <img src="{% static 'img/recovery-graph-coast.svg' %}" alt="Recovery Graph">
+        </div>
+      </div>
+  {% elif zone.zoneid == 3 %}
       <div class="row">
         <div class="column">
           <img src="{% static 'img/recovery-graph-valley.svg' %}" alt="Recovery Graph">
         </div>
       </div>
+  {% elif zone.zoneid == 4 %}
+      <div class="row">
+        <div class="column">
+          <img src="{% static 'img/recovery-graph-east.svg' %}" alt="Recovery Graph">
+        </div>
+      </div>
+  {% endif %}
+{% endfor %}
      
 <!-------------- HOW TO PREPARE -------------->
       <div class="row">
@@ -87,14 +98,13 @@
         </div>
       </div>
 
-<div class="secondary label temp">Impact</div>
 {% for snugget in data.groups.impact_snugs %}
   {% ifequal snugget.section.name "How To Prepare" %}
     {% include "snugget.html" with text=snugget.temp_text_field %}
   {% endifequal %}
 {% endfor %}
 
-{% include "supply-kit.html" %}
+{% include "supply-kit.html" with zones=data.impact_zones %}
 
       <div class="row">
         <div class="column">
@@ -102,14 +112,12 @@
         </div>
       </div>
 
-<div class="secondary label temp">Shaking</div>
 {% for snugget in data.groups.shake_snugs %}
   {% ifequal snugget.section.name "How To Prepare" %}
     {% include "snugget.html" with text=snugget.temp_text_field %}
   {% endifequal %}
 {% endfor %}
 
-<div class="secondary label temp">Land Deformation</div>
 {% include "snugget_deformation.html" with section="How To Prepare" landslide_snugs=data.groups.landslide_snugs liqui_snugs=data.groups.liqui_snugs %}
 
       <div class="row">
