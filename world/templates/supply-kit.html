@@ -7,32 +7,24 @@
         </div>
       </div>
 
+{% for zone in zones %}
+  {% if zone.zoneid == 2 %}
       <div class="row">
         <div class="column">
-          <div class="supply-item supply">
-            <img src="{% static 'img/icon-calendar.svg' %}" alt="supplies">
-            <div class="number">3</div>
-            <div class="text">
-              <div class="item">Weeks of supplies</div>
-              <div class="person">per person</div>
-            </div>
-          </div>
-          <div class="supply-item water">
-            <img src="{% static 'img/icon-water.svg' %}" alt="supplies">
-            <div class="number">300</div>
-            <div class="text">
-              <div class="item">Gallons of water</div>
-              <div class="person">per person</div>
-            </div>
-          </div>
-          <div class="supply-item food">
-            <img src="{% static 'img/icon-food.svg' %}" alt="supplies">
-            <div class="number">120,000</div>
-            <div class="text">
-              <div class="item">Calories of shelf-stable food</div>
-              <div class="person">per person</div>
-            </div>
-          </div>
+          <img src="{% static 'img/4weekkit.svg' %}" alt="Recovery Graph">
         </div>
       </div>
-
+  {% elif zone.zoneid == 3 %}
+      <div class="row">
+        <div class="column">
+          <img src="{% static 'img/2weekkit.svg' %}" alt="Recovery Graph">
+        </div>
+      </div>
+  {% elif zone.zoneid == 4 %}
+      <div class="row">
+        <div class="column">
+          <img src="{% static 'img/2weekkit.svg' %}" alt="Recovery Graph">
+        </div>
+      </div>
+  {% endif %}
+{% endfor %}
