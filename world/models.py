@@ -192,7 +192,7 @@ class Snugget(models.Model):
     
     
 class TextSnugget(models.Model):
-    snugget_ptr = models.ForeignKey(Snugget, null=True, db_column='base_ptr') # temporary explicit parent pointer to make migration work
+    snugget_ptr = models.ForeignKey(Snugget, null=True, db_column='snugget_ptr') # temporary explicit parent pointer to make migration work
     name = SNUGGET_TYPES[SNUG_TEXT]
     content = models.TextField()
     
