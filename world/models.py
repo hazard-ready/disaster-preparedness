@@ -191,8 +191,7 @@ class Snugget(models.Model):
         return str(self.type) + " Snugget for section " + str(self.section) + " subsection: " + str(self.sub_section) + " (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + " landslide: " + str(self.landslide_filter) + " liquefaction: " + str(self.liquifaction_filter) + " tsunami: " + str(self.tsunami_filter) + ")"
     
     
-class TextSnugget(models.Model):
-    snugget_ptr = models.ForeignKey(Snugget, null=True, db_column='snugget_ptr') # temporary explicit parent pointer to make migration work
+class TextSnugget(Snugget):
     name = SNUGGET_TYPES[SNUG_TEXT]
     content = models.TextField()
     
