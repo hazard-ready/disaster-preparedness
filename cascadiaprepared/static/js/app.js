@@ -1,7 +1,7 @@
 $( document ).ready(function() {
   
   // app constants
-  var google_api_key = "AIzaSyBSZGyycuPZO0BBfJqO-RBFeKM7_icZUnk";
+  var google_api_key = "AIzaSyDIoSOu6JLsf3uZ4YPbti6fG-glvVMO4_M";
   var google_bounds = "46.308136,-124.575575|41.974902,-116.456679";
 
   var mapbox_access_token = "pk.eyJ1IjoibWVlc3RlcnN0dW1wIiwiYSI6IkdGVVFTSkkifQ.8_WCPGKmIImxpNy4dEWU1A";
