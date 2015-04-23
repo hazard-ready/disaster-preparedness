@@ -1,10 +1,11 @@
 {% load staticfiles %}
+{% load show_snugget %}
 
       <div class="row snugget">
         <div class="medium-3 columns icon tsunami">
           <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
         </div>
         <div class="medium-9 columns">
-          <p class="serif-font">{{ text }}</p>
+          {% show_snugget snugget %}
         </div>
       </div>

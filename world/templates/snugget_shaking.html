@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load show_snugget %}
 
       <div class="row snugget">
         <div class="medium-3 columns icon shaking">
@@ -17,6 +18,6 @@
           {% endif %}
         </div>
         <div class="medium-9 columns">
-          <p class="serif-font">{{ text }}</p>
+          {% show_snugget snugget %}
         </div>
       </div>
