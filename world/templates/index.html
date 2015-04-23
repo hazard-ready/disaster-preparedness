@@ -38,19 +38,19 @@
       
 {% for snugget in data.groups.impact_snugs %}
   {% ifequal snugget.section.name "The Moment" %}
-    {% include "snugget.html" with text=snugget.temp_text_field %}
+    {% include "snugget.html" with snugget=snugget %}
   {% endifequal %}
 {% endfor %}
      
 {% for snugget in data.groups.tsunami_snugs %}
   {% ifequal snugget.section.name "The Moment" %}
-    {% include "snugget_tsunami.html" with text=snugget.temp_text_field %}
+    {% include "snugget_tsunami.html" with snugget=snugget %}
   {% endifequal %}
 {% endfor %}
      
 {% for snugget in data.groups.shake_snugs %}
   {% ifequal snugget.section.name "The Moment" %}
-    {% include "snugget_shaking.html" with text=snugget.temp_text_field level=snugget.shaking_filter.rate %}
+    {% include "snugget_shaking.html" with snugget=snugget level=snugget.shaking_filter.rate %}
   {% endifequal %}
 {% endfor %}
 
@@ -65,7 +65,7 @@
  
 {% for snugget in data.groups.impact_snugs %}
   {% ifequal snugget.section.name "Community Recovery" %}
-    {% include "snugget.html" with text=snugget.temp_text_field %}
+    {% include "snugget.html" with snugget=snugget %}
   {% endifequal %}
 {% endfor %}
 
@@ -100,7 +100,7 @@
 
 {% for snugget in data.groups.impact_snugs %}
   {% ifequal snugget.section.name "How To Prepare" %}
-    {% include "snugget.html" with text=snugget.temp_text_field %}
+    {% include "snugget.html" with snugget=snugget %}
   {% endifequal %}
 {% endfor %}
 
@@ -114,7 +114,7 @@
 
 {% for snugget in data.groups.shake_snugs %}
   {% ifequal snugget.section.name "How To Prepare" %}
-    {% include "snugget.html" with text=snugget.temp_text_field %}
+    {% include "snugget.html" with snugget=snugget %}
   {% endifequal %}
 {% endfor %}
 
