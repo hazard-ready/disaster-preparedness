@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load show_snugget %}
 
 {% for snugget in landslide_snugs %}
   {% if snugget.section.name == "The Moment" and section == "The Moment" %}
@@ -17,13 +18,13 @@
           {% endif %}
         </div>
         <div class="medium-9 columns">
-          <p class="serif-font">{{ snugget.temp_text_field }}</p>
+          {% show_snugget snugget %}
         </div>
       </div>
   {% elif snugget.section.name == "How To Prepare" and section == "How To Prepare" %}
       <div class="row snugget">
         <div class="column">
-          <p class="serif-font">{{ snugget.temp_text_field }}</p>
+          {% show_snugget snugget %}
         </div>
       </div>
   {% endif %}
@@ -46,13 +47,13 @@
           {% endif %}
         </div>
         <div class="medium-9 columns">
-          <p class="serif-font">{{ snugget.temp_text_field }}</p>
+          {% show_snugget snugget %}
         </div>
       </div>
   {% elif snugget.section.name == "How To Prepare" and section == "How To Prepare" %}
       <div class="row snugget">
         <div class="column">
-          <p class="serif-font">{{ snugget.temp_text_field }}</p>
+          {% show_snugget snugget %}
         </div>
       </div>
   {% endif %}

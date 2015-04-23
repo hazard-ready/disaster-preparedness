@@ -150,6 +150,9 @@ class Snugget(models.Model):
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
     sub_section = models.ForeignKey(SnuggetSubSection, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
     
+    def getRelatedTemplate(self):
+        return "snugget.html";
+    
     @staticmethod
     def findSnuggetsForPoint(lat=0, lng=0):
         pnt = Point(lng, lat)
