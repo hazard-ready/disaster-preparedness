@@ -1,5 +1,9 @@
       <div class="row snugget">
         <div class="column">
+          <div class="snugget-content">
+          {% block snugget-content %}
             <p class="serif-font">{{ snugget.temp_text_field }}</p>
+          {% endblock snugget-content %}
+          </div>
         </div>
       </div>

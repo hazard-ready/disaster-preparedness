@@ -1,4 +1,5 @@
 from django.contrib.gis import admin
+from embed_video.admin import AdminVideoMixin
 from .models import *
 
 admin.site.register(TsunamiZone, admin.GeoModelAdmin)
@@ -9,6 +10,11 @@ admin.site.register(SnuggetType, admin.ModelAdmin)
 admin.site.register(SnuggetSection, admin.ModelAdmin)
 admin.site.register(SnuggetSubSection, admin.ModelAdmin)
 admin.site.register(TextSnugget, admin.ModelAdmin)
+
+class EmbedAdmin(AdminVideoMixin, admin.ModelAdmin):
+    pass
+
+admin.site.register(EmbedSnugget, EmbedAdmin)
 
 # Maybe in the future
 # admin.site.register(InfrastructureGroup, admin.ModelAdmin)
