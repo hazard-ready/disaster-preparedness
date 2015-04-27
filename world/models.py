@@ -1,6 +1,7 @@
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from embed_video.fields import EmbedVideoField
+from model_utils.managers import InheritanceManager
 
 
 zoneOptions = {
@@ -140,6 +141,7 @@ class SnuggetSubSection(models.Model):
         return self.name
 
 class Snugget(models.Model):
+    objects = InheritanceManager();
     type = models.ForeignKey(SnuggetType, related_name='+', on_delete=models.PROTECT)
     shaking_filter = models.ForeignKey(ExpectedGroundShaking, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     impact_zone_filter = models.ForeignKey(ImpactZone, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
@@ -174,12 +176,12 @@ class Snugget(models.Model):
         # Near seaside
         #world.models.Snugget.findSnuggetsForPoint(lng=-123.9125932, lat=45.9928274)
 
-        tsunami_snuggets = Snugget.objects.filter(tsunami_filter__typeid__in=qs_tsunami.values_list('typeid'))
-        shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__in=qs_shaking.values_list('shaking'))
-        impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('zoneid'))
-        liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__in=qs_liquifaction.values_list('score'))
-        landslide_snuggets = Snugget.objects.filter(landslide_filter__score__in=qs_landslide.values_list('score'))
-        impact_zones = qs_impacts.values()
+        tsunami_snuggets = Snugget.objects.filter(tsunami_filter__typeid__in=qs_tsunami.values_list('typeid')).select_subclasses()
+        shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__in=qs_shaking.values_list('shaking')).select_subclasses()
+        impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('zoneid')).select_subclasses()
+        liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__in=qs_liquifaction.values_list('score')).select_subclasses()
+        landslide_snuggets = Snugget.objects.filter(landslide_filter__score__in=qs_landslide.values_list('score')).select_subclasses()
+        # impact_zones = qs_impacts.values()
         
         return {'groups' : {
                             'tsunami_snugs': tsunami_snuggets,
@@ -188,7 +190,7 @@ class Snugget(models.Model):
                             'liqui_snugs': liquifaction_snuggets,
                             'landslide_snugs': landslide_snuggets,
                             },
-                'impact_zones': impact_zones
+        #        'impact_zones': impact_zones
                 }
     
     def __str__(self):
