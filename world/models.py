@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
+from embed_video.fields import EmbedVideoField
 
 
 zoneOptions = {
@@ -191,12 +192,26 @@ class Snugget(models.Model):
                 }
     
     def __str__(self):
-        return str(self.type) + " Snugget for section " + str(self.section) + " subsection: " + str(self.sub_section) + " (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + " landslide: " + str(self.landslide_filter) + " liquefaction: " + str(self.liquifaction_filter) + " tsunami: " + str(self.tsunami_filter) + ")"
+        return "Basic Snugget for section " + str(self.section) + " subsection: " + str(self.sub_section) + " (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + " landslide: " + str(self.landslide_filter) + " liquefaction: " + str(self.liquifaction_filter) + " tsunami: " + str(self.tsunami_filter) + ")"
     
     
 class TextSnugget(Snugget):
     name = SNUGGET_TYPES[SNUG_TEXT]
     content = models.TextField()
     
+    def getRelatedTemplate(self):
+        print("text template name");
+        return "snugget_text.html";
+    
     def __str__(self):
-        return str(self.name)
+        return "Text Snugget for section " + str(self.section) + " subsection: " + str(self.sub_section) + " (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + " landslide: " + str(self.landslide_filter) + " liquefaction: " + str(self.liquifaction_filter) + " tsunami: " + str(self.tsunami_filter) + ")"
+    
+class EmbedSnugget(Snugget):
+    embed = EmbedVideoField()
+    
+    def getRelatedTemplate(self):
+        print("embed template name");
+        return "snugget_embed.html";
+    
+    def __str__(self):
+        return "Embed Snugget for section " + str(self.section) + " subsection: " + str(self.sub_section) + " (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + " landslide: " + str(self.landslide_filter) + " liquefaction: " + str(self.liquifaction_filter) + " tsunami: " + str(self.tsunami_filter) + ")"
