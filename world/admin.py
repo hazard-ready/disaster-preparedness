@@ -2,10 +2,12 @@ from django.contrib.gis import admin
 from embed_video.admin import AdminVideoMixin
 from .models import *
 
-admin.site.register(TsunamiZone, admin.GeoModelAdmin)
-admin.site.register(ImpactZoneData, admin.GeoModelAdmin)
-admin.site.register(ExpectedGroundShaking, admin.GeoModelAdmin)
-admin.site.register(ImpactZone, admin.GeoModelAdmin)
+
+# These are commented out because editing them seems to serve no purpose, currently.
+#admin.site.register(TsunamiZone, admin.GeoModelAdmin)
+#admin.site.register(ImpactZoneData, admin.GeoModelAdmin)
+#admin.site.register(ExpectedGroundShaking, admin.GeoModelAdmin)
+#admin.site.register(ImpactZone, admin.GeoModelAdmin)
 admin.site.register(SnuggetSection, admin.ModelAdmin)
 admin.site.register(SnuggetSubSection, admin.ModelAdmin)
 
