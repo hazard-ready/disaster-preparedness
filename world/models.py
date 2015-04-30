@@ -205,7 +205,7 @@ class TextSnugget(Snugget):
         return "snugget_text.html";
     
     def __str__(self):
-        return "Text Snugget for section " + str(self.section) + " subsection: " + str(self.sub_section) + " (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + " landslide: " + str(self.landslide_filter) + " liquefaction: " + str(self.liquifaction_filter) + " tsunami: " + str(self.tsunami_filter) + ")"
+        return str(self.content)[:100]
     
 class EmbedSnugget(Snugget):
     embed = EmbedVideoField()
@@ -215,4 +215,4 @@ class EmbedSnugget(Snugget):
         return "snugget_embed.html";
     
     def __str__(self):
-        return "Embed Snugget for section " + str(self.section) + " subsection: " + str(self.sub_section) + " (impact zone: " + str(self.impact_zone_filter) + " shaking: " + str(self.shaking_filter) + " landslide: " + str(self.landslide_filter) + " liquefaction: " + str(self.liquifaction_filter) + " tsunami: " + str(self.tsunami_filter) + ")"
+        return "Embed Snugget: " + str(self.embed)
