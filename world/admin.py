@@ -2,12 +2,6 @@ from django.contrib.gis import admin
 from embed_video.admin import AdminVideoMixin
 from .models import *
 
-
-# These are commented out because editing them seems to serve no purpose, currently.
-#admin.site.register(TsunamiZone, admin.GeoModelAdmin)
-#admin.site.register(ImpactZoneData, admin.GeoModelAdmin)
-#admin.site.register(ExpectedGroundShaking, admin.GeoModelAdmin)
-#admin.site.register(ImpactZone, admin.GeoModelAdmin)
 admin.site.register(SnuggetSection, admin.ModelAdmin)
 admin.site.register(SnuggetSubSection, admin.ModelAdmin)
 
@@ -48,6 +42,15 @@ class EmbedAdmin(AdminVideoMixin, SnuggetAdmin):
     
 admin.site.register(TextSnugget, TextAdmin)
 admin.site.register(EmbedSnugget, EmbedAdmin)
+
+class GeoNoEditAdmin(admin.GeoModelAdmin):
+    modifiable = False
+
+# These are commented out because editing them seems to serve no purpose, currently.
+#admin.site.register(TsunamiZone, GeoNoEditAdmin)
+#admin.site.register(ImpactZoneData, GeoNoEditAdmin)
+#admin.site.register(ExpectedGroundShaking, GeoNoEditAdmin)
+#admin.site.register(ImpactZone, GeoNoEditAdmin)
 
 # Maybe in the future
 # admin.site.register(InfrastructureGroup, admin.ModelAdmin)
