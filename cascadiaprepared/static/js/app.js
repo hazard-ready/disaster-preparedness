@@ -12,7 +12,7 @@ $( document ).ready(function() {
   var mapbox_initial_lng = "-120.5";
   var mapbox_initial_lat = "44.1";
   var mapbox_initial_zoom_level = "6";
-  
+    
   // convenience function to extract url parameters
   function getURLParameter(name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -26,7 +26,6 @@ $( document ).ready(function() {
   // grab the position, if possible  
   var lat = getURLParameter('lat');
   var lng = getURLParameter('lng');
-  
   // load up an appropriate mapbox image
   // TODO: better validation of lat/lon values
   if (lat && lng) {
@@ -40,8 +39,11 @@ $( document ).ready(function() {
     $("#map-image").attr("src", image_url);
   }
 
-  /********** HOME VIEW (input form) **********/
-  
+  // grab and set any previously entered query text
+  var loc = getURLParameter('loc');
+  var location_query_text = (loc) ? decodeURIComponent(loc) : "";
+  $("#location-text").val(location_query_text);
+
   // hitting enter key in the textfield will trigger submit
   $("#location-text").keydown(function(event) {
     if (event.keyCode == 13) {
@@ -53,11 +55,11 @@ $( document ).ready(function() {
   // submit location text 
   $("#location-submit").click(function() {
     // grab the query value, ignoring it if it's empty
-    var selection = $("#location-text").val();
-    if (selection.length == 0) return;
+    location_query_text = $("#location-text").val();
+    if (location_query_text.length == 0) return;
     disableForm();
     // call google!
-    geocodeSend(selection);
+    geocodeSend(location_query_text);
   });
   
   // auto location
@@ -112,7 +114,7 @@ $( document ).ready(function() {
 
   function submitLocation(lat,lng) {
     // reload the page with the lat,lng
-    document.location =  document.location.hash + "?lat=" + lat + "&lng=" + lng;
+    document.location =  encodeURI(document.location.hash + "?lat=" + lat + "&lng=" + lng + "&loc=" + location_query_text);
   }
   
 
