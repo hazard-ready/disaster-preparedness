@@ -31,19 +31,20 @@
 
 {% if has_location == True %}      
 <!-------------- THE MOMENT -------------->
-      <div class="orange-bg white">
+      <div class="orange-bg white stripe down-arrow">
         <div class="row">
           <div class="column">
             <div class="chapter-title bold">The Moment</div>
+            <div class="chapter-content">
+            {% for snugget in data.groups.impact_snugs %}
+              {% ifequal snugget.section.name "The Moment" %}
+                {% include "snugget.html" with snugget=snugget %}
+              {% endifequal %}
+            {% endfor %}
+            </div>
           </div>
         </div>
       </div>
-      
-{% for snugget in data.groups.impact_snugs %}
-  {% ifequal snugget.section.name "The Moment" %}
-    {% include "snugget.html" with snugget=snugget %}
-  {% endifequal %}
-{% endfor %}
      
 {% for snugget in data.groups.tsunami_snugs %}
   {% ifequal snugget.section.name "The Moment" %}
@@ -60,20 +61,21 @@
 {% include "snugget_deformation.html" with section="The Moment" landslide_snugs=data.groups.landslide_snugs liqui_snugs=data.groups.liqui_snugs %}
 
 <!-------------- COMMUNITY RECOVERY -------------->
-      <div class="orange-bg white">
+      <div class="orange-bg white stripe down-arrow">
         <div class="row">
           <div class="column">
             <div class="chapter-title bold">Your Community’s Recovery</div>
+            <div class="chapter-content">
+            {% for snugget in data.groups.impact_snugs %}
+              {% ifequal snugget.section.name "Community Recovery" %}
+                {% include "snugget.html" with snugget=snugget %}
+              {% endifequal %}
+            {% endfor %}           
+            </div>
           </div>
         </div>
       </div>
  
-{% for snugget in data.groups.impact_snugs %}
-  {% ifequal snugget.section.name "Community Recovery" %}
-    {% include "snugget.html" with snugget=snugget %}
-  {% endifequal %}
-{% endfor %}
-
 {% for zone in data.impact_zones %}
   {% if zone.zoneid == 2 %}
       <div class="row">
@@ -97,19 +99,20 @@
 {% endfor %}
      
 <!-------------- HOW TO PREPARE -------------->
-      <div class="orange-bg white">
+      <div class="orange-bg white stripe down-arrow">
         <div class="row">
           <div class="column">
             <div class="chapter-title bold">How To Prepare</div>
+            <div class="chapter-content">
+            {% for snugget in data.groups.impact_snugs %}
+              {% ifequal snugget.section.name "How To Prepare" %}
+                {% include "snugget.html" with snugget=snugget %}
+              {% endifequal %}
+            {% endfor %}
+            </div>
           </div>
         </div>
       </div>
-
-{% for snugget in data.groups.impact_snugs %}
-  {% ifequal snugget.section.name "How To Prepare" %}
-    {% include "snugget.html" with snugget=snugget %}
-  {% endifequal %}
-{% endfor %}
 
 {% include "supply-kit.html" with zones=data.impact_zones %}
 

@@ -78,7 +78,12 @@ body {
   text-transform: uppercase;
 }
 
-.snugget { 
+.chapter-content {
+  margin: 0 0 23px;
+}
+
+.snugget {
+  font-size: 1em;
   margin-bottom: 1em;
 }
 
@@ -120,6 +125,28 @@ h4.sub-title {
   display: block;
   color: rgba(0,0,0,.4) !important;
   background-color: transparent !important;
+}
+
+.down-arrow {
+	position: relative;
+	margin-bottom: 43px;
+}
+.down-arrow:after {
+	/* Fixing some AA on webkit and FF */
+	-moz-transform: scale(.9999);
+	-webkit-transform:rotate(360deg);
+	
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    border-color: #FF9933 rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+    border-width: 43px 113px 0 113px;
+    content: " ";
+    height: 0;
+    margin-left: -113px;
+    position: absolute;
+    pointer-events: none;
+    width: 0;
 }
 
 
