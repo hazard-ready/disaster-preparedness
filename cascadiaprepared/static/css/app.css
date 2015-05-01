@@ -1,64 +1,81 @@
 body {
-  background-color: #E6EBDA;
-  color: #003366;
+  font-family: 'MetaSerifCompPro-Book W01 Rg', serif;
+  background-color: #FFFFFF;
+  color: #55578B;
 }
-
-.serif-font {
-  font-family: "Times New Roman", Times, serif;
+.white {
+  color: #FFFFFF;
 }
-
-#home {
-  margin: 1.5em .7em 2em;
+.orange {
+  color: #FF9933;
 }
-
-.project-header {
-  margin-bottom: .2em;
+.orange-bg {
+  background-color: #FF9933;
 }
-
+.purple {
+  color: #55578B;
+}
+.purple-bg {
+  background-color: #55578B;
+}
+.bold {
+  font-family: 'Meta Serif Offc W01 Extrabold';
+}
+.sans-serif {
+  font-family: 'HelveticaNeueW01-65Medi', sans-serif;
+}
+.sans-serif.bold {
+  font-family: 'HelveticaNeueW01-95Blac';
+}
 .project-title {
-  display: inline-block;
-  vertical-align: bottom;
-  padding-bottom: .7em;
-  padding-right: .7em;
+  margin-top: 40px;
+  font-size: 75px;
+  line-height: 1.2em;
 }
 .project-subtitle {
-  display: inline-block;
-  color: #003366;
+  margin: 10px 0;
+  font-size: 23px;
+  line-height: 1.2em;
 }
-
+.location-label {
+  margin: 10px 0;
+  font-size: 38px;
+  line-height: 1.2em;
+  text-transform: uppercase;
+}
 #location-text {
+  color: #55578B;
+  font-family: 'Meta Serif Offc W01 Extrabold';
+  font-size: 18px;
+  line-height: 1.3em;
   border-color: #FF9933;
   border-width: 3px;
 }
 ::-webkit-input-placeholder {
-   color: #81C6C2;
+   color: #55578B;
 }
 :-moz-placeholder { /* Firefox 18- */
-   color: #81C6C2;  
+   color: #55578B;  
 }
 ::-moz-placeholder {  /* Firefox 19+ */
-   color: #81C6C2;  
+   color: #55578B;  
 }
 :-ms-input-placeholder {  
-   color: #81C6C2;  
+   color: #55578B;  
 }
-
-#map {
-  margin-bottom: 1em;
-}
-
 .form-icon-button {
   width: 7.33%;
 }
-
 #auto-location-submit {
   border-radius: 3px;
 }
 
 .chapter-title {
-  margin-top: 1em;
-  margin-bottom: .5em;
-  color: #FF9933;
+  margin: 20px 0;
+  font-size: 46px;
+  line-height: 1.2em;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .snugget { 
