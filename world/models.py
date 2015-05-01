@@ -192,7 +192,7 @@ class Snugget(models.Model):
         impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('zoneid')).select_subclasses()
         liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__in=qs_liquifaction.values_list('score')).select_subclasses()
         landslide_snuggets = Snugget.objects.filter(landslide_filter__score__in=qs_landslide.values_list('score')).select_subclasses()
-        # impact_zones = qs_impacts.values()
+        impact_zones = qs_impacts.values()
 
         return {'groups': {
                           'tsunami_snugs': tsunami_snuggets,
@@ -201,7 +201,7 @@ class Snugget(models.Model):
                           'liqui_snugs': liquifaction_snuggets,
                           'landslide_snugs': landslide_snuggets,
                           },
-        #        'impact_zones': impact_zones
+                'impact_zones': impact_zones
                 }
 
     def __str__(self):
