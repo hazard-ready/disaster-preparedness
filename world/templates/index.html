@@ -5,9 +5,10 @@
   <meta charset="utf-8" />
   <title>Aftershock</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-  <link rel="stylesheet" href="{% static 'css/foundation.css' %}">
-  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <link type="text/css" rel="stylesheet" href="{% static 'css/normalize.css' %}">
+  <link type="text/css" rel="stylesheet" href="{% static 'css/foundation.css' %}">
+  <link type="text/css" rel="stylesheet" href="http://fast.fonts.net/cssapi/946b88e5-dfa3-4779-97ec-ea82c655a7c5.css"/>
+  <link type="text/css" rel="stylesheet" href="{% static 'css/app.css' %}">
   <script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>  
   <script src="{% static 'js/vendor/modernizr.js' %}"></script>
   <script src="{% static 'js/vendor/jquery.js' %}"></script>
@@ -30,9 +31,11 @@
 
 {% if has_location == True %}      
 <!-------------- THE MOMENT -------------->
-      <div class="row">
-        <div class="column">
-          <h3 class="chapter-title">The Moment</h3>
+      <div class="orange-bg white">
+        <div class="row">
+          <div class="column">
+            <div class="chapter-title bold">The Moment</div>
+          </div>
         </div>
       </div>
       
@@ -57,9 +60,11 @@
 {% include "snugget_deformation.html" with section="The Moment" landslide_snugs=data.groups.landslide_snugs liqui_snugs=data.groups.liqui_snugs %}
 
 <!-------------- COMMUNITY RECOVERY -------------->
-      <div class="row">
-        <div class="column">
-          <h3 class="chapter-title">Your Community’s Recovery</h3>
+      <div class="orange-bg white">
+        <div class="row">
+          <div class="column">
+            <div class="chapter-title bold">Your Community’s Recovery</div>
+          </div>
         </div>
       </div>
  
@@ -92,9 +97,11 @@
 {% endfor %}
      
 <!-------------- HOW TO PREPARE -------------->
-      <div class="row">
-        <div class="column">
-          <h3 class="chapter-title">How To Prepare</h3>
+      <div class="orange-bg white">
+        <div class="row">
+          <div class="column">
+            <div class="chapter-title bold">How To Prepare</div>
+          </div>
         </div>
       </div>
 

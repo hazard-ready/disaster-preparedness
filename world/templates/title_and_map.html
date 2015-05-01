@@ -1,36 +1,48 @@
 {% load staticfiles %}
 
-    <div class="row project-header">
-      <div class="column">
-        <div class="project-title"><img width="200" height="40" src="{% static 'img/aftershock-title.svg' %}" alt="Aftershock"></div>
-        <h5 class="project-subtitle">Preparing for Your Cascadia Quake Scenario</h>
+    <div class="orange-bg">
+      <div class="row">
+        <div class="column">
+          <div class="project-title sans-serif bold white">Aftershock</div>
+        </div>
       </div>
     </div>
     
-    <div class="row location-form">
-      <div class="column">
-        <form>
-           <div class="row">
-            <div class="column">
-             <div class="row collapse postfix-radius">
-                <div class="small-10 columns form-text-input">
-                  <input id="location-text" type="text" placeholder="Enter your location to get your scenario" />
-                </div>
-                <div class="small-1 column form-icon-button">
-                  <a id="location-submit" class="button postfix">Go</a>
-                </div>
-                <div class="small-1 column form-icon-button">
-                  <a id="auto-location-submit" class="button postfix radius">&#9650;</a>
+    <div class="purple-bg">
+      <div class="row">
+        <div class="column">
+          <div class="project-subtitle bold orange">Customized earthquake information for Oregon</div>
+        </div>
+      </div>    
+      <div class="row">
+        <div class="column">
+          <div class="location-label bold white">Your localized report for:</div>
+        </div>
+      </div>    
+      <div class="row location-form">
+        <div class="column">
+          <form>
+             <div class="row">
+              <div class="column">
+               <div class="row collapse postfix-radius">
+                  <div class="small-10 columns form-text-input">
+                    <input class="bold" id="location-text" type="text" placeholder="Enter your location" />
+                  </div>
+                  <div class="small-1 column form-icon-button">
+                    <a id="location-submit" class="button postfix">Go</a>
+                  </div>
+                  <div class="small-1 column form-icon-button">
+                    <a id="auto-location-submit" class="button postfix radius">&#9650;</a>
+                  </div>
                 </div>
               </div>
-            </div>
-           </div>
-        </form>
+             </div>
+          </form>
+        </div>
       </div>
-    </div>
-
-    <div id="map" class="row">
-      <div class="column">
-        <image id="map-image" src="">
+      <div id="map" class="row">
+        <div class="column">
+          <image id="map-image" src="">
+        </div>
       </div>
     </div>
