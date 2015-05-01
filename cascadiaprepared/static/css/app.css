@@ -12,7 +12,8 @@ body {
 .orange-bg {
   background-color: #FF9933;
 }
-.purple {
+.purple,
+.chapter-content a {
   color: #55578B;
 }
 .purple-bg {
@@ -80,6 +81,12 @@ body {
 
 .chapter-content {
   margin: 0 0 23px;
+  text-align: center;
+}
+
+.chapter-content p {
+  font-size: 1.50em;
+  line-height: 1.5;
 }
 
 .snugget {
