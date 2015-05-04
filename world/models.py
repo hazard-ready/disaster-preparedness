@@ -169,7 +169,7 @@ class Snugget(models.Model):
         return "snugget.html"
 
     @staticmethod
-    def findSnuggetsForPoint(lat=0, lng=0):
+    def findSnuggetsForPoint(lat=0, lng=0, merge_deform = True):
         pnt = Point(lng, lat)
         qs_impacts = ImpactZoneData.objects.filter(geom__contains=pnt)
         print(qs_impacts)
@@ -186,12 +186,23 @@ class Snugget(models.Model):
         # world.models.Snugget.findSnuggetsForPoint(lng=-121.3153096, lat=44.0581728)
         # Near seaside
         # world.models.Snugget.findSnuggetsForPoint(lng=-123.9125932, lat=45.9928274)
-
+        
+        liquifaction_scores = qs_liquifaction.values_list('score', flat=True)
+        landslide_scores = qs_landslide.values_list('score', flat=True)
+        
         tsunami_snuggets = Snugget.objects.filter(tsunami_filter__typeid__in=qs_tsunami.values_list('typeid')).select_subclasses()
         shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__in=qs_shaking.values_list('shaking')).select_subclasses()
         impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('zoneid')).select_subclasses()
-        liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__in=qs_liquifaction.values_list('score')).select_subclasses()
-        landslide_snuggets = Snugget.objects.filter(landslide_filter__score__in=qs_landslide.values_list('score')).select_subclasses()
+        liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__in=liquifaction_scores).select_subclasses()
+        landslide_snuggets = Snugget.objects.filter(landslide_filter__score__in=landslide_scores).select_subclasses()
+        
+        deform_snuggets = []
+        deform_rating = 0.0
+        if (merge_deform == True):
+            deform_snuggets = landslide_snuggets | liquifaction_snuggets
+            both_scores = list(liquifaction_scores) + list(landslide_scores)
+            deform_rating = max(both_scores)
+        
         impact_zones = qs_impacts.values()
 
         return {'groups': {
@@ -200,7 +211,9 @@ class Snugget(models.Model):
                           'impact_snugs': impact_snuggets,
                           'liqui_snugs': liquifaction_snuggets,
                           'landslide_snugs': landslide_snuggets,
+                          'deform_snugs': deform_snuggets,
                           },
+                'deform_score': deform_rating,
                 'impact_zones': impact_zones
                 }
 

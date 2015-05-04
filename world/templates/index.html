@@ -62,7 +62,7 @@
   {% endifequal %}
 {% endfor %}
 
-{% include "snugget_deformation.html" with section="The Moment" landslide_snugs=data.groups.landslide_snugs liqui_snugs=data.groups.liqui_snugs %}
+{% include "snugget_deformation.html" with section="The Moment" deform_snugs=data.groups.deform_snugs deform_level=data.deform_score %}
 
 <!-------------- COMMUNITY RECOVERY -------------->
       <div class="orange-bg white stripe down-arrow">
@@ -132,7 +132,7 @@
   {% endifequal %}
 {% endfor %}
 
-{% include "snugget_deformation.html" with section="How To Prepare" landslide_snugs=data.groups.landslide_snugs liqui_snugs=data.groups.liqui_snugs %}
+{% include "snugget_deformation.html" with section="How To Prepare" deform_snugs=data.groups.deform_snugs deform_level=data.deform_score %}
 
       <div class="row">
         <div class="column">
