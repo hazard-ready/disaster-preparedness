@@ -8,7 +8,7 @@ $( document ).ready(function() {
   var mapbox_map = "meesterstump.8bf4e389";
   var mapbox_pin_color = "F93";
   var mapbox_zoom_level = "15";
-  var mapbox_image_size = "970x300";  
+  var mapbox_image_size = "1280x300";  
   var mapbox_initial_lng = "-120.5";
   var mapbox_initial_lat = "44.1";
   var mapbox_initial_zoom_level = "6";

@@ -2,32 +2,24 @@ body {
   font-family: 'MetaSerifCompPro-Book W01 Rg', serif;
   background-color: #FFFFFF;
   color: #55578B;
+  font-size: 20px;
+  line-height: 1.3em;
 }
-.white {
-  color: #FFFFFF;
-}
-.orange {
-  color: #FF9933;
-}
-.orange-bg {
-  background-color: #FF9933;
-}
-.purple,
-.chapter-content a {
-  color: #55578B;
-}
-.purple-bg {
-  background-color: #55578B;
-}
-.bold {
-  font-family: 'Meta Serif Offc W01 Extrabold';
-}
-.sans-serif {
-  font-family: 'HelveticaNeueW01-65Medi', sans-serif;
-}
-.sans-serif.bold {
-  font-family: 'HelveticaNeueW01-95Blac';
-}
+
+
+/* helper classes for colors and fonts */
+.white { color: #FFFFFF; }
+.orange { color: #FF9933; }
+.orange-bg { background-color: #FF9933; }
+.purple { color: #55578B; }
+.purple-bg { background-color: #55578B; }
+.bold { font-family: 'Meta Serif Offc W01 Extrabold'; }
+.sans-serif { font-family: 'HelveticaNeueW01-65Medi', sans-serif; }
+.sans-serif.bold { font-family: 'HelveticaNeueW01-95Blac'; }
+.center { text-align: center; }
+
+
+/* header styles */
 .project-title {
   margin-top: 40px;
   font-size: 75px;
@@ -52,30 +44,38 @@ body {
   border-color: #FF9933;
   border-width: 3px;
 }
-::-webkit-input-placeholder {
-   color: #55578B;
-}
-:-moz-placeholder { /* Firefox 18- */
-   color: #55578B;  
-}
-::-moz-placeholder {  /* Firefox 19+ */
-   color: #55578B;  
-}
-:-ms-input-placeholder {  
-   color: #55578B;  
-}
+::-webkit-input-placeholder { color: #55578B; }
+:-moz-placeholder { color: #55578B; }
+::-moz-placeholder { color: #55578B; }
+:-ms-input-placeholder { color: #55578B; }
 .form-icon-button {
   width: 7.33%;
 }
+#location-submit,
 #auto-location-submit {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 30px 30px;
+}
+#location-submit {
+  background-image: url(../img/icon-search.png);
+}
+#auto-location-submit {
+  background-image: url(../img/icon-target.png);
   border-radius: 3px;
 }
 
+
+/* main content and snugget styles */
+.welcome {
+  font-size: 22px;
+  line-height: 1.3em;
+  padding: 30px 0;
+}
 .chapter-title {
-  margin: 20px 0;
+  padding: 20px 0;
   font-size: 46px;
   line-height: 1.2em;
-  text-align: center;
   text-transform: uppercase;
 }
 
@@ -94,44 +94,37 @@ body {
   margin-bottom: 1em;
 }
 
-.snugget .icon {
-}
 
-h4.sub-title {
-  margin-bottom: 0;
-  color: #003366;
-}
-
+/* footer styles */
 .social {
-  margin-top: 1em;
-  margin-bottom: 3em;
+  padding: 40px 0;
 }
 .social .title {
-  color: #FF9933;
-  margin-bottom: .7em;
+  font-size: 36px;
+  line-height: 2em;
+  text-transform: uppercase;
 }
-
-.geek-box {
-  padding: 1em 1.5em .5em;
-  background-color: #81C6C2;
+.social .secondary {
+  font-size: 16px;
+  line-height: 1.5em;
+  text-transform: uppercase;
 }
-.geek-box .title,
-.geek-box p {
-  color: #FFF;
-  line-height: 1.4em;
+.social .hashtag {
+  font-size: 24px;
+  line-height: 1.5em;
+  text-transform: uppercase;
 }
-.geek-box p {
-  font-size: .9em;
+.geek {
+  padding: 30px 0;
 }
-.geek-box .title {
-  margin-bottom: 0.1em;
+.geek p {
+  font-size: 20px;
+  line-height: 1.2em;
 }
-
-.temp {
-  margin-bottom: 5px;
-  display: block;
-  color: rgba(0,0,0,.4) !important;
-  background-color: transparent !important;
+.footer {
+  font-size: 16px;
+  line-height: 1.3em;
+  padding: 30px 0; 
 }
 
 .down-arrow {
@@ -162,5 +155,5 @@ a.button {
   background-color: #FF9933;
 }
 a.button:hover {
-  background-color: #81C6C2;
+  background-color: #55578B;
 }
