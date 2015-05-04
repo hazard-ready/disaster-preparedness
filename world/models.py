@@ -189,9 +189,9 @@ class Snugget(models.Model):
         
         liquifaction_scores = qs_liquifaction.values_list('score', flat=True)
         landslide_scores = qs_landslide.values_list('score', flat=True)
-        
+        shake_rating = qs_shaking.values_list('shaking', flat=True)        
         tsunami_snuggets = Snugget.objects.filter(tsunami_filter__typeid__in=qs_tsunami.values_list('typeid')).select_subclasses()
-        shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__in=qs_shaking.values_list('shaking')).select_subclasses()
+        shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__in=shake_rating).select_subclasses()
         impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__in=qs_impacts.values_list('zoneid')).select_subclasses()
         liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__in=liquifaction_scores).select_subclasses()
         landslide_snuggets = Snugget.objects.filter(landslide_filter__score__in=landslide_scores).select_subclasses()
@@ -214,6 +214,7 @@ class Snugget(models.Model):
                           'deform_snugs': deform_snuggets,
                           },
                 'deform_score': deform_rating,
+                'shake_score': shake_rating,
                 'impact_zones': impact_zones
                 }
 
