@@ -52,6 +52,11 @@
  <div class="row">
  {% if data.structured.moment.tsunami_snugs %}
    <div class="large-4 column">
+   <div class="row group-header">
+    <div class="medium-3 columns small-centered icon tsunami">
+      <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
+    </div>
+  </div>
    {% for snugget in data.structured.moment.tsunami_snugs %}
     {% include "snugget_tsunami.html" with snugget=snugget %}
   {% endfor %}
@@ -60,9 +65,30 @@
 
 {% if data.structured.moment.shake_snugs %}
   <div class="large-4 column">
-  {% for snugget in data.structured.moment.shake_snugs %}
-    {% include "snugget_shaking.html" with snugget=snugget level=snugget.shaking_filter.rate %}
-  {% endfor %}
+    <div class="row">
+      <div class="column icon shaking">
+      {% with data.shake_score as level %}
+        {% if level == "Light" %}
+          <img src="{% static 'img/icon-shaking-1-6.svg' %}" alt="shaking icon">
+        {% elif level == "Moderate" %}
+          <img src="{% static 'img/icon-shaking-2-6.svg' %}" alt="shaking icon">
+        {% elif level == "Strong" %}
+          <img src="{% static 'img/icon-shaking-3-6.svg' %}" alt="shaking icon">
+        {% elif level == "Very Strong" %}
+          <img src="{% static 'img/icon-shaking-4-6.svg' %}" alt="shaking icon">
+        {% elif level == "Severe" %}
+          <img src="{% static 'img/icon-shaking-5-6.svg' %}" alt="shaking icon">
+        {% elif level == "Violent" %}
+          <img src="{% static 'img/icon-shaking-6-6.svg' %}" alt="shaking icon">
+        {% endif %}
+      {% endwith %}
+      </div>
+    </div>
+      {% for snugget in data.structured.moment.shake_snugs %}
+    <div class="row snugget">  
+        {% include "snugget_shaking.html" with snugget=snugget level=snugget.shaking_filter.rate %}
+    </div>    
+      {% endfor %}
   </div>
  {% endif %}
 

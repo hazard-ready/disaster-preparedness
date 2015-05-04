@@ -1,23 +1,5 @@
 {% load staticfiles %}
 {% load show_snugget %}
-
-      <div class="row snugget">
-        <div class="medium-3 columns icon shaking">
-          {% if level == 1 %}
-          <img src="{% static 'img/icon-shaking-1-6.svg' %}" alt="shaking icon">
-          {% elif level == 2 %}
-          <img src="{% static 'img/icon-shaking-2-6.svg' %}" alt="shaking icon">
-          {% elif level == 3 %}
-          <img src="{% static 'img/icon-shaking-3-6.svg' %}" alt="shaking icon">
-          {% elif level == 4 %}
-          <img src="{% static 'img/icon-shaking-4-6.svg' %}" alt="shaking icon">
-          {% elif level == 5 %}
-          <img src="{% static 'img/icon-shaking-5-6.svg' %}" alt="shaking icon">
-          {% elif level == 6 %}
-          <img src="{% static 'img/icon-shaking-6-6.svg' %}" alt="shaking icon">
-          {% endif %}
-        </div>
         <div class="medium-9 columns">
           {% show_snugget snugget %}
         </div>
-      </div>
