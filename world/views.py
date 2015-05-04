@@ -30,6 +30,7 @@ def app_view(request):
                         snugget_content['structured']['recovery'][groupkey].append(snugget)
                     elif snugget.section.name == "How To Prepare":
                         snugget_content['structured']['prepare'][groupkey].append(snugget)
+                        
             return render(request, 'index.html', {'data': snugget_content, 'has_location': True})
 
     # if not, we'll still serve up the same template without data
