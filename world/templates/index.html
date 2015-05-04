@@ -35,7 +35,7 @@
 
 {% if has_location == True %}      
 <!-------------- THE MOMENT -------------->
-      <div class="orange-bg white stripe down-arrow">
+      <div class="orange-bg white down-arrow center">
         <div class="row">
           <div class="column">
             <div class="chapter-title bold">The Moment</div>
@@ -65,7 +65,7 @@
 {% include "snugget_deformation.html" with section="The Moment" deform_snugs=data.groups.deform_snugs deform_level=data.deform_score %}
 
 <!-------------- COMMUNITY RECOVERY -------------->
-      <div class="orange-bg white stripe down-arrow">
+      <div class="orange-bg white down-arrow center">
         <div class="row">
           <div class="column">
             <div class="chapter-title bold">Your Community’s Recovery</div>
@@ -103,7 +103,7 @@
 {% endfor %}
      
 <!-------------- HOW TO PREPARE -------------->
-      <div class="orange-bg white stripe down-arrow">
+      <div class="orange-bg white down-arrow center">
         <div class="row">
           <div class="column">
             <div class="chapter-title bold">How To Prepare</div>
@@ -156,16 +156,21 @@
         </div>
       </div>
 
-
-{% endif %}
-
 <!-------------- SOCIAL -------------->
 {% include "social.html" %}
-
 
 <!-------------- GEEK BOX -------------->
 {% include "geek_box.html" %}
 
+{% endif %}
+
+      <div class="purple-bg">
+        <div class="row">
+          <div class="column">
+            <div class="footer center white sans-serif"></div>
+          </div>
+        </div>
+      </div>
 
   </div>
 
