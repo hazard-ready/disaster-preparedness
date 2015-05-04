@@ -1,19 +1,19 @@
 {% load staticfiles %}
 {% load show_snugget %}
 
-{% for snugget in landslide_snugs %}
+{% for snugget in deform_snugs %}
   {% if snugget.section.name == "The Moment" and section == "The Moment" %}
       <div class="row snugget">
         <div class="medium-3 columns icon deformation">
-          {% if snugget.landslide_filter.score == 1 %}
+          {% if deform_level == 1 %}
           <img src="{% static 'img/icon-deformation-1-5.svg' %}" alt="deformation icon">
-          {% elif snugget.landslide_filter.score == 2 %}
+          {% elif deform_level == 2 %}
           <img src="{% static 'img/icon-deformation-2-5.svg' %}" alt="deformation icon">
-          {% elif snugget.landslide_filter.score == 3 %}
+          {% elif deform_level == 3 %}
           <img src="{% static 'img/icon-deformation-3-5.svg' %}" alt="deformation icon">
-          {% elif snugget.landslide_filter.score == 4 %}
+          {% elif deform_level == 4 %}
           <img src="{% static 'img/icon-deformation-4-5.svg' %}" alt="deformation icon">
-          {% elif snugget.landslide_filter.score == 5 %}
+          {% elif deform_level == 5 %}
           <img src="{% static 'img/icon-deformation-5-5.svg' %}" alt="deformation icon">
           {% endif %}
         </div>
@@ -30,31 +30,3 @@
   {% endif %}
 {% endfor %}
 
-{% for snugget in liqui_snugs %}
-  {% if snugget.section.name == "The Moment" and section == "The Moment" %}
-      <div class="row snugget">
-        <div class="medium-3 columns icon deformation">
-          {% if snugget.liquifaction_filter.score == 1 %}
-          <img src="{% static 'img/icon-deformation-1-5.svg' %}" alt="deformation icon">
-          {% elif snugget.liquifaction_filter.score == 2 %}
-          <img src="{% static 'img/icon-deformation-2-5.svg' %}" alt="deformation icon">
-          {% elif snugget.liquifaction_filter.score == 3 %}
-          <img src="{% static 'img/icon-deformation-3-5.svg' %}" alt="deformation icon">
-          {% elif snugget.liquifaction_filter.score == 4 %}
-          <img src="{% static 'img/icon-deformation-4-5.svg' %}" alt="deformation icon">
-          {% elif snugget.liquifaction_filter.score == 5 %}
-          <img src="{% static 'img/icon-deformation-5-5.svg' %}" alt="deformation icon">
-          {% endif %}
-        </div>
-        <div class="medium-9 columns">
-          {% show_snugget snugget %}
-        </div>
-      </div>
-  {% elif snugget.section.name == "How To Prepare" and section == "How To Prepare" %}
-      <div class="row snugget">
-        <div class="column">
-          {% show_snugget snugget %}
-        </div>
-      </div>
-  {% endif %}
-{% endfor %}
