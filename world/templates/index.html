@@ -40,29 +40,23 @@
           <div class="column">
             <div class="chapter-title bold">The Moment</div>
             <div class="chapter-content">
-            {% for snugget in data.groups.impact_snugs %}
-              {% ifequal snugget.section.name "The Moment" %}
-                {% include "snugget.html" with snugget=snugget %}
-              {% endifequal %}
+            {% for snugget in data.structured.moment.impact_snugs %}
+              {% include "snugget.html" with snugget=snugget %}
             {% endfor %}
             </div>
           </div>
         </div>
       </div>
      
-{% for snugget in data.groups.tsunami_snugs %}
-  {% ifequal snugget.section.name "The Moment" %}
-    {% include "snugget_tsunami.html" with snugget=snugget %}
-  {% endifequal %}
+{% for snugget in data.structured.moment.tsunami_snugs %}
+  {% include "snugget_tsunami.html" with snugget=snugget %}
 {% endfor %}
      
-{% for snugget in data.groups.shake_snugs %}
-  {% ifequal snugget.section.name "The Moment" %}
-    {% include "snugget_shaking.html" with snugget=snugget level=snugget.shaking_filter.rate %}
-  {% endifequal %}
+{% for snugget in data.structured.moment.shake_snugs %}
+  {% include "snugget_shaking.html" with snugget=snugget level=snugget.shaking_filter.rate %}
 {% endfor %}
 
-{% include "snugget_deformation.html" with section="The Moment" deform_snugs=data.groups.deform_snugs deform_level=data.deform_score %}
+{% include "snugget_deformation.html" with section="The Moment" deform_snugs=data.structured.moment.deform_snugs deform_level=data.deform_score %}
 
 <!-------------- COMMUNITY RECOVERY -------------->
       <div class="orange-bg white down-arrow center">
@@ -70,11 +64,9 @@
           <div class="column">
             <div class="chapter-title bold">Your Community’s Recovery</div>
             <div class="chapter-content">
-            {% for snugget in data.groups.impact_snugs %}
-              {% ifequal snugget.section.name "Community Recovery" %}
-                {% include "snugget.html" with snugget=snugget %}
-              {% endifequal %}
-            {% endfor %}           
+            {% for snugget in data.structured.recovery.impact_snugs %}
+              {% include "snugget.html" with snugget=snugget %}
+            {% endfor %}       
             </div>
           </div>
         </div>
@@ -108,10 +100,8 @@
           <div class="column">
             <div class="chapter-title bold">How To Prepare</div>
             <div class="chapter-content">
-            {% for snugget in data.groups.impact_snugs %}
-              {% ifequal snugget.section.name "How To Prepare" %}
-                {% include "snugget.html" with snugget=snugget %}
-              {% endifequal %}
+            {% for snugget in data.structured.prepare.impact_snugs %}
+              {% include "snugget.html" with snugget=snugget %}
             {% endfor %}
             </div>
           </div>
@@ -126,13 +116,11 @@
         </div>
       </div>
 
-{% for snugget in data.groups.shake_snugs %}
-  {% ifequal snugget.section.name "How To Prepare" %}
-    {% include "snugget.html" with snugget=snugget %}
-  {% endifequal %}
+{% for snugget in data.structured.prepare.shake_snugs %}
+  {% include "snugget.html" with snugget=snugget %}
 {% endfor %}
 
-{% include "snugget_deformation.html" with section="How To Prepare" deform_snugs=data.groups.deform_snugs deform_level=data.deform_score %}
+{% include "snugget_deformation.html" with section="How To Prepare" deform_snugs=data.structured.prepare.deform_snugs deform_level=data.deform_score %}
 
       <div class="row">
         <div class="column">
