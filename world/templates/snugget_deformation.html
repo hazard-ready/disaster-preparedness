@@ -2,7 +2,7 @@
 {% load show_snugget %}
 
 {% for snugget in deform_snugs %}
-  {% if snugget.section.name == "The Moment" and section == "The Moment" %}
+  {% if section == "The Moment" %}
       <div class="row snugget">
         <div class="medium-3 columns icon deformation">
           {% if deform_level == 1 %}
@@ -21,7 +21,7 @@
           {% show_snugget snugget %}
         </div>
       </div>
-  {% elif snugget.section.name == "How To Prepare" and section == "How To Prepare" %}
+  {% elif section == "How To Prepare" %}
       <div class="row snugget">
         <div class="column">
           {% show_snugget snugget %}
