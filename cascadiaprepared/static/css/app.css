@@ -182,4 +182,5 @@ a:hover { color: #55578B; }
 .orange-bg a { color: #55578B; }
 .orange-bg a:hover { color: #FFFFFF; }
 a.button { background-color: #FF9933; }
-a.button:hover { background-color: #55578B; }
+a.button:hover { background-color: #A6A7C4; }
+a.button.disabled { background-color: #999; }
