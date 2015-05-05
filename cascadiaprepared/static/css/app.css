@@ -17,6 +17,9 @@ body {
 .sans-serif { font-family: 'HelveticaNeueW01-65Medi', sans-serif; }
 .sans-serif.bold { font-family: 'HelveticaNeueW01-95Blac'; }
 .center { text-align: center; }
+.vert-pad-large { padding: 40px 0; }
+.vert-pad-medium {padding: 25px 0; }
+.vert-pad-small { padding: 15px 0; }
 
 
 /* header styles */
@@ -73,26 +76,40 @@ body {
   padding: 30px 0;
 }
 .chapter-title {
-  padding: 20px 0;
+  margin-bottom: .5em;
   font-size: 46px;
   line-height: 1.2em;
   text-transform: uppercase;
 }
-
-.chapter-content {
-  margin: 0 0 23px;
-  text-align: center;
-}
-
 .chapter-content p {
-  font-size: 1.50em;
-  line-height: 1.5;
+  font-size: 1.2em;
+  line-height: 1.3em;
+}
+.snugget {
+  margin-bottom: 2em;
+}
+.down-arrow {
+	position: relative;
+	margin-bottom: 43px;
+}
+.down-arrow:after {
+  /* Fixing some AA on webkit and FF */
+  -moz-transform: scale(.9999);
+  -webkit-transform:rotate(360deg);
+  
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  border-color: #FF9933 rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+  border-width: 43px 113px 0 113px;
+  content: " ";
+  height: 0;
+  margin-left: -113px;
+  position: absolute;
+  pointer-events: none;
+  width: 0;
 }
 
-.snugget {
-  font-size: 1em;
-  margin-bottom: 1em;
-}
 
 
 /* footer styles */
@@ -114,12 +131,12 @@ body {
   line-height: 1.5em;
   text-transform: uppercase;
 }
-.geek {
-  padding: 30px 0;
+#geek-bar a {
+  text-transform: uppercase;
+  color: #FFFFFF;
 }
-.geek p {
-  font-size: 20px;
-  line-height: 1.2em;
+#geek-bar a:hover {
+  color: #55578B;
 }
 .footer {
   font-size: 16px;
@@ -127,33 +144,11 @@ body {
   padding: 30px 0; 
 }
 
-.down-arrow {
-	position: relative;
-	margin-bottom: 43px;
-}
-.down-arrow:after {
-	/* Fixing some AA on webkit and FF */
-	-moz-transform: scale(.9999);
-	-webkit-transform:rotate(360deg);
-	
-    top: 100%;
-    left: 50%;
-    border: solid transparent;
-    border-color: #FF9933 rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
-    border-width: 43px 113px 0 113px;
-    content: " ";
-    height: 0;
-    margin-left: -113px;
-    position: absolute;
-    pointer-events: none;
-    width: 0;
-}
-
 
 /* overriding foundation (should use sass/scss/less instead!) */
-a.button {
-  background-color: #FF9933;
-}
-a.button:hover {
-  background-color: #55578B;
-}
+a { color: #FF9933; }
+a:hover { color: #55578B; }
+.orange-bg a { color: #55578B; }
+.orange-bg a:hover { color: #FFFFFF; }
+a.button { background-color: #FF9933; }
+a.button:hover { background-color: #55578B; }
