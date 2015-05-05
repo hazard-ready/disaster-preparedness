@@ -54,7 +54,7 @@
  <div class="row vert-pad-large">
  {% if data.structured.moment.tsunami_snugs %}
    <div class="large-4 column">
-   <div class="row group-header">
+   <div class="row group-icon">
     <div class="medium-3 columns small-centered icon tsunami">
       <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
     </div>
@@ -184,7 +184,16 @@
           {% include "supply-kit.html" with zones=data.impact_zones %}
         </div>
         <div class="large-4 columns">
-          <div class="sub-title">Your Home</div>
+          <div class="row group-icon">
+            <div class="medium-3 columns small-centered icon tsunami">
+              <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
+            </div>
+          </div>
+          <div class="row group-title">
+            <div class="columns small-centered">
+              <div class="sub-title">Your Home</div>
+            </div>
+          </div>
           {% if data.structured.prepare.shake_snugs %}
             {% for snugget in data.structured.prepare.shake_snugs %}
               {% include "snugget.html" with snugget=snugget %}
@@ -197,7 +206,16 @@
           {% endfor %}
         </div>
         <div class="large-4 columns">
-          <div class="sub-title">Know Your Routes</div>
+          <div class="row group-icon">
+            <div class="medium-3 columns small-centered icon tsunami">
+              <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
+            </div>
+          </div>
+          <div class="row group-title">
+            <div class="columns small-centered">
+              <div class="sub-title">Know Your Routes</div>
+            </div>
+          </div>
           <p class="serif-font">Make sure your family and friends know where to gather after the earthquake and how to get there. You'll need a reconnection plan. Do you cross a bridge on your way to school or work? It could be unsafe to cross after an earthquake. Do you need an evacuation route? If you're in the tsunami zone, you do. <a href="http://www.oregon.gov/DOGAMI/pages/earthquakes/Coastal/Tsubrochures.aspx">Find your route.</a></p> 
           <p class="serif-font">Know that some major roads won't be safe or passable during and after an earthquake. <a href="http://www.oregon.gov/ODOT/HWY/OOM/Pages/contact_us.aspx">Ask the Oregon Department of Transportation</a> to find out which routes in your area to expect will be down.</p>
         </div>
@@ -205,11 +223,29 @@
       
       <div class="row">
         <div class="large-4 columns">
-          <div class="sub-title">Know Your Leaders</div>
+          <div class="row group-icon">
+            <div class="medium-3 columns small-centered icon tsunami">
+              <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
+            </div>
+          </div>
+          <div class="row group-title">
+            <div class="columns small-centered">
+              <div class="sub-title">Know Your Leaders</div>
+            </div>
+          </div>
           <p class="serif-font">The best way to see your community be more prepared for a big earthquake or tsunami is to contact your local official.</p>
         </div>
         <div class="large-4 columns end">
-          <div class="sub-title">The Importance of Community</div>
+          <div class="row group-icon">
+            <div class="medium-3 columns small-centered icon tsunami">
+              <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
+            </div>
+          </div>
+          <div class="row group-title">
+            <div class="columns small-centered">
+              <div class="sub-title">The Importance of Community</div>
+            </div>
+          </div>
           <p class="serif-font">The most crucial thing you can do the increase the resiliency of your community is connect with your neighbors to plan as a group. One way to do this is through Community Emergency Response Teams. <a href="https://www.fema.gov/community-emergency-response-teams">Find out how to join or start a community team.</a></p>
         </div>
       </div>
