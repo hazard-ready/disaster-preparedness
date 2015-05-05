@@ -151,6 +151,17 @@ body {
   line-height: 1.5em;
   text-transform: uppercase;
 }
+.social-icon {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background: #FF9933 url(../img/icons-social.png) no-repeat 0 0;
+  background-size: auto 32px;
+  border-radius: 5px;
+}
+.social-icon.twitter { background-position: -32px 0; }
+.social-icon.email { background-position: -64px 0; }
+.social-icon:hover { background-color: #A6A7C4; }
 #geek-bar a {
   text-transform: uppercase;
   color: #FFFFFF;
