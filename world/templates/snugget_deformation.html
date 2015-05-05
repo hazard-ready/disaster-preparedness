@@ -1,32 +1,5 @@
 {% load staticfiles %}
 {% load show_snugget %}
-
-{% for snugget in deform_snugs %}
-  {% if section == "The Moment" %}
-      <div class="row snugget">
-        <div class="medium-3 columns icon deformation">
-          {% if deform_level == 1 %}
-          <img src="{% static 'img/icon-deformation-1-5.svg' %}" alt="deformation icon">
-          {% elif deform_level == 2 %}
-          <img src="{% static 'img/icon-deformation-2-5.svg' %}" alt="deformation icon">
-          {% elif deform_level == 3 %}
-          <img src="{% static 'img/icon-deformation-3-5.svg' %}" alt="deformation icon">
-          {% elif deform_level == 4 %}
-          <img src="{% static 'img/icon-deformation-4-5.svg' %}" alt="deformation icon">
-          {% elif deform_level == 5 %}
-          <img src="{% static 'img/icon-deformation-5-5.svg' %}" alt="deformation icon">
-          {% endif %}
-        </div>
         <div class="medium-9 columns">
           {% show_snugget snugget %}
         </div>
-      </div>
-  {% elif section == "How To Prepare" %}
-      <div class="row snugget">
-        <div class="column">
-          {% show_snugget snugget %}
-        </div>
-      </div>
-  {% endif %}
-{% endfor %}
-

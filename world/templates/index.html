@@ -19,7 +19,7 @@
   <script type="text/javascript">(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = '//stream.publicbroadcasting.net/analytics/aae0.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script> 
   
 </head>
-<body>
+<body class="purple-bg">
   <div id="home">
 
 
@@ -49,14 +49,15 @@
           </div>
         </div>
       </div>
-      
-      
+ <div class="white-bg below-arrow">
  <div class="row vert-pad-large">
+ <div class="large-{{ wrapper_width }} large-centered columns">
+ <div class="row">
  {% if data.structured.moment.tsunami_snugs %}
-   <div class="large-4 column">
-   <div class="row group-header">
-    <div class="medium-3 columns small-centered icon tsunami">
-      <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
+   <div class="large-{{ section_width }} column">
+     <div class="row group-icon">
+      <div class="medium-3 columns small-centered icon tsunami">
+        <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
     </div>
   </div>
    {% for snugget in data.structured.moment.tsunami_snugs %}
@@ -66,10 +67,11 @@
  {% endif %}
 
 {% if data.structured.moment.shake_snugs %}
-  <div class="large-4 column">
-    <div class="row">
-      <div class="column icon shaking">
-      {% with data.shake_score as level %}
+  <div class="large-{{ section_width }} column">
+    <div class="row group-icon">
+      <div class="medium-3 columns small-centered icon shaking">
+      {% comment %}Using "first" because data.shake_score is coming in as a list.{% endcomment %}
+      {% with data.shake_score|first as level %}
         {% if level == "Light" %}
           <img src="{% static 'img/icon-shaking-1-6.svg' %}" alt="shaking icon">
         {% elif level == "Moderate" %}
@@ -86,20 +88,54 @@
       {% endwith %}
       </div>
     </div>
-      {% for snugget in data.structured.moment.shake_snugs %}
-    <div class="row snugget">  
-        {% include "snugget_shaking.html" with snugget=snugget level=snugget.shaking_filter.rate %}
-    </div>    
-      {% endfor %}
+    <div class="group-rating row">
+      <div class="columns graph">
+        <img src="{% static 'img/icon-deformation-1-5.svg' %}" alt="deformation icon">
+      </div>
+    </div>
+    {% for snugget in data.structured.moment.shake_snugs %}
+    <div class="row snugget">
+      {% include "snugget_shaking.html" with snugget=snugget %}
+    </div>
+    {% endfor %}
   </div>
  {% endif %}
 
 {% if data.structured.moment.deform_snugs %}
-  <div class="large-4 column">
-    {% include "snugget_deformation.html" with section="The Moment" deform_snugs=data.structured.moment.deform_snugs deform_level=data.deform_score %}
+  <div class="large-{{ section_width }} column">
+    <div class="row group-icon">
+      <div class="medium-3 columns small-centered icon shaking">
+      {% with data.deform_score as deform_level %}
+        {% if deform_level == 1 %}
+          <img src="{% static 'img/icon-deformation-1-5.svg' %}" alt="deformation icon">
+        {% elif deform_level == 2 %}
+          <img src="{% static 'img/icon-deformation-2-5.svg' %}" alt="deformation icon">
+        {% elif deform_level == 3 %}
+          <img src="{% static 'img/icon-deformation-3-5.svg' %}" alt="deformation icon">
+        {% elif deform_level == 4 %}
+          <img src="{% static 'img/icon-deformation-4-5.svg' %}" alt="deformation icon">
+        {% elif deform_level == 5 %}
+          <img src="{% static 'img/icon-deformation-5-5.svg' %}" alt="deformation icon">
+        {% endif %}
+      {% endwith %}
+      </div>
+    </div>
+    <div class="group-rating row">
+      <div class="columns graph">
+        <img src="{% static 'img/icon-deformation-1-5.svg' %}" alt="deformation icon">
+      </div>
+    </div>
+    {% for snugget in data.structured.moment.deform_snugs %}
+    <div class="row snugget">
+      {% include "snugget_deformation.html" with snugget=snugget deform_level=data.deform_score %}
+    </div>
+    {% endfor %}
   </div>
-</div>
 {% endif %}
+</div>
+</div>
+</div> <!-- end moment content stripe -->
+</div>
 <!-------------- COMMUNITY RECOVERY -------------->
       <div class="orange-bg white down-arrow">
         <div class="row">
@@ -115,7 +151,7 @@
           </div>
         </div>
       </div>
-      
+    <div class="white-bg below-arrow">
       <div class="row vert-pad-large">
         <div class="large-offset-2 large-10 columns end">
         {% for zone in data.impact_zones %}
@@ -129,7 +165,7 @@
         {% endfor %}
         </div>
      </div>
-     
+    </div> 
 <!-------------- HOW TO PREPARE -------------->
       <div class="orange-bg white down-arrow">
         <div class="row">
@@ -145,23 +181,45 @@
           </div>
         </div>
       </div>
-
+      <div class="white-bg below-arrow">
       <div class="vert-pad-large">
       <div class="row">
         <div class="large-4 columns">
           {% include "supply-kit.html" with zones=data.impact_zones %}
         </div>
         <div class="large-4 columns">
-          <div class="sub-title">Your Home</div>
+          <div class="row group-icon">
+            <div class="medium-3 columns small-centered icon tsunami">
+              <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
+            </div>
+          </div>
+          <div class="row group-title">
+            <div class="columns small-centered">
+              <div class="sub-title">Your Home</div>
+            </div>
+          </div>
           {% if data.structured.prepare.shake_snugs %}
             {% for snugget in data.structured.prepare.shake_snugs %}
               {% include "snugget.html" with snugget=snugget %}
             {% endfor %}
           {% endif %}
-          {% include "snugget_deformation.html" with section="How To Prepare" deform_snugs=data.structured.prepare.deform_snugs deform_level=data.deform_score %}
+          {% for snugget in data.structured.moment.deform_snugs %}
+            <div class="row snugget">
+            {% include "snugget_deformation.html" with snugget=snugget deform_level=data.deform_score %}
+            </div>
+          {% endfor %}
         </div>
         <div class="large-4 columns">
-          <div class="sub-title">Know Your Routes</div>
+          <div class="row group-icon">
+            <div class="medium-3 columns small-centered icon tsunami">
+              <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
+            </div>
+          </div>
+          <div class="row group-title">
+            <div class="columns small-centered">
+              <div class="sub-title">Know Your Routes</div>
+            </div>
+          </div>
           <p class="serif-font">Make sure your family and friends know where to gather after the earthquake and how to get there. You'll need a reconnection plan. Do you cross a bridge on your way to school or work? It could be unsafe to cross after an earthquake. Do you need an evacuation route? If you're in the tsunami zone, you do. <a href="http://www.oregon.gov/DOGAMI/pages/earthquakes/Coastal/Tsubrochures.aspx">Find your route.</a></p> 
           <p class="serif-font">Know that some major roads won't be safe or passable during and after an earthquake. <a href="http://www.oregon.gov/ODOT/HWY/OOM/Pages/contact_us.aspx">Ask the Oregon Department of Transportation</a> to find out which routes in your area to expect will be down.</p>
         </div>
@@ -169,13 +227,32 @@
       
       <div class="row">
         <div class="large-4 columns">
-          <div class="sub-title">Know Your Leaders</div>
+          <div class="row group-icon">
+            <div class="medium-3 columns small-centered icon tsunami">
+              <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
+            </div>
+          </div>
+          <div class="row group-title">
+            <div class="columns small-centered">
+              <div class="sub-title">Know Your Leaders</div>
+            </div>
+          </div>
           <p class="serif-font">The best way to see your community be more prepared for a big earthquake or tsunami is to contact your local official.</p>
         </div>
         <div class="large-4 columns end">
-          <div class="sub-title">The Importance of Community</div>
+          <div class="row group-icon">
+            <div class="medium-3 columns small-centered icon tsunami">
+              <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
+            </div>
+          </div>
+          <div class="row group-title">
+            <div class="columns small-centered">
+              <div class="sub-title">The Importance of Community</div>
+            </div>
+          </div>
           <p class="serif-font">The most crucial thing you can do the increase the resiliency of your community is connect with your neighbors to plan as a group. One way to do this is through Community Emergency Response Teams. <a href="https://www.fema.gov/community-emergency-response-teams">Find out how to join or start a community team.</a></p>
         </div>
+      </div>
       </div>
       </div>
 
