@@ -52,11 +52,13 @@
       
       
  <div class="row vert-pad-large">
+ <div class="large-{{ wrapper_width }} large-centered columns">
+ <div class="row">
  {% if data.structured.moment.tsunami_snugs %}
-   <div class="large-4 column">
-   <div class="row group-icon">
-    <div class="medium-3 columns small-centered icon tsunami">
-      <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
+   <div class="large-{{ section_width }} column">
+     <div class="row group-icon">
+      <div class="medium-3 columns small-centered icon tsunami">
+        <img src="{% static 'img/icon-tsunami-1.svg' %}" alt="tsunami icon">
     </div>
   </div>
    {% for snugget in data.structured.moment.tsunami_snugs %}
@@ -66,7 +68,7 @@
  {% endif %}
 
 {% if data.structured.moment.shake_snugs %}
-  <div class="large-4 column">
+  <div class="large-{{ section_width }} column">
     <div class="row group-icon">
       <div class="medium-3 columns small-centered icon shaking">
       {% comment %}Using "first" because data.shake_score is coming in as a list.{% endcomment %}
@@ -101,7 +103,7 @@
  {% endif %}
 
 {% if data.structured.moment.deform_snugs %}
-  <div class="large-4 column">
+  <div class="large-{{ section_width }} column">
     <div class="row group-icon">
       <div class="medium-3 columns small-centered icon shaking">
       {% with data.deform_score as deform_level %}
@@ -130,8 +132,10 @@
     </div>
     {% endfor %}
   </div>
-</div> <!-- end moment content stripe -->
 {% endif %}
+</div>
+</div>
+</div> <!-- end moment content stripe -->
 <!-------------- COMMUNITY RECOVERY -------------->
       <div class="orange-bg white down-arrow">
         <div class="row">
