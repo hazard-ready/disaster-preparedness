@@ -68,7 +68,7 @@ body {
 #auto-location-submit {
   background-position: center center;
   background-repeat: no-repeat;
-  background-size: 30px 30px;
+  background-size: 27px 27px;
 }
 #location-submit {
   background-image: url(../img/icon-search.png);
@@ -78,8 +78,8 @@ body {
   border-radius: 3px;
 }
 .map-holder {
-/*  max-height: 300px; */
-/*  overflow: hidden; */
+  max-height: 300px;
+  overflow: hidden;
   position: relative;
 }
 #map-image {
@@ -147,7 +147,8 @@ body {
 }
 .social .title {
   font-size: 36px;
-  line-height: 2em;
+  line-height: 1.2em;
+  margin-bottom: 1em;
   text-transform: uppercase;
 }
 .social .secondary {
@@ -178,6 +179,9 @@ body {
 #geek-bar a:hover {
   color: #55578B;
 }
+#geek-bar a:active {
+  color: #FFFFFF;
+}
 .footer {
   font-size: 16px;
   line-height: 1.3em;
@@ -192,4 +196,38 @@ a:hover { color: #55578B; }
 .orange-bg a:hover { color: #FFFFFF; }
 a.button { background-color: #FF9933; }
 a.button:hover { background-color: #A6A7C4; }
-a.button.disabled { background-color: #999 !important; }
+a.button.disabled { background-color: #999; }
+
+
+/* adjustments for smaller screens */
+@media only screen and (max-width: 40em) { 
+  
+body, p {
+  font-size: .9rem;
+}  
+.project-title {
+  font-size: 50px;
+  line-height: 1.2em;
+}
+.project-subtitle {
+  font-size: 20px;
+  line-height: 1.2em;
+}
+.location-label {
+  font-size: 22px;
+  line-height: 1.2em;
+}  
+.welcome {
+  font-size: 20px;
+  line-height: 1.3em;
+}
+.chapter-title {
+  font-size: 30px;
+  line-height: 1.2em;
+}
+.social .title {
+  font-size: 32px;
+  line-height: 1.2em;
+}
+  
+}

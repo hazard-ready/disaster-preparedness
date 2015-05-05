@@ -89,6 +89,7 @@ $( document ).ready(function() {
   
   // if a search fails or a restart, enable the form
   function enableForm() {
+    $("#location-text").prop("disabled", false);
     $("#location-submit").removeClass("disabled");
     $("#auto-location-submit").removeClass("disabled");
   }
