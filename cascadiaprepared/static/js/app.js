@@ -82,6 +82,7 @@ $( document ).ready(function() {
   // during api calls, disable the form
   // TODO: add animation to show action is happening?
   function disableForm() {
+    $("#location-text").prop("disabled", true);
     $("#location-submit").addClass("disabled");
     $("#auto-location-submit").addClass("disabled");
   }
