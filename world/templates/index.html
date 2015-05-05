@@ -67,9 +67,10 @@
 
 {% if data.structured.moment.shake_snugs %}
   <div class="large-4 column">
-    <div class="row">
-      <div class="column icon shaking">
-      {% with data.shake_score as level %}
+    <div class="row group-icon">
+      <div class="medium-3 columns small-centered icon shaking">
+      {% comment %}Using "first" because data.shake_score is coming in as a list.{% endcomment %}
+      {% with data.shake_score|first as level %}
         {% if level == "Light" %}
           <img src="{% static 'img/icon-shaking-1-6.svg' %}" alt="shaking icon">
         {% elif level == "Moderate" %}
@@ -86,19 +87,51 @@
       {% endwith %}
       </div>
     </div>
-      {% for snugget in data.structured.moment.shake_snugs %}
-    <div class="row snugget">  
-        {% include "snugget_shaking.html" with snugget=snugget level=snugget.shaking_filter.rate %}
-    </div>    
-      {% endfor %}
+    <div class="group-rating row">
+      <div class="columns graph">
+        <img src="{% static 'img/icon-deformation-1-5.svg' %}" alt="deformation icon">
+      </div>
+    </div>
+    {% for snugget in data.structured.moment.shake_snugs %}
+    <div class="row snugget">
+      {% include "snugget_shaking.html" with snugget=snugget %}
+    </div>
+    {% endfor %}
   </div>
  {% endif %}
 
 {% if data.structured.moment.deform_snugs %}
   <div class="large-4 column">
-    {% include "snugget_deformation.html" with section="The Moment" deform_snugs=data.structured.moment.deform_snugs deform_level=data.deform_score %}
+    <div class="row group-icon">
+      <div class="medium-3 columns small-centered icon shaking">
+      <p>{{ data.deform_rating }}</p>
+      {% with data.deform_score as deform_level %}
+        {% if deform_level == 1 %}
+          <img src="{% static 'img/icon-deformation-1-5.svg' %}" alt="deformation icon">
+        {% elif deform_level == 2 %}
+          <img src="{% static 'img/icon-deformation-2-5.svg' %}" alt="deformation icon">
+        {% elif deform_level == 3 %}
+          <img src="{% static 'img/icon-deformation-3-5.svg' %}" alt="deformation icon">
+        {% elif deform_level == 4 %}
+          <img src="{% static 'img/icon-deformation-4-5.svg' %}" alt="deformation icon">
+        {% elif deform_level == 5 %}
+          <img src="{% static 'img/icon-deformation-5-5.svg' %}" alt="deformation icon">
+        {% endif %}
+      {% endwith %}
+      </div>
+    </div>
+    <div class="group-rating row">
+      <div class="columns graph">
+        <img src="{% static 'img/icon-deformation-1-5.svg' %}" alt="deformation icon">
+      </div>
+    </div>
+    {% for snugget in data.structured.moment.deform_snugs %}
+    <div class="row snugget">
+      {% include "snugget_deformation.html" with snugget=snugget deform_level=data.deform_score %}
+    </div>
+    {% endfor %}
   </div>
-</div>
+</div> <!-- end moment content stripe -->
 {% endif %}
 <!-------------- COMMUNITY RECOVERY -------------->
       <div class="orange-bg white down-arrow">
@@ -158,7 +191,11 @@
               {% include "snugget.html" with snugget=snugget %}
             {% endfor %}
           {% endif %}
-          {% include "snugget_deformation.html" with section="How To Prepare" deform_snugs=data.structured.prepare.deform_snugs deform_level=data.deform_score %}
+          {% for snugget in data.structured.moment.deform_snugs %}
+            <div class="row snugget">
+            {% include "snugget_deformation.html" with snugget=snugget deform_level=data.deform_score %}
+            </div>
+          {% endfor %}
         </div>
         <div class="large-4 columns">
           <div class="sub-title">Know Your Routes</div>
