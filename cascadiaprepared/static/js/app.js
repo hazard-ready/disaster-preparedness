@@ -117,5 +117,12 @@ $( document ).ready(function() {
     document.location =  encodeURI(document.location.hash + "?lat=" + lat + "&lng=" + lng + "&loc=" + location_query_text);
   }
   
+  // revealing the geek box content
+  $("#geek-bar a").click(function() {
+    $("#geek-bar").addClass("down-arrow");
+    $("#geek-content").removeClass("hide").slideDown();
+    return false;
+  });
+  
 
 });
