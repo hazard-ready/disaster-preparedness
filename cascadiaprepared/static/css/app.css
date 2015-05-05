@@ -29,6 +29,11 @@ body {
   font-size: 75px;
   line-height: 1.2em;
 }
+
+.orange-bg .project-title a {
+  color: #FFF;
+} 
+
 .project-subtitle {
   margin: 10px 0;
   font-size: 23px;
