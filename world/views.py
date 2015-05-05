@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from math import floor
 from .models import Snugget
 
 
@@ -31,7 +32,28 @@ def app_view(request):
                     elif snugget.section.name == "How To Prepare":
                         snugget_content['structured']['prepare'][groupkey].append(snugget)
                         
-            return render(request, 'index.html', {'data': snugget_content, 'has_location': True})
+                        
+            # Our moment columns are wrapped inside a centered column, which is set to a
+            # width according to how many columns we're showing.
+            base_section_width = 4
+            n_sections = 0
+            wrapper_width = 0
+            if snugget_content['structured']['moment']['tsunami_snugs']:
+                wrapper_width += base_section_width
+                n_sections += 1
+            if snugget_content['structured']['moment']['shake_snugs']:
+                wrapper_width += base_section_width
+                n_sections += 1
+            if snugget_content['structured']['moment']['deform_snugs']:
+                wrapper_width += base_section_width
+                n_sections += 1
+                        
+            return render(request, 'index.html', {
+                'data': snugget_content, 
+                'has_location': True,
+                'section_width': floor(12 / n_sections),
+                'wrapper_width': wrapper_width
+            })
 
     # if not, we'll still serve up the same template without data
     else:

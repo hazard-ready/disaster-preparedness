@@ -6,8 +6,8 @@ register = template.Library()
 
 class SnuggetNode(template.Node):
 
-    def __init__(self, snugget):
-        self.snugget = template.Variable(snugget)
+    def __init__(self, var_name):
+        self.snugget = template.Variable(var_name)
 
     def render(self, context):
         """
@@ -18,9 +18,12 @@ class SnuggetNode(template.Node):
         A lot of this is token from django.template.base's InclusionNode.
         This behavior should be changed if we upgrade to Django 1.8.
         """
-        snugget = self.snugget.resolve(context)
-        file_name = snugget.getRelatedTemplate()
-        context['snugget'] = snugget
+        try:
+            snugget = self.snugget.resolve(context)
+            file_name = snugget.getRelatedTemplate()
+            context['snugget'] = snugget
+        except (template.base.VariableDoesNotExist):
+            return ''
 
         if not getattr(self, 'nodelist', False):
             from django.template.loader import get_template, select_template
@@ -32,8 +35,7 @@ class SnuggetNode(template.Node):
             else:
                 t = get_template(file_name)
             self.nodelist = t.nodelist
-
-        return self.nodelist.render(context)
+            return self.nodelist.render(context)
 
     def get_resolved_arguments(self, context):
         """

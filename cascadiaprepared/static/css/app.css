@@ -9,6 +9,7 @@ body {
 
 /* helper classes for colors and fonts */
 .white { color: #FFFFFF; }
+.white-bg { background-color: #FFF; }
 .orange { color: #FF9933; }
 .orange-bg { background-color: #FF9933; }
 .purple { color: #55578B; }
@@ -105,8 +106,12 @@ body {
 }
 .down-arrow {
 	position: relative;
-	margin-bottom: 43px;
 }
+
+.below-arrow {
+  padding-top: 43px;
+}
+
 .down-arrow:after {
   /* Fixing some AA on webkit and FF */
   -moz-transform: scale(.9999);
