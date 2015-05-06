@@ -31,7 +31,55 @@
   <div id="home">
 
 <!-------------- TITLE AND MAP -------------->
-{% include "title_and_map.html" %}
+{% block title %}
+   <div class="orange-bg">
+      <div class="row">
+        <div class="column">
+          <div class="project-title sans-serif bold white"><a href="{% url 'index' %}">Aftershock</a></div>
+        </div>
+      </div>
+    </div>
+{% endblock title %}
+    <div class="purple-bg">
+{% block search %}
+      <!--<div class="row">-->
+      <!--  <div class="column">-->
+      <!--    <div class="project-subtitle bold orange">Customized earthquake information for Oregon</div>-->
+      <!--  </div>-->
+      <!--</div>    -->
+      <div class="row">
+        <div class="column">
+          <div class="location-label bold white">Find your Cascadia quake story:</div>
+        </div>
+      </div>
+      <div class="row location-form">
+        <div class="column">
+          <form>
+             <div class="row">
+              <div class="column">
+               <div class="row collapse postfix-radius">
+                  <div class="small-10 columns form-text-input">
+                    <input id="location-text" type="text" placeholder="Enter your location" />
+                  </div>
+                  <div class="small-1 column form-icon-button">
+                    <a id="location-submit" class="orange-bg button postfix"></a>
+                  </div>
+                  <div class="small-1 column form-icon-button">
+                    <a id="auto-location-submit" class="orange-bg button postfix radius"></a>
+                  </div>
+                </div>
+              </div>
+             </div>
+          </form>
+        </div>
+      </div>
+{% endblock search %}
+{% block map %}
+      <div class="center map-holder">
+          <image id="map-image" src="" />
+      </div>
+{% endblock map %}
+    </div>
 
 {% block main-content %}
     <div class="orange-bg">
