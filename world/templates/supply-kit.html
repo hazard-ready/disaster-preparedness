@@ -1,27 +1,87 @@
 {% load staticfiles %}
 
-  {% for zone in zones %}
-    {% if zone.zoneid == 1 %}
-      <p>Experts suggest you have the following (located in a safe spot away from your home):</p>
-      <div class="supply-kit-icon supply"></div>
-      <div class="supply-kit-icon food"></div>
-      <div class="supply-kit-icon water"></div>
-    {% elif zone.zoneid == 2 %}
       <p>Experts suggest you have the following:</p>
-      <div class="supply-kit-icon supply"></div>
-      <div class="supply-kit-icon food"></div>
-      <div class="supply-kit-icon water"></div>
-    {% elif zone.zoneid == 3 %}
-      <p>Experts suggest you have the following:</p>
-      <div class="supply-kit-icon supply"></div>
-      <div class="supply-kit-icon food"></div>
-      <div class="supply-kit-icon water"></div>
-    {% elif zone.zoneid == 4 %}
-      <p>Experts suggest you have the following:</p>
-      <div class="supply-kit-icon supply"></div>
-      <div class="supply-kit-icon food"></div>
-      <div class="supply-kit-icon water"></div>
-    {% endif %}
-  {% endfor %}
 
-      <p>For more info on what should be in your kit, check out <a href="http://www.opb.org/news/series/unprepared/a-visual-guide-to-emergency-supplies-everyone-needs/">this guide from OPB</a> or the <a href="http://www.redcross.org/mobile-apps/earthquake-app">earthquake app from the Red Cross</a>.</p>
+{% for zone in zones %}
+  {% if zone.zoneid == 2 %}
+  
+    <div class="row">
+          <div class="small-2 columns"><div class="supply-kit-icon"></div></div>
+          <div class="small-3 columns"><h1 class="purple text-right">4</h1></div>
+          <div class="small-7 columns">
+              <p class="sans-serif">Weeks of supplies</br>per person</p>
+          </div>
+    </div>
+  
+    <div class="row">
+          <div class="small-2 columns"><div class="supply-kit-icon water"></div></div>
+          <div class="small-3 columns"><h1 class="purple text-right">28</h1></div>
+          <div class="small-7 columns">
+              <p class="sans-serif">Gallons of water</br>per person</p>
+          </div>
+    </div>
+
+    <div class="row">
+          <div class="small-2 columns"><div class="supply-kit-icon food"></div></div>
+          <div class="small-3 columns"><h1 class="purple text-right">84</h1></div>
+          <div class="small-7 columns">
+              <p class="sans-serif">Meals</br>per person</p>
+          </div>
+    </div>
+    
+  {% elif zone.zoneid == 3 %}
+
+    <div class="row">
+          <div class="small-2 columns"><div class="supply-kit-icon"></div></div>
+          <div class="small-3 columns"><h1 class="purple text-right">2</h1></div>
+          <div class="small-7 columns">
+              <p class="sans-serif">Weeks of supplies</br>per person</p>
+          </div>
+    </div>
+  
+    <div class="row">
+          <div class="small-2 columns"><div class="supply-kit-icon water"></div></div>
+          <div class="small-3 columns"><h1 class="purple text-right">14</h1></div>
+          <div class="small-7 columns">
+              <p class="sans-serif">Gallons of water</br>per person</p>
+          </div>
+    </div>
+
+    <div class="row">
+          <div class="small-2 columns"><div class="supply-kit-icon food"></div></div>
+          <div class="small-3 columns"><h1 class="purple text-right">42</h1></div>
+          <div class="small-7 columns">
+              <p class="sans-serif">Meals</br>per person</p>
+          </div>
+    </div>
+
+  {% elif zone.zoneid == 4 %}
+
+    <div class="row">
+          <div class="small-2 columns"><div class="supply-kit-icon"></div></div>
+          <div class="small-3 columns"><h1 class="purple text-right">2</h1></div>
+          <div class="small-7 columns">
+              <p class="sans-serif">Weeks of supplies</br>per person</p>
+          </div>
+    </div>
+  
+    <div class="row">
+          <div class="small-2 columns"><div class="supply-kit-icon water"></div></div>
+          <div class="small-3 columns"><h1 class="purple text-right">14</h1></div>
+          <div class="small-7 columns">
+              <p class="sans-serif">Gallons of water</br>per person</p>
+          </div>
+    </div>
+
+    <div class="row">
+          <div class="small-2 columns"><div class="supply-kit-icon food"></div></div>
+          <div class="small-3 columns"><h1 class="purple text-right">42</h1></div>
+          <div class="small-7 columns">
+              <p class="sans-serif">Meals</br>per person</p>
+          </div>
+    </div>
+
+  {% endif %}
+{% endfor %}
+
+<p>For more info on what should be in your kit, check out <a href="http://www.opb.org/news/series/unprepared/a-visual-guide-to-emergency-supplies-everyone-needs/">this guide from OPB</a> or the <a href="http://www.redcross.org/prepare/location/home-family/get-kit">these steps from the Red Cross</a>.</p>
