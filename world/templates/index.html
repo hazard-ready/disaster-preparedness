@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load show_snugget %}
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
@@ -49,7 +50,7 @@
               <div class="chapter-title sans-serif">The Moment</div>
               <div class="chapter-content">
               {% for snugget in data.structured.moment.impact_snugs %}
-                {% include "snugget.html" with snugget=snugget %}
+                {% show_snugget snugget %}
               {% endfor %}
               </div>
             </div>
@@ -66,7 +67,7 @@
                 <div class="section-icon tsunami"></div>
                 <div class="section-title center sans-serif orange">Tsunami</div>
                 {% for snugget in data.structured.moment.tsunami_snugs %}
-                  {% include "snugget_tsunami.html" with snugget=snugget %}
+                  {% show_snugget snugget %}
                 {% endfor %}
               </div>
               {% endif %}
@@ -94,7 +95,7 @@
                 {% endwith %}
                 </div>
                 {% for snugget in data.structured.moment.shake_snugs %}
-                  {% include "snugget_shaking.html" with snugget=snugget %}
+                  {% show_snugget snugget %}
                 {% endfor %}
               </div>
               {% endif %}
@@ -117,7 +118,7 @@
                 {% endif %}
                 {% endwith %}
                 {% for snugget in data.structured.moment.deform_snugs %}
-                  {% include "snugget_deformation.html" with snugget=snugget deform_level=data.deform_score %}
+                  {% show_snugget snugget %}
                 {% endfor %}
               </div>
               {% endif %}
@@ -134,7 +135,7 @@
               <div class="chapter-title sans-serif">Your Community’s Recovery</div>
               <div class="chapter-content">
               {% for snugget in data.structured.recovery.impact_snugs %}
-                {% include "snugget.html" with snugget=snugget %}
+                {% show_snugget snugget %}
               {% endfor %}
               </div>
             </div>
@@ -164,7 +165,7 @@
               <div class="chapter-title sans-serif">How To Prepare</div>
               <div class="chapter-content">
               {% for snugget in data.structured.prepare.impact_snugs %}
-                {% include "snugget.html" with snugget=snugget %}
+                {% show_snugget snugget %}
               {% endfor %}
               </div>
             </div>
@@ -184,11 +185,11 @@
           <div class="section-title center sans-serif orange">Your Home</div>
           {% if data.structured.prepare.shake_snugs %}
             {% for snugget in data.structured.prepare.shake_snugs %}
-              {% include "snugget.html" with snugget=snugget %}
+              {% show_snugget snugget %}
             {% endfor %}
           {% endif %}
-          {% for snugget in data.structured.moment.deform_snugs %}
-            {% include "snugget_deformation.html" with snugget=snugget deform_level=data.deform_score %}
+          {% for snugget in data.structured.prepare.deform_snugs %}
+            {% show_snugget snugget %}
           {% endfor %}
         </div>
         <div class="large-4 columns">
