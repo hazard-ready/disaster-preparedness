@@ -47,11 +47,16 @@ def app_view(request):
             if snugget_content['structured']['moment']['deform_snugs']:
                 wrapper_width += base_section_width
                 n_sections += 1
-                        
+            
+            try:
+                section_width = int(floor(12 / n_sections))
+            except ZeroDivisionError:
+                section_width = 0
+                
             return render(request, 'index.html', {
                 'data': snugget_content, 
                 'has_location': True,
-                'section_width': int(floor(12 / n_sections)),
+                'section_width': section_width,
                 'wrapper_width': wrapper_width
             })
 
