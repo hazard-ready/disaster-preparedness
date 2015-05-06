@@ -1,15 +1,27 @@
 {% load staticfiles %}
 
+  {% for zone in zones %}
+    {% if zone.zoneid == 1 %}
+      <p>Experts suggest you have the following (located in a safe spot away from your home):</p>
+      <div class="supply-kit-icon supply"></div>
+      <div class="supply-kit-icon food"></div>
+      <div class="supply-kit-icon water"></div>
+    {% elif zone.zoneid == 2 %}
       <p>Experts suggest you have the following:</p>
-
-{% for zone in zones %}
-  {% if zone.zoneid == 2 %}
-    <img src="{% static 'img/4weekkit.svg' %}" alt="Recovery Graph">
-  {% elif zone.zoneid == 3 %}
-    <img src="{% static 'img/2weekkit.svg' %}" alt="Recovery Graph">
-  {% elif zone.zoneid == 4 %}
-    <img src="{% static 'img/2weekkit.svg' %}" alt="Recovery Graph">
-  {% endif %}
-{% endfor %}
+      <div class="supply-kit-icon supply"></div>
+      <div class="supply-kit-icon food"></div>
+      <div class="supply-kit-icon water"></div>
+    {% elif zone.zoneid == 3 %}
+      <p>Experts suggest you have the following:</p>
+      <div class="supply-kit-icon supply"></div>
+      <div class="supply-kit-icon food"></div>
+      <div class="supply-kit-icon water"></div>
+    {% elif zone.zoneid == 4 %}
+      <p>Experts suggest you have the following:</p>
+      <div class="supply-kit-icon supply"></div>
+      <div class="supply-kit-icon food"></div>
+      <div class="supply-kit-icon water"></div>
+    {% endif %}
+  {% endfor %}
 
       <p>For more info on what should be in your kit, check out <a href="http://www.opb.org/news/series/unprepared/a-visual-guide-to-emergency-supplies-everyone-needs/">this guide from OPB</a> or the <a href="http://www.redcross.org/mobile-apps/earthquake-app">earthquake app from the Red Cross</a>.</p>
