@@ -110,17 +110,9 @@ body {
   font-size: 1.2em;
   line-height: 1.3em;
 }
-.snugget {
-  margin-bottom: 2em;
-}
 .down-arrow {
 	position: relative;
 }
-
-.below-arrow {
-  padding-top: 43px;
-}
-
 .down-arrow:after {
   /* Fixing some AA on webkit and FF */
   -moz-transform: scale(.9999);
@@ -137,6 +129,30 @@ body {
   position: absolute;
   pointer-events: none;
   width: 0;
+}
+.below-arrow {
+  padding-top: 43px;
+}
+.section-icon {
+  margin: auto;
+  width: 80px;
+  height: 80px;
+  background: transparent url(../img/icons-sections.png) no-repeat 0 0;
+  background-size: 80px auto;
+}
+.section-icon.kit         { background-position: 0 -80px; }
+.section-icon.community   { background-position: 0 -160px; }
+.section-icon.leaders     { background-position: 0 -240px; }
+.section-icon.home        { background-position: 0 -320px; }
+.section-icon.deformation { background-position: 0 -400px; }
+.section-icon.routes      { background-position: 0 -480px; }
+.section-icon.shaking     { background-position: 0 -560px; }
+.section-title {
+  text-transform: uppercase;
+  margin: 15px 0;
+}
+.snugget {
+  margin-bottom: 2em;
 }
 
 
