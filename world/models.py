@@ -228,7 +228,6 @@ class TextSnugget(Snugget):
     content = models.TextField()
 
     def getRelatedTemplate(self):
-        print("text template name")
         return "snugget_text.html"
 
     def __str__(self):
@@ -239,7 +238,6 @@ class EmbedSnugget(Snugget):
     embed = EmbedVideoField()
 
     def getRelatedTemplate(self):
-        print("embed template name")
         return "snugget_embed.html"
 
     def __str__(self):
