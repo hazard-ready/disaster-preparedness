@@ -19,7 +19,7 @@ body {
 .sans-serif.bold { font-family: 'HelveticaNeueW01-95Blac'; }
 .center { text-align: center; }
 .vert-pad-large { padding: 40px 0; }
-.vert-pad-medium {padding: 25px 0; }
+.vert-pad-medium {padding: 28px 0; }
 .vert-pad-small { padding: 15px 0; }
 
 
@@ -40,10 +40,9 @@ body {
   line-height: 1.2em;
 }
 .location-label {
-  margin: 10px 0;
-  font-size: 38px;
+  margin: 15px 0 12px 0;
+  font-size: 34px;
   line-height: 1.2em;
-  text-transform: uppercase;
 }
 #location-text {
   color: #55578B;
@@ -101,7 +100,7 @@ body {
   padding: 30px 0;
 }
 .chapter-title {
-  margin-bottom: .5em;
+  margin-bottom: .2em;
   font-size: 46px;
   line-height: 1.2em;
   text-transform: uppercase;
@@ -148,14 +147,48 @@ body {
 .section-icon.routes      { background-position: 0 -480px; }
 .section-icon.shaking     { background-position: 0 -560px; }
 .section-title {
+  font-size: 24px;
+  line-height: 1.2em;
   text-transform: uppercase;
   margin: 15px 0;
 }
 .snugget {
   margin-bottom: 2em;
 }
-
-
+.value-graph {
+  width: 170px;
+  margin: auto;
+  margin-bottom: 1em;
+}
+.value-graph .intensity,
+.value-graph .deformation {
+  display: inline-block;
+  height: 59px;
+  background: transparent url(../img/intensity-bars.png) no-repeat 0 0;
+  background-size: 85px auto;
+  overflow: hidden;
+}
+.value-graph .intensity {
+  width: 85px;
+}
+.value-graph .deformation {
+  width: 70px;
+}
+.value-graph .val-1 { background-position: 0 -59px; }
+.value-graph .val-2 { background-position: 0 -118px; }
+.value-graph .val-3 { background-position: 0 -177px; }
+.value-graph .val-4 { background-position: 0 -236px; }
+.value-graph .val-5 { background-position: 0 -295px; }
+.value-graph .val-5 { background-position: 0 -354px; }
+.value-graph .numerical {
+  display: inline-block;
+  width: 85px;
+  font-size: 30px;
+}
+.value-graph .numerical span {
+  padding-left: 10px;
+  font-size: 50px;
+}
 
 /* footer styles */
 .social {
