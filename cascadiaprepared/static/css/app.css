@@ -189,6 +189,10 @@ body {
   padding-left: 10px;
   font-size: 50px;
 }
+.supply-kit {
+  font-size: 16px;
+  line-height: 1.2em;
+}
 .supply-kit-icon {
   width: 43px;
   height: 45px;
@@ -198,7 +202,21 @@ body {
 }
 .supply-kit-icon.food { background-position: 0 -45px; }
 .supply-kit-icon.water { background-position: 0 -90px; }
-
+.supply-kit .big-num {
+  font-size: 50px;
+  line-height: .9em;
+  margin: 0 15px;
+}
+.supply-kit .text-label {
+  padding-top: .2em;
+}
+.supply-kit > div {
+  margin: 30px 0;
+}
+.supply-kit span {
+  font-size: .75em;
+  line-height: 1em;
+}
 
 /* footer styles */
 .social {
