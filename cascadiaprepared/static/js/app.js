@@ -12,6 +12,8 @@ $( document ).ready(function() {
   var mapbox_initial_lng = "-120.5";
   var mapbox_initial_lat = "44.1";
   var mapbox_initial_zoom_level = "6";
+  // Default to a map of all of Oregon.
+  var image_url = "http://api.tiles.mapbox.com/v4/" + mapbox_map + "/" + mapbox_initial_lng + "," + mapbox_initial_lat + "," + mapbox_initial_zoom_level + "/" + mapbox_image_size + ".png64?access_token=" + mapbox_access_token;
     
   // convenience function to extract url parameters
   function getURLParameter(name) {
@@ -26,18 +28,14 @@ $( document ).ready(function() {
   // grab the position, if possible  
   var lat = getURLParameter('lat');
   var lng = getURLParameter('lng');
-  // load up an appropriate mapbox image
-  // TODO: better validation of lat/lon values
-  if (lat && lng) {
-    var image_url = "http://api.tiles.mapbox.com/v4/" + mapbox_map + "/pin-m+" + mapbox_pin_color + "(" + lng + "," + lat + ")/" + lng + "," + lat + "," + mapbox_zoom_level + "/" + mapbox_image_size + ".png64?access_token=" + mapbox_access_token;
-    // request new map image
-    $("#map-image").attr("src", image_url); 
+  
+  // Check if HTML is specifying a default map (like on an error screen).  If not, use provided lat/lng.
+  if ($("#map-image.default").length === 0 && (lat && lng)) {
+    // TODO: better validation of lat/lon values
+    image_url = image_url = "http://api.tiles.mapbox.com/v4/" + mapbox_map + "/pin-m+" + mapbox_pin_color + "(" + lng + "," + lat + ")/" + lng + "," + lat + "," + mapbox_zoom_level + "/" + mapbox_image_size + ".png64?access_token=" + mapbox_access_token;
   }
-  // initially load a map of all of oregon
-  else {  
-    var image_url = "http://api.tiles.mapbox.com/v4/" + mapbox_map + "/" + mapbox_initial_lng + "," + mapbox_initial_lat + "," + mapbox_initial_zoom_level + "/" + mapbox_image_size + ".png64?access_token=" + mapbox_access_token;
-    $("#map-image").attr("src", image_url);
-  }
+  $("#map-image").attr("src", image_url);
+  
 
   // grab and set any previously entered query text
   var loc = getURLParameter('loc');
