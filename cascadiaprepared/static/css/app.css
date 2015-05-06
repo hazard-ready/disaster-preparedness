@@ -19,7 +19,7 @@ body {
 .sans-serif.bold { font-family: 'HelveticaNeueW01-95Blac'; }
 .center { text-align: center; }
 .vert-pad-large { padding: 40px 0; }
-.vert-pad-medium {padding: 28px 0; }
+.vert-pad-medium { padding: 30px 0; }
 .vert-pad-small { padding: 15px 0; }
 
 
@@ -133,7 +133,7 @@ body {
   padding-top: 43px;
 }
 .section-icon {
-  margin: auto;
+  margin: 30px auto 0;
   width: 80px;
   height: 80px;
   background: transparent url(../img/icons-sections.png) no-repeat 0 0;
@@ -151,9 +151,6 @@ body {
   line-height: 1.2em;
   text-transform: uppercase;
   margin: 15px 0;
-}
-.snugget {
-  margin-bottom: 2em;
 }
 .value-graph {
   width: 170px;
@@ -240,6 +237,7 @@ body {
 }
 .social-icon {
   display: inline-block;
+  margin: 0 .1em;
   width: 32px;
   height: 32px;
   background: #FF9933 url(../img/icons-social.png) no-repeat 0 0;
@@ -292,9 +290,10 @@ a.button.disabled { background-color: #999; }
 /* adjustments for smaller screens */
 @media only screen and (max-width: 40em) { 
   
-body, p {
-  font-size: .9rem;
-}  
+#location-submit,
+#auto-location-submit {
+  background-size: 23px 23px;
+}
 .project-title {
   font-size: 50px;
   line-height: 1.2em;
