@@ -68,6 +68,24 @@
               <div class="large-{{ section_width }} column">
                 <div class="section-icon shaking"></div>
                 <div class="section-title center sans-serif orange">Intensity</div>
+                <div class="section-scale">
+                {% comment %}Using "first" because data.shake_score is coming in as a list.{% endcomment %}
+                {% with data.shake_score|first as level %}
+                {% if level == "Light" %}
+                  <div class="value-graph"><div class="intensity val-1"></div><div class="numerical orange sans-serif"><span>1</span>/6</div></div>
+                {% elif level == "Moderate" %}
+                  <div class="value-graph"><div class="intensity val-2"></div><div class="numerical orange sans-serif"><span>2</span>/6</div></div>
+                {% elif level == "Strong" %}
+                  <div class="value-graph"><div class="intensity val-3"></div><div class="numerical orange sans-serif"><span>3</span>/6</div></div>
+                {% elif level == "Very Strong" %}
+                  <div class="value-graph"><div class="intensity val-4"></div><div class="numerical orange sans-serif"><span>4</span>/6</div></div>
+                {% elif level == "Severe" %}
+                  <div class="value-graph"><div class="intensity val-5"></div><div class="numerical orange sans-serif"><span>5</span>/6</div></div>
+                {% elif level == "Violent" %}
+                  <div class="value-graph"><div class="intensity val-6"></div><div class="numerical orange sans-serif"><span>6</span>/6</div></div>
+                {% endif %}
+                {% endwith %}
+                </div>
                 {% for snugget in data.structured.moment.shake_snugs %}
                   {% include "snugget_shaking.html" with snugget=snugget %}
                 {% endfor %}
@@ -78,6 +96,19 @@
               <div class="large-{{ section_width }} column">
                 <div class="section-icon deformation"></div>
                 <div class="section-title center sans-serif orange">Ground Deformation</div>
+                {% with data.deform_score as deform_level %}
+                {% if deform_level == 1 %}
+                  <div class="value-graph"><div class="deformation val-1"></div><div class="numerical orange sans-serif"><span>1</span>/5</div></div>
+                {% elif deform_level == 2 %}
+                  <div class="value-graph"><div class="deformation val-2"></div><div class="numerical orange sans-serif"><span>2</span>/5</div></div>
+                {% elif deform_level == 3 %}
+                  <div class="value-graph"><div class="deformation val-3"></div><div class="numerical orange sans-serif"><span>3</span>/5</div></div>
+                {% elif deform_level == 4 %}
+                  <div class="value-graph"><div class="deformation val-4"></div><div class="numerical orange sans-serif"><span>4</span>/5</div></div>
+                {% elif deform_level == 5 %}
+                  <div class="value-graph"><div class="deformation val-5"></div><div class="numerical orange sans-serif"><span>5</span>/5</div></div>
+                {% endif %}
+                {% endwith %}
                 {% for snugget in data.structured.moment.deform_snugs %}
                   {% include "snugget_deformation.html" with snugget=snugget deform_level=data.deform_score %}
                 {% endfor %}
