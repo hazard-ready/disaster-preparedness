@@ -266,6 +266,19 @@ body {
 }
 
 
+/* loading spinner during geolocation */
+.loading {
+  position: fixed;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(255,255,255,.5) url(../img/thinking.gif) no-repeat center center;
+  background-size: 110px 110px;
+}
+
+
 /* overriding foundation (should use sass/scss/less instead!) */
 a { color: #FF9933; }
 a:hover { color: #55578B; }
