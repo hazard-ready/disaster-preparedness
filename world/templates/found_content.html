@@ -18,7 +18,6 @@
           </div>
         </div>
       </div>
-      
       <div class="white-bg below-arrow">
         <div class="row vert-pad-large">
           <div class="large-{{ wrapper_width }} large-centered columns">
@@ -32,7 +31,6 @@
                 {% endfor %}
               </div>
               {% endif %}
-              
               {% if data.structured.moment.shake_snugs %}
               <div class="large-{{ section_width }} column">
                 <div class="section-icon shaking"></div>
@@ -60,7 +58,6 @@
                 {% endfor %}
               </div>
               {% endif %}
-              
               {% if data.structured.moment.deform_snugs %}
               <div class="large-{{ section_width }} column">
                 <div class="section-icon deformation"></div>
@@ -85,9 +82,8 @@
               {% endif %}
             </div>
           </div>
-        </div> <!-- end moment content stripe -->
+        </div>
       </div>
-      
 <!-------------- COMMUNITY RECOVERY -------------->
       <div class="orange-bg white down-arrow">
         <div class="row">
@@ -105,7 +101,7 @@
       </div>
     <div class="white-bg below-arrow">
       <div class="row vert-pad-large">
-        <div class="large-offset-2 large-10 columns end">
+        <div class="column">
         {% for zone in data.impact_zones %}
           {% if zone.zoneid == 2 %}
           <img src="{% static 'img/recovery-graph-coast.svg' %}" alt="Recovery Graph">
@@ -134,48 +130,46 @@
         </div>
       </div>
       <div class="white-bg below-arrow">
-      <div class="vert-pad-large">
-      <div class="row">
-        <div class="large-4 columns">
-          <div class="section-icon kit"></div>
-          <div class="section-title center sans-serif orange">Building Your Supply Kit</div>
-          {% include "supply-kit.html" with zones=data.impact_zones %}
-        </div>
-        <div class="large-4 columns">
-          <div class="section-icon home"></div>
-          <div class="section-title center sans-serif orange">Your Home</div>
-          {% if data.structured.prepare.shake_snugs %}
-            {% for snugget in data.structured.prepare.shake_snugs %}
-              {% show_snugget snugget %}
-            {% endfor %}
-          {% endif %}
-          {% for snugget in data.structured.prepare.deform_snugs %}
-            {% show_snugget snugget %}
-          {% endfor %}
-        </div>
-        <div class="large-4 columns">
-          <div class="section-icon routes"></div>
-          <div class="section-title center sans-serif orange">Know Your Routes</div>
-          <p>Make sure your family and friends know where to gather after the earthquake and how to get there. You'll need a reconnection plan. Do you cross a bridge on your way to school or work? It could be unsafe to cross after an earthquake. Do you need an evacuation route? If you're in the tsunami zone, you do. <a href="http://www.oregon.gov/DOGAMI/pages/earthquakes/Coastal/Tsubrochures.aspx">Find your route.</a></p> 
-          <p>Know that some major roads won't be safe or passable during and after an earthquake. <a href="http://www.oregon.gov/ODOT/HWY/OOM/Pages/contact_us.aspx">Ask the Oregon Department of Transportation</a> to find out which routes in your area to expect will be down.</p>
+        <div class="vert-pad-large">
+          <div class="row">
+            <div class="large-4 columns">
+              <div class="section-icon kit"></div>
+              <div class="section-title center sans-serif orange">Your Supply Kit</div>
+              {% include "supply-kit.html" with zones=data.impact_zones %}
+            </div>
+            <div class="large-4 columns">
+              <div class="section-icon home"></div>
+              <div class="section-title center sans-serif orange">Your Home</div>
+              {% if data.structured.prepare.shake_snugs %}
+                {% for snugget in data.structured.prepare.shake_snugs %}
+                  {% show_snugget snugget %}
+                {% endfor %}
+              {% endif %}
+              {% for snugget in data.structured.prepare.deform_snugs %}
+                {% show_snugget snugget %}
+              {% endfor %}
+            </div>
+            <div class="large-4 columns">
+              <div class="section-icon routes"></div>
+              <div class="section-title center sans-serif orange">Know Your Routes</div>
+              <p>Make sure your family and friends know where to gather after the earthquake and how to get there. You'll need a reconnection plan. Do you cross a bridge on your way to school or work? It could be unsafe to cross after an earthquake. Do you need an evacuation route? If you're in the tsunami zone, you do. <a href="http://www.oregon.gov/DOGAMI/pages/earthquakes/Coastal/Tsubrochures.aspx">Find your route.</a></p> 
+              <p>Know that some major roads won't be safe or passable during and after an earthquake. <a href="http://www.oregon.gov/ODOT/HWY/OOM/Pages/contact_us.aspx">Ask the Oregon Department of Transportation</a> to find out which routes in your area to expect will be down.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="large-4 columns">
+              <div class="section-icon leaders"></div>
+              <div class="section-title center sans-serif orange">Know Your Leaders</div>
+              <p>Contacting local officials with questions and concerns can further preparedness efforts in your community. These include finding <a href="http://www4.cbs.state.or.us/ex/all/mylicsearch/index.cfm?fuseaction=search.get_name_results">building officials</a> who can assess potentially vulnerable buildings, leaders of <a href="http://www.oregon.gov/osp/sfm/pages/local_lepc_information.aspx">local emergency planning committees</a> and your <a href="http://www.commoncause.org/take-action/find-elected-officials/">elected officials</a>.</p>
+            </div>
+            <div class="large-4 columns end">
+              <div class="section-icon community"></div>
+              <div class="section-title center sans-serif orange">The Importance of Community</div>
+              <p>The most crucial thing you can do the increase the resiliency of your community is connect with your neighbors to plan as a group. One way to do this is through Community Emergency Response Teams. <a href="https://www.fema.gov/community-emergency-response-teams">Find out how to join or start a community team.</a></p>
+            </div>
+          </div>
         </div>
       </div>
-      
-      <div class="row">
-        <div class="large-4 columns">
-          <div class="section-icon leaders"></div>
-          <div class="section-title center sans-serif orange">Know Your Leaders</div>
-          <p>Contacting local officials with questions and concerns can further preparedness efforts in your community. These include finding <a href="http://www4.cbs.state.or.us/ex/all/mylicsearch/index.cfm?fuseaction=search.get_name_results">building officials</a> who can assess potentially vulnerable buildings, leaders of <a href="http://www.oregon.gov/osp/sfm/pages/local_lepc_information.aspx">local emergency planning committees</a> and your <a href="http://www.commoncause.org/take-action/find-elected-officials/">elected officials</a>.</p>
-        </div>
-        <div class="large-4 columns end">
-          <div class="section-icon community"></div>
-          <div class="section-title center sans-serif orange">The Importance of Community</div>
-          <p>The most crucial thing you can do the increase the resiliency of your community is connect with your neighbors to plan as a group. One way to do this is through Community Emergency Response Teams. <a href="https://www.fema.gov/community-emergency-response-teams">Find out how to join or start a community team.</a></p>
-        </div>
-      </div>
-      </div>
-      </div>
-
 <!-------------- SOCIAL -------------->
 {% include "social.html" %}
 

@@ -78,11 +78,11 @@ $( document ).ready(function() {
   });
   
   // during api calls, disable the form
-  // TODO: add animation to show action is happening?
   function disableForm() {
     $("#location-text").prop("disabled", true);
     $("#location-submit").addClass("disabled");
     $("#auto-location-submit").addClass("disabled");
+    $(".loading").show();
   }
   
   // if a search fails or a restart, enable the form
@@ -90,6 +90,7 @@ $( document ).ready(function() {
     $("#location-text").prop("disabled", false);
     $("#location-submit").removeClass("disabled");
     $("#auto-location-submit").removeClass("disabled");
+    $(".loading").hide();
   }
   
   // request geocoding from google
