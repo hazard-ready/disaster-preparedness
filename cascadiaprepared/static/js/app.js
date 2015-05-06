@@ -126,5 +126,30 @@ $( document ).ready(function() {
     return false;
   });
   
+  function openSocialPopup(siteName, event) {
+    var url = '',
+      title = '',
+      width = 500,
+      height = 300,
+      left = (screen.width / 2) - (width / 2),
+      top = (screen.height / 2) - (height / 2);
+    switch (siteName) {
+      case 'facebook':
+        url = 'https://www.facebook.com/sharer/sharer.php?app_id=390011161186648&sdk=joey&u=http%3A%2F%2Fopb.org%2Faftershock&display=popup&ref=plugin&src=share_button';
+        break;
+      case 'twitter':
+        url = 'https://twitter.com/intent/tweet?text=How%20will%20a%209.0%20earthquake%20impact%20you%3F%20Find%20out%20with%20the%20new%20Aftershock%20app.%20http%3A%2F%2Ftiny.cc%2Fgjerxx%20%23UnpreparedNW%20%40OPB%20%40stickyco';
+        break;
+      default:
+        return;
+    }
+    window.open(url, title,'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top + "'");
+  }
+  
+  $('.social-icon').click(function(event) {
+    var dest = $(this).data('site');
+    openSocialPopup(dest, event);
+  });
+  
 
 });

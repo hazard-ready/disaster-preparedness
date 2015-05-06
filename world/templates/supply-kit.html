@@ -4,22 +4,12 @@
 
 {% for zone in zones %}
   {% if zone.zoneid == 2 %}
-      <div class="row">
-        <div class="column">
-          <img src="{% static 'img/4weekkit.svg' %}" alt="Recovery Graph">
-        </div>
-      </div>
+    <img src="{% static 'img/4weekkit.svg' %}" alt="Recovery Graph">
   {% elif zone.zoneid == 3 %}
-      <div class="row">
-        <div class="column">
-          <img src="{% static 'img/2weekkit.svg' %}" alt="Recovery Graph">
-        </div>
-      </div>
+    <img src="{% static 'img/2weekkit.svg' %}" alt="Recovery Graph">
   {% elif zone.zoneid == 4 %}
-      <div class="row">
-        <div class="column">
-          <img src="{% static 'img/2weekkit.svg' %}" alt="Recovery Graph">
-        </div>
-      </div>
+    <img src="{% static 'img/2weekkit.svg' %}" alt="Recovery Graph">
   {% endif %}
 {% endfor %}
+
+      <p>For more info on what should be in your kit, check out <a href="http://www.opb.org/news/series/unprepared/a-visual-guide-to-emergency-supplies-everyone-needs/">this guide from OPB</a> or the <a href="http://www.redcross.org/mobile-apps/earthquake-app">earthquake app from the Red Cross</a>.</p>
