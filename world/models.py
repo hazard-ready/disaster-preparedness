@@ -201,7 +201,8 @@ class Snugget(models.Model):
         if (merge_deform == True):
             deform_snuggets = landslide_snuggets | liquifaction_snuggets
             both_scores = list(liquifaction_scores) + list(landslide_scores)
-            deform_rating = max(both_scores)
+            if both_scores:
+                deform_rating = max(both_scores)
         
         impact_zones = qs_impacts.values()
 
