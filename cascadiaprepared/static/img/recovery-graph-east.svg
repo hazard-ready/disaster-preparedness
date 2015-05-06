@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="584px" height="88px" viewBox="0 0 584 88" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+<svg width="948px" height="92px" viewBox="0 0 948 92" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.1 (12002) - http://www.bohemiancoding.com/sketch -->
     <title>East Recovery Graph</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="east" sketch:type="MSLayerGroup" transform="translate(7.000000, 20.000000)">
-            <path d="M507,2.12398228 L507,66.5947677" id="Line" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
-            <text id="SIX-WEEKS" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#FDA938">
-                <tspan x="511" y="10">SIX WEEKS</tspan>
-            </text>
-            <path d="M336,2.12398228 L336,66.5947677" id="Line" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
-            <text id="ONE-MONTH" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#FDA938">
-                <tspan x="340" y="10">ONE MONTH</tspan>
-            </text>
-            <path d="M168,2.12398228 L168,66.5947677" id="Line" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
-            <text id="TWO-WEEKS" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#FDA938">
-                <tspan x="171" y="10">TWO WEEKS</tspan>
-            </text>
-            <rect id="natural-gas" fill="#81C6C2" sketch:type="MSShapeGroup" x="0" y="42" width="575" height="10" rx="8"></rect>
-            <text id="NATURAL-GAS" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#003366">
-                <tspan x="3" y="38">NATURAL GAS</tspan>
-            </text>
+        <g id="Graphs" sketch:type="MSArtboardGroup" transform="translate(-93.000000, -1296.000000)">
+            <g id="East-Recovery-Graph" sketch:type="MSLayerGroup" transform="translate(92.000000, 1295.000000)">
+                <g id="Page-1">
+                    <g id="east">
+                        <path d="M809.705882,1.76460729 L809.705882,92.1367187" id="Line" stroke="#FFDEBC" stroke-width="2" sketch:type="MSShapeGroup"></path>
+                        <g id="SIX-WEEKS" transform="translate(842.647059, 0.000000)" font-size="15" font-family="Helvetica" fill="#FF9933" sketch:type="MSTextLayer" font-weight="bold">
+                            <text>
+                                <tspan x="0" y="15">SIX WEEKS</tspan>
+                            </text>
+                        </g>
+                        <path d="M528.058824,1.76460729 L528.058824,92.1367187" id="Line" stroke="#FFDEBC" stroke-width="2" sketch:type="MSShapeGroup"></path>
+                        <g id="ONE-MONTH" transform="translate(561.000000, 0.000000)" font-size="15" font-family="Helvetica" fill="#FF9933" sketch:type="MSTextLayer" font-weight="bold">
+                            <text>
+                                <tspan x="0" y="15">ONE MONTH</tspan>
+                            </text>
+                        </g>
+                        <path d="M251.352941,1.76460729 L251.352941,92.1367187" id="Line" stroke="#FFDEBC" stroke-width="2" sketch:type="MSShapeGroup"></path>
+                        <g id="TWO-WEEKS" transform="translate(282.647059, 0.000000)" font-size="15.0715308" font-family="Helvetica" fill="#FF9933" sketch:type="MSTextLayer" font-weight="bold">
+                            <text>
+                                <tspan x="0" y="15">TWO WEEKS</tspan>
+                            </text>
+                        </g>
+                        <rect id="natural-gas" fill="#A9AACC" sketch:type="MSShapeGroup" x="1" y="57" width="947.058824" height="18.5"></rect>
+                        <g id="NATURAL-GAS" transform="translate(0.941176, 33.000000)" fill="#55578B" font-size="14" font-family="Helvetica" line-spacing="18" sketch:type="MSTextLayer" font-weight="bold">
+                            <text>
+                                <tspan x="0" y="14">NATURAL GAS</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </g>
+            </g>
         </g>
     </g>
 </svg>

@@ -1,51 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="690px" height="270px" viewBox="0 0 690 270" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
-    <title>Valley Recovery Graph</title>
+<svg width="981px" height="472px" viewBox="0 0 981 472" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.1 (12002) - http://www.bohemiancoding.com/sketch -->
+    <title>Recovery</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="Valley" sketch:type="MSLayerGroup" transform="translate(7.000000, 20.000000)">
-            <path d="M447,2.47318008 L447,248.52682" id="Line" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
-            <text id="TWO-YEARS" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#FDA938">
-                <tspan x="451" y="10">TWO YEARS</tspan>
-            </text>
-            <path d="M223,2.47318008 L223,248.52682" id="Line" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
-            <text id="ONE-YEAR" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#FDA938">
-                <tspan x="226" y="10">ONE YEAR</tspan>
-            </text>
-            <path d="M19,2.47318008 L19,248.52682" id="Line" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
-            <text id="ONE-MONTH" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#FDA938">
-                <tspan x="22" y="11">ONE MONTH</tspan>
-            </text>
-            <rect id="highways" fill="#81C6C2" sketch:type="MSShapeGroup" x="0" y="232" width="340" height="10" rx="8"></rect>
-            <rect id="healthcare-facilities" fill="#81C6C2" sketch:type="MSShapeGroup" x="0" y="202" width="683" height="10" rx="8"></rect>
-            <rect id="police-and-fire" fill="#81C6C2" sketch:type="MSShapeGroup" x="0" y="169" width="130" height="10" rx="8"></rect>
-            <rect id="natural-gas" fill="#81C6C2" sketch:type="MSShapeGroup" x="0" y="138" width="31" height="10" rx="8"></rect>
-            <rect id="electric" fill="#81C6C2" sketch:type="MSShapeGroup" x="0" y="106" width="75" height="10" rx="8"></rect>
-            <rect id="water-dist-center" fill="#81C6C2" sketch:type="MSShapeGroup" x="0" y="75" width="9" height="10" rx="8"></rect>
-            <rect id="water-&amp;-sewer" fill="#81C6C2" sketch:type="MSShapeGroup" x="0" y="42" width="246" height="10" rx="8"></rect>
-            <text id="WATER-&amp;-SEWER" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#003366">
-                <tspan x="3" y="38">WATER &amp; SEWER</tspan>
-            </text>
-            <text id="WATER-AT-DISTRIBUTIO" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#003366">
-                <tspan x="3" y="71">WATER AT DISTRIBUTION CENTERS</tspan>
-            </text>
-            <text id="ELECTRICITY" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#003366">
-                <tspan x="3" y="102">ELECTRICITY</tspan>
-            </text>
-            <text id="NATURAL-GAS" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#003366">
-                <tspan x="3" y="134">NATURAL GAS</tspan>
-            </text>
-            <text id="POLICE-AND-FIRE" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#003366">
-                <tspan x="3" y="165">POLICE AND FIRE</tspan>
-            </text>
-            <text id="HEALTHCARE-FACILITIE" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#003366">
-                <tspan x="3" y="198">HEALTHCARE FACILITIES</tspan>
-            </text>
-            <text id="TOP-PRIORITY-HIGHWAY" sketch:type="MSTextLayer" font-family="Helvetica" font-size="10" font-weight="bold" fill="#003366">
-                <tspan x="3" y="228">TOP PRIORITY HIGHWAYS (PARTIAL RESTORATION)</tspan>
-            </text>
+        <g id="Graphs" sketch:type="MSArtboardGroup" transform="translate(-92.000000, -78.000000)">
+            <g id="Recovery" sketch:type="MSLayerGroup" transform="translate(92.000000, 79.000000)">
+                <g id="Valley-2">
+                    <path d="M641.769231,0.900383142 L641.769231,469.099617" id="Line" stroke="#FFDEBC" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <text id="TWO-YEARS" sketch:type="MSTextLayer" font-family="Helvetica" font-size="15.0715308" font-weight="bold" fill="#FF9933">
+                        <tspan x="660.679769" y="15">TWO YEARS</tspan>
+                    </text>
+                    <path d="M321.384615,0.900383142 L321.384615,469.099617" id="Line" stroke="#FFDEBC" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <text id="ONE-YEAR" sketch:type="MSTextLayer" font-family="Helvetica" font-size="15" font-weight="bold" fill="#FF9933">
+                        <tspan x="337.839359" y="15">ONE YEAR</tspan>
+                    </text>
+                    <path d="M29.2692308,0.900383142 L29.2692308,469.099617" id="Line" stroke="#FFDEBC" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                    <text id="ONE-MONTH" sketch:type="MSTextLayer" font-family="Helvetica" font-size="15" font-weight="bold" fill="#FF9933">
+                        <tspan x="45.1307204" y="16.8431373">ONE MONTH</tspan>
+                    </text>
+                    <rect id="highways" fill="#A9AACC" sketch:type="MSShapeGroup" x="1" y="438.666667" width="487.847731" height="18.4313725"></rect>
+                    <rect id="healthcare-facilities" fill="#A9AACC" sketch:type="MSShapeGroup" x="1" y="378" width="980" height="18.4313725"></rect>
+                    <rect id="police-and-fire" fill="#A9AACC" sketch:type="MSShapeGroup" x="1" y="320" width="186.530015" height="18.4313725"></rect>
+                    <rect id="natural-gas" fill="#A9AACC" sketch:type="MSShapeGroup" x="1" y="262" width="44.4802343" height="18.4313725"></rect>
+                    <rect id="electric" fill="#A9AACC" sketch:type="MSShapeGroup" x="1" y="204" width="107.61347" height="18.4313725"></rect>
+                    <rect id="water-dist-center" fill="#A9AACC" sketch:type="MSShapeGroup" x="1" y="146" width="12.9136164" height="18.4313725"></rect>
+                    <rect id="water-&amp;-sewer" fill="#A9AACC" sketch:type="MSShapeGroup" x="1" y="88.4705882" width="352.972182" height="18.4313725"></rect>
+                    <text id="WATER-&amp;-SEWER" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14" font-weight="bold" line-spacing="18" fill="#55578B">
+                        <tspan x="0.304538799" y="81.6666667">WATER &amp; SEWER</tspan>
+                    </text>
+                    <text id="WATER-AT-DISTRIBUTIO" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14.72103" font-weight="bold" fill="#55578B">
+                        <tspan x="0.304538799" y="138">WATER AT DISTRIBUTION CENTERS</tspan>
+                    </text>
+                    <text id="ELECTRICITY" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14.72103" font-weight="bold" fill="#55578B">
+                        <tspan x="0.304538799" y="196">ELECTRICITY</tspan>
+                    </text>
+                    <text id="NATURAL-GAS" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14.72103" font-weight="bold" fill="#55578B">
+                        <tspan x="0.304538799" y="254">NATURAL GAS</tspan>
+                    </text>
+                    <text id="POLICE-AND-FIRE" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14.72103" font-weight="bold" fill="#55578B">
+                        <tspan x="0.304538799" y="312">POLICE AND FIRE</tspan>
+                    </text>
+                    <text id="HEALTHCARE-FACILITIE" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14.72103" font-weight="bold" fill="#55578B">
+                        <tspan x="0.304538799" y="370">HEALTHCARE FACILITIES</tspan>
+                    </text>
+                    <text id="TOP-PRIORITY-HIGHWAY" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14.72103" font-weight="bold" fill="#55578B">
+                        <tspan x="0.304538799" y="431.862745">TOP PRIORITY HIGHWAYS (PARTIAL RESTORATION)</tspan>
+                    </text>
+                </g>
+            </g>
         </g>
     </g>
 </svg>
