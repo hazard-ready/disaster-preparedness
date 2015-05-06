@@ -51,7 +51,7 @@ def app_view(request):
             return render(request, 'index.html', {
                 'data': snugget_content, 
                 'has_location': True,
-                'section_width': floor(12 / n_sections),
+                'section_width': int(floor(12 / n_sections)),
                 'wrapper_width': wrapper_width
             })
 
