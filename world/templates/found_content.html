@@ -104,11 +104,14 @@
         <div class="column">
         {% for zone in data.impact_zones %}
           {% if zone.zoneid == 2 %}
-          <img src="{% static 'img/recovery-graph-coast.svg' %}" alt="Recovery Graph">
+          <img class="show-for-small-only" src="{% static 'img/recovery-graph-coast-s.svg' %}" alt="Recovery Graph">
+          <img class="show-for-medium-up" src="{% static 'img/recovery-graph-coast.svg' %}" alt="Recovery Graph">
           {% elif zone.zoneid == 3 %}
-          <img src="{% static 'img/recovery-graph-valley.svg' %}" alt="Recovery Graph">
+          <img class="show-for-small-only" src="{% static 'img/recovery-graph-valley-s.svg' %}" alt="Recovery Graph">
+          <img class="show-for-medium-up" src="{% static 'img/recovery-graph-valley.svg' %}" alt="Recovery Graph">
           {% elif zone.zoneid == 4 %}
-          <img src="{% static 'img/recovery-graph-east.svg' %}" alt="Recovery Graph">
+          <img class="show-for-small-only" src="{% static 'img/recovery-graph-east-s.svg' %}" alt="Recovery Graph">
+          <img class="show-for-medium-up" src="{% static 'img/recovery-graph-east.svg' %}" alt="Recovery Graph">
           {% endif %}
         {% endfor %}
         </div>
