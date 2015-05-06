@@ -44,7 +44,7 @@ class EmbedAdmin(AdminVideoMixin, SnuggetAdmin):
         return "EmbedSnugget"
 
 admin.site.register(TextSnugget, TextAdmin)
-admin.site.register(EmbedSnugget, EmbedAdmin)
+#admin.site.register(EmbedSnugget, EmbedAdmin)
 
 
 class GeoNoEditAdmin(admin.GeoModelAdmin):
