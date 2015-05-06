@@ -35,7 +35,7 @@ class SnuggetNode(template.Node):
             else:
                 t = get_template(file_name)
             self.nodelist = t.nodelist
-            return self.nodelist.render(context)
+        return self.nodelist.render(context)
 
     def get_resolved_arguments(self, context):
         """
