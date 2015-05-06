@@ -1,0 +1,185 @@
+{% extends "index.html" %}
+{% load staticfiles %}
+{% load show_snugget %}
+
+{% block main-content %}    
+<!-------------- THE MOMENT -------------->
+      <div class="orange-bg white down-arrow">
+        <div class="row">
+          <div class="column">
+            <div class="vert-pad-medium center">
+              <div class="chapter-title sans-serif">The Moment</div>
+              <div class="chapter-content">
+              {% for snugget in data.structured.moment.impact_snugs %}
+                {% show_snugget snugget %}
+              {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="white-bg below-arrow">
+        <div class="row vert-pad-large">
+          <div class="large-{{ wrapper_width }} large-centered columns">
+            <div class="row">
+              {% if data.structured.moment.tsunami_snugs %}
+              <div class="large-{{ section_width }} column">
+                <div class="section-icon tsunami"></div>
+                <div class="section-title center sans-serif orange">Tsunami</div>
+                {% for snugget in data.structured.moment.tsunami_snugs %}
+                  {% show_snugget snugget %}
+                {% endfor %}
+              </div>
+              {% endif %}
+              
+              {% if data.structured.moment.shake_snugs %}
+              <div class="large-{{ section_width }} column">
+                <div class="section-icon shaking"></div>
+                <div class="section-title center sans-serif orange">Intensity</div>
+                <div class="section-scale">
+                {% comment %}Using "first" because data.shake_score is coming in as a list.{% endcomment %}
+                {% with data.shake_score|first as level %}
+                {% if level == "Light" %}
+                  <div class="value-graph"><div class="intensity val-1"></div><div class="numerical orange sans-serif"><span>1</span>/6</div></div>
+                {% elif level == "Moderate" %}
+                  <div class="value-graph"><div class="intensity val-2"></div><div class="numerical orange sans-serif"><span>2</span>/6</div></div>
+                {% elif level == "Strong" %}
+                  <div class="value-graph"><div class="intensity val-3"></div><div class="numerical orange sans-serif"><span>3</span>/6</div></div>
+                {% elif level == "Very Strong" %}
+                  <div class="value-graph"><div class="intensity val-4"></div><div class="numerical orange sans-serif"><span>4</span>/6</div></div>
+                {% elif level == "Severe" %}
+                  <div class="value-graph"><div class="intensity val-5"></div><div class="numerical orange sans-serif"><span>5</span>/6</div></div>
+                {% elif level == "Violent" %}
+                  <div class="value-graph"><div class="intensity val-6"></div><div class="numerical orange sans-serif"><span>6</span>/6</div></div>
+                {% endif %}
+                {% endwith %}
+                </div>
+                {% for snugget in data.structured.moment.shake_snugs %}
+                  {% show_snugget snugget %}
+                {% endfor %}
+              </div>
+              {% endif %}
+              
+              {% if data.structured.moment.deform_snugs %}
+              <div class="large-{{ section_width }} column">
+                <div class="section-icon deformation"></div>
+                <div class="section-title center sans-serif orange">Ground Deformation</div>
+                {% with data.deform_score as deform_level %}
+                {% if deform_level == 1 %}
+                  <div class="value-graph"><div class="deformation val-1"></div><div class="numerical orange sans-serif"><span>1</span>/5</div></div>
+                {% elif deform_level == 2 %}
+                  <div class="value-graph"><div class="deformation val-2"></div><div class="numerical orange sans-serif"><span>2</span>/5</div></div>
+                {% elif deform_level == 3 %}
+                  <div class="value-graph"><div class="deformation val-3"></div><div class="numerical orange sans-serif"><span>3</span>/5</div></div>
+                {% elif deform_level == 4 %}
+                  <div class="value-graph"><div class="deformation val-4"></div><div class="numerical orange sans-serif"><span>4</span>/5</div></div>
+                {% elif deform_level == 5 %}
+                  <div class="value-graph"><div class="deformation val-5"></div><div class="numerical orange sans-serif"><span>5</span>/5</div></div>
+                {% endif %}
+                {% endwith %}
+                {% for snugget in data.structured.moment.deform_snugs %}
+                  {% show_snugget snugget %}
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div> <!-- end moment content stripe -->
+      </div>
+      
+<!-------------- COMMUNITY RECOVERY -------------->
+      <div class="orange-bg white down-arrow">
+        <div class="row">
+          <div class="column">
+            <div class="vert-pad-medium center">
+              <div class="chapter-title sans-serif">Your Community’s Recovery</div>
+              <div class="chapter-content">
+              {% for snugget in data.structured.recovery.impact_snugs %}
+                {% show_snugget snugget %}
+              {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="white-bg below-arrow">
+      <div class="row vert-pad-large">
+        <div class="large-offset-2 large-10 columns end">
+        {% for zone in data.impact_zones %}
+          {% if zone.zoneid == 2 %}
+          <img src="{% static 'img/recovery-graph-coast.svg' %}" alt="Recovery Graph">
+          {% elif zone.zoneid == 3 %}
+          <img src="{% static 'img/recovery-graph-valley.svg' %}" alt="Recovery Graph">
+          {% elif zone.zoneid == 4 %}
+          <img src="{% static 'img/recovery-graph-east.svg' %}" alt="Recovery Graph">
+          {% endif %}
+        {% endfor %}
+        </div>
+     </div>
+    </div> 
+<!-------------- HOW TO PREPARE -------------->
+      <div class="orange-bg white down-arrow">
+        <div class="row">
+          <div class="column">
+            <div class="vert-pad-medium center">
+              <div class="chapter-title sans-serif">How To Prepare</div>
+              <div class="chapter-content">
+              {% for snugget in data.structured.prepare.impact_snugs %}
+                {% show_snugget snugget %}
+              {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="white-bg below-arrow">
+      <div class="vert-pad-large">
+      <div class="row">
+        <div class="large-4 columns">
+          <div class="section-icon kit"></div>
+          <div class="section-title center sans-serif orange">Building Your Supply Kit</div>
+          {% include "supply-kit.html" with zones=data.impact_zones %}
+        </div>
+        <div class="large-4 columns">
+          <div class="section-icon home"></div>
+          <div class="section-title center sans-serif orange">Your Home</div>
+          {% if data.structured.prepare.shake_snugs %}
+            {% for snugget in data.structured.prepare.shake_snugs %}
+              {% show_snugget snugget %}
+            {% endfor %}
+          {% endif %}
+          {% for snugget in data.structured.prepare.deform_snugs %}
+            {% show_snugget snugget %}
+          {% endfor %}
+        </div>
+        <div class="large-4 columns">
+          <div class="section-icon routes"></div>
+          <div class="section-title center sans-serif orange">Know Your Routes</div>
+          <p>Make sure your family and friends know where to gather after the earthquake and how to get there. You'll need a reconnection plan. Do you cross a bridge on your way to school or work? It could be unsafe to cross after an earthquake. Do you need an evacuation route? If you're in the tsunami zone, you do. <a href="http://www.oregon.gov/DOGAMI/pages/earthquakes/Coastal/Tsubrochures.aspx">Find your route.</a></p> 
+          <p>Know that some major roads won't be safe or passable during and after an earthquake. <a href="http://www.oregon.gov/ODOT/HWY/OOM/Pages/contact_us.aspx">Ask the Oregon Department of Transportation</a> to find out which routes in your area to expect will be down.</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="large-4 columns">
+          <div class="section-icon leaders"></div>
+          <div class="section-title center sans-serif orange">Know Your Leaders</div>
+          <p>Contacting local officials with questions and concerns can further preparedness efforts in your community. These include finding <a href="http://www4.cbs.state.or.us/ex/all/mylicsearch/index.cfm?fuseaction=search.get_name_results">building officials</a> who can assess potentially vulnerable buildings, leaders of <a href="http://www.oregon.gov/osp/sfm/pages/local_lepc_information.aspx">local emergency planning committees</a> and your <a href="http://www.commoncause.org/take-action/find-elected-officials/">elected officials</a>.</p>
+        </div>
+        <div class="large-4 columns end">
+          <div class="section-icon community"></div>
+          <div class="section-title center sans-serif orange">The Importance of Community</div>
+          <p>The most crucial thing you can do the increase the resiliency of your community is connect with your neighbors to plan as a group. One way to do this is through Community Emergency Response Teams. <a href="https://www.fema.gov/community-emergency-response-teams">Find out how to join or start a community team.</a></p>
+        </div>
+      </div>
+      </div>
+      </div>
+
+<!-------------- SOCIAL -------------->
+{% include "social.html" %}
+
+<!-------------- GEEK BOX -------------->
+{% include "geek_box.html" %}
+
+{% endblock main-content %}
