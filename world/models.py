@@ -172,15 +172,10 @@ class Snugget(models.Model):
     def findSnuggetsForPoint(lat=0, lng=0, merge_deform = True):
         pnt = Point(lng, lat)
         qs_impacts = ImpactZoneData.objects.filter(geom__contains=pnt)
-        print(qs_impacts)
         qs_tsunami = TsunamiZone.objects.filter(geom__contains=pnt)
-        print(qs_tsunami)
         qs_shaking = ExpectedGroundShaking.objects.filter(geom__contains=pnt)
-        print(qs_shaking)
         qs_liquifaction = LiquefactionDeformation.objects.filter(geom__contains=pnt)
-        print(qs_liquifaction)
         qs_landslide = LandslideDeformation.objects.filter(geom__contains=pnt)
-        print(qs_landslide)
 
         # bend, or
         # world.models.Snugget.findSnuggetsForPoint(lng=-121.3153096, lat=44.0581728)
