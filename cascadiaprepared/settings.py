@@ -1,36 +1,29 @@
 """
 Django settings for cascadiaprepared project.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.7/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
+ADMINS = (
+          ('Weston Wedding', 'wes@wawco.com')
+         )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from os import environ
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-# Import variables defined in a file that isn't in version control. 
-# Commented out for push to Heroku. Uncomment to run
-#from .secure_settings import *
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-TEMPLATE_DEBUG = True
+DEBUG = False
+# TODO: Deprecated in Django 1.8, remove when that happens.
+TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = []
-
+if DEBUG:
+    ALLOWED_HOSTS = ['opb.org', 'aftershock.local', 'localhost', '127.0.0.1', '0.0.0.0']
+else:
+    ALLOWED_HOSTS = ['opb.org', 'arcane-dawn-5464.herokuapp.com']
 
 # Application definition
 INSTALLED_APPS = (
@@ -59,26 +52,6 @@ ROOT_URLCONF = 'cascadiaprepared.urls'
 
 WSGI_APPLICATION = 'cascadiaprepared.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-
-
-# These are commmented out for Heroku configuration, as we're not pushing
-# secure_settings to Heroku. Uncomment these to run locally. Must also comment out 
-# two lines further below. See "Heroku Configuration" section.
-
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.contrib.gis.db.backends.postgis',
-    #     'NAME': SECURE_SETTINGS_DB_NAME,
-    #     'USER': SECURE_SETTINGS_DB_USER,
-    #     'PASSWORD': SECURE_SETTINGS_DB_PASSWORD,
-    #     'HOST': SECURE_SETTINGS_DB_HOST,
-    #     'PORT': SECURE_SETTINGS_DB_PORT,
-    # }
-}
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
@@ -99,20 +72,16 @@ USE_TZ = True
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
 
-# Comment out these two DATABASES lines to run locally
+DATABASES = {}
 DATABASES['default'] =  dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
-
 # Static asset configuration
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/aftershock/static/'
