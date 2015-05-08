@@ -102,7 +102,11 @@
       <div class="row vert-pad-large">
         <div class="column">
         {% for zone in data.impact_zones %}
-          {% if zone.zoneid == 2 %}
+          {% comment %} for now, let the separate tsunami check override the tsunami zone {% endcomment %}
+          {% if data.structured.moment.tsunami_snugs %}
+          <img class="show-for-small-only" src="{% static 'img/recovery-graph-tsunami-s.svg' %}" alt="Recovery Graph">
+          <img class="show-for-medium-up" src="{% static 'img/recovery-graph-tsunami.svg' %}" alt="Recovery Graph">
+          {% elif zone.zoneid == 2 %}
           <img class="show-for-small-only" src="{% static 'img/recovery-graph-coast-s.svg' %}" alt="Recovery Graph">
           <img class="show-for-medium-up" src="{% static 'img/recovery-graph-coast.svg' %}" alt="Recovery Graph">
           {% elif zone.zoneid == 3 %}
