@@ -1,7 +1,25 @@
 {% load staticfiles %}
       <p>Experts suggest you have the following:</p>
 {% for zone in zones %}
-  {% if zone.zoneid == 2 %}
+  {% if zone.zoneid == 1 %}
+      <div class="supply-kit sans-serif orange">
+        <div class="clearfix">
+          <div class="supply-kit-icon left"></div>
+          <div class="big-num left">4</div>
+          <div class="text-label left">Weeks of supplies</br><span>per person</span></div>
+        </div>
+        <div class="clearfix">
+          <div class="supply-kit-icon water left"></div>
+          <div class="big-num left">28</div>
+          <div class="text-label left">Gallons of water</br><span>per person</span></div>
+        </div> 
+        <div class="clearfix">
+          <div class="supply-kit-icon food left"></div>
+          <div class="big-num left">84</div>
+          <div class="text-label left">Meals</br><span>per person</span></div>
+        </div>
+      </div>
+  {% elif zone.zoneid == 2 %}
       <div class="supply-kit sans-serif orange">
         <div class="clearfix">
           <div class="supply-kit-icon left"></div>
@@ -57,4 +75,4 @@
       </div>
   {% endif %}
 {% endfor %}
-      <p>For more info on what should be in your kit, check out <a href="http://www.opb.org/news/series/unprepared/a-visual-guide-to-emergency-supplies-everyone-needs/">this guide from OPB</a> or the <a href="http://www.redcross.org/prepare/location/home-family/get-kit">these steps from the Red Cross</a>.</p>
+      <p>For more information on making your kit, check out these emergency supply lists from <a href="http://www.opb.org/news/series/unprepared/a-visual-guide-to-emergency-supplies-everyone-needs/">OPB</a> and <a href="http://www.redcross.org/prepare/location/home-family/get-kit">American Red Cross</a>.</p>
