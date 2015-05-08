@@ -182,9 +182,13 @@ class Snugget(models.Model):
         # Near seaside
         # world.models.Snugget.findSnuggetsForPoint(lng=-123.9125932, lat=45.9928274)
         
-        liquifaction_scores = qs_liquifaction.values_list('score', flat=True)
-        landslide_scores = qs_landslide.values_list('score', flat=True)
-        shake_rating = qs_shaking.values_list('shaking', flat=True)        
+        # liquifaction_scores and landslide_scores need to be list-i-fied here because
+        # the numeric values are used in two different places, and ended up generating excessive
+        # database queries.  This was causing landslide_scores queries to be run 3 times, at the cost of
+        # 600ms or more each time!
+        liquifaction_scores = list(qs_liquifaction.values_list('score', flat=True))
+        landslide_scores = list(qs_landslide.values_list('score', flat=True))
+        shake_rating = qs_shaking.values_list('shaking', flat=True)
         tsunami_rating = qs_tsunami.values_list('typeid', flat=True) 
         tsunami_snuggets = Snugget.objects.filter(tsunami_filter__typeid__exact=tsunami_rating).select_subclasses()
         shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__exact=shake_rating).select_subclasses()
@@ -196,7 +200,7 @@ class Snugget(models.Model):
         deform_rating = 0.0
         if (merge_deform == True):
             deform_snuggets = landslide_snuggets | liquifaction_snuggets
-            both_scores = list(liquifaction_scores) + list(landslide_scores)
+            both_scores = liquifaction_scores + landslide_scores
             if both_scores:
                 deform_rating = max(both_scores)
         
