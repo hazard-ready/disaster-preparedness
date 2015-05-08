@@ -162,14 +162,15 @@ body {
   display: inline-block;
   height: 59px;
   background: transparent url(../img/intensity-bars.png) no-repeat 0 0;
-  background-size: 85px auto;
+  background-size: 140px auto;
   overflow: hidden;
 }
 .value-graph .intensity {
   width: 85px;
 }
 .value-graph .deformation {
-  width: 70px;
+  width: 55px;
+  margin-left: 20px;
 }
 .value-graph .val-1 { background-position: 0 -59px; }
 .value-graph .val-2 { background-position: 0 -118px; }
@@ -177,6 +178,10 @@ body {
 .value-graph .val-4 { background-position: 0 -236px; }
 .value-graph .val-5 { background-position: 0 -295px; }
 .value-graph .val-6 { background-position: 0 -354px; }
+.deformation.val-1 { background-position: -85px -59px; }
+.deformation.val-2 { background-position: -85px -118px; }
+.deformation.val-3 { background-position: -85px -177px; }
+.deformation.val-4 { background-position: -85px -236px; }
 .value-graph .numerical {
   display: inline-block;
   width: 85px;

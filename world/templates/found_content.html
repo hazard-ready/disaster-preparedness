@@ -63,16 +63,15 @@
                 <div class="section-icon deformation"></div>
                 <div class="section-title center sans-serif orange">Ground Deformation</div>
                 {% with data.deform_score as deform_level %}
-                {% if deform_level == 1 %}
-                  <div class="value-graph"><div class="deformation val-1"></div><div class="numerical orange sans-serif"><span>1</span>/5</div></div>
-                {% elif deform_level == 2 %}
-                  <div class="value-graph"><div class="deformation val-2"></div><div class="numerical orange sans-serif"><span>2</span>/5</div></div>
+                {% comment %} deform_level 1 is really "none", so the meaningful values are 2 to 5 {% endcomment %}
+                {% if deform_level == 2 %}
+                  <div class="value-graph"><div class="deformation val-1"></div><div class="numerical orange sans-serif"><span>1</span>/4</div></div>
                 {% elif deform_level == 3 %}
-                  <div class="value-graph"><div class="deformation val-3"></div><div class="numerical orange sans-serif"><span>3</span>/5</div></div>
+                  <div class="value-graph"><div class="deformation val-2"></div><div class="numerical orange sans-serif"><span>2</span>/4</div></div>
                 {% elif deform_level == 4 %}
-                  <div class="value-graph"><div class="deformation val-4"></div><div class="numerical orange sans-serif"><span>4</span>/5</div></div>
+                  <div class="value-graph"><div class="deformation val-3"></div><div class="numerical orange sans-serif"><span>3</span>/4</div></div>
                 {% elif deform_level == 5 %}
-                  <div class="value-graph"><div class="deformation val-5"></div><div class="numerical orange sans-serif"><span>5</span>/5</div></div>
+                  <div class="value-graph"><div class="deformation val-4"></div><div class="numerical orange sans-serif"><span>4</span>/4</div></div>
                 {% endif %}
                 {% endwith %}
                 {% for snugget in data.structured.moment.deform_snugs %}
