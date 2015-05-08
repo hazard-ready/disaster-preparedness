@@ -17,7 +17,7 @@
                         <tspan x="337.839359" y="15">ONE YEAR</tspan>
                     </text>
                     <path d="M29.2692308,0.900383142 L29.2692308,469.099617" id="Line" stroke="#FFDEBC" stroke-width="2" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
-                    <text id="ONE-MONTH" sketch:type="MSTextLayer" font-family="Helvetica" font-size="15" font-weight="bold" fill="#FF9933">
+                    <text id="ONE-MONTH" sketch:type="MSTextLayer" font-family="Helvetica" font-size="16" font-weight="bold" fill="#FF9933">
                         <tspan x="45.1307204" y="16.8431373">ONE MONTH</tspan>
                     </text>
                     <rect id="highways" fill="#A9AACC" sketch:type="MSShapeGroup" x="1" y="438.666667" width="487.847731" height="18.4313725"></rect>
@@ -39,8 +39,8 @@
                     <text id="NATURAL-GAS" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14.72103" font-weight="bold" fill="#55578B">
                         <tspan x="0.304538799" y="254">NATURAL GAS</tspan>
                     </text>
-                    <text id="POLICE-AND-FIRE" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14.72103" font-weight="bold" fill="#55578B">
-                        <tspan x="0.304538799" y="312">POLICE AND FIRE</tspan>
+                    <text id="POLICE-&amp;-FIRE" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14.72103" font-weight="bold" fill="#55578B">
+                        <tspan x="0.304538799" y="312">POLICE &amp; FIRE</tspan>
                     </text>
                     <text id="HEALTHCARE-FACILITIE" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14.72103" font-weight="bold" fill="#55578B">
                         <tspan x="0.304538799" y="370">HEALTHCARE FACILITIES</tspan>
