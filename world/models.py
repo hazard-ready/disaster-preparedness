@@ -193,12 +193,19 @@ class Snugget(models.Model):
         tsunami_snuggets = Snugget.objects.filter(tsunami_filter__typeid__exact=tsunami_rating).select_subclasses()
         shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__exact=shake_rating).select_subclasses()
         impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__exact=qs_impacts.values_list('zoneid')).select_subclasses()
-        liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__exact=liquifaction_scores[0]).select_subclasses()
-        landslide_snuggets = Snugget.objects.filter(landslide_filter__score__exact=landslide_scores[0]).select_subclasses()
+        
+        if liquifaction_scores:        
+            liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__exact=liquifaction_scores[0]).select_subclasses()
+        else:
+            liquifaction_snuggets = []
+        if landslide_scores:
+            landslide_snuggets = Snugget.objects.filter(landslide_filter__score__exact=landslide_scores[0]).select_subclasses()
+        else:
+            landslide_snuggets = []
         
         deform_snuggets = []
         deform_rating = 0.0
-        if (merge_deform == True):
+        if merge_deform == True and liquifaction_snuggets and liquifaction_snuggets:
             deform_snuggets = landslide_snuggets | liquifaction_snuggets
             both_scores = liquifaction_scores + landslide_scores
             if both_scores:
