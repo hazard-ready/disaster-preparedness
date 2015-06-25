@@ -36,7 +36,6 @@ def app_view(request):
                     elif snugget.section.name == "How To Prepare":
                         snugget_content['structured']['prepare'][groupkey].append(snugget)
 
-
             if no_content:
                 template = 'no_content_found.html'
             # Our moment columns are wrapped inside a centered column, which is set to a
