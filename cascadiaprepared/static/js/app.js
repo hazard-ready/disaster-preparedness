@@ -3,18 +3,12 @@ $( document ).ready(function() {
   // app constants
   var google_api_key = "AIzaSyDIoSOu6JLsf3uZ4YPbti6fG-glvVMO4_M";
   var google_bounds = "46.308136,-124.575575|41.974902,-116.456679";
-
-  var mapbox_access_token = "pk.eyJ1IjoibWVlc3RlcnN0dW1wIiwiYSI6IkdGVVFTSkkifQ.8_WCPGKmIImxpNy4dEWU1A";
-  var mapbox_map = "meesterstump.8bf4e389";
-  var mapbox_pin_color = "558";
-  var mapbox_zoom_level = "15";
-  var mapbox_image_size = "1280x300";  
-  var mapbox_initial_lng = "-120.5";
-  var mapbox_initial_lat = "44.1";
-  var mapbox_initial_zoom_level = "6";
-  // Default to a map of all of Oregon.
-  var image_url = "http://api.tiles.mapbox.com/v4/" + mapbox_map + "/" + mapbox_initial_lng + "," + mapbox_initial_lat + "," + mapbox_initial_zoom_level + "/" + mapbox_image_size + ".png64?access_token=" + mapbox_access_token;
-    
+  
+  // Initial map values for Oregon overview
+  var lat = "44.1";
+  var lng = "-120.5";
+  var zoom = "6";
+  
   // convenience function to extract url parameters
   function getURLParameter(name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -26,20 +20,42 @@ $( document ).ready(function() {
   }
 
   // grab the position, if possible  
-  var lat = getURLParameter('lat');
-  var lng = getURLParameter('lng');
-  
-  // Check if HTML is specifying a default map (like on an error screen).  If not, use provided lat/lng.
-  if ($("#map-image.default").length === 0 && (lat && lng)) {
-    // TODO: better validation of lat/lon values
-    image_url = image_url = "http://api.tiles.mapbox.com/v4/" + mapbox_map + "/pin-m+" + mapbox_pin_color + "(" + lng + "," + lat + ")/" + lng + "," + lat + "," + mapbox_zoom_level + "/" + mapbox_image_size + ".png64?access_token=" + mapbox_access_token;
+  var query_lat = getURLParameter('lat');
+  var query_lng = getURLParameter('lng');
+  if (query_lat && query_lng) {
+    lat = query_lat;
+    lng = query_lng;
+    zoom = 15;
   }
-  $("#map-image").attr("src", image_url);
   
+  // set up the map
+  var map = L.map('map', { 
+    zoomControl: false,
+    dragging: false,
+    touchZoom: false,
+    scrollWheelZoom: false,
+    doubleClickZoom: false,
+    boxZoom:false,
+    tap: false,
+    keyboard: false,
+    attributionControl: false
+  }).setView([lat,lng], zoom);
+  L.esri.basemapLayer('Gray',{ detectRetina: true }).addTo(map);
+  L.esri.basemapLayer('GrayLabels',{ detectRetina: true }).addTo(map);
+  document.getElementById('map').style.cursor='default';
+  var icon = new L.Icon.Default;
+  icon.options.iconUrl = "aftershock/static/img/marker-icon.png";
+  var marker = L.marker([lat,lng], {
+    icon: icon,
+    clickable: false, 
+    keyboard: false
+  }).addTo(map);
 
   // grab and set any previously entered query text
   var loc = getURLParameter('loc');
-  var location_query_text = (loc) ? decodeURIComponent(loc) : "";
+  var location_query_text = (loc) ? decodeURIComponent(loc) : lat + "," + lng;
+  if (!query_lat || !query_lng)
+    location_query_text = "";
   $("#location-text").val(location_query_text);
 
   // hitting enter key in the textfield will trigger submit
@@ -62,6 +78,7 @@ $( document ).ready(function() {
   
   // auto location
   $("#auto-location-submit").click(function() {
+    location_query_text = "";
     disableForm();
     var geoOptions = { timeout: 8000 };
     var geoSuccess = function(position) {

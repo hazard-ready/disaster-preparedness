@@ -17,11 +17,18 @@
   <link type="text/css" rel="stylesheet" href="{% static 'css/foundation.css' %}">
   <link type="text/css" rel="stylesheet" href="http://fast.fonts.net/cssapi/946b88e5-dfa3-4779-97ec-ea82c655a7c5.css"/>
   <link type="text/css" rel="stylesheet" href="{% static 'css/app.css' %}">
-  <script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>  
+
+  <!-- Load Leaflet from CDN-->
+  <link type="text/css" rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
+  <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
+  <script src="//cdn.jsdelivr.net/leaflet.esri/latest/esri-leaflet.js"></script>
+  
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
   <script src="{% static 'js/vendor/modernizr.js' %}"></script>
   <script src="{% static 'js/vendor/jquery.js' %}"></script>
   <script src="{% static 'js/foundation.min.js' %}"></script>
   <script src="{% static 'js/app.js' %}"></script>
+  
   
   <!-- NPR DS / Google Analytics --> 
   <script type="text/javascript">(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = '//stream.publicbroadcasting.net/analytics/aae0.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script> 
@@ -71,7 +78,7 @@
 {% endblock search %}
 {% block map %}
       <div class="center map-holder">
-          <image id="map-image" src="" />
+        <div id="map"></div>
       </div>
 {% endblock map %}
     </div>
