@@ -11,7 +11,9 @@
               <div class="chapter-title sans-serif">The Moment</div>
               <div class="chapter-content">
               {% for snugget in data.structured.moment.impact_snugs %}
-                {% show_snugget snugget %}
+                {% if snugget.sub_section.name == "header" %}
+                  {% show_snugget snugget %}
+                {% endif %}
               {% endfor %}
               </div>
             </div>
@@ -27,7 +29,9 @@
                 <div class="section-icon tsunami"></div>
                 <div class="section-title center sans-serif orange">Tsunami</div>
                 {% for snugget in data.structured.moment.tsunami_snugs %}
-                  {% show_snugget snugget %}
+                  {% if snugget.sub_section.name != "header" %}
+                    {% show_snugget snugget %}
+                  {% endif %}
                 {% endfor %}
               </div>
               {% endif %}
@@ -54,7 +58,9 @@
                 {% endwith %}
                 </div>
                 {% for snugget in data.structured.moment.shake_snugs %}
-                  {% show_snugget snugget %}
+                  {% if snugget.sub_section.name != "header" %}
+                    {% show_snugget snugget %}
+                  {% endif %}
                 {% endfor %}
               </div>
               {% endif %}
@@ -91,7 +97,9 @@
               <div class="chapter-title sans-serif">Your Community’s Recovery</div>
               <div class="chapter-content">
               {% for snugget in data.structured.recovery.impact_snugs %}
-                {% show_snugget snugget %}
+                {% if snugget.sub_section.name == "header" %}
+                  {% show_snugget snugget %}
+                {% endif %}
               {% endfor %}
               </div>
             </div>
@@ -128,7 +136,9 @@
               <div class="chapter-title sans-serif">How To Prepare</div>
               <div class="chapter-content">
               {% for snugget in data.structured.prepare.impact_snugs %}
-                {% show_snugget snugget %}
+                {% if snugget.sub_section.name != "header" %}
+                    {% show_snugget snugget %}
+                {% endif %}
               {% endfor %}
               </div>
             </div>
@@ -148,11 +158,15 @@
               <div class="section-title center sans-serif orange">Your Home</div>
               {% if data.structured.prepare.shake_snugs %}
                 {% for snugget in data.structured.prepare.shake_snugs %}
-                  {% show_snugget snugget %}
+                  {% if snugget.sub_section.name != "header" %}
+                    {% show_snugget snugget %}
+                  {% endif %}
                 {% endfor %}
               {% endif %}
               {% for snugget in data.structured.prepare.deform_snugs %}
-                {% show_snugget snugget %}
+                {% if snugget.sub_section.name != "header" %}
+                  {% show_snugget snugget %}
+                {% endif %}
               {% endfor %}
             </div>
             <div class="large-4 columns">
