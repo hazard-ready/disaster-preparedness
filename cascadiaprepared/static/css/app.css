@@ -76,22 +76,9 @@ body {
   background-image: url(../img/icon-target.png);
   border-radius: 3px;
 }
-.map-holder {
-  max-height: 300px;
-  overflow: hidden;
-  position: relative;
+#map {
+  height: 200px;
 }
-#map-image {
-  /* corrects inline gap in enclosing div */
-  display: block;
-  width: 100%;
-  /* just in case, to force correct aspect ratio */
-  height: auto !important;
-  width: auto\9; /* ie8+9 */
-  /* lt ie8 */
-  -ms-interpolation-mode: bicubic; 
-}
-
 
 /* main content and snugget styles */
 .welcome {
