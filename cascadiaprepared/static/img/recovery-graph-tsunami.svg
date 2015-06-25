@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg width="947px" height="361px" viewBox="0 0 947 361" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.3.1 (12002) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
     <title>Coast Recovery Graph Copy 3</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
@@ -9,8 +9,8 @@
             <g id="Coast-Recovery-Graph-Copy-3" sketch:type="MSLayerGroup" transform="translate(92.000000, 1513.000000)">
                 <g id="Page-1">
                     <g id="Coast">
-                        <path d="M730,2 L730,362.433594" id="Line" stroke="#FFDEBC" stroke-width="2" sketch:type="MSShapeGroup"></path>
-                        <g id="THREE-YEARS" transform="translate(756.094118, 0.000000)" font-size="16" font-family="Helvetica" fill="#FF9933" sketch:type="MSTextLayer" font-weight="bold">
+                        <path d="M730,2 L730,362.433594" id="Line" stroke="#E6E6E6" stroke-width="2" sketch:type="MSShapeGroup"></path>
+                        <g id="THREE-YEARS" transform="translate(756.094118, 0.000000)" font-size="16" font-family="Helvetica" fill="#B7B7B7" sketch:type="MSTextLayer" font-weight="bold">
                             <text>
                                 <tspan x="0" y="16">THREE YEARS</tspan>
                             </text>
@@ -18,55 +18,55 @@
                                 <tspan x="118" y="15">+</tspan>
                             </text>
                         </g>
-                        <path d="M490,2 L490,362.433594" id="Line" stroke="#FFDEBC" stroke-width="2" sketch:type="MSShapeGroup"></path>
-                        <g id="TWO-YEARS" transform="translate(516.614706, 1.000000)" font-size="16" font-family="Helvetica" fill="#FF9933" sketch:type="MSTextLayer" font-weight="bold">
+                        <path d="M490,2 L490,362.433594" id="Line" stroke="#E6E6E6" stroke-width="2" sketch:type="MSShapeGroup"></path>
+                        <g id="TWO-YEARS" transform="translate(516.614706, 1.000000)" font-size="16" font-family="Helvetica" fill="#B7B7B7" sketch:type="MSTextLayer" font-weight="bold">
                             <text>
                                 <tspan x="0" y="15">TWO YEARS</tspan>
                             </text>
                         </g>
-                        <path d="M249,2 L249,362.433594" id="Line" stroke="#FFDEBC" stroke-width="2" sketch:type="MSShapeGroup"></path>
-                        <g id="ONE-YEAR" transform="translate(274.250000, 1.000000)" font-size="16" font-family="Helvetica" fill="#FF9933" sketch:type="MSTextLayer" font-weight="bold">
+                        <path d="M249,2 L249,362.433594" id="Line" stroke="#E6E6E6" stroke-width="2" sketch:type="MSShapeGroup"></path>
+                        <g id="ONE-YEAR" transform="translate(274.250000, 1.000000)" font-size="16" font-family="Helvetica" fill="#B7B7B7" sketch:type="MSTextLayer" font-weight="bold">
                             <text>
                                 <tspan x="0" y="15">ONE YEAR</tspan>
                             </text>
                         </g>
-                        <path d="M29,2 L29,362.433594" id="Line" stroke="#FFDEBC" stroke-width="2" sketch:type="MSShapeGroup"></path>
-                        <g id="ONE-MONTH" transform="translate(53.525000, 2.000000)" font-size="16" font-family="Helvetica" fill="#FF9933" sketch:type="MSTextLayer" font-weight="bold">
+                        <path d="M29,2 L29,362.433594" id="Line" stroke="#E6E6E6" stroke-width="2" sketch:type="MSShapeGroup"></path>
+                        <g id="ONE-MONTH" transform="translate(53.525000, 2.000000)" font-size="16" font-family="Helvetica" fill="#B7B7B7" sketch:type="MSTextLayer" font-weight="bold">
                             <text>
                                 <tspan x="0" y="15">ONE MONTH</tspan>
                             </text>
                         </g>
-                        <path d="M925.422472,227.328351 L923.705247,233.23792 C923.416225,234.476374 923.705247,235.405009 924.428572,236.179967 C925.443226,237.106958 927.182742,236.797139 928.19432,235.867683 L947,221.542052 L927.930664,207.438307 C926.917548,206.509672 925.180338,206.199031 924.167991,207.128488 C923.44236,207.903446 923.154106,208.831259 923.44236,210.070535 L925.51625,215.804239 C925.51625,215.804239 923.185622,227.257676 925.422472,227.328351 Z" id="Imported-Layers" fill="#A9AACC" sketch:type="MSShapeGroup"></path>
-                        <path d="M925.422472,168.328351 L923.705247,174.23792 C923.416225,175.476374 923.705247,176.405009 924.428572,177.179967 C925.443226,178.106958 927.182742,177.797139 928.19432,176.867683 L947,162.542052 L927.930664,148.438307 C926.917548,147.509672 925.180338,147.199031 924.167991,148.128488 C923.44236,148.903446 923.154106,149.831259 923.44236,151.070535 L925.51625,156.804239 C925.51625,156.804239 923.185622,168.257676 925.422472,168.328351 Z" id="Imported-Layers-Copy" fill="#A9AACC" sketch:type="MSShapeGroup"></path>
-                        <path d="M925.422472,110.328351 L923.705247,116.23792 C923.416225,117.476374 923.705247,118.405009 924.428572,119.179967 C925.443226,120.106958 927.182742,119.797139 928.19432,118.867683 L947,104.542052 L927.930664,90.4383069 C926.917548,89.509672 925.180338,89.1990313 924.167991,90.128488 C923.44236,90.9034461 923.154106,91.8312592 923.44236,93.0705347 L925.51625,98.8042387 C925.51625,98.8042387 923.185622,110.257676 925.422472,110.328351 Z" id="Imported-Layers-Copy-2" fill="#A9AACC" sketch:type="MSShapeGroup"></path>
-                        <path d="M924.783618,285.328351 L923.066394,291.23792 C922.777372,292.476374 923.066394,293.405009 923.789719,294.179967 C924.804373,295.106958 926.543889,294.797139 927.555467,293.867683 L946.361147,279.542052 L927.291811,265.438307 C926.278695,264.509672 924.541485,264.199031 923.529138,265.128488 C922.803507,265.903446 922.515253,266.831259 922.803507,268.070535 L924.877397,273.804239 C924.877397,273.804239 922.546769,285.257676 924.783618,285.328351 Z" id="Imported-Layers-Copy-3" fill="#A9AACC" sketch:type="MSShapeGroup"></path>
-                        <path d="M925.422472,344.328351 L923.705247,350.23792 C923.416225,351.476374 923.705247,352.405009 924.428572,353.179967 C925.443226,354.106958 927.182742,353.797139 928.19432,352.867683 L947,338.542052 L927.930664,324.438307 C926.917548,323.509672 925.180338,323.199031 924.167991,324.128488 C923.44236,324.903446 923.154106,325.831259 923.44236,327.070535 L925.51625,332.804239 C925.51625,332.804239 923.185622,344.257676 925.422472,344.328351 Z" id="Imported-Layers-Copy-4" fill="#A9AACC" sketch:type="MSShapeGroup"></path>
-                        <rect id="healthcare" fill="#A9AACC" sketch:type="MSShapeGroup" x="0.589112553" y="329.75" width="933.791459" height="18.5"></rect>
-                        <rect id="natural-gas" fill="#A9AACC" sketch:type="MSShapeGroup" x="0.589112553" y="270.5" width="933.791459" height="18.5"></rect>
-                        <rect id="electric" fill="#A9AACC" sketch:type="MSShapeGroup" x="0" y="212.5" width="933.791459" height="18.5"></rect>
-                        <rect id="water-dist-center" fill="#A9AACC" sketch:type="MSShapeGroup" x="0" y="153.75" width="933.791459" height="18.5"></rect>
-                        <rect id="water-&amp;-sewer" fill="#A9AACC" sketch:type="MSShapeGroup" x="0" y="95.75" width="933.791459" height="18.5"></rect>
-                        <g id="WATER-&amp;-SEWER" transform="translate(0.000000, 74.000000)" fill="#55578B" font-size="14" font-family="Helvetica" line-spacing="18" sketch:type="MSTextLayer" font-weight="bold">
+                        <path d="M925.422472,227.328351 L923.705247,233.23792 C923.416225,234.476374 923.705247,235.405009 924.428572,236.179967 C925.443226,237.106958 927.182742,236.797139 928.19432,235.867683 L947,221.542052 L927.930664,207.438307 C926.917548,206.509672 925.180338,206.199031 924.167991,207.128488 C923.44236,207.903446 923.154106,208.831259 923.44236,210.070535 L925.51625,215.804239 C925.51625,215.804239 923.185622,227.257676 925.422472,227.328351 Z" id="Imported-Layers" fill="#FF9933" sketch:type="MSShapeGroup"></path>
+                        <path d="M925.422472,168.328351 L923.705247,174.23792 C923.416225,175.476374 923.705247,176.405009 924.428572,177.179967 C925.443226,178.106958 927.182742,177.797139 928.19432,176.867683 L947,162.542052 L927.930664,148.438307 C926.917548,147.509672 925.180338,147.199031 924.167991,148.128488 C923.44236,148.903446 923.154106,149.831259 923.44236,151.070535 L925.51625,156.804239 C925.51625,156.804239 923.185622,168.257676 925.422472,168.328351 Z" id="Imported-Layers-Copy" fill="#FF9933" sketch:type="MSShapeGroup"></path>
+                        <path d="M925.422472,110.328351 L923.705247,116.23792 C923.416225,117.476374 923.705247,118.405009 924.428572,119.179967 C925.443226,120.106958 927.182742,119.797139 928.19432,118.867683 L947,104.542052 L927.930664,90.4383069 C926.917548,89.509672 925.180338,89.1990313 924.167991,90.128488 C923.44236,90.9034461 923.154106,91.8312592 923.44236,93.0705347 L925.51625,98.8042387 C925.51625,98.8042387 923.185622,110.257676 925.422472,110.328351 Z" id="Imported-Layers-Copy-2" fill="#FF9933" sketch:type="MSShapeGroup"></path>
+                        <path d="M924.783618,285.328351 L923.066394,291.23792 C922.777372,292.476374 923.066394,293.405009 923.789719,294.179967 C924.804373,295.106958 926.543889,294.797139 927.555467,293.867683 L946.361147,279.542052 L927.291811,265.438307 C926.278695,264.509672 924.541485,264.199031 923.529138,265.128488 C922.803507,265.903446 922.515253,266.831259 922.803507,268.070535 L924.877397,273.804239 C924.877397,273.804239 922.546769,285.257676 924.783618,285.328351 Z" id="Imported-Layers-Copy-3" fill="#FF9933" sketch:type="MSShapeGroup"></path>
+                        <path d="M925.422472,344.328351 L923.705247,350.23792 C923.416225,351.476374 923.705247,352.405009 924.428572,353.179967 C925.443226,354.106958 927.182742,353.797139 928.19432,352.867683 L947,338.542052 L927.930664,324.438307 C926.917548,323.509672 925.180338,323.199031 924.167991,324.128488 C923.44236,324.903446 923.154106,325.831259 923.44236,327.070535 L925.51625,332.804239 C925.51625,332.804239 923.185622,344.257676 925.422472,344.328351 Z" id="Imported-Layers-Copy-4" fill="#FF9933" sketch:type="MSShapeGroup"></path>
+                        <rect id="healthcare" fill="#FF9933" sketch:type="MSShapeGroup" x="0.589112553" y="329.75" width="933.791459" height="18.5"></rect>
+                        <rect id="natural-gas" fill="#FF9933" sketch:type="MSShapeGroup" x="0.589112553" y="270.5" width="933.791459" height="18.5"></rect>
+                        <rect id="electric" fill="#FF9933" sketch:type="MSShapeGroup" x="0" y="212.5" width="933.791459" height="18.5"></rect>
+                        <rect id="water-dist-center" fill="#FF9933" sketch:type="MSShapeGroup" x="0" y="153.75" width="933.791459" height="18.5"></rect>
+                        <rect id="water-&amp;-sewer" fill="#FF9933" sketch:type="MSShapeGroup" x="0" y="95.75" width="933.791459" height="18.5"></rect>
+                        <g id="WATER-&amp;-SEWER" transform="translate(0.000000, 74.000000)" fill="#FF9933" font-size="14" font-family="Helvetica" line-spacing="18" sketch:type="MSTextLayer" font-weight="bold">
                             <text>
                                 <tspan x="0" y="14">WATER &amp; SEWER</tspan>
                             </text>
                         </g>
-                        <g id="WATER-AT-DISTRIBUTIO" transform="translate(0.000000, 132.000000)" font-weight="bold" font-family="Helvetica" line-spacing="18" fill="#55578B" font-size="14" sketch:type="MSTextLayer">
+                        <g id="WATER-AT-DISTRIBUTIO" transform="translate(0.000000, 132.000000)" font-weight="bold" font-family="Helvetica" line-spacing="18" fill="#FF9933" font-size="14" sketch:type="MSTextLayer">
                             <text id="WATER-AT-DISTRIBUTION-CENTERS">
                                 <tspan x="0" y="14">WATER AT DISTRIBUTION CENTERS</tspan>
                             </text>
                         </g>
-                        <g id="ELECTRICITY" transform="translate(0.000000, 190.000000)" fill="#55578B" font-size="14" font-family="Helvetica" line-spacing="18" sketch:type="MSTextLayer" font-weight="bold">
+                        <g id="ELECTRICITY" transform="translate(0.000000, 190.000000)" fill="#FF9933" font-size="14" font-family="Helvetica" line-spacing="18" sketch:type="MSTextLayer" font-weight="bold">
                             <text>
                                 <tspan x="0" y="14">ELECTRICITY</tspan>
                             </text>
                         </g>
-                        <g id="NATURAL-GAS" transform="translate(0.000000, 248.000000)" fill="#55578B" font-size="14" font-family="Helvetica" line-spacing="18" sketch:type="MSTextLayer" font-weight="bold">
+                        <g id="NATURAL-GAS" transform="translate(0.000000, 248.000000)" fill="#FF9933" font-size="14" font-family="Helvetica" line-spacing="18" sketch:type="MSTextLayer" font-weight="bold">
                             <text>
                                 <tspan x="0" y="14">NATURAL GAS</tspan>
                             </text>
                         </g>
-                        <g id="HEALTHCARE-FACILITIE" transform="translate(0.000000, 307.000000)" font-weight="bold" font-family="Helvetica" line-spacing="18" fill="#55578B" font-size="14" sketch:type="MSTextLayer">
+                        <g id="HEALTHCARE-FACILITIE" transform="translate(0.000000, 307.000000)" font-weight="bold" font-family="Helvetica" line-spacing="18" fill="#FF9933" font-size="14" sketch:type="MSTextLayer">
                             <text id="HEALTHCARE-FACILITIES">
                                 <tspan x="0" y="14">HEALTHCARE FACILITIES</tspan>
                             </text>

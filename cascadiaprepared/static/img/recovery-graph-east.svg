@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg width="948px" height="124px" viewBox="0 0 948 124" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.3.1 (12002) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
     <title>East Recovery Graph</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
@@ -9,26 +9,26 @@
             <g id="East-Recovery-Graph" sketch:type="MSLayerGroup" transform="translate(92.000000, 1295.000000)">
                 <g id="Page-1">
                     <g id="east">
-                        <path d="M809,1.76460729 L809,124.582031" id="Line" stroke="#FFDEBC" stroke-width="2" sketch:type="MSShapeGroup"></path>
-                        <g id="SIX-WEEKS" transform="translate(842.647059, 0.000000)" font-size="16" font-family="Helvetica" fill="#FF9933" sketch:type="MSTextLayer" font-weight="bold">
+                        <path d="M809,1.76460729 L809,124.582031" id="Line" stroke="#E6E6E6" stroke-width="2" sketch:type="MSShapeGroup"></path>
+                        <g id="SIX-WEEKS" transform="translate(842.647059, 0.000000)" font-size="16" font-family="Helvetica" fill="#B7B7B7" sketch:type="MSTextLayer" font-weight="bold">
                             <text>
                                 <tspan x="0" y="15">SIX WEEKS</tspan>
                             </text>
                         </g>
-                        <path d="M528,1.76460729 L528,124.582031" id="Line" stroke="#FFDEBC" stroke-width="2" sketch:type="MSShapeGroup"></path>
-                        <g id="ONE-MONTH" transform="translate(561.000000, 0.000000)" font-size="16" font-family="Helvetica" fill="#FF9933" sketch:type="MSTextLayer" font-weight="bold">
+                        <path d="M528,1.76460729 L528,124.582031" id="Line" stroke="#E6E6E6" stroke-width="2" sketch:type="MSShapeGroup"></path>
+                        <g id="ONE-MONTH" transform="translate(561.000000, 0.000000)" font-size="16" font-family="Helvetica" fill="#B7B7B7" sketch:type="MSTextLayer" font-weight="bold">
                             <text>
                                 <tspan x="0" y="15">ONE MONTH</tspan>
                             </text>
                         </g>
-                        <path d="M251,1.76460729 L251,124.582031" id="Line" stroke="#FFDEBC" stroke-width="2" sketch:type="MSShapeGroup"></path>
-                        <g id="TWO-WEEKS" transform="translate(282.647059, 0.000000)" font-size="15.0715308" font-family="Helvetica" fill="#FF9933" sketch:type="MSTextLayer" font-weight="bold">
+                        <path d="M251,1.76460729 L251,124.582031" id="Line" stroke="#E6E6E6" stroke-width="2" sketch:type="MSShapeGroup"></path>
+                        <g id="TWO-WEEKS" transform="translate(282.647059, 0.000000)" font-size="15.0715308" font-family="Helvetica" fill="#B7B7B7" sketch:type="MSTextLayer" font-weight="bold">
                             <text>
                                 <tspan x="0" y="15">TWO WEEKS</tspan>
                             </text>
                         </g>
-                        <rect id="natural-gas" fill="#A9AACC" sketch:type="MSShapeGroup" x="1" y="94.8867188" width="947.058824" height="18.5"></rect>
-                        <g id="NATURAL-GAS" transform="translate(0.941176, 70.886719)" fill="#55578B" font-size="14" font-family="Helvetica" line-spacing="18" sketch:type="MSTextLayer" font-weight="bold">
+                        <rect id="natural-gas" fill="#FF9933" sketch:type="MSShapeGroup" x="1" y="94.8867188" width="947.058824" height="18.5"></rect>
+                        <g id="NATURAL-GAS" transform="translate(0.941176, 70.886719)" fill="#FF9933" font-size="14" font-family="Helvetica" line-spacing="18" sketch:type="MSTextLayer" font-weight="bold">
                             <text>
                                 <tspan x="0" y="14">NATURAL GAS</tspan>
                             </text>
