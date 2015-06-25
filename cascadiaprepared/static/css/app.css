@@ -1,7 +1,7 @@
 body {
   font-family: 'MetaSerifCompPro-Book W01 Rg', serif;
   background-color: #FFFFFF;
-  color: #55578B;
+  color: #868686;
   font-size: 20px;
   line-height: 1.3em;
 }
@@ -10,10 +10,10 @@ body {
 /* helper classes for colors and fonts */
 .white { color: #FFFFFF; }
 .white-bg { background-color: #FFF; }
-.orange { color: #FF9933; }
-.orange-bg { background-color: #FF9933; }
-.purple { color: #55578B; }
-.purple-bg { background-color: #55578B; }
+.orange { color: #B0B0B0; }
+.orange-bg { background-color: #B0B0B0; }
+.purple { color: #868686; }
+.purple-bg { background-color: #868686; }
 .bold { font-family: 'Meta Serif Offc W01 Extrabold'; }
 .sans-serif { font-family: 'HelveticaNeueW01-65Medi', sans-serif; }
 .sans-serif.bold { font-family: 'HelveticaNeueW01-95Blac'; }
@@ -45,7 +45,7 @@ body {
   line-height: 1.2em;
 }
 #location-text {
-  color: #55578B;
+  color: #868686;
   font-family: 'Meta Serif Offc W01 Extrabold';
   font-size: 18px;
   line-height: 1.3em;
@@ -56,10 +56,10 @@ body {
   border-color: #999;
   color: #999;
 }
-::-webkit-input-placeholder { color: #55578B; }
-:-moz-placeholder { color: #55578B; }
-::-moz-placeholder { color: #55578B; }
-:-ms-input-placeholder { color: #55578B; }
+::-webkit-input-placeholder { color: #868686; }
+:-moz-placeholder { color: #868686; }
+::-moz-placeholder { color: #868686; }
+:-ms-input-placeholder { color: #868686; }
 .form-icon-button {
   width: 7.33%;
 }
@@ -107,7 +107,7 @@ body {
   top: 100%;
   left: 50%;
   border: solid transparent;
-  border-color: #FF9933 rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+  border-color: #B0B0B0 rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
   border-width: 43px 113px 0 113px;
   content: " ";
   height: 0;
@@ -195,6 +195,7 @@ body {
   font-size: 50px;
   line-height: .9em;
   margin: 0 15px;
+  color: #FF9933;
 }
 .supply-kit .text-label {
   padding-top: .2em;
@@ -238,13 +239,13 @@ body {
 }
 .social-icon.twitter { background-position: -32px 0; }
 .social-icon.email { background-position: -64px 0; }
-.social-icon:hover { background-color: #A6A7C4; }
+.social-icon:hover { background-color: #B0B0B0; }
 #geek-bar a {
   text-transform: uppercase;
   color: #FFFFFF;
 }
 #geek-bar a:hover {
-  color: #55578B;
+  color: #666666;
 }
 #geek-bar a:active {
   color: #FFFFFF;
@@ -271,11 +272,12 @@ body {
 
 /* overriding foundation (should use sass/scss/less instead!) */
 a { color: #FF9933; }
-a:hover { color: #55578B; }
-.orange-bg a { color: #55578B; }
+a:hover { color: #666666; }
+.orange-bg a { color: #B0B0B0; }
 .orange-bg a:hover { color: #FFFFFF; }
 a.button { background-color: #FF9933; }
-a.button:hover { background-color: #A6A7C4; }
+a.button:hover,
+a.button:focus { background-color: #B0B0B0; }
 a.button.disabled { background-color: #999; }
 
 

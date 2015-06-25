@@ -40,17 +40,18 @@ $( document ).ready(function() {
     keyboard: false,
     attributionControl: false
   }).setView([lat,lng], zoom);
-  L.esri.basemapLayer('Gray',{ detectRetina: true }).addTo(map);
-  L.esri.basemapLayer('GrayLabels',{ detectRetina: true }).addTo(map);
+  L.esri.basemapLayer('Topographic',{ detectRetina: true }).addTo(map);
   document.getElementById('map').style.cursor='default';
-  var icon = new L.Icon.Default;
-  icon.options.iconUrl = "aftershock/static/img/marker-icon.png";
-  var marker = L.marker([lat,lng], {
-    icon: icon,
-    clickable: false, 
-    keyboard: false
-  }).addTo(map);
-
+  if (zoom > 10) {
+    var icon = new L.Icon.Default;
+    icon.options.iconUrl = "aftershock/static/img/marker-icon.png";
+    var marker = L.marker([lat,lng], {
+      icon: icon,
+      clickable: false, 
+      keyboard: false
+    }).addTo(map);
+  }
+  
   // grab and set any previously entered query text
   var loc = getURLParameter('loc');
   var location_query_text = (loc) ? decodeURIComponent(loc) : lat + "," + lng;
