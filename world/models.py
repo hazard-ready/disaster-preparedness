@@ -20,20 +20,6 @@ SNUGGET_TYPES = (
                  ('SNUG_TEXT', 'TextSnugget'),
                  )
 
-
-# This was originally an auto-generated Django model module created by ogrinspect,
-# updated and documented by the devs.
-class TsunamiZone(models.Model):
-    type = models.CharField(max_length=50)
-    typeid = models.IntegerField()
-    geom = models.MultiPolygonField(srid=4326)  # This is for tsunamiZone
-    objects = models.GeoManager()
-
-    # Returns the string representation of the model.
-    def __str__(self):              # __unicode__ on Python 2
-        return self.type
-
-
 # This was an auto-generated Django model module created by ogrinspect with.
 class ImpactZoneData(models.Model):
     shape_leng = models.FloatField()
@@ -157,7 +143,6 @@ class Snugget(models.Model):
     objects = InheritanceManager()
     shaking_filter = models.ForeignKey(ExpectedGroundShaking, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     impact_zone_filter = models.ForeignKey(ImpactZone, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
-    tsunami_filter = models.ForeignKey(TsunamiZone, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     liquifaction_filter = models.ForeignKey(LiquefactionDeformation, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     landslide_filter = models.ForeignKey(LandslideDeformation, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     temp_text_field = models.TextField(null=True, blank=True, editable=False)
@@ -172,7 +157,6 @@ class Snugget(models.Model):
     def findSnuggetsForPoint(lat=0, lng=0, merge_deform = True):
         pnt = Point(lng, lat)
         qs_impacts = ImpactZoneData.objects.filter(geom__contains=pnt)
-        qs_tsunami = TsunamiZone.objects.filter(geom__contains=pnt)
         qs_shaking = ExpectedGroundShaking.objects.filter(geom__contains=pnt)
         qs_liquifaction = LiquefactionDeformation.objects.filter(geom__contains=pnt)
         qs_landslide = LandslideDeformation.objects.filter(geom__contains=pnt)
@@ -189,8 +173,7 @@ class Snugget(models.Model):
         liquifaction_scores = list(qs_liquifaction.values_list('score', flat=True))
         landslide_scores = list(qs_landslide.values_list('score', flat=True))
         shake_rating = qs_shaking.values_list('shaking', flat=True)
-        tsunami_rating = qs_tsunami.values_list('typeid', flat=True) 
-        tsunami_snuggets = Snugget.objects.filter(tsunami_filter__typeid__exact=tsunami_rating).select_subclasses()
+        tsunami_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__exact=1).select_subclasses()
         shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__exact=shake_rating).select_subclasses()
         impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__exact=qs_impacts.values_list('zoneid')).select_subclasses()
         

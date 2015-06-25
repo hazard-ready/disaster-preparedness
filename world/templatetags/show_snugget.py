@@ -25,17 +25,15 @@ class SnuggetNode(template.Node):
         except (template.base.VariableDoesNotExist):
             return ''
 
-        if not getattr(self, 'nodelist', False):
-            from django.template.loader import get_template, select_template
-            from django.utils.itercompat import is_iterable
-            if isinstance(file_name, template.Template):
-                t = file_name
-            elif not isinstance(file_name, six.string_types) and is_iterable(file_name):
-                t = select_template(file_name)
-            else:
-                t = get_template(file_name)
-            self.nodelist = t.nodelist
-        return self.nodelist.render(context)
+        from django.template.loader import get_template, select_template
+        from django.utils.itercompat import is_iterable
+        if isinstance(file_name, template.Template):
+            t = file_name
+        elif not isinstance(file_name, six.string_types) and is_iterable(file_name):
+            t = select_template(file_name)
+        else:
+            t = get_template(file_name)
+        return t.render(context)
 
     def get_resolved_arguments(self, context):
         """

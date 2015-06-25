@@ -7,8 +7,8 @@ admin.site.register(SnuggetSubSection, admin.ModelAdmin)
 
 
 class SnuggetAdmin(admin.ModelAdmin):
-    list_display = ('shortname', 'shaking_filter', 'impact_zone_filter', 'tsunami_filter', 'liquifaction_filter', 'landslide_filter', 'section', 'sub_section')
-    list_filter = ('shaking_filter', 'impact_zone_filter', 'tsunami_filter', 'liquifaction_filter', 'landslide_filter', 'section', 'sub_section')
+    list_display = ('shortname', 'shaking_filter', 'impact_zone_filter', 'liquifaction_filter', 'landslide_filter', 'section', 'sub_section')
+    list_filter = ('shaking_filter', 'impact_zone_filter', 'liquifaction_filter', 'landslide_filter', 'section', 'sub_section')
 
     fieldsets = (
         (None, {
@@ -16,7 +16,7 @@ class SnuggetAdmin(admin.ModelAdmin):
         }),
         ('Filters', {
             'description': 'Choose a filter value this snugget will show up for.  It is recommended you only select a value for one filter and leave the rest empty.',
-            'fields': (('shaking_filter', 'impact_zone_filter', 'tsunami_filter', 'liquifaction_filter', 'landslide_filter'),)
+            'fields': (('shaking_filter', 'impact_zone_filter', 'liquifaction_filter', 'landslide_filter'),)
         }),
     )
 
@@ -44,7 +44,7 @@ class EmbedAdmin(AdminVideoMixin, SnuggetAdmin):
         return "EmbedSnugget"
 
 admin.site.register(TextSnugget, TextAdmin)
-#admin.site.register(EmbedSnugget, EmbedAdmin)
+admin.site.register(EmbedSnugget, EmbedAdmin)
 
 
 class GeoNoEditAdmin(admin.GeoModelAdmin):
