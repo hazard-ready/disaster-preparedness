@@ -136,7 +136,7 @@
               <div class="chapter-title sans-serif">How To Prepare</div>
               <div class="chapter-content">
               {% for snugget in data.structured.prepare.impact_snugs %}
-                {% if snugget.sub_section.name != "header" %}
+                {% if snugget.sub_section.name == "header" %}
                     {% show_snugget snugget %}
                 {% endif %}
               {% endfor %}
