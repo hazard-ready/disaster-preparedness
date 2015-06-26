@@ -11,7 +11,6 @@ zoneOptions = {
                 4: 'Tsunami',
                 }
 
-
 SNUG_TEXT = 0
 SNUG_AUDIO = 1
 SNUG_VID = 2
@@ -19,6 +18,8 @@ SNUG_VID = 2
 SNUGGET_TYPES = (
                  ('SNUG_TEXT', 'TextSnugget'),
                  )
+
+TSUNAMIZONE_ID = 1
 
 # This was an auto-generated Django model module created by ogrinspect with.
 class ImpactZoneData(models.Model):
@@ -173,9 +174,9 @@ class Snugget(models.Model):
         liquifaction_scores = list(qs_liquifaction.values_list('score', flat=True))
         landslide_scores = list(qs_landslide.values_list('score', flat=True))
         shake_rating = qs_shaking.values_list('shaking', flat=True)
-        tsunami_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__exact=1).select_subclasses()
         shake_snuggets = Snugget.objects.filter(shaking_filter__shaking__exact=shake_rating).select_subclasses()
         impact_snuggets = Snugget.objects.filter(impact_zone_filter__featureValue__exact=qs_impacts.values_list('zoneid')).select_subclasses()
+        tsunami_snuggets = impact_snuggets.filter(impact_zone_filter__featureValue__exact=TSUNAMIZONE_ID).select_subclasses()
         
         if liquifaction_scores:        
             liquifaction_snuggets = Snugget.objects.filter(liquifaction_filter__score__exact=liquifaction_scores[0]).select_subclasses()
