@@ -1,15 +1,10 @@
-       return results[1] || 0;
 $( document ).ready(function() {
-  
-  // app constants
-  var google_api_key = "AIzaSyBZBBqyohy-jWtFMNi8SCZNd74LGpD1ZWo";
-  var google_bounds = "46.308136,-124.575575|41.974902,-116.456679";
 
   // Initial map values for Oregon overview
   var lat = "44.1";
   var lng = "-120.5";
   var zoom = "6";
-  
+
   // convenience function to extract url parameters
   function getURLParameter(name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -60,7 +55,7 @@ $( document ).ready(function() {
     location_query_text = "";
   $("#location-text").val(location_query_text);
 
-  // hitting enter key in the textfield will trigger submit
+  // // hitting enter key in the textfield will trigger submit
   $("#location-text").keydown(function(event) {
     if (event.keyCode == 13) {
       $('#location-submit').trigger('click');
@@ -112,25 +107,22 @@ $( document ).ready(function() {
     $(".loading").hide();
   }
   
-  // request geocoding from google
+
+  // request geocoding from google CLIENT SIDE!
+  var geocoder = new google.maps.Geocoder();
+
   function geocodeSend(query) {
-    // call google api!
-    $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' + query + '&bounds=' + google_bounds + '&key=' + google_api_key, geocodeResponseHandler);
+      geocoder.geocode( { 'address': query}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          var lat = results[0].geometry.location.A;
+          var lon = results[0].geometry.location.F;
+          submitLocation(lat,lon);
+        } else {
+          console.log('Geocode was not successful for the following reason: ' + status);
+        }
+      });
   }
   
-  // handle google's json response
-  function geocodeResponseHandler(data) {
-    // only proceed if we have a location
-    if (data.status != "OK") {
-      enableForm();
-      return;
-    }
-    // save the lat and lng
-    var lat = data.results[0].geometry.location.lat;
-    var lng = data.results[0].geometry.location.lng;
-    // success! onwards to view the content
-    submitLocation(lat, lng);
-  }
 
   function submitLocation(lat,lng) {
     // reload the page with the lat,lng
