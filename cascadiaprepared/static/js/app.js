@@ -1,7 +1,7 @@
 $( document ).ready(function() {
   
   // app constants
-  var google_api_key = "AIzaSyDIoSOu6JLsf3uZ4YPbti6fG-glvVMO4_M";
+  var google_api_key = "AIzaSyAD7d1GEBOMDHCPwecvERBACNIsqjGbG0g";
   var google_bounds = "46.308136,-124.575575|41.974902,-116.456679";
   
   // Initial map values for Oregon overview
