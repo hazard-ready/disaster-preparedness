@@ -114,8 +114,8 @@ $( document ).ready(function() {
   function geocodeSend(query) {
       geocoder.geocode( { 'address': query}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          var lat = results[0].geometry.location.A;
-          var lon = results[0].geometry.location.F;
+          var lat = results[0].geometry.location.G;
+          var lon = results[0].geometry.location.K;
           submitLocation(lat,lon);
         } else {
           console.log('Geocode was not successful for the following reason: ' + status);
