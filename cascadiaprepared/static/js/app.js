@@ -1,14 +1,10 @@
 $( document ).ready(function() {
-  
-  // app constants
-  var google_api_key = "AIzaSyAD7d1GEBOMDHCPwecvERBACNIsqjGbG0g";
-  var google_bounds = "46.308136,-124.575575|41.974902,-116.456679";
-  
+
   // Initial map values for Oregon overview
   var lat = "44.1";
   var lng = "-120.5";
   var zoom = "6";
-  
+
   // convenience function to extract url parameters
   function getURLParameter(name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -19,7 +15,7 @@ $( document ).ready(function() {
     }
   }
 
-  // grab the position, if possible  
+  // grab the position, if possible
   var query_lat = getURLParameter('lat');
   var query_lng = getURLParameter('lng');
   if (query_lat && query_lng) {
@@ -27,9 +23,9 @@ $( document ).ready(function() {
     lng = query_lng;
     zoom = 15;
   }
-  
+
   // set up the map
-  var map = L.map('map', { 
+  var map = L.map('map', {
     zoomControl: false,
     dragging: false,
     touchZoom: false,
@@ -40,18 +36,18 @@ $( document ).ready(function() {
     keyboard: false,
     attributionControl: false
   }).setView([lat,lng], zoom);
-  L.esri.basemapLayer('Topographic',{ detectRetina: true }).addTo(map);
+  L.esri.basemapLayer('DarkGray',{ detectRetina: true }).addTo(map);
   document.getElementById('map').style.cursor='default';
   if (zoom > 10) {
     var icon = new L.Icon.Default;
     icon.options.iconUrl = "aftershock/static/img/marker-icon.png";
     var marker = L.marker([lat,lng], {
       icon: icon,
-      clickable: false, 
+      clickable: false,
       keyboard: false
     }).addTo(map);
   }
-  
+
   // grab and set any previously entered query text
   var loc = getURLParameter('loc');
   var location_query_text = (loc) ? decodeURIComponent(loc) : lat + "," + lng;
@@ -59,15 +55,15 @@ $( document ).ready(function() {
     location_query_text = "";
   $("#location-text").val(location_query_text);
 
-  // hitting enter key in the textfield will trigger submit
+  // // hitting enter key in the textfield will trigger submit
   $("#location-text").keydown(function(event) {
     if (event.keyCode == 13) {
       $('#location-submit').trigger('click');
       return false;
     }
   });
-  
-  // submit location text 
+
+  // submit location text
   $("#location-submit").click(function() {
     // grab the query value, ignoring it if it's empty
     location_query_text = $("#location-text").val();
@@ -76,7 +72,7 @@ $( document ).ready(function() {
     // call google!
     geocodeSend(location_query_text);
   });
-  
+
   // auto location
   $("#auto-location-submit").click(function() {
     location_query_text = "";
@@ -94,7 +90,7 @@ $( document ).ready(function() {
     };
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
   });
-  
+
   // during api calls, disable the form
   function disableForm() {
     $("#location-text").prop("disabled", true);
@@ -102,7 +98,7 @@ $( document ).ready(function() {
     $("#auto-location-submit").addClass("disabled");
     $(".loading").show();
   }
-  
+
   // if a search fails or a restart, enable the form
   function enableForm() {
     $("#location-text").prop("disabled", false);
@@ -110,39 +106,41 @@ $( document ).ready(function() {
     $("#auto-location-submit").removeClass("disabled");
     $(".loading").hide();
   }
-  
-  // request geocoding from google
+
+
+  // request geocoding from google CLIENT SIDE!
+  var geocoder = new google.maps.Geocoder();
+
   function geocodeSend(query) {
-    // call google api!
-    $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' + query + '&bounds=' + google_bounds + '&key=' + google_api_key, geocodeResponseHandler);
+      geocoder.geocode( { 'address': query}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          var lat = results[0].geometry.location.H;
+          var lon = results[0].geometry.location.L;
+          // var position = results[0].geometry.location;
+          submitLocation(lat,lon);
+
+          console.log(results);
+          // console.log(position);
+
+        } else {
+          console.log('Geocode was not successful for the following reason: ' + status);
+        }
+      });
   }
-  
-  // handle google's json response
-  function geocodeResponseHandler(data) {
-    // only proceed if we have a location
-    if (data.status != "OK") {
-      enableForm();
-      return;
-    }
-    // save the lat and lng
-    var lat = data.results[0].geometry.location.lat;
-    var lng = data.results[0].geometry.location.lng;
-    // success! onwards to view the content
-    submitLocation(lat, lng);
-  }
+
 
   function submitLocation(lat,lng) {
     // reload the page with the lat,lng
     document.location =  encodeURI(document.location.hash + "?lat=" + lat + "&lng=" + lng + "&loc=" + location_query_text);
   }
-  
+
   // revealing the geek box content
   $("#geek-bar a").click(function() {
     $("#geek-bar").addClass("down-arrow");
     $("#geek-content").removeClass("hide").slideDown();
     return false;
   });
-  
+
   function openSocialPopup(siteName, event) {
     var url = '',
       title = '',
@@ -162,11 +160,11 @@ $( document ).ready(function() {
     }
     window.open(url, title,'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top + "'");
   }
-  
+
   $('.social-icon').click(function(event) {
     var dest = $(this).data('site');
     openSocialPopup(dest, event);
   });
-  
+
 
 });
