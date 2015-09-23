@@ -107,7 +107,6 @@ $( document ).ready(function() {
     $(".loading").hide();
   }
 
-
   // request geocoding from google CLIENT SIDE!
   var geocoder = new google.maps.Geocoder();
 
@@ -122,11 +121,13 @@ $( document ).ready(function() {
           console.log(results);
           // console.log(position);
 
+
         } else {
           console.log('Geocode was not successful for the following reason: ' + status);
         }
       });
   }
+
 
 
   function submitLocation(lat,lng) {
@@ -153,7 +154,7 @@ $( document ).ready(function() {
         url = 'https://www.facebook.com/sharer/sharer.php?app_id=390011161186648&sdk=joey&u=http%3A%2F%2Fopb.org%2Faftershock&display=popup&ref=plugin&src=share_button';
         break;
       case 'twitter':
-        url = 'https://twitter.com/intent/tweet?text=How%20will%20a%209.0%20earthquake%20impact%20you%3F%20Find%20out%20with%20the%20new%20Aftershock%20app.%20http%3A%2F%2Ftiny.cc%2Fgjerxx%20%23UnpreparedNW%20%40OPB%20%40stickyco';
+        url = 'https://twitter.com/intent/tweet?text=How%20will%20a%209.0%20earthquake%20impact%20you%3F%20Find%20out%20with%20Aftershock.%20www.opb.org%2Faftershock%20%23UnpreparedNW%20%40OPB%20%40stickyco';
         break;
       default:
         return;
