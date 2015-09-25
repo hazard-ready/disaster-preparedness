@@ -2,20 +2,20 @@
 {% load staticfiles %}
 
 {% block map %}
-      <div class="center map-holder">
-          <image id="map-image" class="default" src="" />
-      </div>
+  <div class="row">
+    <div class="small-12 column">
+      <div id="map" style="height: 300px;"></div>
+    </div>
+  </div>
 {% endblock map %}
 
 
 {% block main-content %}
-    <div class="orange-bg chapter-content">
-      <div class="row">
-        <div class="column">
-          <div class="welcome">
-            <h3 class="bold white">Oops!</h3>
-            <p class="white">Make sure you are searching within the state of Oregon.</p>
-          </div>
+    <div class="row vert-pad-medium">
+        <div class="medium-8 column medium-push-1">
+          <h3 class="caps">Oops!</h3>
+          <div class="chapter-content underline">
+            <p>Make sure you are searching within the state of Oregon.</p>
         </div>
       </div>
     </div>
