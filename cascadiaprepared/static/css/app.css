@@ -15,6 +15,20 @@ body {
   /*color: #444;*/
 }
 
+#title a {
+   font-family: Georgia, Times, 'Times New Roman', serif;
+   font-size: 1.75em;
+   color: #222;
+}
+
+#title a:hover {
+   font-family: Georgia, Times, 'Times New Roman', serif;
+   font-size: 1.75em;
+   color: #333;
+   text-decoration: underline;
+}
+
+
 .underline:after {
   display: block;
   content: " ";
@@ -53,7 +67,7 @@ body {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 22px 22px;
-  width: 44px;
+  /*width: 44px;*/
   border-radius: 0 3px 3px 0;
 }
 
@@ -275,6 +289,10 @@ a.button.disabled { background-color: #999; }
 
 #auto-location-submit {
   margin-left: 1em;
+}
+
+#title a {
+   font-size: 1.25em;
 }
 
 }
