@@ -51,22 +51,70 @@
       <div class="small-10 medium-6 medium-push-1 column end">
         <h4 class="caps">Intensity</h4>
         <div class="section-scale">
-        <!-- {% comment %}Using "first" because data.shake_score is coming in as a list.{% endcomment %}
+        {% comment %}Using "first" because data.shake_score is coming in as a list.{% endcomment %}
         {% with data.shake_score|first as level %}
         {% if level == "Light" %}
-          <div class="value-graph"><div class="intensity val-1"></div><div class="numerical orange sans-serif"><span>1</span>/6</div></div>
+        <div class="clearfix">
+          <div class="chart-meter light-color"></div>
+          <div class="chart-meter"></div>
+          <div class="chart-meter"></div>
+          <div class="chart-meter"></div>
+          <div class="chart-meter"></div>
+          <div class="chart-meter"></div>
+          <!-- <h6 class="chart-label">Light</h6> -->
+        </div>
         {% elif level == "Moderate" %}
-          <div class="value-graph"><div class="intensity val-2"></div><div class="numerical orange sans-serif"><span>2</span>/6</div></div>
-        {% elif level == "Strong" %}
-          <div class="value-graph"><div class="intensity val-3"></div><div class="numerical orange sans-serif"><span>3</span>/6</div></div>
-        {% elif level == "Very Strong" %}
-          <div class="value-graph"><div class="intensity val-4"></div><div class="numerical orange sans-serif"><span>4</span>/6</div></div>
+        <div class="clearfix">
+          <div class="chart-meter light-color"></div>
+          <div class="chart-meter moderate-color"></div>
+          <div class="chart-meter"></div>
+          <div class="chart-meter"></div>
+          <div class="chart-meter"></div>
+          <div class="chart-meter"></div>
+          <!-- <h6 class="chart-label">Moderate</h6> -->
+        </div>
+       {% elif level == "Strong" %}
+        <div class="clearfix">
+          <div class="chart-meter light-color"></div>
+          <div class="chart-meter moderate-color"></div>
+          <div class="chart-meter strong-color"></div>
+          <div class="chart-meter"></div>
+          <div class="chart-meter"></div>
+          <div class="chart-meter"></div>
+          <!-- <h6 class="chart-label">Strong</h6> -->
+        </div>
+       {% elif level == "Very Strong" %}
+        <div class="clearfix">
+          <div class="chart-meter light-color"></div>
+          <div class="chart-meter moderate-color"></div>
+          <div class="chart-meter strong-color"></div>
+          <div class="chart-meter very-strong-color"></div>
+          <div class="chart-meter"></div>
+          <div class="chart-meter"></div>
+          <!-- <h6 class="chart-label">Very Strong</h6> -->
+        </div>
         {% elif level == "Severe" %}
-          <div class="value-graph"><div class="intensity val-5"></div><div class="numerical orange sans-serif"><span>5</span>/6</div></div>
+          <div class="clearfix">
+            <div class="chart-meter light-color"></div>
+            <div class="chart-meter moderate-color"></div>
+            <div class="chart-meter strong-color"></div>
+            <div class="chart-meter very-strong-color"></div>
+            <div class="chart-meter severe-color"></div>
+            <div class="chart-meter"></div>
+            <!-- <h6 class="chart-label">Severe</h6> -->
+          </div>
         {% elif level == "Violent" %}
-          <div class="value-graph"><div class="intensity val-6"></div><div class="numerical orange sans-serif"><span>6</span>/6</div></div>
+          <div class="clearfix">
+            <div class="chart-meter light-color"></div>
+            <div class="chart-meter moderate-color"></div>
+            <div class="chart-meter strong-color"></div>
+            <div class="chart-meter very-strong-color"></div>
+            <div class="chart-meter severe-color"></div>
+            <div class="chart-meter violent-color"></div>
+            <!-- <h6 class="chart-label">Violent</h6> -->
+          </div>
         {% endif %}
-        {% endwith %} -->
+        {% endwith %}
         </div>
         {% for snugget in data.structured.moment.shake_snugs %}
           {% if snugget.sub_section.name != "header" %}
@@ -84,18 +132,38 @@
       </div>
       <div class="small-10 medium-6 medium-push-1 column end">
         <h4 class="caps">Ground Deformation</h4>
-          <!-- {% with data.deform_score as deform_level %}
+          {% with data.deform_score as deform_level %}
           {% comment %} deform_level 1 is really "none", so the meaningful values are 2 to 5 {% endcomment %}
           {% if deform_level == 2 %}
-            <div class="value-graph"><div class="deformation val-1"></div><div class="numerical orange sans-serif"><span>1</span>/4</div></div>
+            <div class="clearfix">
+              <div class="chart-meter moderate-color"></div>
+              <div class="chart-meter"></div>
+              <div class="chart-meter"></div>
+              <div class="chart-meter"></div>
+            </div>
           {% elif deform_level == 3 %}
-            <div class="value-graph"><div class="deformation val-2"></div><div class="numerical orange sans-serif"><span>2</span>/4</div></div>
+          <div class="clearfix">
+            <div class="chart-meter moderate-color"></div>
+            <div class="chart-meter strong-color"></div>
+            <div class="chart-meter"></div>
+            <div class="chart-meter"></div>
+          </div>
           {% elif deform_level == 4 %}
-            <div class="value-graph"><div class="deformation val-3"></div><div class="numerical orange sans-serif"><span>3</span>/4</div></div>
+          <div class="clearfix">
+            <div class="chart-meter moderate-color"></div>
+            <div class="chart-meter strong-color"></div>
+            <div class="chart-meter very-strong-color"></div>
+            <div class="chart-meter"></div>
+          </div>
           {% elif deform_level == 5 %}
-            <div class="value-graph"><div class="deformation val-4"></div><div class="numerical orange sans-serif"><span>4</span>/4</div></div>
+          <div class="clearfix">
+            <div class="chart-meter moderate-color"></div>
+            <div class="chart-meter strong-color"></div>
+            <div class="chart-meter very-strong-color"></div>
+            <div class="chart-meter severe-color"></div>
+          </div>
           {% endif %}
-          {% endwith %} -->
+          {% endwith %}
           {% for snugget in data.structured.moment.deform_snugs %}
             {% show_snugget snugget %}
           {% endfor %}
@@ -120,28 +188,26 @@
     </div>
   </div>
 
-    <div class="white-bg below-arrow">
-      <div class="row vert-pad-large">
-        <!-- <div class="column">
-        {% for zone in data.impact_zones %}
-          {% comment %} for now, let the separate tsunami check override the tsunami zone {% endcomment %}
-          {% if data.structured.moment.tsunami_snugs or zone.zoneid == 1 %}
-          <img class="show-for-small-only" src="{% static 'img/recovery-graph-tsunami-s.svg' %}" alt="Recovery Graph">
-          <img class="show-for-medium-up" src="{% static 'img/recovery-graph-tsunami.svg' %}" alt="Recovery Graph">
-          {% elif zone.zoneid == 2 %}
-          <img class="show-for-small-only" src="{% static 'img/recovery-graph-coast-s.svg' %}" alt="Recovery Graph">
-          <img class="show-for-medium-up" src="{% static 'img/recovery-graph-coast.svg' %}" alt="Recovery Graph">
-          {% elif zone.zoneid == 3 %}
-          <img class="show-for-small-only" src="{% static 'img/recovery-graph-valley-s.svg' %}" alt="Recovery Graph">
-          <img class="show-for-medium-up" src="{% static 'img/recovery-graph-valley.svg' %}" alt="Recovery Graph">
-          {% elif zone.zoneid == 4 %}
-          <img class="show-for-small-only" src="{% static 'img/recovery-graph-east-s.svg' %}" alt="Recovery Graph">
-          <img class="show-for-medium-up" src="{% static 'img/recovery-graph-east.svg' %}" alt="Recovery Graph">
-          {% endif %}
-        {% endfor %}
-        </div> -->
-     </div>
+  <div class="row vert-pad-medium">
+    <div class="column">
+    {% for zone in data.impact_zones %}
+      {% comment %} for now, let the separate tsunami check override the tsunami zone {% endcomment %}
+      {% if data.structured.moment.tsunami_snugs or zone.zoneid == 1 %}
+      <img class="show-for-small-only" src="{% static 'img/recovery-graph-tsunami-s.svg' %}" alt="Recovery Graph">
+      <img class="show-for-medium-up" src="{% static 'img/recovery-graph-tsunami.svg' %}" alt="Recovery Graph">
+      {% elif zone.zoneid == 2 %}
+      <img class="show-for-small-only" src="{% static 'img/recovery-graph-coast-s.svg' %}" alt="Recovery Graph">
+      <img class="show-for-medium-up" src="{% static 'img/recovery-graph-coast.svg' %}" alt="Recovery Graph">
+      {% elif zone.zoneid == 3 %}
+      <img class="show-for-small-only" src="{% static 'img/recovery-graph-valley-s.svg' %}" alt="Recovery Graph">
+      <img class="show-for-medium-up" src="{% static 'img/recovery-graph-valley.svg' %}" alt="Recovery Graph">
+      {% elif zone.zoneid == 4 %}
+      <img class="show-for-small-only" src="{% static 'img/recovery-graph-east-s.svg' %}" alt="Recovery Graph">
+      <img class="show-for-medium-up" src="{% static 'img/recovery-graph-east.svg' %}" alt="Recovery Graph">
+      {% endif %}
+    {% endfor %}
     </div>
+ </div>
 
 
 

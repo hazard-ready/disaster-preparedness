@@ -26,7 +26,6 @@ body {
    color: #444;
 }
 
-
 .underline:after {
   display: block;
   content: " ";
@@ -107,7 +106,30 @@ body {
   text-transform: uppercase;
   margin: 15px 0;
 }
-.value-graph {
+
+.chart-meter {
+    float:left;
+    width:40px;
+    height: 18px;
+    background-color: #f1f2f3;
+    border: 1px solid #888;
+    margin-bottom: 0.5em;
+}
+
+.light-color { background-color: #ffffb2;}
+.moderate-color { background-color: #fed976;}
+.strong-color { background-color: #feb24c;}
+.very-strong-color { background-color: #fd8d3c;}
+.severe-color { background-color: #f03b20;}
+.violent-color { background-color: #bd0026;}
+
+.chart-label{
+  margin-top: -0.25em;
+  padding-left: 1em;
+  font-weight: bold;
+}
+
+/*.value-graph {
   width: 170px;
   margin: auto;
   margin-bottom: 1em;
@@ -145,7 +167,7 @@ body {
 .value-graph .numerical span {
   padding-left: 10px;
   font-size: 50px;
-}
+}*/
 .supply-kit {
   font-size: 16px;
   line-height: 1.2em;
