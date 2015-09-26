@@ -36,7 +36,8 @@ $( document ).ready(function() {
     keyboard: false,
     attributionControl: false
   }).setView([lat,lng], zoom);
-  L.esri.basemapLayer('DarkGray',{ detectRetina: true }).addTo(map);
+  var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png');
+  map.addLayer(layer);
   document.getElementById('map').style.cursor='default';
   if (zoom > 10) {
     var icon = new L.Icon.Default;
