@@ -42,15 +42,21 @@
    <div class="row">
         <div class="small-12 medium-7 small-centered text-center column">
           <h1 id="title"><a href="http://www.opb.org/aftershock/">Aftershock</a></h1>
-          <p>A magnitude 9.0 earthquake off the Pacific Northwest coast could hit at any time. Enter your location above for a custom report on your seismic risks and how to prepare.</p>
+          <p>A magnitude 9.0 earthquake off the Pacific Northwest coast could hit at any time. Enter your location for a custom report on your seismic risks and how to prepare.</p>
          </div>
        </div>
 {% endblock title %}
 
 {% block search %}
       <div class="location-form vert-pad-small ">
-        <div class="row">
 
+        <div class="row hidden-for-medium-up">
+          <div class="small-6 small-centered columns form-icon-button">
+             <a id="auto-location-submit" class="blue-bg button radius caps">Find Me</a>
+          </div>
+        </div>
+
+        <div class="row">
            <div class="small-12 medium-8 medium-push-1 columns">
                <div class="row collapse">
                  <div class="small-10 columns">
@@ -61,12 +67,11 @@
                  </div>
                </div>
            </div>
-
-              <div class="small-6 medium-4 medium-push-1 small-centered medium-uncentered columns form-icon-button">
-               <a id="auto-location-submit" class="blue-bg button radius caps">Find Me</a>
-             </div>
-
+           <div class="small-12 hide-for-small medium-3 columns form-icon-button">
+              <a id="auto-location-submit" class="blue-bg button radius caps">Find Me</a>
+           </div>
         </div>
+
       </div>
 {% endblock search %}
 
