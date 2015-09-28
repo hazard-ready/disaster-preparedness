@@ -12,7 +12,6 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: bold;
-  /*color: #444;*/
 }
 
 #title a {
@@ -68,7 +67,7 @@ body {
   border-radius: 0 3px 3px 0;
 }
 
-#auto-location-submit {
+.auto-location-submit {
   /*background-image: url(../img/icon-target.png);
   background-repeat: no-repeat;*/
   border-radius: 3px;
@@ -198,39 +197,6 @@ body {
   line-height: 1em;
 }
 
-/* footer styles */
-/*.social {
-  padding: 40px 0;
-}
-.social .title {
-  font-size: 36px;
-  line-height: 1.2em;
-  margin-bottom: 1em;
-  text-transform: uppercase;
-}
-.social .secondary {
-  font-size: 16px;
-  line-height: 1.5em;
-  text-transform: uppercase;
-}
-.social .hashtag {
-  font-size: 24px;
-  line-height: 1.5em;
-  text-transform: uppercase;
-}
-.social-icon {
-  display: inline-block;
-  margin: 0 .1em;
-  width: 32px;
-  height: 32px;
-  background: #FF9933 url(../img/icons-social.png) no-repeat 0 0;
-  background-size: auto 32px;
-  border-radius: 5px;
-}
-.social-icon.twitter { background-position: -32px 0; }
-.social-icon.email { background-position: -64px 0; }
-.social-icon:hover { background-color: #B0B0B0; }*/
-
 #geek-box h6 {
     color: #717273;
 }
@@ -238,13 +204,6 @@ body {
 #geek-box p {
     color: #717273;
 }
-
-/*.footer {
-  font-size: 16px;
-  line-height: 1.3em;
-  padding: 30px 0;
-}*/
-
 
 /* loading spinner during geolocation */
 .loading {
@@ -258,23 +217,10 @@ body {
   background-size: 110px 110px;
 }
 
-
-/* overriding foundation (should use sass/scss/less instead!) */
-/*a { color: #FF9933; }*/
-/*a:hover { color: #666666; }
-.orange-bg a { color: #B0B0B0; }
-.orange-bg a:hover { color: #FFFFFF; }
-a.button { background-color: #0074a4; }
-a.button:hover,
-a.button:focus { background-color: #B0B0B0; }
-a.button.disabled { background-color: #999; }*/
-
-
 /* adjustments for smaller screens */
 @media only screen and (max-width: 40em) {
 
-#location-submit,
-#auto-location-submit {
+#location-submit {
   background-size: 23px 23px;
 }
 .project-title {
@@ -306,7 +252,7 @@ a.button.disabled { background-color: #999; }*/
   height: 180px;
 }
 
-#auto-location-submit {
+.auto-location-submit {
   margin-left: 1em;
 }
 

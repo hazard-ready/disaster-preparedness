@@ -75,7 +75,7 @@ $( document ).ready(function() {
   });
 
   // auto location
-  $("#auto-location-submit").click(function() {
+  $(".auto-location-submit").click(function() {
     location_query_text = "";
     disableForm();
     var geoOptions = { timeout: 8000 };
@@ -96,7 +96,7 @@ $( document ).ready(function() {
   function disableForm() {
     $("#location-text").prop("disabled", true);
     $("#location-submit").addClass("disabled");
-    $("#auto-location-submit").addClass("disabled");
+    $(".auto-location-submit").addClass("disabled");
     $(".loading").show();
   }
 
@@ -104,7 +104,7 @@ $( document ).ready(function() {
   function enableForm() {
     $("#location-text").prop("disabled", false);
     $("#location-submit").removeClass("disabled");
-    $("#auto-location-submit").removeClass("disabled");
+    $(".auto-location-submit").removeClass("disabled");
     $(".loading").hide();
   }
 
