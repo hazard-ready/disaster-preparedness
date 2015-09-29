@@ -41,7 +41,7 @@ $( document ).ready(function() {
   document.getElementById('map').style.cursor='default';
   if (zoom > 10) {
     var icon = new L.Icon.Default;
-    icon.options.iconUrl = "aftershock/static/img/marker-icon.png";
+    icon.options.iconUrl = "../img/marker-icon.png";
     var marker = L.marker([lat,lng], {
       icon: icon,
       clickable: false,
