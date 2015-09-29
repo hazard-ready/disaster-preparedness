@@ -32,20 +32,20 @@
   <script src="{% static 'js/app.js' %}"></script>
 
   <!-- NPR DS / Google Analytics -->
-  <script type="text/javascript">(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = '//stream.publicbroadcasting.net/analytics/aae0.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
+  <!-- <script type="text/javascript">(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = '//stream.publicbroadcasting.net/analytics/aae0.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script> -->
 
 </head>
 <body>
 
 <!-------------- TITLE AND MAP -------------->
-{% block title %}
+<!-- {% block title %}
    <div class="row">
         <div class="small-12 medium-7 small-centered text-center column">
           <h1 id="title"><a href="http://www.opb.org/aftershock/">Aftershock</a></h1>
           <p>A magnitude 9.0 earthquake off the Pacific Northwest coast could hit at any time. Enter your location for a custom report on your seismic risks and how to prepare.</p>
          </div>
        </div>
-{% endblock title %}
+{% endblock title %} -->
 
 {% block search %}
       <div class="location-form vert-pad-small ">
@@ -105,7 +105,7 @@
 <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga');  ga('create', 'UA-62764577-1', 'auto'); ga('send', 'pageview');</script>
 
 <!-- Chartbeat Analytics -->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 var _sf_async_config={uid:33583,domain:"opb.org"};
 (function(){
  function loadChartbeat() {
@@ -122,7 +122,7 @@ document.body.appendChild(e);
  window.onload = (typeof window.onload != 'function') ?
 loadChartbeat : function() { oldonload(); loadChartbeat(); };
 })();
-</script>
+</script> -->
 
 </body>
 </html>
