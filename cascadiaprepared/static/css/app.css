@@ -1,4 +1,9 @@
+html {
+  width:auto;
+}
+
 body {
+  height:auto;
   font-family: Georgia, Times, 'Times New Roman', serif;
   color: #444;
 }

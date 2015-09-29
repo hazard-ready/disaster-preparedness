@@ -16,7 +16,7 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 # TODO: Deprecated in Django 1.8, remove when that happens.
 TEMPLATE_DEBUG = False
 
@@ -72,12 +72,21 @@ USE_TZ = True
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
 
-DATABASES = {}
-DATABASES['default'] =  dj_database_url.config()
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+# DATABASES = {}
+# DATABASES['default'] =  dj_database_url.config()
+# DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
-# Allow database connections to persist
-CONN_MAX_AGE = environ.get('CONN_MAX_AGE') or 0
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'da7foih8uihm7q',                      # Or path to database file if using sqlite3.
+        'USER': 'uarsskabpvkdo3',                      # Not used with sqlite3.
+        'PASSWORD': 'pb0aghqtgavlb1cgk2a8g3v7gp1',                  # Not used with sqlite3.
+        'HOST': 'ec2-50-19-104-12.compute-1.amazonaws.com',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '5652',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

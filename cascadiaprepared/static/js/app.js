@@ -41,7 +41,7 @@ $( document ).ready(function() {
   document.getElementById('map').style.cursor='default';
   if (zoom > 10) {
     var icon = new L.Icon.Default;
-    icon.options.iconUrl = "../img/marker-icon.png";
+    icon.options.iconUrl = "http://opb-news-interactives.s3-website-us-west-2.amazonaws.com/aftershock/img/marker-icon.png";
     var marker = L.marker([lat,lng], {
       icon: icon,
       clickable: false,
@@ -129,44 +129,42 @@ $( document ).ready(function() {
       });
   }
 
-
-
   function submitLocation(lat,lng) {
     // reload the page with the lat,lng
     document.location =  encodeURI(document.location.hash + "?lat=" + lat + "&lng=" + lng + "&loc=" + location_query_text);
   }
 
   // revealing the geek box content
-  $("#geek-bar a").click(function() {
-    $("#geek-bar").addClass("down-arrow");
-    $("#geek-content").removeClass("hide").slideDown();
-    return false;
-  });
+  // $("#geek-bar a").click(function() {
+  //   $("#geek-bar").addClass("down-arrow");
+  //   $("#geek-content").removeClass("hide").slideDown();
+  //   return false;
+  // });
 
-  function openSocialPopup(siteName, event) {
-    var url = '',
-      title = '',
-      width = 500,
-      height = 300,
-      left = (screen.width / 2) - (width / 2),
-      top = (screen.height / 2) - (height / 2);
-    switch (siteName) {
-      case 'facebook':
-        url = 'https://www.facebook.com/sharer/sharer.php?app_id=390011161186648&sdk=joey&u=http%3A%2F%2Fopb.org%2Faftershock&display=popup&ref=plugin&src=share_button';
-        break;
-      case 'twitter':
-        url = 'https://twitter.com/intent/tweet?text=How%20will%20a%209.0%20earthquake%20impact%20you%3F%20Find%20out%20with%20Aftershock.%20www.opb.org%2Faftershock%20%23UnpreparedNW%20%40OPB%20%40stickyco';
-        break;
-      default:
-        return;
-    }
-    window.open(url, title,'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top + "'");
-  }
-
-  $('.social-icon').click(function(event) {
-    var dest = $(this).data('site');
-    openSocialPopup(dest, event);
-  });
+  // function openSocialPopup(siteName, event) {
+  //   var url = '',
+  //     title = '',
+  //     width = 500,
+  //     height = 300,
+  //     left = (screen.width / 2) - (width / 2),
+  //     top = (screen.height / 2) - (height / 2);
+  //   switch (siteName) {
+  //     case 'facebook':
+  //       url = 'https://www.facebook.com/sharer/sharer.php?app_id=390011161186648&sdk=joey&u=http%3A%2F%2Fopb.org%2Faftershock&display=popup&ref=plugin&src=share_button';
+  //       break;
+  //     case 'twitter':
+  //       url = 'https://twitter.com/intent/tweet?text=How%20will%20a%209.0%20earthquake%20impact%20you%3F%20Find%20out%20with%20Aftershock.%20www.opb.org%2Faftershock%20%23UnpreparedNW%20%40OPB%20%40stickyco';
+  //       break;
+  //     default:
+  //       return;
+  //   }
+  //   window.open(url, title,'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top + "'");
+  // }
+  //
+  // $('.social-icon').click(function(event) {
+  //   var dest = $(this).data('site');
+  //   openSocialPopup(dest, event);
+  // });
 
 
 });
