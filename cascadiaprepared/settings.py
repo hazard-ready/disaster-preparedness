@@ -87,7 +87,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/aftershock/static/'
+STATIC_URL = 'https://s3-us-west-2.amazonaws.com/opb-news-interactives/aftershock/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
