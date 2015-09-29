@@ -1,9 +1,11 @@
 html {
-  width:auto;
+  width:auto !important;
+	height:auto !important;
 }
 
 body {
-  height:auto;
+  height:auto !important;
+  width:auto !important;
   font-family: Georgia, Times, 'Times New Roman', serif;
   color: #444;
 }
