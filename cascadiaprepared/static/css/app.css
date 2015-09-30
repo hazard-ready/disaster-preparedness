@@ -135,45 +135,6 @@ body {
   font-weight: bold;
 }
 
-/*.value-graph {
-  width: 170px;
-  margin: auto;
-  margin-bottom: 1em;
-}
-.value-graph .intensity,
-.value-graph .deformation {
-  display: inline-block;
-  height: 59px;
-  background: transparent url(../img/intensity-bars.png) no-repeat 0 0;
-  background-size: 140px auto;
-  overflow: hidden;
-}
-.value-graph .intensity {
-  width: 85px;
-}
-.value-graph .deformation {
-  width: 55px;
-  margin-left: 20px;
-}
-.value-graph .val-1 { background-position: 0 -59px; }
-.value-graph .val-2 { background-position: 0 -118px; }
-.value-graph .val-3 { background-position: 0 -177px; }
-.value-graph .val-4 { background-position: 0 -236px; }
-.value-graph .val-5 { background-position: 0 -295px; }
-.value-graph .val-6 { background-position: 0 -354px; }
-.deformation.val-1 { background-position: -85px -59px; }
-.deformation.val-2 { background-position: -85px -118px; }
-.deformation.val-3 { background-position: -85px -177px; }
-.deformation.val-4 { background-position: -85px -236px; }
-.value-graph .numerical {
-  display: inline-block;
-  width: 85px;
-  font-size: 30px;
-}
-.value-graph .numerical span {
-  padding-left: 10px;
-  font-size: 50px;
-}*/
 .supply-kit {
   font-size: 16px;
   line-height: 1.2em;
@@ -227,44 +188,69 @@ body {
 /* adjustments for smaller screens */
 @media only screen and (max-width: 40em) {
 
-#location-submit {
-  background-size: 23px 23px;
-}
-.project-title {
-  font-size: 50px;
-  line-height: 1.2em;
-}
-.project-subtitle {
-  font-size: 20px;
-  line-height: 1.2em;
-}
-.location-label {
-  font-size: 22px;
-  line-height: 1.2em;
-}
-.welcome {
-  font-size: 20px;
-  line-height: 1.3em;
-}
-.chapter-title {
-  font-size: 30px;
-  line-height: 1.2em;
-}
-.social .title {
-  font-size: 32px;
-  line-height: 1.2em;
+  #location-submit {
+    background-size: 23px 23px;
+  }
+  .project-title {
+    font-size: 50px;
+    line-height: 1.2em;
+  }
+  .project-subtitle {
+    font-size: 20px;
+    line-height: 1.2em;
+  }
+  .location-label {
+    font-size: 22px;
+    line-height: 1.2em;
+  }
+  .welcome {
+    font-size: 20px;
+    line-height: 1.3em;
+  }
+  .chapter-title {
+    font-size: 30px;
+    line-height: 1.2em;
+  }
+  .social .title {
+    font-size: 32px;
+    line-height: 1.2em;
+  }
+
+  #map {
+    height: 180px;
+  }
+
+  .auto-location-submit {
+    margin-left: 1em;
+  }
+
+  #title a {
+     font-size: 1.25em;
+  }
+
+
+
 }
 
-#map {
-  height: 180px;
-}
+/* adjustments for the smallest screens */
+@media only screen and (max-width: 26em) {
 
-.auto-location-submit {
-  margin-left: 1em;
-}
+  .section-icon {
+    width: 40px;
+    height: 40px;
+    background-size: 40px auto;
+  }
 
-#title a {
-   font-size: 1.25em;
-}
+  .section-icon.kit         { background-position: 0 -40px; }
+  .section-icon.community   { background-position: 0 -80px; }
+  .section-icon.leaders     { background-position: 0 -120px; }
+  .section-icon.home        { background-position: 0 -160px; }
+  .section-icon.deformation { background-position: 0 -200px; }
+  .section-icon.routes      { background-position: 0 -240px; }
+  .section-icon.shaking     { background-position: 0 -280px; }
+
+  .chart-meter {
+      width:28px;
+  }
 
 }
