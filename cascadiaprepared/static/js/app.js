@@ -36,8 +36,10 @@ $( document ).ready(function() {
     keyboard: false,
     attributionControl: false
   }).setView([lat,lng], zoom);
-  var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png');
-  map.addLayer(layer);
+  L.esri.basemapLayer('Terrain').addTo(map);
+  var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png').addTo(map);
+  layer.setOpacity(0.6);
+
   document.getElementById('map').style.cursor='default';
   if (zoom > 10) {
     var icon = new L.Icon.Default;
@@ -47,6 +49,7 @@ $( document ).ready(function() {
       clickable: false,
       keyboard: false
     }).addTo(map);
+    layer.setOpacity(1);
   }
 
   // grab and set any previously entered query text
