@@ -117,8 +117,8 @@ $( document ).ready(function() {
   function geocodeSend(query) {
       geocoder.geocode( { 'address': query}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          var lat = results[0].geometry.location.H;
-          var lon = results[0].geometry.location.L;
+          var lat = results[0].geometry.location.lat();
+          var lon = results[0].geometry.location.lng();
           // var position = results[0].geometry.location;
           submitLocation(lat,lon);
 
