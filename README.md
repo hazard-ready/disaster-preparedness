@@ -23,12 +23,12 @@ Use whichever base command is appropriate for your environment.
 Set up a virtual environment so that you can freely install python modules
 without worrying about overwriting globally installed versions.  It's easy!
 
-1. `pip install virtualenv`
+1. `pip install virtualenv` (for python3, `pip3 install virtualenv`)
 2. Move to the project directory (e.g. `/Applications/MAMP/htdocs/cascadia`).
-3. `virtualenv venv –no-site-packages`  (doesn't need to be venv, just remember what you pick)
+3. `virtualenv venv –no-site-packages`  (doesn't need to be venv, just remember what you pick; for python3, do `virtualenv --python=python3 venv --no-site-packages`)
 4. Wait for things to happen.
 5. `source venv/bin/activate`  (type `deactivate` to leave)
-6. `pip install -r requirements.txt` to automatically install whatever we have in
+6. `pip install -r requirements.txt` or `pip3 install -r requirements.txt` to automatically install whatever we have in
 our requirements.txt.
   * If you are in python3+, the wsgi install will fail.  But that's okay, because
     you won't need it in python3.  Just remove it from your local copy of the text file.
@@ -40,7 +40,7 @@ how GeoDjango works.  "Real" work will probably be taking place in another app
 written slightly better and with all of the datasets modelled better.
 ## Written using:
 * Postgres version: 9.4 
-* Python version: 3.4
+* Python version: 3.5
 
 ## Installing App
 This assumes 'python' is the command configured to run the correct python version.
@@ -51,12 +51,14 @@ This assumes 'python' is the command configured to run the correct python versio
   * On Max/Linux: `export DJANGO_SECRET_KEY="gibberishrandomstring"`
   
 ### Set up the database
-Note: This assumes you've got Postgres with PostGIS installed, which can be a
-      challenge on its own!
+0. Set up Postgres with PostGIS: 
+ * To install PostGIS using Homebrew: `brew install postgis`
+ * Run `brew info postgres` to see options for starting Postgres - you can have it start automatically when your computer starts, or not.
+ * Homebrew sets Postgres up with one user to start with, and that user is you. You should probably make a separate user for Django. If you want your user to be named `django`, do `createuser django --password`. You will then get a prompt for the password.
 
 1. Clone repo.
-2. Create a Postgres database on the Postgres server.
-3. Set up an environment variable `DATABASE_URL` that will be used by the Djando Database URL app to load our databse.
+2. Create a Postgres database on the Postgres server. -  [instructions](http://postgis.net/docs/manual-2.1/postgis_installation.html#create_new_db_extensions)
+3. Set up an environment variable `DATABASE_URL` that will be used by the Django Database URL app to load our databse.
   * example on Mac/Linux: `export DATABASE_URL="postgres://USER:PASSWORD@HOST:PORT/NAME"` 
 6. Run `python manage.py migrate` to initialize the database's structure.
 7. Unzip the TsunamiEvacuationZones_2013.zip and [TM_WORLD_BORDERS-0.3.zip](http://thematicmapping.org/downloads/TM_WORLD_BORDERS-0.3.zip) into world/data
