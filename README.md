@@ -61,7 +61,7 @@ This assumes 'python' is the command configured to run the correct python versio
 3. Set up an environment variable `DATABASE_URL` that will be used by the Django Database URL app to load our databse.
   * example on Mac/Linux: `export DATABASE_URL="postgres://USER:PASSWORD@HOST:PORT/NAME"` 
 6. Run `python manage.py migrate` to initialize the database's structure.
-7. Unzip the TsunamiEvacuationZones_2013.zip and [TM_WORLD_BORDERS-0.3.zip](http://thematicmapping.org/downloads/TM_WORLD_BORDERS-0.3.zip) into world/data
+7. Unzip the all of the shapefiles from the [Aftershock backup](https://www.dropbox.com/s/qefxqdddeqtlryq/AftershockDatabase.zip?dl=0) and [TM_WORLD_BORDERS-0.3.zip](http://thematicmapping.org/downloads/TM_WORLD_BORDERS-0.3.zip) into world/data
 8. Start a python shell with `python manage.py shell`
 9. Type `from world import load` and then `load.run()` to import the shapefile data into the DB
 10. Type `exit()` to exit the shell.
