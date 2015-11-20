@@ -21,7 +21,7 @@ SNUGGET_TYPES = (
 
 TSUNAMIZONE_ID = 1
 
-# This was an auto-generated Django model module created by ogrinspect with.
+# This was an auto-generated Django model module created by ogrinspect.
 class ImpactZoneData(models.Model):
     shape_leng = models.FloatField()
     shape_area = models.FloatField()
@@ -32,6 +32,14 @@ class ImpactZoneData(models.Model):
 
     def __str__(self):
         return self.zone
+
+
+# This was an auto-generated Django model module created by ogrinspect.
+class TsunamiZone(models.Model):
+    type = models.CharField(max_length=50)
+    typeid = models.IntegerField()
+    geom = models.MultiPolygonField(srid=-1)
+    objects = models.GeoManager()
 
 
 # HAZARDS

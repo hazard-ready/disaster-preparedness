@@ -37,7 +37,7 @@ liquefactiondeformation_mapping = {
 }
 
 tsunami_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/tsunamiZone_simple.shp'))
-impact_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/recreateZones.shp'))
+impact_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/new_Impact_Zones_Simple.shp'))
 groundshaking_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/GroundShaking_simple.shp'))
 landslide_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/Landslide_simple.shp'))
 liquefaction_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/Liquefaction_simple.shp'))
@@ -46,17 +46,17 @@ liquefaction_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data
 def run(verbose=True):
     "Making stuff happen but this line is here because some/all stuff below here might get commented out."
 
-    # from .models import TsunamiZone
-    # lm2 = LayerMapping(TsunamiZone, tsunami_shp, tsunamizone_mapping,
-    #                transform=True, encoding='iso-8859-1',
-    #                unique=['typeid'])
-    # lm2.save(strict=True, verbose=verbose)
+    from .models import TsunamiZone
+    lm2 = LayerMapping(TsunamiZone, tsunami_shp, tsunamizone_mapping,
+                   transform=True, encoding='iso-8859-1',
+                   unique=['typeid'])
+    lm2.save(strict=True, verbose=verbose)
 
-    from .models import ImpactZoneData
-    lm3 = LayerMapping(ImpactZoneData, impact_shp, impactzone_mapping,
-                       transform=True, encoding='iso-8859-1',
-                       unique=['zoneid'])
-    lm3.save(strict=True, verbose=verbose)
+    # from .models import ImpactZoneData
+    # lm3 = LayerMapping(ImpactZoneData, impact_shp, impactzone_mapping,
+    #                    transform=True, encoding='iso-8859-1',
+    #                    unique=['zoneid'])
+    # lm3.save(strict=True, verbose=verbose)
 
     # from .models import ExpectedGroundShaking
     # lm4 = LayerMapping(ExpectedGroundShaking, groundshaking_shp, expectedgroundshaking_mapping,
