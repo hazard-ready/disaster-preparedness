@@ -51,15 +51,23 @@ This assumes 'python' is the command configured to run the correct python versio
   * On Max/Linux: `export DJANGO_SECRET_KEY="gibberishrandomstring"`
   
 ### Set up the database
+
 0. Set up Postgres with PostGIS: 
  * To install PostGIS using Homebrew: `brew install postgis`
  * Run `brew info postgres` to see options for starting Postgres - you can have it start automatically when your computer starts, or not.
- * Homebrew sets Postgres up with one user to start with, and that user is you. You should probably make a separate user for Django. If you want your user to be named `django`, do `createuser django --password`. You will then get a prompt for the password.
-
+ * Homebrew sets Postgres up with one user to start with, and that user is you. You should probably make a separate user for Django. If you want your user to be named `django`, do `createuser django --password`. You will then get a prompt for the password. Use only letters and numbers in the password, because you'll need to use it in a URL later.
 1. Clone repo.
-2. Create a Postgres database on the Postgres server. -  [instructions](http://postgis.net/docs/manual-2.1/postgis_installation.html#create_new_db_extensions)
+2. Create a Postgres database on the Postgres server, and install PostGIS to it.
+
+    ```shell
+    createdb [DBNAME]
+    psql -d [DBNAME] -c "CREATE EXTENSION postgis;"
+    ```
+
+[detailed instructions for reference](http://postgis.net/docs/manual-2.1/postgis_installation.html#create_new_db_extensions)
+
 3. Set up an environment variable `DATABASE_URL` that will be used by the Django Database URL app to load our databse.
-  * example on Mac/Linux: `export DATABASE_URL="postgres://USER:PASSWORD@HOST:PORT/NAME"` 
+  * example on Mac/Linux: `export DATABASE_URL="postgres://USER:PASSWORD@HOST:PORT/DBNAME"` where the USER & PASSWORD are the django account you created above in postgres, and the default HOST:PORT is localhost:5432 .
 6. Run `python manage.py migrate` to initialize the database's structure.
 7. Unzip the all of the shapefiles from the [Aftershock backup](https://www.dropbox.com/s/qefxqdddeqtlryq/AftershockDatabase.zip?dl=0) and [TM_WORLD_BORDERS-0.3.zip](http://thematicmapping.org/downloads/TM_WORLD_BORDERS-0.3.zip) into world/data
 8. Start a python shell with `python manage.py shell`
