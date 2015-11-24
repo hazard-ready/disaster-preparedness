@@ -27,7 +27,7 @@ class ImpactZoneData(models.Model):
     shape_area = models.FloatField()
     zoneid = models.IntegerField()
     zone = models.CharField(max_length=10)
-    geom = models.MultiPolygonField(srid=4326)
+    geom = models.MultiPolygonField(srid=2992) # this was set to 4326 but experimenting in QGIS finds it wildly misaligned unless I use the same SRS as for ExpectedGroundShaking
     objects = models.GeoManager()
 
     def __str__(self):

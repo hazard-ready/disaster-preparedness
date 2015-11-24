@@ -9,11 +9,12 @@ tsunamizone_mapping = {
     'geom': 'MULTIPOLYGON',
 }
 
+# EG commenting out fields that don't seem to exist in the shapefile
 impactzone_mapping = {
-    'shape_leng': 'Shape_Leng',
-    'shape_area': 'Shape_Area',
-    'zoneid': 'zoneID',
-    'zone': 'zone',
+#    'shape_leng': 'Shape_Leng',
+#    'shape_area': 'Shape_Area',
+#    'zoneid': 'zoneID',
+    'zone': 'Zone',
     'geom': 'MULTIPOLYGON',
 }
 
@@ -55,7 +56,7 @@ def run(verbose=True):
     # from .models import ImpactZoneData
     # lm3 = LayerMapping(ImpactZoneData, impact_shp, impactzone_mapping,
     #                    transform=True, encoding='iso-8859-1',
-    #                    unique=['zoneid'])
+    #                    unique=['zone'])
     # lm3.save(strict=True, verbose=verbose)
 
     from .models import ExpectedGroundShaking
