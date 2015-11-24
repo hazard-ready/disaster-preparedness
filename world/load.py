@@ -71,8 +71,8 @@ def run(verbose=True):
     #                  unique=['score'])
     # lm5.save(strict=True, verbose=verbose)
 
-    # from .models import LiquefactionDeformation
-    # lm6 = LayerMapping(LiquefactionDeformation, liquefaction_shp, liquefactiondeformation_mapping,
-    #                   transform=True, encoding='iso-8859-1',
-    #                   unique=['score'])
-    # lm6.save(strict=True, verbose=verbose)
+    from .models import LiquefactionDeformation
+    lm6 = LayerMapping(LiquefactionDeformation, liquefaction_shp, liquefactiondeformation_mapping,
+                     transform=True, encoding='iso-8859-1',
+                     unique=['score'])
+    lm6.save(strict=True, verbose=verbose)
