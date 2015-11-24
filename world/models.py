@@ -38,7 +38,7 @@ class ImpactZoneData(models.Model):
 class TsunamiZone(models.Model):
     type = models.CharField(max_length=50)
     typeid = models.IntegerField()
-    geom = models.MultiPolygonField(srid=-1)
+    geom = models.MultiPolygonField(srid=4326)
     objects = models.GeoManager()
 
 
