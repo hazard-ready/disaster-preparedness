@@ -21,17 +21,27 @@ SNUGGET_TYPES = (
 
 TSUNAMIZONE_ID = 1
 
-# This was an auto-generated Django model module created by ogrinspect with.
+# This was an auto-generated Django model module created by ogrinspect.
+# EG commented out 3 fields that aren't in the shapefile
+# EG added one back in: zoneid is checked elsewhere and its absence causes crashes. 
 class ImpactZoneData(models.Model):
-    shape_leng = models.FloatField()
-    shape_area = models.FloatField()
+#    shape_leng = models.FloatField()
+#    shape_area = models.FloatField()
     zoneid = models.IntegerField()
     zone = models.CharField(max_length=10)
-    geom = models.MultiPolygonField(srid=4326)
+    geom = models.MultiPolygonField(srid=4326) # NB: I think this is incorrect because QGIS renders this shapefile way out of alignment with SRID 4326, whereas it renders it correctly with 2992.  But load.py tells me it can't find the geometry if I specify 2992 here.  -EG
     objects = models.GeoManager()
 
     def __str__(self):
         return self.zone
+
+
+# This was an auto-generated Django model module created by ogrinspect.
+class TsunamiZone(models.Model):
+    type = models.CharField(max_length=50)
+    typeid = models.IntegerField()
+    geom = models.MultiPolygonField(srid=4326)
+    objects = models.GeoManager()
 
 
 # HAZARDS

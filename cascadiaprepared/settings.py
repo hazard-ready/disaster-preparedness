@@ -3,7 +3,7 @@ Django settings for cascadiaprepared project.
 """
 
 ADMINS = (
-          ('Weston Wedding', 'wes@wawco.com')
+          ('Melinda Minch', 'melinda@melindaminch.com')
          )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -16,14 +16,12 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-# TODO: Deprecated in Django 1.8, remove when that happens.
-TEMPLATE_DEBUG = False
+DEBUG = True
 
 if DEBUG:
-    ALLOWED_HOSTS = ['opb.org', 'aftershock.local', 'localhost', '127.0.0.1', '0.0.0.0']
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
 else:
-    ALLOWED_HOSTS = ['opb.org', 'arcane-dawn-5464.herokuapp.com']
+    ALLOWED_HOSTS = ['']
 
 # Application definition
 INSTALLED_APPS = (
@@ -87,6 +85,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
+
+# todo: host our own static files
 STATIC_URL = 'http://opb-news-interactives.s3-website-us-west-2.amazonaws.com/aftershock/'
 
 STATICFILES_DIRS = (

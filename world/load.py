@@ -9,11 +9,12 @@ tsunamizone_mapping = {
     'geom': 'MULTIPOLYGON',
 }
 
+# EG commenting out fields that don't seem to exist in the shapefile
 impactzone_mapping = {
-    'shape_leng': 'Shape_Leng',
-    'shape_area': 'Shape_Area',
-    'zoneid': 'zoneID',
-    'zone': 'zone',
+#    'shape_leng': 'Shape_Leng',
+#    'shape_area': 'Shape_Area',
+#    'zoneid': 'zoneID',
+    'zone': 'Zone',
     'geom': 'MULTIPOLYGON',
 }
 
@@ -37,7 +38,7 @@ liquefactiondeformation_mapping = {
 }
 
 tsunami_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/tsunamiZone_simple.shp'))
-impact_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/recreateZones.shp'))
+impact_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/new_Impact_Zones_Simple.shp'))
 groundshaking_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/GroundShaking_simple.shp'))
 landslide_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/Landslide_simple.shp'))
 liquefaction_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/Liquefaction_simple.shp'))
@@ -46,32 +47,32 @@ liquefaction_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data
 def run(verbose=True):
     "Making stuff happen but this line is here because some/all stuff below here might get commented out."
 
-    # from .models import TsunamiZone
-    # lm2 = LayerMapping(TsunamiZone, tsunami_shp, tsunamizone_mapping,
-    #                transform=True, encoding='iso-8859-1',
-    #                unique=['typeid'])
-    # lm2.save(strict=True, verbose=verbose)
+    from .models import TsunamiZone
+    lm2 = LayerMapping(TsunamiZone, tsunami_shp, tsunamizone_mapping,
+                   transform=True, encoding='iso-8859-1',
+                   unique=['typeid'])
+    lm2.save(strict=True, verbose=verbose)
 
     from .models import ImpactZoneData
     lm3 = LayerMapping(ImpactZoneData, impact_shp, impactzone_mapping,
-                       transform=True, encoding='iso-8859-1',
-                       unique=['zoneid'])
+                      transform=True, encoding='iso-8859-1',
+                      unique=['zone'])
     lm3.save(strict=True, verbose=verbose)
 
-    # from .models import ExpectedGroundShaking
-    # lm4 = LayerMapping(ExpectedGroundShaking, groundshaking_shp, expectedgroundshaking_mapping,
-    #                   transform=True, encoding='iso-8859-1',
-    #                   unique=['rate'])
-    # lm4.save(strict=True, verbose=verbose)
+    from .models import ExpectedGroundShaking
+    lm4 = LayerMapping(ExpectedGroundShaking, groundshaking_shp, expectedgroundshaking_mapping,
+                     transform=True, encoding='iso-8859-1',
+                     unique=['rate'])
+    lm4.save(strict=True, verbose=verbose)
 
-    # from .models import LandslideDeformation
-    # lm5 = LayerMapping(LandslideDeformation, landslide_shp, landslidedeformation_mapping,
-    #                  transform=True, encoding='iso-8859-1',
-    #                  unique=['score'])
-    # lm5.save(strict=True, verbose=verbose)
+    from .models import LandslideDeformation
+    lm5 = LayerMapping(LandslideDeformation, landslide_shp, landslidedeformation_mapping,
+                    transform=True, encoding='iso-8859-1',
+                    unique=['score'])
+    lm5.save(strict=True, verbose=verbose)
 
-    # from .models import LiquefactionDeformation
-    # lm6 = LayerMapping(LiquefactionDeformation, liquefaction_shp, liquefactiondeformation_mapping,
-    #                   transform=True, encoding='iso-8859-1',
-    #                   unique=['score'])
-    # lm6.save(strict=True, verbose=verbose)
+    from .models import LiquefactionDeformation
+    lm6 = LayerMapping(LiquefactionDeformation, liquefaction_shp, liquefactiondeformation_mapping,
+                     transform=True, encoding='iso-8859-1',
+                     unique=['score'])
+    lm6.save(strict=True, verbose=verbose)
