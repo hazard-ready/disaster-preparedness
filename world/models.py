@@ -22,12 +22,13 @@ SNUGGET_TYPES = (
 TSUNAMIZONE_ID = 1
 
 # This was an auto-generated Django model module created by ogrinspect.
+# EG commented out 3 fields that aren't in the shapefile
 class ImpactZoneData(models.Model):
-    shape_leng = models.FloatField()
-    shape_area = models.FloatField()
-    zoneid = models.IntegerField()
+#    shape_leng = models.FloatField()
+#    shape_area = models.FloatField()
+#    zoneid = models.IntegerField()
     zone = models.CharField(max_length=10)
-    geom = models.MultiPolygonField(srid=2992) # this was set to 4326 but experimenting in QGIS finds it wildly misaligned unless I use the same SRS as for ExpectedGroundShaking
+    geom = models.MultiPolygonField(srid=4326) # NB: I think this is incorrect because QGIS renders this shapefile way out of alignment with SRID 4326, whereas it renders it correctly with 2992.  But load.py tells me it can't find the geometry if I specify 2992 here.  -EG
     objects = models.GeoManager()
 
     def __str__(self):

@@ -53,11 +53,11 @@ def run(verbose=True):
                    unique=['typeid'])
     lm2.save(strict=True, verbose=verbose)
 
-    # from .models import ImpactZoneData
-    # lm3 = LayerMapping(ImpactZoneData, impact_shp, impactzone_mapping,
-    #                    transform=True, encoding='iso-8859-1',
-    #                    unique=['zone'])
-    # lm3.save(strict=True, verbose=verbose)
+    from .models import ImpactZoneData
+    lm3 = LayerMapping(ImpactZoneData, impact_shp, impactzone_mapping,
+                      transform=True, encoding='iso-8859-1',
+                      unique=['zone'])
+    lm3.save(strict=True, verbose=verbose)
 
     from .models import ExpectedGroundShaking
     lm4 = LayerMapping(ExpectedGroundShaking, groundshaking_shp, expectedgroundshaking_mapping,
