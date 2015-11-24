@@ -58,11 +58,11 @@ def run(verbose=True):
     #                    unique=['zoneid'])
     # lm3.save(strict=True, verbose=verbose)
 
-    # from .models import ExpectedGroundShaking
-    # lm4 = LayerMapping(ExpectedGroundShaking, groundshaking_shp, expectedgroundshaking_mapping,
-    #                   transform=True, encoding='iso-8859-1',
-    #                   unique=['rate'])
-    # lm4.save(strict=True, verbose=verbose)
+    from .models import ExpectedGroundShaking
+    lm4 = LayerMapping(ExpectedGroundShaking, groundshaking_shp, expectedgroundshaking_mapping,
+                     transform=True, encoding='iso-8859-1',
+                     unique=['rate'])
+    lm4.save(strict=True, verbose=verbose)
 
     # from .models import LandslideDeformation
     # lm5 = LayerMapping(LandslideDeformation, landslide_shp, landslidedeformation_mapping,
