@@ -4,7 +4,7 @@ from .models import Snugget, Location
 
 
 def app_view(request):
-    area_name = Location.get_solo().area_name
+    location = Location.get_solo()
 
     # if user submitted lat/lng, find our snuggets and send them to our template
     if 'lat' and 'lng' in request.GET:
@@ -60,7 +60,7 @@ def app_view(request):
                 section_width = 0
                 
             return render(request, template, {
-                'area_name': area_name,
+                'location': location,
                 'data': snugget_content, 
                 'section_width': section_width,
                 'wrapper_width': wrapper_width

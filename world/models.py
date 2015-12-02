@@ -24,6 +24,8 @@ TSUNAMIZONE_ID = 1
 
 class Location(SingletonModel):
     area_name = models.CharField(max_length=100, default="the affected area", help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.")
+    about_text = models.TextField(default="Information about your organization goes here.", help_text="Describe the data and the agencies that it came from.")
+    contact_email = models.EmailField(default="contact@youremail.com", help_text="Put a contact email for the maintainer of this site here.")
     def __unicode__(self):
         return u"Location Information"
 
