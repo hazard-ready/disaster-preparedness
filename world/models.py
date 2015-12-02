@@ -21,6 +21,9 @@ SNUGGET_TYPES = (
 
 TSUNAMIZONE_ID = 1
 
+class Location(models.Model):
+    area_name = models.CharField(max_length=100, default="the affected area", help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.")
+
 # This was an auto-generated Django model module created by ogrinspect.
 # EG commented out 3 fields that aren't in the shapefile
 # EG added one back in: zoneid is checked elsewhere and its absence causes crashes. 

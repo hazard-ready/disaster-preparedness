@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from math import floor
-from .models import Snugget
+from .models import Snugget, Location
 
 
 def app_view(request):
+    area_name = "the affected area"
+    if Location.objects.first() is not None:
+        area_name = Location.objects.first().area_name
 
     # if user submitted lat/lng, find our snuggets and send them to our template
     if 'lat' and 'lng' in request.GET:
@@ -59,6 +62,7 @@ def app_view(request):
                 section_width = 0
                 
             return render(request, template, {
+                'area_name': area_name,
                 'data': snugget_content, 
                 'section_width': section_width,
                 'wrapper_width': wrapper_width
