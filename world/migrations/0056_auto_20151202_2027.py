@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='location',
             name='area_name',
-            field=models.CharField(max_length=100, help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.", default='The affected area'),
+            field=models.CharField(max_length=100, help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.", default='the affected area'),
         ),
     ]

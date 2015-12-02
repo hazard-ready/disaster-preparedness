@@ -23,7 +23,7 @@ SNUGGET_TYPES = (
 TSUNAMIZONE_ID = 1
 
 class Location(SingletonModel):
-    area_name = models.CharField(max_length=100, default="The affected area", help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.")
+    area_name = models.CharField(max_length=100, default="the affected area", help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.")
     def __unicode__(self):
         return u"Location Information"
 
