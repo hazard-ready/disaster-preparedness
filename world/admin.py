@@ -1,5 +1,6 @@
 from django.contrib.gis import admin
 from embed_video.admin import AdminVideoMixin
+from solo.admin import SingletonModelAdmin
 from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, TsunamiZone, ImpactZoneData, ImpactZone, ExpectedGroundShaking, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location
 
 admin.site.register(SnuggetSection, admin.ModelAdmin)
@@ -63,4 +64,4 @@ admin.site.register(InfrastructureCategory, admin.ModelAdmin)
 admin.site.register(RecoveryLevels, admin.ModelAdmin)
 
 # To make the UI more general
-admin.site.register(Location, admin.ModelAdmin)
+admin.site.register(Location, SingletonModelAdmin)

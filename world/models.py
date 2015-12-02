@@ -2,6 +2,7 @@ from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from embed_video.fields import EmbedVideoField
 from model_utils.managers import InheritanceManager
+from solo.models import SingletonModel
 
 
 zoneOptions = {
@@ -21,8 +22,13 @@ SNUGGET_TYPES = (
 
 TSUNAMIZONE_ID = 1
 
-class Location(models.Model):
-    area_name = models.CharField(max_length=100, default="the affected area", help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.")
+class Location(SingletonModel):
+    area_name = models.CharField(max_length=100, default="The affected area", help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.")
+    def __unicode__(self):
+        return u"Location Information"
+
+    class Meta:
+        verbose_name = "Location Information"
 
 # This was an auto-generated Django model module created by ogrinspect.
 # EG commented out 3 fields that aren't in the shapefile

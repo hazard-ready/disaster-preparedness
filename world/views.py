@@ -4,9 +4,7 @@ from .models import Snugget, Location
 
 
 def app_view(request):
-    area_name = "the affected area"
-    if Location.objects.first() is not None:
-        area_name = Location.objects.first().area_name
+    area_name = Location.get_solo().area_name
 
     # if user submitted lat/lng, find our snuggets and send them to our template
     if 'lat' and 'lng' in request.GET:
