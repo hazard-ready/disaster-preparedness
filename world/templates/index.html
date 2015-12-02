@@ -4,18 +4,14 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:site" content="@OPB" />
-  <meta property="og:url" content="http://www.opb.org/aftershock/" />
-  <meta property="og:title" content="Aftershock: Find Your Earthquake Story">
-  <meta property="og:description" content="A magnitude 9.0 earthquake could hit off the Northwest coast at any time. Enter your location for a personalized report on your seismic risks and how to prepare.">
-  <!-- <meta property="og:image" content="" /> -->
+  <meta property="og:url" content="{{ location.site_url }}"/>
+  <meta property="og:title" content="{{ location.site_description }}">
+  <meta property="og:description" content="{{ location.disaster_description }} Enter your location for a personalized report on your risks and how to prepare.">
 
-  <title>Aftershock</title>
+  <title>{{ location.site_title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link type="text/css" rel="stylesheet" href="{% static 'css/normalize.css' %}">
   <link type="text/css" rel="stylesheet" href="{% static 'css/foundation.css' %}">
-  <!-- <link type="text/css" rel="stylesheet" href="http://fast.fonts.net/cssapi/946b88e5-dfa3-4779-97ec-ea82c655a7c5.css"/> -->
   <link type="text/css" rel="stylesheet" href="{% static 'css/app.css' %}">
 
   <!-- Load Leaflet from CDN-->
@@ -47,7 +43,7 @@
            <div class="small-12 medium-8 medium-push-1 columns">
                <div class="row collapse">
                  <div class="small-10 columns">
-                   <input id="location-text" type="text" placeholder="Enter your Oregon address" />
+                   <input id="location-text" type="text" placeholder="Enter your {{ location.area_name }} address" />
                  </div>
                  <div class="small-2 end columns">
                    <a id="location-submit" class="blue-bg button postfix"></a>
@@ -68,9 +64,9 @@
           <div id="map" style="height: 400px;"></div>
         </div>
       <div class="small-12 medium-5 column">
-        <h4 class="caps underline">What’s Your Cascadia Quake Story?</h4>
+        <h4 class="caps underline">What’s Your Disaster Recovery Story?</h4>
         <h5 class="caps">The Moment</h5>
-        <p>Aftershock predicts what you will feel during a 9.0 earthquake based on your location in Oregon.</p>
+        <p>{{ location.site_title }} predicts what you will experience during {{ location.disaster_name }} based on your location in {{ location.area_name }}.</p>
 
         <h5 class="caps">Recovery Time</h5>
         <p>Find estimates for how long  your neighborhood will take to reconnect to basic services, such as water and power.</p>
