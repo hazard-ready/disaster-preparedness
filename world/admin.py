@@ -1,6 +1,6 @@
 from django.contrib.gis import admin
 from embed_video.admin import AdminVideoMixin
-from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection
+from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, TsunamiZone, ImpactZoneData, ImpactZone, ExpectedGroundShaking, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels
 
 admin.site.register(SnuggetSection, admin.ModelAdmin)
 admin.site.register(SnuggetSubSection, admin.ModelAdmin)
@@ -51,13 +51,13 @@ class GeoNoEditAdmin(admin.GeoModelAdmin):
     modifiable = False
 
 # These are commented out because editing them seems to serve no purpose, currently.
-# admin.site.register(TsunamiZone, GeoNoEditAdmin)
-# admin.site.register(ImpactZoneData, GeoNoEditAdmin)
-# admin.site.register(ExpectedGroundShaking, GeoNoEditAdmin)
-# admin.site.register(ImpactZone, GeoNoEditAdmin)
+admin.site.register(TsunamiZone, GeoNoEditAdmin)
+admin.site.register(ImpactZoneData, GeoNoEditAdmin)
+admin.site.register(ExpectedGroundShaking, GeoNoEditAdmin)
+admin.site.register(ImpactZone, GeoNoEditAdmin)
 
 # Maybe in the future
-# admin.site.register(InfrastructureGroup, admin.ModelAdmin)
-# admin.site.register(Infrastructure, admin.ModelAdmin)
-# admin.site.register(InfrastructureCategory, admin.ModelAdmin)
-# admin.site.register(RecoveryLevels, admin.ModelAdmin)
+admin.site.register(InfrastructureGroup, admin.ModelAdmin)
+admin.site.register(Infrastructure, admin.ModelAdmin)
+admin.site.register(InfrastructureCategory, admin.ModelAdmin)
+admin.site.register(RecoveryLevels, admin.ModelAdmin)
