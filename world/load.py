@@ -13,7 +13,7 @@ tsunamizone_mapping = {
 impactzone_mapping = {
 #    'shape_leng': 'Shape_Leng',
 #    'shape_area': 'Shape_Area',
-#    'zoneid': 'zoneID',
+    'zoneid': 'zoneID',
     'zone': 'Zone',
     'geom': 'MULTIPOLYGON',
 }
