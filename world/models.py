@@ -2,6 +2,7 @@ from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from embed_video.fields import EmbedVideoField
 from model_utils.managers import InheritanceManager
+from solo.models import SingletonModel
 
 
 zoneOptions = {
@@ -20,6 +21,23 @@ SNUGGET_TYPES = (
                  )
 
 TSUNAMIZONE_ID = 1
+
+class Location(SingletonModel):
+    area_name = models.CharField(max_length=100, default="the affected area", help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.")
+    about_text = models.TextField(default="Information about your organization goes here.", help_text="Describe the data and the agencies that it came from.")
+    contact_email = models.EmailField(default="contact@youremail.com", help_text="Put a contact email for the maintainer of this site here.")
+    site_url = models.URLField(default="http://www.example.com", help_text="Put the URL to this site here.")
+    site_title = models.CharField(max_length=50, default="Your Title Here!")
+    site_description = models.CharField(max_length=200, default="A disaster preparedness website", help_text="A small, catchy description for this site.")
+
+    disaster_name = models.CharField(max_length=50, default="some disaster", help_text="Something like 'a tsunami', 'an earthquake', 'a fire'")
+    disaster_description = models.TextField(default="A natural disaster could strike your area at any time.", help_text="A description of what we are trying to help people prepare for.")
+    
+    def __unicode__(self):
+        return u"Location Information"
+
+    class Meta:
+        verbose_name = "Location Information"
 
 # This was an auto-generated Django model module created by ogrinspect.
 # EG commented out 3 fields that aren't in the shapefile

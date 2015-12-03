@@ -33,7 +33,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'embed_video',
-    'world'
+    'world',
+    'solo'
 )
 
 MIDDLEWARE_CLASSES = (

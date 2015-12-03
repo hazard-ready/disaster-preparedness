@@ -4,18 +4,14 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:site" content="@OPB" />
-  <meta property="og:url" content="http://www.opb.org/aftershock/" />
-  <meta property="og:title" content="Aftershock: Find Your Earthquake Story">
-  <meta property="og:description" content="A magnitude 9.0 earthquake could hit off the Northwest coast at any time. Enter your location for a personalized report on your seismic risks and how to prepare.">
-  <!-- <meta property="og:image" content="" /> -->
+  <meta property="og:url" content="{{ location.site_url }}"/>
+  <meta property="og:title" content="{{ location.site_description }}">
+  <meta property="og:description" content="{{ location.disaster_description }} Enter your location for a personalized report on your risks and how to prepare.">
 
-  <title>Aftershock</title>
+  <title>{{ location.site_title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link type="text/css" rel="stylesheet" href="{% static 'css/normalize.css' %}">
   <link type="text/css" rel="stylesheet" href="{% static 'css/foundation.css' %}">
-  <!-- <link type="text/css" rel="stylesheet" href="http://fast.fonts.net/cssapi/946b88e5-dfa3-4779-97ec-ea82c655a7c5.css"/> -->
   <link type="text/css" rel="stylesheet" href="{% static 'css/app.css' %}">
 
   <!-- Load Leaflet from CDN-->
@@ -31,21 +27,13 @@
   <script src="{% static 'js/foundation.min.js' %}"></script>
   <script src="{% static 'js/app.js' %}"></script>
 
-  <!-- NPR DS / Google Analytics -->
-  <!-- <script type="text/javascript">(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = '//stream.publicbroadcasting.net/analytics/aae0.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script> -->
-
 </head>
 <body>
-
-<!-------------- TITLE AND MAP -------------->
-<!-- {% block title %}
-   <div class="row">
-        <div class="small-12 medium-7 small-centered text-center column">
-          <h1 id="title"><a href="http://www.opb.org/aftershock/">Aftershock</a></h1>
-          <p>A magnitude 9.0 earthquake off the Pacific Northwest coast could hit at any time. Enter your location for a custom report on your seismic risks and how to prepare.</p>
-         </div>
-       </div>
-{% endblock title %} -->
+  <div class="row">
+    <h3 class="caps underline">{{ location.site_title }}</h3>
+    <h5 class="caps">{{ location.site_description }}</h5>
+    <p>{{ location.disaster_description }} Enter your location for a personalized report on your risks and how to prepare.</p>
+  </div>
 
 {% block search %}
       <div class="location-form vert-pad-small ">
@@ -60,7 +48,7 @@
            <div class="small-12 medium-8 medium-push-1 columns">
                <div class="row collapse">
                  <div class="small-10 columns">
-                   <input id="location-text" type="text" placeholder="Enter your Oregon address" />
+                   <input id="location-text" type="text" placeholder="Enter your {{ location.area_name }} address" />
                  </div>
                  <div class="small-2 end columns">
                    <a id="location-submit" class="blue-bg button postfix"></a>
@@ -81,9 +69,9 @@
           <div id="map" style="height: 400px;"></div>
         </div>
       <div class="small-12 medium-5 column">
-        <h4 class="caps underline">What’s Your Cascadia Quake Story?</h4>
+        <h4 class="caps underline">What’s Your Disaster Recovery Story?</h4>
         <h5 class="caps">The Moment</h5>
-        <p>Aftershock predicts what you will feel during a 9.0 earthquake based on your location in Oregon.</p>
+        <p>{{ location.site_title }} predicts what you will experience during {{ location.disaster_name }} based on your location in {{ location.area_name }}.</p>
 
         <h5 class="caps">Recovery Time</h5>
         <p>Find estimates for how long  your neighborhood will take to reconnect to basic services, such as water and power.</p>
@@ -100,29 +88,6 @@
 {% include "geek_box.html" %}
 
 <div class="loading hide"></div>
-
-<!-- Sticky Analytics -->
-<script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga');  ga('create', 'UA-62764577-1', 'auto'); ga('send', 'pageview');</script>
-
-<!-- Chartbeat Analytics -->
-<!-- <script type="text/javascript">
-var _sf_async_config={uid:33583,domain:"opb.org"};
-(function(){
- function loadChartbeat() {
-window._sf_endpt=(new Date()).getTime();
-var e = document.createElement('script');
-e.setAttribute('language', 'javascript');
-e.setAttribute('type', 'text/javascript');
-e.setAttribute('src',
-  (("https:" == document.location.protocol) ? "https://a248.e.akamai.net/chartbeat.download.akamai.com/102508/" : "http://static.chartbeat.com/") +
-  "js/chartbeat.js");
-document.body.appendChild(e);
- }
- var oldonload = window.onload;
- window.onload = (typeof window.onload != 'function') ?
-loadChartbeat : function() { oldonload(); loadChartbeat(); };
-})();
-</script> -->
 
 <script src="http://opb-news-interactives.s3.amazonaws.com/lib/pym.js" type="text/javascript"></script>
 <script>
