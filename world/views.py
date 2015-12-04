@@ -71,5 +71,6 @@ def app_view(request):
     # if not, we'll still serve up the same template without data
     else:
         return render(request, 'index.html', {
-            'location': location
+            'location': location,
+            'settings': settings
             })
