@@ -4,11 +4,11 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta property="og:url" content="{{ SiteSettings.site_url }}"/>
-  <meta property="og:title" content="{{ SiteSettings.site_description }}">
+  <meta property="og:url" content="{{ settings.site_url }}"/>
+  <meta property="og:title" content="{{ settings.site_description }}">
   <meta property="og:description" content="{{ location.disaster_description }} Enter your location for a personalized report on your risks and how to prepare.">
 
-  <title>{{ SiteSettings.site_title }}</title>
+  <title>{{ settings.site_title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link type="text/css" rel="stylesheet" href="{% static 'css/normalize.css' %}">
   <link type="text/css" rel="stylesheet" href="{% static 'css/foundation.css' %}">
@@ -30,8 +30,8 @@
 </head>
 <body>
   <div class="row">
-    <h3 class="caps underline">{{ SiteSettings.site_title }}</h3>
-    <h5 class="caps">{{ SiteSettings.site_description }}</h5>
+    <h3 class="caps underline">{{ settings.site_title }}</h3>
+    <h5 class="caps">{{ settings.site_description }}</h5>
     <p>{{ location.disaster_description }} Enter your location for a personalized report on your risks and how to prepare.</p>
   </div>
 
@@ -71,7 +71,7 @@
       <div class="small-12 medium-5 column">
         <h4 class="caps underline">What’s Your Disaster Recovery Story?</h4>
         <h5 class="caps">The Moment</h5>
-        <p>{{ SiteSettings.site_title }} predicts what you will experience during {{ location.disaster_name }} based on your location in {{ location.area_name }}.</p>
+        <p>{{ settings.site_title }} predicts what you will experience during {{ location.disaster_name }} based on your location in {{ location.area_name }}.</p>
 
         <h5 class="caps">Recovery Time</h5>
         <p>Find estimates for how long  your neighborhood will take to reconnect to basic services, such as water and power.</p>
