@@ -22,19 +22,64 @@ SNUGGET_TYPES = (
 
 TSUNAMIZONE_ID = 1
 
-class Location(SingletonModel):
-    area_name = models.CharField(max_length=100, default="the affected area", help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.")
-    about_text = models.TextField(default="Information about your organization goes here.", help_text="Describe the data and the agencies that it came from.")
-    contact_email = models.EmailField(default="contact@youremail.com", help_text="Put a contact email for the maintainer of this site here.")
-    site_url = models.URLField(default="http://www.example.com", help_text="Put the URL to this site here.")
-    site_title = models.CharField(max_length=50, default="Your Title Here!")
-    site_description = models.CharField(max_length=200, default="A disaster preparedness website", help_text="A small, catchy description for this site.")
 
-    disaster_name = models.CharField(max_length=50, default="some disaster", help_text="Something like 'a tsunami', 'an earthquake', 'a fire'")
-    disaster_description = models.TextField(default="A natural disaster could strike your area at any time.", help_text="A description of what we are trying to help people prepare for.")
+class SiteSettings(SingletonModel):
+    """A singleton model to represent site-wide settings."""
+    about_text = models.TextField(
+        default="Information about your organization goes here.",
+        help_text="Describe the data and the agencies that it came from."
+    )
+    contact_email = models.EmailField(
+        default="contact@youremail.com",
+        help_text="Put a contact email for the maintainer of this site here."
+    )
+    site_url = models.URLField(
+        default="http://www.example.com",
+        help_text="Put the URL to this site here."
+    )
+    site_title = models.CharField(
+        max_length=50,
+        default="Your Title Here!"
+    )
+    site_description = models.CharField(
+        max_length=200,
+        default="A disaster preparedness website",
+        help_text="A small, catchy description for this site."
+    )
+
+    def __unicode__(self):
+        return u"Site Settings"
+
+    class Meta:
+        verbose_name = "Site Settings"
+
+
+class Location(SingletonModel):
+    """A singleton model to represent the location covered by this website's data"""
+    area_name = models.CharField(
+        max_length=100,
+        default="the affected area",
+        help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'."
+    )
+    disaster_name = models.CharField(
+        max_length=50,
+        default="some disaster",
+        help_text="Something like 'a tsunami', 'an earthquake', 'a fire'"
+    )
+    disaster_description = models.TextField(
+        default="A natural disaster could strike your area at any time.", 
+        help_text="A description of what we are trying to help people prepare for."
+    )
+    evacuation_routes_link = models.URLField(
+        default="",
+        blank=True,
+        help_text="A link to website that can help people find an evacuation route"
+    )
+    emergency_management_link = models.URLField(
+        default="http://www.fema.gov",
+        help_text="A link to your local office of emergency management."
+    )
     
-    evacuation_routes_link = models.URLField(default="", blank=True, help_text="A link to website that can help people find an evacuation route")
-    emergency_management_link = models.URLField(default="http://www.fema.gov", help_text="A link to your local office of emergency management.")
     def __unicode__(self):
         return u"Location Information"
 
