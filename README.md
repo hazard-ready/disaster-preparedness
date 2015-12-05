@@ -48,12 +48,12 @@ This assumes 'python' is the command configured to run the correct python versio
 ### Set up the "secret key" used by Django to secure forms.
 * Set up an environment variable `DJANGO_SECRET_KEY` to whatever you want to set it to.
   * See http://techblog.leosoto.com/django-secretkey-generation/ for an example approach.
-  * On Max/Linux: `export DJANGO_SECRET_KEY="gibberishrandomstring"`
+  * On Mac/Linux: `export DJANGO_SECRET_KEY="gibberishrandomstring"`
   
 ### Set up the database
 
 1. Set up Postgres with PostGIS: 
- * To install PostGIS using Homebrew: `brew install postgis`
+ * To install PostGIS on a Mac using Homebrew: `brew install postgis`. Here are [PostGIS install instructions for Ubuntu](https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS21UbuntuPGSQL93Apt).
  * Run `brew info postgres` to see options for starting Postgres - you can have it start automatically when your computer starts, or not.
  * Homebrew sets Postgres up with one user to start with, and that user is you. You should probably make a separate user for Django. If you want your user to be named `django`, do `createuser django --password`. You will then get a prompt for the password. Use only letters and numbers in the password, because you'll need to use it in a URL later.
 1. Clone repo.
