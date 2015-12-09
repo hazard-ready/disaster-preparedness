@@ -81,8 +81,15 @@ Save them to your `.bash_profile` or equivalent.
 
 ### Create a user and visit the admin screen to verify
 1. `python manage.py createsuperuser`
-2. `python manage.py runserver` (or configure another webserver) and visit http://server.ip/admin and log in with new user.
-3. Should see a list of content.  *Don't try to edit any DOGAMI data directly; those shapes are so complex with so many points that it's a guaranteed browser crash/freeze.*
+2. `python manage.py runserver` to run a development server on localhost:8000 or see below for how to deploy via Apache.
+3. Visit http://server.ip/admin and log in with new user.
+4. Should see a list of content.  *Don't try to directly edit data that came from the shapefiles - they are liable to be so complex with so many points that attempting this freezes or crashes the browser.*
+
+### Deploying to the web via Apache
+
+1. Install a version of `mod_wsgi` that is compiled for Python 3. On Debian/Ubuntu you can do this with `aptitude install libapache2-mod-wsgi-py3`. On other systems it may be easier to use `pip` as per [these instructions](https://pypi.python.org/pypi/mod_wsgi).
+2. Use [these instructions](https://docs.djangoproject.com/en/1.9/howto/deployment/wsgi/modwsgi/) to configure Apache.
+3. Set up the environment values from above (`DJANGO_SECRET_KEY` and `DATABASE_URL`) for all users by putting their declarations in `/etc/environment/` and rebooting the machine.
 
 ### Use foreman to run the server Heroku-style
 * `foreman start`
