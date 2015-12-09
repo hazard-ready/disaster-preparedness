@@ -262,8 +262,12 @@
     </div>
     <div class="small-10 medium-5 column">
       <h4 class="caps">Know Your Routes</h4>
-      <p>Make sure your family and friends know where to gather after the earthquake and how to get there. You'll need a reconnection plan. Do you cross a bridge on your way to school or work? It could be unsafe to cross after an earthquake. Do you need an evacuation route? If you're in the tsunami zone, you do. <a href="http://www.oregongeology.org/tsuclearinghouse/">Find your route.</a></p>
-      <p>Also be aware that some major roads won't be safe or passable during and after an earthquake. Contact your local public works department or <a href="http://www.oregon.gov/omd/oem/pages/index.aspx">Office of Emergency Management</a> in advance to find out which routes could potentially be impassable in your area.</p>
+      <p>Make sure your family and friends know where to gather after {{ location.disaster_name }} and how to get there. You'll need a reconnection plan. Do you cross a bridge on your way to school or work? It could be unsafe to cross after {{ location.disaster_name }}. Do you need an evacuation route? 
+      {% if location.evacuation_routes_link %}
+        <a href="{{ location.evacuation_routes_link }}">Find your route.</a>
+      {% endif %}
+      </p>
+      <p>Also be aware that some major roads won't be safe or passable during and after {{ location.disaster_name }}. Contact your local public works department or <a href="{{ location.emergency_management_link }}">Office of Emergency Management</a> in advance to find out which routes could potentially be impassable in your area.</p>
     </div>
 
     <div class="small-2 medium-1 column">
