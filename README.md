@@ -91,6 +91,8 @@ Save them to your `.bash_profile` or equivalent.
     1. You'll need `WSGIScriptAlias` to point to `cascadiaprepared/wsgi.py`
     2. You'll need to apply the "Using a virtualenv" addition.
     3. You'll need to set up a `/static/` alias pointing to `cascadiaprepared/static`
+    4. Depending on your server configuration, you *may* also need to set up a redirect rule to add trailing slashes to URLs, to get the static files (CSS, images etc) included.
+
 3. Set up the environment values from above (`DJANGO_SECRET_KEY` and `DATABASE_URL`) for all users by putting their declarations in `/etc/environment/` and rebooting the machine.
 
 ### Use foreman to run the server Heroku-style
