@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="99.650856mm"
-   height="49.986637mm"
-   viewBox="0 0 353.09358 177.11801"
+   width="99.90667mm"
+   height="50.564095mm"
+   viewBox="0 0 354.00001 179.16412"
    id="svg4816"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -21,16 +21,17 @@
     <marker
        inkscape:stockid="Arrow2Lend"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="Arrow2Lend"
-       style="overflow:visible;"
+       style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path4169"
-         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#2c2c2c;stroke-opacity:1;fill:#2c2c2c;fill-opacity:1"
-         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
-         transform="scale(1.1) rotate(180) translate(1,0)" />
+         style="fill:#2c2c2c;fill-opacity:1;fill-rule:evenodd;stroke:#2c2c2c;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         inkscape:connector-curvature="0" />
     </marker>
   </defs>
   <sodipodi:namedview
@@ -41,8 +42,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.6468927"
-     inkscape:cx="177.24953"
-     inkscape:cy="89.582055"
+     inkscape:cx="177"
+     inkscape:cy="89.582058"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -52,8 +53,8 @@
      fit-margin-bottom="0"
      inkscape:window-width="1366"
      inkscape:window-height="724"
-     inkscape:window-x="210"
-     inkscape:window-y="77"
+     inkscape:window-x="271"
+     inkscape:window-y="120"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata4821">
@@ -63,7 +64,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -71,7 +72,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-104.82733,-247.62588)">
+     transform="translate(-105.07686,-245.57977)">
     <path
        style="fill:#5e001d;fill-opacity:0.19607843;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
        id="path5274"
@@ -150,7 +151,7 @@
        sodipodi:end="0"
        d="m 264.12235,422.00333 a 18.15621,18.15621 0 0 1 18.15621,-18.15621 18.15621,18.15621 0 0 1 18.15621,18.15621 l -18.15621,0 z" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#2c2c2c;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#Arrow2Lend)"
+       style="fill:none;fill-rule:evenodd;stroke:#2c2c2c;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
        d="M 283.64886,421.31819 C 132.23291,374.38609 132.23291,374.38609 132.23291,374.38609"
        id="path3342"
        inkscape:connector-curvature="0" />
