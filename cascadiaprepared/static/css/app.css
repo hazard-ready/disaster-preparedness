@@ -122,12 +122,12 @@ body {
     margin-bottom: 0.5em;
 }
 
-.light-color { background-color: #ffffb2;}
-.moderate-color { background-color: #fed976;}
-.strong-color { background-color: #feb24c;}
-.very-strong-color { background-color: #fd8d3c;}
-.severe-color { background-color: #f03b20;}
-.violent-color { background-color: #bd0026;}
+.light-color { color: #006666;}
+.moderate-color { color: #64822d;}
+.strong-color { color: #c8a30a}
+.very-strong-color { color: #d7642d;}
+.severe-color { color: #5e001d;}
+.violent-color { color: #5e001d;}
 
 .chart-label{
   margin-top: -0.25em;
