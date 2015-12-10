@@ -48,12 +48,12 @@ This assumes 'python' is the command configured to run the correct python versio
 ### Set up the "secret key" used by Django to secure forms.
 * Set up an environment variable `DJANGO_SECRET_KEY` to whatever you want to set it to.
   * See http://techblog.leosoto.com/django-secretkey-generation/ for an example approach.
-  * On Max/Linux: `export DJANGO_SECRET_KEY="gibberishrandomstring"`
+  * On Mac/Linux: `export DJANGO_SECRET_KEY="gibberishrandomstring"`
   
 ### Set up the database
 
 1. Set up Postgres with PostGIS: 
- * To install PostGIS using Homebrew: `brew install postgis`
+ * To install PostGIS on a Mac using Homebrew: `brew install postgis`. Here are [PostGIS install instructions for Ubuntu](https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS21UbuntuPGSQL93Apt).
  * Run `brew info postgres` to see options for starting Postgres - you can have it start automatically when your computer starts, or not.
  * Homebrew sets Postgres up with one user to start with, and that user is you. You should probably make a separate user for Django. If you want your user to be named `django`, do `createuser django --password`. You will then get a prompt for the password. Use only letters and numbers in the password, because you'll need to use it in a URL later.
 1. Clone repo.
@@ -70,7 +70,7 @@ This assumes 'python' is the command configured to run the correct python versio
 1. Set up an environment variable `DATABASE_URL` that will be used by the Django Database URL app to load our databse.
   * example on Mac/Linux: `export DATABASE_URL="postgres://USER:PASSWORD@HOST:PORT/DBNAME"` where the USER & PASSWORD are the django account you created above in postgres, and the default HOST:PORT is localhost:5432 .
 6. Run `python manage.py migrate` to initialize the database's structure.
-7. Unzip the all of the shapefiles from the [Aftershock backup](https://www.dropbox.com/s/qefxqdddeqtlryq/AftershockDatabase.zip?dl=0) and [TM_WORLD_BORDERS-0.3.zip](http://thematicmapping.org/downloads/TM_WORLD_BORDERS-0.3.zip) into world/data
+7. Unzip data.zip inside world, so that the data is in world/data. This data includes world borders and sample shapefiles from the Aftershock app you can load to get started.
 8. Start a python shell with `python manage.py shell`
 9. Type `from world import load` and then `load.run()` to import the shapefile data into the DB
 10. Type `exit()` to exit the shell.
@@ -81,8 +81,15 @@ Save them to your `.bash_profile` or equivalent.
 
 ### Create a user and visit the admin screen to verify
 1. `python manage.py createsuperuser`
-2. `python manage.py runserver` (or configure another webserver) and visit http://server.ip/admin and log in with new user.
-3. Should see a list of content.  *Don't try to edit any DOGAMI data directly; those shapes are so complex with so many points that it's a guaranteed browser crash/freeze.*
+2. `python manage.py runserver` to run a development server on localhost:8000 or see below for how to deploy via Apache.
+3. Visit http://server.ip/admin and log in with new user.
+4. Should see a list of content.  *Don't try to directly edit data that came from the shapefiles - they are liable to be so complex with so many points that attempting this freezes or crashes the browser.*
+
+### Deploying to the web via Apache
+
+1. Install a version of `mod_wsgi` that is compiled for Python 3. On Debian/Ubuntu you can do this with `aptitude install libapache2-mod-wsgi-py3`. On other systems it may be easier to use `pip` as per [these instructions](https://pypi.python.org/pypi/mod_wsgi).
+2. Use [these instructions](https://docs.djangoproject.com/en/1.9/howto/deployment/wsgi/modwsgi/) to configure Apache.
+3. Set up the environment values from above (`DJANGO_SECRET_KEY` and `DATABASE_URL`) for all users by putting their declarations in `/etc/environment/` and rebooting the machine.
 
 ### Use foreman to run the server Heroku-style
 * `foreman start`

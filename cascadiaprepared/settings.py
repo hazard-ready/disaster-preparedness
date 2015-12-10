@@ -33,7 +33,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'embed_video',
-    'world'
+    'world',
+    'solo'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -86,8 +87,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
 
-# todo: host our own static files
-STATIC_URL = 'http://opb-news-interactives.s3-website-us-west-2.amazonaws.com/aftershock/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),

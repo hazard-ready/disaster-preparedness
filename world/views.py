@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from math import floor
-from .models import Snugget
+from .models import Snugget, Location, SiteSettings
 
 
 def app_view(request):
+    location = Location.get_solo()
+    settings = SiteSettings.get_solo()
 
     # if user submitted lat/lng, find our snuggets and send them to our template
     if 'lat' and 'lng' in request.GET:
@@ -59,6 +61,8 @@ def app_view(request):
                 section_width = 0
                 
             return render(request, template, {
+                'location': location,
+                'settings': settings,
                 'data': snugget_content, 
                 'section_width': section_width,
                 'wrapper_width': wrapper_width
@@ -66,4 +70,7 @@ def app_view(request):
 
     # if not, we'll still serve up the same template without data
     else:
-        return render(request, 'index.html')
+        return render(request, 'index.html', {
+            'location': location,
+            'settings': settings
+            })

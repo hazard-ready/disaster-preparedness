@@ -55,63 +55,45 @@
         {% with data.shake_score|first as level %}
         {% if level == "Light" %}
         <div class="clearfix">
-          <div class="chart-meter light-color"></div>
-          <div class="chart-meter"></div>
-          <div class="chart-meter"></div>
-          <div class="chart-meter"></div>
-          <div class="chart-meter"></div>
-          <div class="chart-meter"></div>
-          <!-- <h6 class="chart-label">Light</h6> -->
+          <div class="light-color">
+            <img src="../img/intensity-low.svg">
+            <h6 class="chart-label">Low</h6>
+          </div>
         </div>
         {% elif level == "Moderate" %}
         <div class="clearfix">
-          <div class="chart-meter light-color"></div>
-          <div class="chart-meter moderate-color"></div>
-          <div class="chart-meter"></div>
-          <div class="chart-meter"></div>
-          <div class="chart-meter"></div>
-          <div class="chart-meter"></div>
-          <!-- <h6 class="chart-label">Moderate</h6> -->
+          <div class="moderate-color">
+          <img src="../static/img/intensity-moderate.svg">
+          <h6 class="chart-label">Moderate</h6></div>
         </div>
        {% elif level == "Strong" %}
         <div class="clearfix">
-          <div class="chart-meter light-color"></div>
-          <div class="chart-meter moderate-color"></div>
-          <div class="chart-meter strong-color"></div>
-          <div class="chart-meter"></div>
-          <div class="chart-meter"></div>
-          <div class="chart-meter"></div>
-          <!-- <h6 class="chart-label">Strong</h6> -->
+          <div class="strong-color">
+          <img src="../static/img/intensity-high.svg">
+          <h6 class="chart-label">High</h6>
+          </div>
         </div>
        {% elif level == "Very Strong" %}
         <div class="clearfix">
-          <div class="chart-meter light-color"></div>
-          <div class="chart-meter moderate-color"></div>
-          <div class="chart-meter strong-color"></div>
-          <div class="chart-meter very-strong-color"></div>
-          <div class="chart-meter"></div>
-          <div class="chart-meter"></div>
-          <!-- <h6 class="chart-label">Very Strong</h6> -->
+          <div class="very-strong-color">
+          <img src="../static/img/intensity-very-high.svg">
+            <h6 class="chart-label">Very High</h6>
+          </div>
         </div>
         {% elif level == "Severe" %}
           <div class="clearfix">
-            <div class="chart-meter light-color"></div>
-            <div class="chart-meter moderate-color"></div>
-            <div class="chart-meter strong-color"></div>
-            <div class="chart-meter very-strong-color"></div>
-            <div class="chart-meter severe-color"></div>
-            <div class="chart-meter"></div>
-            <!-- <h6 class="chart-label">Severe</h6> -->
+            <div class="severe-color">   
+              <img src="../static/img/intensity-extreme.svg">         
+              <h6 class="chart-label">Extreme</h6>
+            </div>
           </div>
         {% elif level == "Violent" %}
+        <!-- todo: we only have 5 levels now so get rid of this -->
           <div class="clearfix">
-            <div class="chart-meter light-color"></div>
-            <div class="chart-meter moderate-color"></div>
-            <div class="chart-meter strong-color"></div>
-            <div class="chart-meter very-strong-color"></div>
-            <div class="chart-meter severe-color"></div>
-            <div class="chart-meter violent-color"></div>
-            <!-- <h6 class="chart-label">Violent</h6> -->
+            <div class="severe-color">   
+              <img src="../static/img/intensity-extreme.svg">         
+              <h6 class="chart-label">Extreme</h6>
+            </div>
           </div>
         {% endif %}
         {% endwith %}
@@ -262,8 +244,12 @@
     </div>
     <div class="small-10 medium-5 column">
       <h4 class="caps">Know Your Routes</h4>
-      <p>Make sure your family and friends know where to gather after the earthquake and how to get there. You'll need a reconnection plan. Do you cross a bridge on your way to school or work? It could be unsafe to cross after an earthquake. Do you need an evacuation route? If you're in the tsunami zone, you do. <a href="http://www.oregongeology.org/tsuclearinghouse/">Find your route.</a></p>
-      <p>Also be aware that some major roads won't be safe or passable during and after an earthquake. Contact your local public works department or <a href="http://www.oregon.gov/omd/oem/pages/index.aspx">Office of Emergency Management</a> in advance to find out which routes could potentially be impassable in your area.</p>
+      <p>Make sure your family and friends know where to gather after {{ location.disaster_name }} and how to get there. You'll need a reconnection plan. Do you cross a bridge on your way to school or work? It could be unsafe to cross after {{ location.disaster_name }}. Do you need an evacuation route? 
+      {% if location.evacuation_routes_link %}
+        <a href="{{ location.evacuation_routes_link }}">Find your route.</a>
+      {% endif %}
+      </p>
+      <p>Also be aware that some major roads won't be safe or passable during and after {{ location.disaster_name }}. Contact your local public works department or <a href="{{ location.emergency_management_link }}">Office of Emergency Management</a> in advance to find out which routes could potentially be impassable in your area.</p>
     </div>
 
     <div class="small-2 medium-1 column">
