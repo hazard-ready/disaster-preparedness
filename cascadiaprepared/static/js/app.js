@@ -43,7 +43,7 @@ $( document ).ready(function() {
   document.getElementById('map').style.cursor='default';
   if (zoom > 10) {
     var icon = new L.Icon.Default;
-    icon.options.iconUrl = "http://opb-news-interactives.s3-website-us-west-2.amazonaws.com/aftershock/img/marker-icon.png";
+    icon.options.iconUrl = "../static/img/marker-icon.png";
     var marker = L.marker([lat,lng], {
       icon: icon,
       clickable: false,

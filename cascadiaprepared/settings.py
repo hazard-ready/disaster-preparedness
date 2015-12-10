@@ -88,7 +88,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
 
 # todo: host our own static files
-STATIC_URL = 'http://opb-news-interactives.s3-website-us-west-2.amazonaws.com/aftershock/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
