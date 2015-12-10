@@ -28,7 +28,7 @@
        inkscape:stockid="Arrow2Lend">
       <path
          transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
-         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.01601326 8.7185884,-4.0017078 z"
          style="fill:#2c2c2c;fill-opacity:1;fill-rule:evenodd;stroke:#2c2c2c;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
          id="path4169-6"
          inkscape:connector-curvature="0" />
@@ -41,9 +41,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="177"
-     inkscape:cy="82.262953"
+     inkscape:zoom="2.6242939"
+     inkscape:cx="122.89019"
+     inkscape:cy="89.582059"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -53,8 +53,8 @@
      fit-margin-bottom="0"
      inkscape:window-width="1366"
      inkscape:window-height="724"
-     inkscape:window-x="319"
-     inkscape:window-y="103"
+     inkscape:window-x="-10"
+     inkscape:window-y="17"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata4821">
@@ -64,7 +64,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -74,7 +74,7 @@
      id="layer1"
      transform="translate(-105.07686,-245.57977)">
     <path
-       style="fill:#5e001d;fill-opacity:0.19607843;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#5e001d;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
        id="path5274"
        sodipodi:type="arc"
        sodipodi:cx="282.42093"
@@ -151,9 +151,9 @@
        sodipodi:end="0"
        d="m 264.12235,422.00333 a 18.15621,18.15621 0 0 1 18.15621,-18.15621 18.15621,18.15621 0 0 1 18.15621,18.15621 l -18.15621,0 z" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#2c2c2c;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-1)"
-       d="M 282.47628,423.03104 C 373.25734,295.59499 373.25734,295.59499 373.25734,295.59499"
-       id="path6825"
+       style="fill:none;fill-rule:evenodd;stroke:#2c2c2c;stroke-width:3.86219764;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-1)"
+       d="M 281.82892,421.35279 374.63386,292.69932"
+       id="path3343"
        inkscape:connector-curvature="0" />
   </g>
 </svg>

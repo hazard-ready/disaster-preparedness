@@ -42,8 +42,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.9191113"
-     inkscape:cx="127.32735"
-     inkscape:cy="89.582058"
+     inkscape:cx="228.53084"
+     inkscape:cy="89.753343"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -64,7 +64,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -74,7 +74,7 @@
      id="layer1"
      transform="translate(-105.07686,-245.57977)">
     <path
-       style="fill:#5e001d;fill-opacity:0.19607843;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#5e001d;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
        id="path5274"
        sodipodi:type="arc"
        sodipodi:cx="282.42093"
@@ -107,7 +107,7 @@
        sodipodi:end="3.7699112"
        d="M 107.19339,423.43023 A 175,175 0 0 1 140.61542,320.56782 L 282.19339,423.43024 Z" />
     <path
-       style="fill:#d7642d;fill-opacity:0.19607843;stroke:#2c2c2c;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#d7642d;fill-opacity:1;stroke:#2c2c2c;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path5992"
        sodipodi:type="arc"
        sodipodi:cx="282.38025"
@@ -151,9 +151,9 @@
        sodipodi:end="0"
        d="m 264.12235,422.00333 a 18.15621,18.15621 0 0 1 18.15621,-18.15621 18.15621,18.15621 0 0 1 18.15621,18.15621 l -18.15621,0 z" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#2c2c2c;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker5884)"
-       d="M 282.27858,422.3459 C 279.53802,266.13397 279.53802,266.13397 279.53802,266.13397"
-       id="path5270"
+       style="fill:none;fill-rule:evenodd;stroke:#2c2c2c;stroke-width:4.00000024;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#marker5884)"
+       d="M 282.52811,420.97561 280.13012,260.31028"
+       id="path6187"
        inkscape:connector-curvature="0" />
   </g>
 </svg>
