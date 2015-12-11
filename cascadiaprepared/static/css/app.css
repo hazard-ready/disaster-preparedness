@@ -32,6 +32,15 @@ body {
    color: #444;
 }
 
+.underline:after {
+  display: block;
+  content: " ";
+  height: 4px;
+  width: 64px;
+  margin: 0.5em 0 1em 0;
+  background-color: #444;
+}
+
 /* header styles */
 .location-label {
   margin: 15px 0 12px 0;
@@ -121,7 +130,7 @@ body {
 .violent-color { color: #5e001d;}
 
 .chart-label{
-  margin-top: 0.5em;
+  margin-top: -0.25em;
   padding-left: 1em;
   font-weight: bold;
 }
@@ -143,7 +152,7 @@ body {
   font-size: 50px;
   line-height: .9em;
   margin: 0 15px;
-  color: #5e001d;
+  color: #FF9933;
 }
 .supply-kit .text-label {
   padding-top: .2em;
