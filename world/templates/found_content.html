@@ -15,7 +15,7 @@
 <!-------------- THE MOMENT -------------->
     <div class="row vert-pad-medium">
         <div class="medium-8 column medium-push-1">
-          <h3 class="caps">The Moment</h3>
+          <h3 class="caps">What to expect</h3>
           <div class="chapter-content underline">
           {% for snugget in data.structured.moment.impact_snugs %}
             {% if snugget.sub_section.name == "header" %}
@@ -26,30 +26,13 @@
       </div>
     </div>
 
-
-    {% if data.structured.moment.tsunami_snugs %}
-    <div class="row">
-      <div class="small-2 medium-1 medium-push-1 column collapse">
-        <div class="section-icon tsunami "></div>
-      </div>
-      <div class="small-10 medium-6 medium-push-1 column end">
-        <h4 class="caps">Tsunami</h4>
-        {% for snugget in data.structured.moment.tsunami_snugs %}
-          {% if snugget.sub_section.name != "header" %}
-            {% show_snugget snugget %}
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
-
     {% if data.structured.moment.shake_snugs %}
     <div class="row">
       <div class="small-2 medium-1 medium-push-1 column collapse">
         <div class="section-icon shaking"></div>
       </div>
       <div class="small-10 medium-6 medium-push-1 column end">
-        <h4 class="caps">Intensity</h4>
+        <h4>Intensity</h4>
         <div class="section-scale">
         {% comment %}Using "first" because data.shake_score is coming in as a list.{% endcomment %}
         {% with data.shake_score|first as level %}
@@ -106,54 +89,6 @@
       </div>
     </div>
     {% endif %}
-
-    {% if data.structured.moment.deform_snugs %}
-    <div class="row">
-      <div class="small-2 medium-1 medium-push-1 column collapse">
-        <div class="section-icon deformation"></div>
-      </div>
-      <div class="small-10 medium-6 medium-push-1 column end">
-        <h4 class="caps">Ground Deformation</h4>
-          {% with data.deform_score as deform_level %}
-          {% comment %} deform_level 1 is really "none", so the meaningful values are 2 to 5 {% endcomment %}
-          {% if deform_level == 2 %}
-            <div class="clearfix">
-              <div class="chart-meter moderate-color"></div>
-              <div class="chart-meter"></div>
-              <div class="chart-meter"></div>
-              <div class="chart-meter"></div>
-            </div>
-          {% elif deform_level == 3 %}
-          <div class="clearfix">
-            <div class="chart-meter moderate-color"></div>
-            <div class="chart-meter strong-color"></div>
-            <div class="chart-meter"></div>
-            <div class="chart-meter"></div>
-          </div>
-          {% elif deform_level == 4 %}
-          <div class="clearfix">
-            <div class="chart-meter moderate-color"></div>
-            <div class="chart-meter strong-color"></div>
-            <div class="chart-meter very-strong-color"></div>
-            <div class="chart-meter"></div>
-          </div>
-          {% elif deform_level == 5 %}
-          <div class="clearfix">
-            <div class="chart-meter moderate-color"></div>
-            <div class="chart-meter strong-color"></div>
-            <div class="chart-meter very-strong-color"></div>
-            <div class="chart-meter severe-color"></div>
-          </div>
-          {% endif %}
-          {% endwith %}
-          {% for snugget in data.structured.moment.deform_snugs %}
-            {% show_snugget snugget %}
-          {% endfor %}
-      </div>
-    </div>
-    {% endif %}
-
-
 
 <!-------------- COMMUNITY RECOVERY -------------->
 
