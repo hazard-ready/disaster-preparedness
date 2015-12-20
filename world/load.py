@@ -62,6 +62,11 @@ liquefaction_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data
 def run(verbose=True):
     "Making stuff happen but this line is here because some/all stuff below here might get commented out."
 
+######################################################
+# Insert generated loadImports here
+######################################################
+    
+    
     from .models import TsunamiZone
     lm2 = LayerMapping(TsunamiZone, tsunami_shp, tsunamizone_mapping,
                    transform=True, encoding='iso-8859-1',
