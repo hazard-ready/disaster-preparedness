@@ -105,11 +105,13 @@ Save them to your `.bash_profile` or equivalent.
 
 *Probably need to put this stuff in its own document eventually, but for now it can live here.  Much of this should also be automatable; whatever isn't needs to be explained more clearly.  For now it's notes-to-self.*
 
+**EG removing items as I automate them**
+
 0. Export a shapefile with at least the following minimum set of attributes for the shape:
     1. A unique ID for each shape
     2. A field which can be used as a lookup key (can be the same as the unique ID; I don't yet know if it has to be the same field or unique)
-1. Convert it to SRID EPSG:4326 (this can be done using `ogr2ogr reprojectedfile.shp sourcefile.shp -t_srs EPSG:4326` and we should automate the process)
-2. Put it into `/world/data/`
+1. Put it into `/world/data/`
+2. `python import.py` 
 3. Add a class to `models.py` extending `models.Model`, following the existing examples, that defines PostGIS datatypes for all the fields in the attribute table that we care about importing.  At a minimum this needs to include the geometry and the key we'll be using to look up by.
 4. Add the name of the class you just created to the `from .models import` line near the top of `admin.py` and the list of `admin.site.register()` calls towards the bottom
 5. At the start of the `Snugget()` class of `models.py`, add a filter definition that relates to the class you just created. Use an existing one (e.g. `shaking_filter`) as an example. *TODO: currently the name in the admin UI seems to come directly from the name here. Figure out if that has to be so and document findings.*
