@@ -16,7 +16,7 @@
     <div class="row vert-pad-medium">
         <div class="medium-8 column medium-push-1">
           <h3 class="caps">What to expect</h3>
-          <div class="chapter-content underline">
+          <div class="chapter-content ">
           {% for snugget in data.structured.moment.impact_snugs %}
             {% if snugget.sub_section.name == "header" %}
               {% show_snugget snugget %}
@@ -32,50 +32,50 @@
         <div class="section-icon shaking"></div>
       </div>
       <div class="small-10 medium-6 medium-push-1 column end">
-        <h4>Intensity</h4>
         <div class="section-scale">
         {% comment %}Using "first" because data.shake_score is coming in as a list.{% endcomment %}
         {% with data.shake_score|first as level %}
         {% if level == "Light" %}
         <div class="clearfix">
           <div class="light-color">
-            <img src="../img/intensity-low.svg">
-            <h6 class="chart-label">Low</h6>
+            <h4 class="chart-label">Low Intensity</h4>
+            <img src="static/img/intensity-low.svg">
           </div>
         </div>
         {% elif level == "Moderate" %}
         <div class="clearfix">
           <div class="moderate-color">
-          <img src="static/img/intensity-moderate.svg">
-          <h6 class="chart-label">Moderate</h6></div>
+            <h4 class="chart-label">Moderate Intensity</h4>
+            <img src="static/img/intensity-moderate.svg">
+          </div>
         </div>
        {% elif level == "Strong" %}
         <div class="clearfix">
           <div class="strong-color">
-          <img src="static/img/intensity-high.svg">
-          <h6 class="chart-label">High</h6>
+            <h4 class="chart-label">High Intensity</h4>
+            <img src="static/img/intensity-high.svg">
           </div>
         </div>
        {% elif level == "Very Strong" %}
         <div class="clearfix">
           <div class="very-strong-color">
-          <img src="static/img/intensity-very-high.svg">
-            <h6 class="chart-label">Very High</h6>
+            <h4 class="chart-label">Very High Intensity</h4>
+            <img src="static/img/intensity-very-high.svg">
           </div>
         </div>
         {% elif level == "Severe" %}
           <div class="clearfix">
-            <div class="severe-color">   
-              <img src="static/img/intensity-extreme.svg">         
-              <h6 class="chart-label">Extreme</h6>
+            <div class="severe-color">
+              <h4 class="chart-label">Extreme Intensity</h4>
+              <img src="static/img/intensity-extreme.svg">
             </div>
           </div>
         {% elif level == "Violent" %}
         <!-- todo: we only have 5 levels now so get rid of this -->
           <div class="clearfix">
-            <div class="severe-color">   
-              <img src="static/img/intensity-extreme.svg">         
-              <h6 class="chart-label">Extreme</h6>
+            <div class="severe-color">
+              <h4 class="chart-label">Extreme Intensity</h4>
+              <img src="static/img/intensity-extreme.svg"> 
             </div>
           </div>
         {% endif %}
@@ -95,7 +95,7 @@
   <div class="row vert-pad-medium">
       <div class="medium-8 column medium-push-1">
         <h3 class="caps">Your Community’s Recovery</h3>
-        <div class="chapter-content underline">
+        <div class="chapter-content ">
           {% for snugget in data.structured.recovery.impact_snugs %}
             {% if snugget.sub_section.name == "header" %}
               {% show_snugget snugget %}
@@ -105,35 +105,13 @@
     </div>
   </div>
 
-  <div class="row vert-pad-medium">
-    <div class="column">
-    {% for zone in data.impact_zones %}
-      {% comment %} for now, let the separate tsunami check override the tsunami zone {% endcomment %}
-      {% if data.structured.moment.tsunami_snugs or zone.zoneid == 1 %}
-      <img class="show-for-small-only" src="{% static 'img/recovery-graph-tsunami-s.svg' %}" alt="Recovery Graph">
-      <img class="show-for-medium-up" src="{% static 'img/recovery-graph-tsunami.svg' %}" alt="Recovery Graph">
-      {% elif zone.zoneid == 2 %}
-      <img class="show-for-small-only" src="{% static 'img/recovery-graph-coast-s.svg' %}" alt="Recovery Graph">
-      <img class="show-for-medium-up" src="{% static 'img/recovery-graph-coast.svg' %}" alt="Recovery Graph">
-      {% elif zone.zoneid == 3 %}
-      <img class="show-for-small-only" src="{% static 'img/recovery-graph-valley-s.svg' %}" alt="Recovery Graph">
-      <img class="show-for-medium-up" src="{% static 'img/recovery-graph-valley.svg' %}" alt="Recovery Graph">
-      {% elif zone.zoneid == 4 %}
-      <img class="show-for-small-only" src="{% static 'img/recovery-graph-east-s.svg' %}" alt="Recovery Graph">
-      <img class="show-for-medium-up" src="{% static 'img/recovery-graph-east.svg' %}" alt="Recovery Graph">
-      {% endif %}
-    {% endfor %}
-    </div>
- </div>
-
-
 
 <!-------------- HOW TO PREPARE -------------->
 
   <div class="row vert-pad-medium">
       <div class="medium-8 column medium-push-1">
         <h3 class="caps">How To Prepare</h3>
-        <div class="chapter-content underline">
+        <div class="chapter-content ">
           {% for snugget in data.structured.prepare.impact_snugs %}
             {% if snugget.sub_section.name == "header" %}
                 {% show_snugget snugget %}

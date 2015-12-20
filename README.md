@@ -29,9 +29,8 @@ without worrying about overwriting globally installed versions.  It's easy!
 4. Wait for things to happen.
 5. `source venv/bin/activate`  (type `deactivate` to leave)
 6. `pip install -r requirements.txt` or `pip3 install -r requirements.txt` to automatically install whatever we have in
-our requirements.txt. *On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.*
-  * If you are in python3+, the wsgi install will fail.  But that's okay, because
-    you won't need it in python3.  Just remove it from your local copy of the text file.
+our requirements.txt. *On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.*  
+    * If you are in python3+, the wsgi install will fail.  But that's okay, because you won't need it in python3.  Just remove it from your local copy of the text file.
  
 
 # "World" App
@@ -92,7 +91,6 @@ Save them to your `.bash_profile` or equivalent.
     2. You'll need to apply the "Using a virtualenv" addition.
     3. You'll need to set up a `/static/` alias pointing to `cascadiaprepared/static`
     4. Depending on your server configuration, you *may* also need to set up a redirect rule to add trailing slashes to URLs, to get the static files (CSS, images etc) included.
-
 3. Set up the environment values from above (`DJANGO_SECRET_KEY` and `DATABASE_URL`) for all users by putting their declarations in `/etc/environment/` and rebooting the machine.
 
 ### Use foreman to run the server Heroku-style
@@ -102,3 +100,32 @@ Save them to your `.bash_profile` or equivalent.
 
 ### Just check to see some very simple checking if a point falls within a shape in the DB
 1.  Visit http://server.ip/zonecheck
+
+### Adding new data
+
+*Probably need to put this stuff in its own document eventually, but for now it can live here.  Much of this should also be automatable; whatever isn't needs to be explained more clearly.  For now it's notes-to-self.*
+
+0. Export a shapefile with at least the following minimum set of attributes for the shape:
+    1. A unique ID for each shape
+    2. A field which can be used as a lookup key (can be the same as the unique ID; I don't yet know if it has to be the same field or unique)
+1. Convert it to SRID EPSG:4326 (this can be done using `ogr2ogr reprojectedfile.shp sourcefile.shp -t_srs EPSG:4326` and we should automate the process)
+2. Put it into `/world/data/`
+3. Add a class to `models.py` extending `models.Model`, following the existing examples, that defines PostGIS datatypes for all the fields in the attribute table that we care about importing.  At a minimum this needs to include the geometry and the key we'll be using to look up by.
+4. Add the name of the class you just created to the `from .models import` line near the top of `admin.py` and the list of `admin.site.register()` calls towards the bottom
+5. At the start of the `Snugget()` class of `models.py`, add a filter definition that relates to the class you just created. Use an existing one (e.g. `shaking_filter`) as an example. *TODO: currently the name in the admin UI seems to come directly from the name here. Figure out if that has to be so and document findings.*
+6. In the `findSnuggetsForPoint()` method of the `Snugget()` class, add filter references in the same form as existing ones (see `qs_shaking`, `shake_rating` & `shake_snuggets` definitions).
+7. In the return statement for the same method, add the outputs you've just created.
+8. IN `views.py` add an `if snugget_content...` block to the existing ones, that matches the naming of the group you just created in `models.py`
+9. Back in `admin.py`, add references to the filter you've just created to the lists defined as `list_display` & `list_filter` and the `Filters` dictionary in the definition for the `SnuggetAdmin()` class.
+10. Add a dictionary to the start of `load.py` that maps field names you just used in `models.py` to field names in the attribute table.  Use existing ones as a examples.
+11. Add a variable definition to the block of `load.py` right after all those dictionaries, that tells it where to find the shapefile.
+12. Add appropriate sections to `templates/found_content.html`.
+13. In the `run()` method of `load.py`, add an import description for the new shapefile, following one of the `from .models import ...` examples.
+14. [remember to activate the virtualenv first] `python manage.py makemigrations`
+15. `python manage.py migrate`
+16. `python manage.py shell`
+    1. `from world import load`
+    2. `load.run()`
+17. Restart the web server *(TODO: figure out if there's a way to just get Django to restart without rebooting Apache/etc)*
+18. Add some snuggets!
+19. test.
