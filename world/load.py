@@ -1,6 +1,14 @@
 import os
 from django.contrib.gis.utils import LayerMapping
 
+
+######################################################
+# Insert generated loadMappings here
+######################################################
+
+
+
+
 # Auto-generated `LayerMapping` dictionary for TsunamiZone model,
 # modified later by cool devs.
 tsunamizone_mapping = {
@@ -36,6 +44,13 @@ liquefactiondeformation_mapping = {
     'label': 'PGD_Class',
     'geom': 'MULTIPOLYGON',
 }
+
+
+
+######################################################
+# Insert generated loadPaths here
+######################################################
+
 
 tsunami_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/tsunamiZone_simple.shp'))
 impact_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/new_Impact_Zones_Simple.shp'))

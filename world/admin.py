@@ -1,6 +1,9 @@
 from django.contrib.gis import admin
 from embed_video.admin import AdminVideoMixin
 from solo.admin import SingletonModelAdmin
+######################################################
+# Insert generated adminModelImports here
+######################################################
 from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, TsunamiZone, ImpactZoneData, ImpactZone, ExpectedGroundShaking, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings
 
 admin.site.register(SnuggetSection, admin.ModelAdmin)
@@ -8,6 +11,9 @@ admin.site.register(SnuggetSubSection, admin.ModelAdmin)
 
 
 class SnuggetAdmin(admin.ModelAdmin):
+######################################################
+# Insert generated adminLists here
+######################################################
     list_display = ('shortname', 'shaking_filter', 'impact_zone_filter', 'liquifaction_filter', 'landslide_filter', 'section', 'sub_section')
     list_filter = ('shaking_filter', 'impact_zone_filter', 'liquifaction_filter', 'landslide_filter', 'section', 'sub_section')
 
@@ -66,3 +72,8 @@ admin.site.register(RecoveryLevels, admin.ModelAdmin)
 # To make the UI more general
 admin.site.register(SiteSettings, SingletonModelAdmin)
 admin.site.register(Location, SingletonModelAdmin)
+
+######################################################
+# Insert generated adminSiteRegistrations here
+######################################################
+
