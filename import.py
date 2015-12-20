@@ -28,7 +28,7 @@ def reprojectShapefile(f, workingDir, srs):
   if reprojected in os.listdir(workingDir):
     print("Skipping reprojection because this file has previously been reprojected.")
   else:
-    print("Reprojecting to", srs)
+    print("Simplifying and reprojecting to", srs)
     reprojected = f[:-4] + "_reprojected.shp"
     ogrCmd = [
       "ogr2ogr", 
@@ -37,7 +37,7 @@ def reprojectShapefile(f, workingDir, srs):
       "-t_srs", 
       "EPSG:4326",
       "-simplify",
-      "0.000001"
+      "10"
     ]
     subprocess.call(ogrCmd)
   return reprojected
