@@ -19,7 +19,6 @@ def main():
   for f in os.listdir(workingDir):
     if f[-4:] == ".shp" and f[-16:] != "_reprojected.shp":
       print("Opening shapefile:", f[:-4])
-#TODO: simplify shapefile before or at the same time as reprojecting it?
       reprojected = reprojectShapefile(f, workingDir, "EPSG:4326")
       
 
@@ -31,8 +30,15 @@ def reprojectShapefile(f, workingDir, srs):
   else:
     print("Reprojecting to", srs)
     reprojected = f[:-4] + "_reprojected.shp"
-    ogrCmd = ["ogr2ogr", workingDir + "/" + reprojected, workingDir + "/" + f, "-t_srs", "EPSG:4326"]
-#    print(ogrCmd)
+    ogrCmd = [
+      "ogr2ogr", 
+      workingDir + "/" + reprojected, 
+      workingDir + "/" + f, 
+      "-t_srs", 
+      "EPSG:4326",
+      "-simplify",
+      "0.000001"
+    ]
     subprocess.call(ogrCmd)
   return reprojected
 
