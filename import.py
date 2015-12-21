@@ -28,7 +28,7 @@ def main():
 
   for f in os.listdir(dataDir):
     if f[-4:] == ".shp":
-      stem = f[:-4]
+      stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening shapefile:", stem)
       reprojected = reprojectShapefile(f, dataDir, reprojectedDir, "EPSG:4326")
       simplified = simplifyShapefile(reprojected, simplifiedDir, "0.0001")
