@@ -2,6 +2,8 @@ import os
 import subprocess
 import sys
 
+from django.contrib.gis.utils.ogrinspect import ogrinspect
+
 def main():
   dataDir = "world/data"
   reprojectedDir = os.path.join(dataDir, "reprojected")
@@ -26,9 +28,20 @@ def main():
 
   for f in os.listdir(dataDir):
     if f[-4:] == ".shp":
-      print("Opening shapefile:", f[:-4])
+      stem = f[:-4]
+      print("Opening shapefile:", stem)
       reprojected = reprojectShapefile(f, dataDir, reprojectedDir, "EPSG:4326")
       simplified = simplifyShapefile(reprojected, simplifiedDir, "0.0001")
+      modelsClasses += ogrinspect(simplified, stem, srid=4326) + "\n\n\n"
+
+      print("")
+
+  print("######################################################\n\n\n\n")
+  # no need to keep repeating the import statement that ogrinspect puts in
+  modelsClasses = modelsClasses.replace("from django.contrib.gis.db import models\n\n","")
+  print("Insert the following code after the 'Insert generated modelsClasses here' comment in world/models.py\n\n")
+  print(modelsClasses)
+  print("######################################################\n\n\n\n")
 
 
 
