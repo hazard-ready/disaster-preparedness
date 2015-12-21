@@ -11,9 +11,9 @@ def main():
 
   modelsClasses = ""
   modelsFilters = ""
+  modelsGeoFilters = ""
   adminModelImports = "from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings"
 #  adminSiteRegistrations = ""
-  modelsGeoFilters = ""
   modelsSnuggetReturns = ""
   viewsSnuggetMatches = ""
   adminLists = ""
@@ -32,10 +32,13 @@ def main():
       print("Opening shapefile:", stem)
       reprojected = reprojectShapefile(f, dataDir, reprojectedDir, "EPSG:4326")
       simplified = simplifyShapefile(reprojected, simplifiedDir, "0.0001")
+
 # TODO: figure out if there's any problem caused by implicitly converting non-multi geometries to multi-types; if so, decide how to handle that
       modelsClasses += ogrinspect(simplified, stem, srid=4326, multi_geom=True) + "\n\n\n"
       modelsFilters += stem + "_filter = models.ForeignKey(" + stem
       modelsFilters += ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
+      modelsGeoFilters += "qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
+
       adminModelImports += ", " + stem
 
       print("")
@@ -45,6 +48,7 @@ def main():
 
   outputGeneratedCode(modelsClasses, "world/models.py", "Insert generated modelsClasses here")
   outputGeneratedCode(modelsFilters, "world/models.py", "Insert generated modelsFilters here")
+  outputGeneratedCode(modelsGeoFilters, "world/models.py", "Insert generated modelsGeoFilters here")
   outputGeneratedCode(adminModelImports, "world/admin.py", "Replace the next line with generated adminModelImports", replace=True)
 
 
