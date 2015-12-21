@@ -33,15 +33,14 @@ def main():
       reprojected = reprojectShapefile(f, dataDir, reprojectedDir, "EPSG:4326")
       simplified = simplifyShapefile(reprojected, simplifiedDir, "0.0001")
       modelsClasses += ogrinspect(simplified, stem, srid=4326) + "\n\n\n"
+      adminModelImports += ", " + stem
 
       print("")
 
-  print("######################################################\n\n\n\n")
   # no need to keep repeating the import statement that ogrinspect puts in
-  modelsClasses = modelsClasses.replace("from django.contrib.gis.db import models\n\n","")
-  print("Insert the following code after the 'Insert generated modelsClasses here' comment in world/models.py\n\n")
-  print(modelsClasses)
-  print("######################################################\n\n\n\n")
+  modelsClasses = modelsClasses.replace("from django.contrib.gis.db import models\n\n", "")
+  outputGeneratedCode(modelsClasses, "world/models.py", "Insert generated modelsClasses here")
+  outputGeneratedCode(adminModelImports, "world/admin.py", "Replace the next line with generated adminModelImports", replace=True)
 
 
 
@@ -77,6 +76,19 @@ def simplifyShapefile(original, outputDir, tolerance):
     ]
     subprocess.call(ogrCmd)
   return simplified
+
+
+
+def outputGeneratedCode(code, destFile, anchor, replace=False):
+  print("\n######################################################\n\n\n\n")
+  if replace:
+  	prompt = "Replace the '" + anchor + "' comment in " + destFile
+  	prompt += " with the following code:\n\n"
+  else:
+  	prompt = "Insert the following code after the '" + anchor + "' comment in "
+  	prompt += destFile + "\n\n"
+  print(prompt)
+  print(code)
 
 
 

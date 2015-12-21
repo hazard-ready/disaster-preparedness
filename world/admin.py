@@ -2,9 +2,9 @@ from django.contrib.gis import admin
 from embed_video.admin import AdminVideoMixin
 from solo.admin import SingletonModelAdmin
 ######################################################
-# Insert generated adminModelImports here
-######################################################
+# Replace the next line with generated adminModelImports
 from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, TsunamiZone, ImpactZoneData, ImpactZone, ExpectedGroundShaking, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings
+######################################################
 
 admin.site.register(SnuggetSection, admin.ModelAdmin)
 admin.site.register(SnuggetSubSection, admin.ModelAdmin)

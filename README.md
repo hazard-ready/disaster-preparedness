@@ -112,7 +112,6 @@ Save them to your `.bash_profile` or equivalent.
     2. A field which can be used as a lookup key (can be the same as the unique ID; I don't yet know if it has to be the same field or unique)
 1. Put it into `/world/data/`
 2. `python import.py` 
-4. Add the name of the class you just created to the `from .models import` line near the top of `admin.py` and the list of `admin.site.register()` calls towards the bottom
 5. At the start of the `Snugget()` class of `models.py`, add a filter definition that relates to the class you just created. Use an existing one (e.g. `shaking_filter`) as an example. *TODO: currently the name in the admin UI seems to come directly from the name here. Figure out if that has to be so and document findings.*
 6. In the `findSnuggetsForPoint()` method of the `Snugget()` class, add filter references in the same form as existing ones (see `qs_shaking`, `shake_rating` & `shake_snuggets` definitions).
 7. In the return statement for the same method, add the outputs you've just created.
