@@ -87,8 +87,8 @@ def simplifyShapefile(original, outputDir, tolerance):
 def outputGeneratedCode(code, destFile, anchor, replace=False):
   print("\n######################################################\n\n\n\n")
   if replace:
-  	prompt = "Replace the '" + anchor + "' comment in " + destFile
-  	prompt += " with the following code:\n\n"
+  	prompt = "Replace the line after the '" + anchor + "' comment in "
+  	prompt += destFile + " with the following code:\n"
   else:
   	prompt = "Insert the following code after the '" + anchor + "' comment in "
   	prompt += destFile + "\n\n"
