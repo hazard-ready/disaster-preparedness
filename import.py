@@ -49,7 +49,7 @@ def main():
       modelsClasses += modelClassGen(stem, sf, keyField)
       modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem
       modelsFilters += ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
-      modelsGeoFilters += "        qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
+      modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
 
       adminModelImports += ", " + stem
 
@@ -134,8 +134,20 @@ def modelClassGen(stem, sf, keyField):
   	exit()
   text += "    objects = models.GeoManager()\n\n"
   text += "    def __str__(self):\n"
-  text += "        return self." + keyField + "\n"
+  text += "        return self." + keyField + "\n\n"
 
+  return text
+
+
+
+def modelsGeoFilterGen(stem, keyField):
+  text = "        qs_" + stem + " = "
+  text += stem + ".objects.filter(geom__contains=pnt)\n"
+  text += "        " + stem + "_rating = "
+  text += "qs_" + stem + ".values.list('" + keyField + "', flat=True)\n"
+  text += "        " + stem + "_snuggets = "
+  text += "Snugget.objects.filter(" + stem + "_filter__" + keyField + "__exact="
+  text += stem + "_rating).select_subclasses()\n\n"
   return text
 
 
