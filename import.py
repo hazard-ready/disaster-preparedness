@@ -6,6 +6,9 @@ import sys
 import shapefile
 
 def main():
+  desiredSRID = "EPSG:4326"
+  simplificationTolerance = "0.0001"
+
   dataDir = "world/data"
   reprojectedDir = os.path.join(dataDir, "reprojected")
   simplifiedDir = os.path.join(dataDir, "simplified")
@@ -31,8 +34,8 @@ def main():
     if f[-4:] == ".shp":
       stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening shapefile:", stem)
-      reprojected = reprojectShapefile(f, dataDir, reprojectedDir, "EPSG:4326")
-      simplified = simplifyShapefile(reprojected, simplifiedDir, "0.0001")
+      reprojected = reprojectShapefile(f, dataDir, reprojectedDir, desiredSRID)
+      simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
 
       sf = shapefile.Reader(simplified)
       fieldNames = [x[0] for x in sf.fields[1:]]
@@ -133,6 +136,7 @@ def modelClassGen(stem, sf, keyField):
   text += "        return self." + keyField + "\n"
 
   return text
+
 
 
 def outputGeneratedCode(code, destFile, anchor, replace=False):
