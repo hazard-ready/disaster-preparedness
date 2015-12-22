@@ -21,10 +21,10 @@ def main():
   modelsSnuggetRatings = ""
   adminModelImports = "from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings"
 #  adminSiteRegistrations = ""
-  viewsSnuggetMatches = ""
   adminLists = ""
   loadMappings = ""
   loadPaths = ""
+  viewsSnuggetMatches = ""
   templateMomentSnuggets = ""
   loadImports = ""
 
@@ -53,6 +53,11 @@ def main():
 
       adminModelImports += ", " + stem
 
+      viewsSnuggetMatches += "            if snugget_content['structured']['moment']['"
+      viewsSnuggetMatches += stem + "_snugs']:\n"
+      viewsSnuggetMatches += "                wrapper_width += base_section_width\n"
+      viewsSnuggetMatches += "                n_sections += 1\n"
+
       print("")
 
   # no need to keep repeating the import statement that ogrinspect puts in
@@ -68,7 +73,10 @@ def main():
   outputGeneratedCode(modelsFilters, "world/models.py", "Insert generated modelsFilters here")
   outputGeneratedCode(modelsGeoFilters, "world/models.py", "Insert generated modelsGeoFilters here")
   outputGeneratedCode(modelsSnuggetReturns, "world/models.py", "Insert generated modelsSnuggetReturns here")
+
   outputGeneratedCode(adminModelImports, "world/admin.py", "Replace the next line with generated adminModelImports", replace=True)
+
+  outputGeneratedCode(viewsSnuggetMatches, "world/models.py", "Insert generated viewsSnuggetMatches here")
   print("\n")
 
 
