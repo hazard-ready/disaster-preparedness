@@ -150,10 +150,7 @@ def modelClassGen(stem, sf, keyField, srs):
   while shapeType == 0:
     shapeType = sf.shapes()[i].shapeType
     i = i + 1
-#TODO: the example code only ever used MultiPolygon fields; all the shapefiles I'm testing are return Polygon geometries.  Figure out why, and whether it's better to use Multi* for all geometries, or use the one that actually matches the shapefile.
   if shapeType == 5:
-    text += "PolygonField(srid=" + srs + ")\n"
-  elif shapeType == 25:
     text += "MultiPolygonField(srid=" + srs + ")\n"
   elif shapeType == 3:
   	print("WARNING:", stem, "has a linear geometry, and this application currently only handles polygons properly")
@@ -162,6 +159,8 @@ def modelClassGen(stem, sf, keyField, srs):
   	print("Geometry field type ", shapeType, "unrecognised")
   	# the list of valid geometry field type codes is at
   	# https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf p4
+  	# but see also caveat at
+  	# https://gis.stackexchange.com/questions/122816/shapefiles-polygon-type-is-it-in-fact-multipolygon
   	exit()
   text += "    objects = models.GeoManager()\n\n"
   text += "    def __str__(self):\n"
