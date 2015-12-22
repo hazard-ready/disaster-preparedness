@@ -59,6 +59,11 @@ def main():
       adminSiteRegistrations += "admin.site.register(" + stem
       adminSiteRegistrations += ", GeoNoEditAdmin)\n"
 
+      loadMappings += stem + "_mapping = {\n"
+      loadMappings += "    '" + keyField.lower() + "': '" + keyField + "',\n"
+      loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
+      loadMappings += "}\n\n"
+
       viewsSnuggetMatches += "            if snugget_content['structured']['moment']['"
       viewsSnuggetMatches += stem + "_snugs']:\n"
       viewsSnuggetMatches += "                wrapper_width += base_section_width\n"
@@ -88,7 +93,10 @@ def main():
   outputGeneratedCode(adminLists, "world/admin.py", "Insert generated adminLists here", replace=True)
   outputGeneratedCode(adminSiteRegistrations, "world/models.py", "Insert generated adminSiteRegistrations here")
 
+  outputGeneratedCode(loadMappings, "world/models.py", "Insert generated loadMappings here")
+
   outputGeneratedCode(viewsSnuggetMatches, "world/models.py", "Insert generated viewsSnuggetMatches here")
+
   print("\n")
 
 
