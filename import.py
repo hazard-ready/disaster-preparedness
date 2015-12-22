@@ -63,6 +63,8 @@ def main():
       loadMappings += "    '" + keyField.lower() + "': '" + keyField + "',\n"
       loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
       loadMappings += "}\n\n"
+      loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__),"
+      loadPaths += " '../" + simplified + "'))\n"
 
       viewsSnuggetMatches += "            if snugget_content['structured']['moment']['"
       viewsSnuggetMatches += stem + "_snugs']:\n"
@@ -94,6 +96,7 @@ def main():
   outputGeneratedCode(adminSiteRegistrations, "world/models.py", "Insert generated adminSiteRegistrations here")
 
   outputGeneratedCode(loadMappings, "world/models.py", "Insert generated loadMappings here")
+  outputGeneratedCode(loadPaths, "world/models.py", "Insert generated loadPaths here")
 
   outputGeneratedCode(viewsSnuggetMatches, "world/models.py", "Insert generated viewsSnuggetMatches here")
 
