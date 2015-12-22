@@ -42,8 +42,9 @@ def main():
       sf = shapefile.Reader(simplified)
 
       keyField = askUserForKeyField(sf, stem)
+      shapeType = detectGeometryType(sf, stem)
 
-      modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID)
+      modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType)
       modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem
       modelsFilters += ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
       modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
@@ -128,7 +129,41 @@ def simplifyShapefile(original, outputDir, tolerance):
 
 
 
-def modelClassGen(stem, sf, keyField, srs):
+def askUserForKeyField(sf, stem):
+  fieldNames = [x[0] for x in sf.fields[1:]]
+  print("Found the following fields in the attribute table:")
+  print(str(fieldNames).strip("[").strip("]").replace("'",""))
+  print("Which would you like to use to look up snuggets by?")
+  keyField = False
+  while keyField not in fieldNames:
+    keyField = input(">> ")
+  print("Generating code for", stem, "using field", keyField, "to look up snuggets.")
+  return keyField
+
+
+
+def detectGeometryType(sf, stem):
+  shapeType = 0
+  i = 0
+  while shapeType == 0:
+    shapeType = sf.shapes()[i].shapeType
+    i = i + 1
+  if shapeType == 5:
+    return "MultiPolygon"
+  elif shapeType == 3:
+  	print("WARNING:", stem, "has a linear geometry, and this application currently only handles polygons properly")
+  	return "PolyLine"
+  else:
+  	print("Geometry field type ", shapeType, "unrecognised")
+  	# the list of valid geometry field type codes is at
+  	# https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf p4
+  	# but see also caveat at
+  	# https://gis.stackexchange.com/questions/122816/shapefiles-polygon-type-is-it-in-fact-multipolygon
+  	exit()
+
+
+
+def modelClassGen(stem, sf, keyField, srs, shapeType):
   text = "class " + stem + "(models.Model):\n"
   text += "    " + keyField + " = models."
   for field in sf.fields:
@@ -144,24 +179,7 @@ def modelClassGen(stem, sf, keyField, srs):
         print("Field type unrecognised:")
         print(field)
         exit()
-  text += "    geom = models."
-  shapeType = 0
-  i = 0
-  while shapeType == 0:
-    shapeType = sf.shapes()[i].shapeType
-    i = i + 1
-  if shapeType == 5:
-    text += "MultiPolygonField(srid=" + srs + ")\n"
-  elif shapeType == 3:
-  	print("WARNING:", stem, "has a linear geometry, and this application currently only handles polygons properly")
-  	text += "PolyLineField(srid=" + srs + ")\n"
-  else:
-  	print("Geometry field type ", shapeType, "unrecognised")
-  	# the list of valid geometry field type codes is at
-  	# https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf p4
-  	# but see also caveat at
-  	# https://gis.stackexchange.com/questions/122816/shapefiles-polygon-type-is-it-in-fact-multipolygon
-  	exit()
+  text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
   text += "    objects = models.GeoManager()\n\n"
   text += "    def __str__(self):\n"
   text += "        return self." + keyField + "\n\n"
@@ -179,19 +197,6 @@ def modelsGeoFilterGen(stem, keyField):
   text += "Snugget.objects.filter(" + stem + "_filter__" + keyField + "__exact="
   text += stem + "_rating).select_subclasses()\n\n"
   return text
-
-
-
-def askUserForKeyField(sf, stem):
-  fieldNames = [x[0] for x in sf.fields[1:]]
-  print("Found the following fields in the attribute table:")
-  print(str(fieldNames).strip("[").strip("]").replace("'",""))
-  print("Which would you like to use to look up snuggets by?")
-  keyField = False
-  while keyField not in fieldNames:
-    keyField = input(">> ")
-  print("Generating code for", stem, "using field", keyField, "to look up snuggets.")
-  return keyField
 
 
 
