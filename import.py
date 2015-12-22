@@ -19,7 +19,9 @@ def main():
   modelsGeoFilters = ""
   modelsSnuggetGroups = ""
   modelsSnuggetRatings = ""
-  adminModelImports = "from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings"
+  adminModelImports = "from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, RecoveryLevels, Location, SiteSettings"
+# taking infrastructure refs out for now; they may not be worth automating in the same way
+#  adminModelImports = "from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings"
   adminFilterRefs = ""
   adminSiteRegistrations = ""
   loadMappings = ""
@@ -95,10 +97,7 @@ def main():
   modelsSnuggetReturns += "\n                }"
 
   # assembling the complete lists for the start of class SnuggetAdmin in admin.py
-  adminListDisplay = "    list_display = ('shortname', 'section', 'sub_section'"
-  adminListFilter = "    list_filter = ('section', 'sub_section'"
-
-  adminLists = "    list_display = ('shortname', 'section', 'sub_section'"
+  adminLists = "    list_display = ('shortname', 'section', 'sub_section', "
   adminLists += adminFilterRefs + ")\n"
   adminLists += "    list_filter = ('section', 'sub_section', "
   adminLists += adminFilterRefs + ")\n\n"
@@ -196,7 +195,7 @@ def detectGeometryType(sf, stem):
     return "MultiPolygon"
   elif shapeType == 3:
   	print("WARNING:", stem, "has a linear geometry, and this application currently only handles polygons properly")
-  	return "PolyLine"
+  	return "MultiLineString"
   else:
   	print("Geometry field type ", shapeType, "unrecognised")
   	# the list of valid geometry field type codes is at
