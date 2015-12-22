@@ -17,9 +17,10 @@ def main():
   modelsClasses = ""
   modelsFilters = ""
   modelsGeoFilters = ""
+  modelsSnuggetGroups = ""
+  modelsSnuggetRatings = ""
   adminModelImports = "from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings"
 #  adminSiteRegistrations = ""
-  modelsSnuggetReturns = ""
   viewsSnuggetMatches = ""
   adminLists = ""
   loadMappings = ""
@@ -51,6 +52,10 @@ def main():
       modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem
       modelsFilters += ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
       modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
+      modelsSnuggetGroups += "                          '"
+      modelsSnuggetGroups += stem + "_snugs': " + stem + "_snuggets,\n"
+      modelsSnuggetRatings += "                '"
+      modelsSnuggetRatings += stem + "_rating': " + stem + "_rating,\n"
 
       adminModelImports += ", " + stem
 
@@ -58,10 +63,17 @@ def main():
 
   # no need to keep repeating the import statement that ogrinspect puts in
   modelsClasses = modelsClasses.replace("from django.contrib.gis.db import models\n\n", "")
+  # assemble the whole return statement for the snugget class after going through the loop
+  modelsSnuggetReturns = "        return {'groups': {\n"
+  modelsSnuggetReturns += modelsSnuggetGroups.strip("\n").strip(",")
+  modelsSnuggetReturns += "\n                          },\n"
+  modelsSnuggetReturns += modelsSnuggetRatings.strip("\n").strip(",")
+  modelsSnuggetReturns += "\n                }"
 
   outputGeneratedCode(modelsClasses, "world/models.py", "Insert generated modelsClasses here")
   outputGeneratedCode(modelsFilters, "world/models.py", "Insert generated modelsFilters here")
   outputGeneratedCode(modelsGeoFilters, "world/models.py", "Insert generated modelsGeoFilters here")
+  outputGeneratedCode(modelsSnuggetReturns, "world/models.py", "Insert generated modelsSnuggetReturns here")
   outputGeneratedCode(adminModelImports, "world/admin.py", "Replace the next line with generated adminModelImports", replace=True)
   print("\n")
 
