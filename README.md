@@ -112,7 +112,6 @@ Save them to your `.bash_profile` or equivalent.
     2. A field which can be used as a lookup key (can be the same as the unique ID; I don't yet know if it has to be the same field or unique)
 1. Put it into `/world/data/`
 2. [remember to activate the virtualenv first] `python import.py` 
-11. Add a variable definition to the block of `load.py` right after all those dictionaries, that tells it where to find the shapefile.
 12. Add appropriate sections to `templates/found_content.html`.
 13. In the `run()` method of `load.py`, add an import description for the new shapefile, following one of the `from .models import ...` examples.
 14. [remember to activate the virtualenv first] `python manage.py makemigrations`

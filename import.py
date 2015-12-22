@@ -25,14 +25,15 @@ def main():
   adminSiteRegistrations = ""
   loadMappings = ""
   loadPaths = ""
+  loadImports = ""
   viewsSnuggetMatches = ""
   templateMomentSnuggets = ""
-  loadImports = ""
 
   for subdir in [reprojectedDir, simplifiedDir]:
     if not os.path.exists(subdir):
       os.mkdir(subdir)
 
+  i = 0
   for f in os.listdir(dataDir):
     if f[-4:] == ".shp":
       stem = f[:-4].replace(".", "_").replace("-","_")
@@ -41,8 +42,9 @@ def main():
       simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
       sf = shapefile.Reader(simplified)
 
-      keyField = askUserForKeyField(sf, stem)
+      keyField, uniqueField = askUserForFieldNames(sf, stem)
       shapeType = detectGeometryType(sf, stem)
+      encoding = findEncoding(sf, dataDir, stem)
 
       modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType)
       modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem
@@ -61,10 +63,18 @@ def main():
 
       loadMappings += stem + "_mapping = {\n"
       loadMappings += "    '" + keyField.lower() + "': '" + keyField + "',\n"
+      if keyField != uniqueField:
+        loadMappings += "    '" + uniqueField.lower() + "': '" + uniqueField + "',\n"
       loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
       loadMappings += "}\n\n"
       loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__),"
       loadPaths += " '../" + simplified + "'))\n"
+      loadImports += "    from .models import " + stem + "\n"
+      loadImports += "    lm_" + str(i) + " = LayerMapping(" + stem + ", "
+      loadImports += stem + "_shp, " + stem + "_mapping, transform=True, "
+      loadImports += "encoding='" + encoding
+      loadImports += "', unique=['" + uniqueField.lower() + "'])\n"
+      loadImports += "    lm_" + str(i) + ".save(strict=True, verbose=verbose)\n\n"
 
       viewsSnuggetMatches += "            if snugget_content['structured']['moment']['"
       viewsSnuggetMatches += stem + "_snugs']:\n"
@@ -72,6 +82,7 @@ def main():
       viewsSnuggetMatches += "                n_sections += 1\n"
 
       print("")
+      i = i + 1
 
   # no need to keep repeating the import statement that ogrinspect puts in
   modelsClasses = modelsClasses.replace("from django.contrib.gis.db import models\n\n", "")
@@ -93,12 +104,13 @@ def main():
 
   outputGeneratedCode(adminModelImports, "world/admin.py", "Replace the next line with generated adminModelImports", replace=True)
   outputGeneratedCode(adminLists, "world/admin.py", "Insert generated adminLists here", replace=True)
-  outputGeneratedCode(adminSiteRegistrations, "world/models.py", "Insert generated adminSiteRegistrations here")
+  outputGeneratedCode(adminSiteRegistrations, "world/admin.py", "Insert generated adminSiteRegistrations here")
 
-  outputGeneratedCode(loadMappings, "world/models.py", "Insert generated loadMappings here")
-  outputGeneratedCode(loadPaths, "world/models.py", "Insert generated loadPaths here")
+  outputGeneratedCode(loadMappings, "world/load.py", "Insert generated loadMappings here")
+  outputGeneratedCode(loadPaths, "world/load.py", "Insert generated loadPaths here")
+  outputGeneratedCode(loadImports, "world/load.py", "Insert generated loadImports here")
 
-  outputGeneratedCode(viewsSnuggetMatches, "world/models.py", "Insert generated viewsSnuggetMatches here")
+  outputGeneratedCode(viewsSnuggetMatches, "world/views.py", "Insert generated viewsSnuggetMatches here")
 
   print("\n")
 
@@ -140,7 +152,7 @@ def simplifyShapefile(original, outputDir, tolerance):
 
 
 
-def askUserForKeyField(sf, stem):
+def askUserForFieldNames(sf, stem):
   fieldNames = [x[0] for x in sf.fields[1:]]
   print("Found the following fields in the attribute table:")
   print(str(fieldNames).strip("[").strip("]").replace("'",""))
@@ -148,8 +160,15 @@ def askUserForKeyField(sf, stem):
   keyField = False
   while keyField not in fieldNames:
     keyField = input(">> ")
-  print("Generating code for", stem, "using field", keyField, "to look up snuggets.")
-  return keyField
+#TODO: make sure it really is OK for key & unique fields to be the same
+  print("Which is unique for each shape? (can be the same field as before)")
+  uniqueField = False
+  while uniqueField not in fieldNames:
+    uniqueField = input(">> ")
+  print("Generating code for", stem, "using the following fields:")
+  print("'" + keyField + "' to look up snuggets.")
+  print("'" + uniqueField + "' as the unique ID.")
+  return keyField, uniqueField
 
 
 
@@ -171,6 +190,21 @@ def detectGeometryType(sf, stem):
   	# but see also caveat at
   	# https://gis.stackexchange.com/questions/122816/shapefiles-polygon-type-is-it-in-fact-multipolygon
   	exit()
+
+
+
+def findEncoding(sf, inputDir, stem):
+  encodingFile = os.path.join(inputDir, stem+".cpg")
+  if os.path.exists(encodingFile):
+    with open(encodingFile, 'r') as f:
+      encoding = f.read()
+    print("Determined that", stem, "uses character encoding", encoding)
+# TODO: implement the chardet method from https://gist.github.com/jatorre/939830 as another option
+  else:
+    print("Unable to automatically detect the character encoding of", stem)
+    print("What encoding should we use? (If in doubt, choose UTF-8)")
+    encoding = input(">> ")
+  return encoding
 
 
 
