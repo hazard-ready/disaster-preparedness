@@ -3,6 +3,7 @@ import subprocess
 import sys
 
 from django.contrib.gis.utils.ogrinspect import ogrinspect
+import shapefile
 
 def main():
   dataDir = "world/data"
@@ -32,6 +33,14 @@ def main():
       print("Opening shapefile:", stem)
       reprojected = reprojectShapefile(f, dataDir, reprojectedDir, "EPSG:4326")
       simplified = simplifyShapefile(reprojected, simplifiedDir, "0.0001")
+      sf = shapefile.Reader(simplified)
+      fieldNames = [x[0] for x in sf.fields[1:]]
+      print("Found the following fields in the attribute table:")
+      print(str(fieldNames).strip("[").strip("]").replace("'",""))
+      print("Which would you like to use to look up snuggets by?")
+      keyField = False
+      while keyField not in fieldNames:
+        keyField = input()
 
 # TODO: figure out if there's any problem caused by implicitly converting non-multi geometries to multi-types; if so, decide how to handle that
       modelsClasses += ogrinspect(simplified, stem, srid=4326, multi_geom=True) + "\n\n\n"
