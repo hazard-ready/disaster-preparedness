@@ -20,8 +20,7 @@ def main():
   modelsSnuggetGroups = ""
   modelsSnuggetRatings = ""
   adminModelImports = "from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings"
-  adminListDisplay = "    list_display = ('shortname', 'section', 'sub_section'"
-  adminListFilter = "    list_filter = ('section', 'sub_section'"
+  adminFilterRefs = ""
   adminSiteRegistrations = ""
   loadMappings = ""
   loadPaths = ""
@@ -56,8 +55,9 @@ def main():
       modelsSnuggetRatings += stem + "_rating': " + stem + "_rating,\n"
 
       adminModelImports += ", " + stem
-      adminListDisplay += ", '" + stem + "_filter'"
-      adminListFilter += ", '" + stem + "_filter'"
+      if i > 0:
+        adminFilterRefs += ", "
+      adminFilterRefs += "'" + stem + "_filter'"
       adminSiteRegistrations += "admin.site.register(" + stem
       adminSiteRegistrations += ", GeoNoEditAdmin)\n"
 
@@ -95,8 +95,22 @@ def main():
   modelsSnuggetReturns += "\n                }"
 
   # assembling the complete lists for the start of class SnuggetAdmin in admin.py
-  adminLists = adminListDisplay + ")\n" + adminListFilter + ")\n"
+  adminListDisplay = "    list_display = ('shortname', 'section', 'sub_section'"
+  adminListFilter = "    list_filter = ('section', 'sub_section'"
 
+  adminLists = "    list_display = ('shortname', 'section', 'sub_section'"
+  adminLists += adminFilterRefs + ")\n"
+  adminLists += "    list_filter = ('section', 'sub_section', "
+  adminLists += adminFilterRefs + ")\n\n"
+  adminLists += "    fieldsets = (\n"
+  adminLists += "        (None, {\n"
+  adminLists += "            'fields': ('section', 'sub_section')\n"
+  adminLists += "        }),\n"
+  adminLists += "        ('Filters', {\n"
+  adminLists += "            'description': 'Choose a filter value this snugget will show up for.  It is recommended you only select a value for one filter and leave the rest empty.',\n"
+  adminLists += "            'fields': ((" + adminFilterRefs + "))\n"
+  adminLists += "        })\n"
+  adminLists += "    )\n"
   outputGeneratedCode(modelsClasses, "world/models.py", "Insert generated modelsClasses here")
   outputGeneratedCode(modelsFilters, "world/models.py", "Insert generated modelsFilters here")
   outputGeneratedCode(modelsGeoFilters, "world/models.py", "Insert generated modelsGeoFilters here")
