@@ -6,7 +6,8 @@ import sys
 import shapefile
 
 def main():
-  desiredSRID = "EPSG:4326"
+  desiredSRID = "4326"
+  SRIDNamespace = "EPSG"
   simplificationTolerance = "0.0001"
 
   dataDir = "world/data"
@@ -34,7 +35,7 @@ def main():
     if f[-4:] == ".shp":
       stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening shapefile:", stem)
-      reprojected = reprojectShapefile(f, dataDir, reprojectedDir, desiredSRID)
+      reprojected = reprojectShapefile(f, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID)
       simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
 
       sf = shapefile.Reader(simplified)
@@ -46,7 +47,7 @@ def main():
       while keyField not in fieldNames:
         keyField = input(">> ")
 
-      modelsClasses += modelClassGen(stem, sf, keyField)
+      modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID)
       modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem
       modelsFilters += ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
       modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
@@ -77,7 +78,7 @@ def reprojectShapefile(f, inputDir, outputDir, srs):
       "ogr2ogr",
       reprojected,
       original,
-      "-t_srs", "EPSG:4326"
+      "-t_srs", srs
     ]
     subprocess.call(ogrCmd)
   return reprojected
@@ -101,7 +102,7 @@ def simplifyShapefile(original, outputDir, tolerance):
 
 
 
-def modelClassGen(stem, sf, keyField):
+def modelClassGen(stem, sf, keyField, srs):
   text = "class " + stem + "(models.Model):\n"
   text += "    " + keyField + " = models."
   for field in sf.fields:
@@ -124,9 +125,9 @@ def modelClassGen(stem, sf, keyField):
     shapeType = sf.shapes()[i].shapeType
     i = i + 1
   if shapeType == 5:
-    text += "PolygonField(srid=4326)\n"
+    text += "PolygonField(srid=" + srs + ")\n"
   elif shapeType == 25:
-    text += "MultiPolygonField(srid=4326)\n"
+    text += "MultiPolygonField(srid=" + srs + ")\n"
   else:
   	print("Geometry field type ", shapeType, "unrecognised")
   	# the list of valid geometry field type codes is at
