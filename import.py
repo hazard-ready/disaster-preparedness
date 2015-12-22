@@ -20,7 +20,8 @@ def main():
   modelsSnuggetGroups = ""
   modelsSnuggetRatings = ""
   adminModelImports = "from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings"
-  adminLists = ""
+  adminListDisplay = "    list_display = ('shortname', 'section', 'sub_section'"
+  adminListFilter = "    list_filter = ('section', 'sub_section'"
   adminSiteRegistrations = ""
   loadMappings = ""
   loadPaths = ""
@@ -52,6 +53,8 @@ def main():
       modelsSnuggetRatings += stem + "_rating': " + stem + "_rating,\n"
 
       adminModelImports += ", " + stem
+      adminListDisplay += ", '" + stem + "_filter'"
+      adminListFilter += ", '" + stem + "_filter'"
       adminSiteRegistrations += "admin.site.register(" + stem
       adminSiteRegistrations += ", GeoNoEditAdmin)"
 
@@ -64,6 +67,7 @@ def main():
 
   # no need to keep repeating the import statement that ogrinspect puts in
   modelsClasses = modelsClasses.replace("from django.contrib.gis.db import models\n\n", "")
+
   # assemble the whole return statement for the snugget class after going through the loop
   modelsSnuggetReturns = "        return {'groups': {\n"
   modelsSnuggetReturns += modelsSnuggetGroups.strip("\n").strip(",")
@@ -71,12 +75,16 @@ def main():
   modelsSnuggetReturns += modelsSnuggetRatings.strip("\n").strip(",")
   modelsSnuggetReturns += "\n                }"
 
+  # assembling the complete lists for the start of class SnuggetAdmin in admin.py
+  adminLists = adminListDisplay + ")\n" + adminListFilter + ")\n"
+
   outputGeneratedCode(modelsClasses, "world/models.py", "Insert generated modelsClasses here")
   outputGeneratedCode(modelsFilters, "world/models.py", "Insert generated modelsFilters here")
   outputGeneratedCode(modelsGeoFilters, "world/models.py", "Insert generated modelsGeoFilters here")
   outputGeneratedCode(modelsSnuggetReturns, "world/models.py", "Insert generated modelsSnuggetReturns here")
 
   outputGeneratedCode(adminModelImports, "world/admin.py", "Replace the next line with generated adminModelImports", replace=True)
+  outputGeneratedCode(adminLists, "world/admin.py", "Insert generated adminLists here", replace=True)
   outputGeneratedCode(adminSiteRegistrations, "world/models.py", "Insert generated adminSiteRegistrations here")
 
   outputGeneratedCode(viewsSnuggetMatches, "world/models.py", "Insert generated viewsSnuggetMatches here")
@@ -186,7 +194,7 @@ def askUserForKeyField(sf, stem):
 def outputGeneratedCode(code, destFile, anchor, replace=False):
   print("\n######################################################\n")
   if replace:
-  	prompt = "Replace the line after the '" + anchor + "' comment in "
+  	prompt = "Replace the line[s] after the '" + anchor + "' comment in "
   	prompt += destFile + " with the following code:\n"
   else:
   	prompt = "Insert the following code after the '" + anchor + "' comment in "
