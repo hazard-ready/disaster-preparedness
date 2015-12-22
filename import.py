@@ -20,8 +20,8 @@ def main():
   modelsSnuggetGroups = ""
   modelsSnuggetRatings = ""
   adminModelImports = "from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings"
-#  adminSiteRegistrations = ""
   adminLists = ""
+  adminSiteRegistrations = ""
   loadMappings = ""
   loadPaths = ""
   viewsSnuggetMatches = ""
@@ -52,6 +52,8 @@ def main():
       modelsSnuggetRatings += stem + "_rating': " + stem + "_rating,\n"
 
       adminModelImports += ", " + stem
+      adminSiteRegistrations += "admin.site.register(" + stem
+      adminSiteRegistrations += ", GeoNoEditAdmin)"
 
       viewsSnuggetMatches += "            if snugget_content['structured']['moment']['"
       viewsSnuggetMatches += stem + "_snugs']:\n"
@@ -75,6 +77,7 @@ def main():
   outputGeneratedCode(modelsSnuggetReturns, "world/models.py", "Insert generated modelsSnuggetReturns here")
 
   outputGeneratedCode(adminModelImports, "world/admin.py", "Replace the next line with generated adminModelImports", replace=True)
+  outputGeneratedCode(adminSiteRegistrations, "world/models.py", "Insert generated adminSiteRegistrations here")
 
   outputGeneratedCode(viewsSnuggetMatches, "world/models.py", "Insert generated viewsSnuggetMatches here")
   print("\n")
@@ -181,7 +184,7 @@ def askUserForKeyField(sf, stem):
 
 
 def outputGeneratedCode(code, destFile, anchor, replace=False):
-  print("\n######################################################\n\n\n\n")
+  print("\n######################################################\n")
   if replace:
   	prompt = "Replace the line after the '" + anchor + "' comment in "
   	prompt += destFile + " with the following code:\n"
