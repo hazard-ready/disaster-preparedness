@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 
-from django.contrib.gis.utils.ogrinspect import ogrinspect
+# from django.contrib.gis.utils.ogrinspect import ogrinspect
 import shapefile
 
 def main():
@@ -33,6 +33,7 @@ def main():
       print("Opening shapefile:", stem)
       reprojected = reprojectShapefile(f, dataDir, reprojectedDir, "EPSG:4326")
       simplified = simplifyShapefile(reprojected, simplifiedDir, "0.0001")
+
       sf = shapefile.Reader(simplified)
       fieldNames = [x[0] for x in sf.fields[1:]]
       print("Found the following fields in the attribute table:")
@@ -42,8 +43,7 @@ def main():
       while keyField not in fieldNames:
         keyField = input()
 
-# TODO: figure out if there's any problem caused by implicitly converting non-multi geometries to multi-types; if so, decide how to handle that
-      modelsClasses += ogrinspect(simplified, stem, srid=4326, multi_geom=True) + "\n\n\n"
+      modelsClasses += modelClassGen(stem, sf, keyField)
       modelsFilters += stem + "_filter = models.ForeignKey(" + stem
       modelsFilters += ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
       modelsGeoFilters += "qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
@@ -95,6 +95,44 @@ def simplifyShapefile(original, outputDir, tolerance):
     subprocess.call(ogrCmd)
   return simplified
 
+
+
+def modelClassGen(stem, sf, keyField):
+  text = "class " + stem + "(models.Model):\n"
+  text += "    " + keyField + " = models."
+  for field in sf.fields:
+    if field[0] == keyField:
+      if field[1] == 'C':
+        text += "CharField(max_length=" + str(field[2]) + ")\n"
+      elif field[1] == 'N':
+        if field[3] > 0:
+          text += "FloatField()\n"
+        else:
+          text += "IntegerField()\n"
+      else:
+        print("Field type unrecognised:")
+        print(field)
+        exit()
+  text += "    geom = models."
+  shapeType = 0
+  i = 0
+  while shapeType == 0:
+    shapeType = sf.shapes()[i].shapeType
+    i = i + 1
+  if shapeType == 5:
+    text += "PolygonField(srid=4326)\n"
+  elif shapeType == 25:
+    text += "MultiPolygonField(srid=4326)\n"
+  else:
+  	print("Geometry field type ", shapeType, "unrecognised")
+  	# the list of valid geometry field type codes is at
+  	# https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf p4
+  	exit()
+  text += "    objects = models.GeoManager()\n\n"
+  text += "    def __str__(self):\n"
+  text += "        return self." + keyField + "\n"
+
+  return text
 
 
 def outputGeneratedCode(code, destFile, anchor, replace=False):
