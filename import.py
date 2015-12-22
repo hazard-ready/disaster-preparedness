@@ -38,15 +38,9 @@ def main():
       print("Opening shapefile:", stem)
       reprojected = reprojectShapefile(f, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID)
       simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
-
       sf = shapefile.Reader(simplified)
-      fieldNames = [x[0] for x in sf.fields[1:]]
-      print("Found the following fields in the attribute table:")
-      print(str(fieldNames).strip("[").strip("]").replace("'",""))
-      print("Which would you like to use to look up snuggets by?")
-      keyField = False
-      while keyField not in fieldNames:
-        keyField = input(">> ")
+
+      keyField = askUserForKeyField(sf, stem)
 
       modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID)
       modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem
@@ -162,6 +156,19 @@ def modelsGeoFilterGen(stem, keyField):
   text += "Snugget.objects.filter(" + stem + "_filter__" + keyField + "__exact="
   text += stem + "_rating).select_subclasses()\n\n"
   return text
+
+
+
+def askUserForKeyField(sf, stem):
+  fieldNames = [x[0] for x in sf.fields[1:]]
+  print("Found the following fields in the attribute table:")
+  print(str(fieldNames).strip("[").strip("]").replace("'",""))
+  print("Which would you like to use to look up snuggets by?")
+  keyField = False
+  while keyField not in fieldNames:
+    keyField = input(">> ")
+  print("Generating code for", stem, "using field", keyField, "to look up snuggets.")
+  return keyField
 
 
 
