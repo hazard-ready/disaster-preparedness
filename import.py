@@ -47,9 +47,9 @@ def main():
         keyField = input(">> ")
 
       modelsClasses += modelClassGen(stem, sf, keyField)
-      modelsFilters += stem + "_filter = models.ForeignKey(" + stem
+      modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem
       modelsFilters += ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
-      modelsGeoFilters += "qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
+      modelsGeoFilters += "        qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
 
       adminModelImports += ", " + stem
 
