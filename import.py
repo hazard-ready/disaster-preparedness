@@ -44,7 +44,7 @@ def main():
       print("Which would you like to use to look up snuggets by?")
       keyField = False
       while keyField not in fieldNames:
-        keyField = input()
+        keyField = input(">> ")
 
       modelsClasses += modelClassGen(stem, sf, keyField)
       modelsFilters += stem + "_filter = models.ForeignKey(" + stem
@@ -62,6 +62,7 @@ def main():
   outputGeneratedCode(modelsFilters, "world/models.py", "Insert generated modelsFilters here")
   outputGeneratedCode(modelsGeoFilters, "world/models.py", "Insert generated modelsGeoFilters here")
   outputGeneratedCode(adminModelImports, "world/admin.py", "Replace the next line with generated adminModelImports", replace=True)
+  print("\n")
 
 
 
