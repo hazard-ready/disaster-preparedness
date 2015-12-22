@@ -7,8 +7,6 @@ from django.contrib.gis.utils import LayerMapping
 ######################################################
 
 
-
-
 # Auto-generated `LayerMapping` dictionary for TsunamiZone model,
 # modified later by cool devs.
 tsunamizone_mapping = {

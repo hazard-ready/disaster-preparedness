@@ -111,7 +111,7 @@ Save them to your `.bash_profile` or equivalent.
     1. A unique ID for each shape
     2. A field which can be used as a lookup key (can be the same as the unique ID; I don't yet know if it has to be the same field or unique)
 1. Put it into `/world/data/`
-2. `python import.py` 
+2. [remember to activate the virtualenv first] `python import.py` 
 10. Add a dictionary to the start of `load.py` that maps field names you just used in `models.py` to field names in the attribute table.  Use existing ones as a examples.
 11. Add a variable definition to the block of `load.py` right after all those dictionaries, that tells it where to find the shapefile.
 12. Add appropriate sections to `templates/found_content.html`.

@@ -56,7 +56,7 @@ def main():
       adminListDisplay += ", '" + stem + "_filter'"
       adminListFilter += ", '" + stem + "_filter'"
       adminSiteRegistrations += "admin.site.register(" + stem
-      adminSiteRegistrations += ", GeoNoEditAdmin)"
+      adminSiteRegistrations += ", GeoNoEditAdmin)\n"
 
       viewsSnuggetMatches += "            if snugget_content['structured']['moment']['"
       viewsSnuggetMatches += stem + "_snugs']:\n"
@@ -123,6 +123,7 @@ def simplifyShapefile(original, outputDir, tolerance):
       "-simplify", tolerance
     ]
     subprocess.call(ogrCmd)
+    print(original, "simplified.")
   return simplified
 
 
@@ -149,10 +150,14 @@ def modelClassGen(stem, sf, keyField, srs):
   while shapeType == 0:
     shapeType = sf.shapes()[i].shapeType
     i = i + 1
+#TODO: the example code only ever used MultiPolygon fields; all the shapefiles I'm testing are return Polygon geometries.  Figure out why, and whether it's better to use Multi* for all geometries, or use the one that actually matches the shapefile.
   if shapeType == 5:
     text += "PolygonField(srid=" + srs + ")\n"
   elif shapeType == 25:
     text += "MultiPolygonField(srid=" + srs + ")\n"
+  elif shapeType == 3:
+  	print("WARNING:", stem, "has a linear geometry, and this application currently only handles polygons properly")
+  	text += "PolyLineField(srid=" + srs + ")\n"
   else:
   	print("Geometry field type ", shapeType, "unrecognised")
   	# the list of valid geometry field type codes is at
