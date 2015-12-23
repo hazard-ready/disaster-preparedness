@@ -246,7 +246,7 @@ def modelClassGen(stem, sf, keyField, uniqueField, srs, shapeType):
   text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
   text += "    objects = models.GeoManager()\n\n"
   text += "    def __str__(self):\n"
-  text += "        return str(self." + keyField + ")\n\n"
+  text += "        return str(self." + keyField.lower() + ")\n\n"
 
   return text
 
