@@ -2,7 +2,6 @@ import os
 import subprocess
 import sys
 
-# from django.contrib.gis.utils.ogrinspect import ogrinspect
 import shapefile
 
 def main():
@@ -86,9 +85,6 @@ def main():
       viewsSnuggetMatches += "                n_sections += 1\n"
 
       print("")
-
-  # no need to keep repeating the import statement that ogrinspect puts in
-  modelsClasses = modelsClasses.replace("from django.contrib.gis.db import models\n\n", "")
 
   # assemble the whole return statement for the snugget class after going through the loop
   modelsSnuggetReturns = "        return {'groups': {\n"
