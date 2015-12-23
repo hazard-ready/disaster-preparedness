@@ -221,7 +221,6 @@ def findEncoding(sf, inputDir, stem):
 
 
 
-
 def findFieldType(sf, fieldName):
   for field in sf.fields:
     if field[0] == fieldName:
@@ -241,9 +240,9 @@ def findFieldType(sf, fieldName):
 
 def modelClassGen(stem, sf, keyField, uniqueField, srs, shapeType):
   text = "class " + stem + "(models.Model):\n"
-  text += "    " + keyField + " = models." + findFieldType(sf, keyField) + "\n"
+  text += "    " + keyField.lower() + " = models." + findFieldType(sf, keyField) + "\n"
   if uniqueField != keyField:
-    text += "    " + uniqueField + " = models." + findFieldType(sf, uniqueField) + "\n"
+    text += "    " + uniqueField.lower() + " = models." + findFieldType(sf, uniqueField) + "\n"
   text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
   text += "    objects = models.GeoManager()\n\n"
   text += "    def __str__(self):\n"
@@ -257,9 +256,9 @@ def modelsGeoFilterGen(stem, keyField):
   text = "        qs_" + stem + " = "
   text += stem + ".objects.filter(geom__contains=pnt)\n"
   text += "        " + stem + "_rating = "
-  text += "qs_" + stem + ".values.list('" + keyField + "', flat=True)\n"
+  text += "qs_" + stem + ".values.list('" + keyField.lower() + "', flat=True)\n"
   text += "        " + stem + "_snuggets = "
-  text += "Snugget.objects.filter(" + stem + "_filter__" + keyField + "__exact="
+  text += "Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact="
   text += stem + "_rating).select_subclasses()\n\n"
   return text
 
