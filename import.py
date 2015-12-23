@@ -58,7 +58,7 @@ def main():
 
       adminModelImports += ", " + stem
       if first:
-      	first = False
+        first = False
       else:
         adminFilterRefs += ", "
       adminFilterRefs += "'" + stem + "_filter'"
@@ -195,15 +195,15 @@ def detectGeometryType(sf, stem):
   if shapeType == 5:
     return "MultiPolygon"
   elif shapeType == 3:
-  	print("WARNING:", stem, "has a linear geometry, and this application currently only handles polygons properly")
-  	return "MultiLineString"
+    print("WARNING:", stem, "has a linear geometry, and this application currently only handles polygons properly")
+    return "MultiLineString"
   else:
-  	print("Geometry field type ", shapeType, "unrecognised")
-  	# the list of valid geometry field type codes is at
-  	# https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf p4
-  	# but see also caveat at
-  	# https://gis.stackexchange.com/questions/122816/shapefiles-polygon-type-is-it-in-fact-multipolygon
-  	exit()
+    print("Geometry field type ", shapeType, "unrecognised")
+    # the list of valid geometry field type codes is at
+    # https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf p4
+    # but see also caveat at
+    # https://gis.stackexchange.com/questions/122816/shapefiles-polygon-type-is-it-in-fact-multipolygon
+    exit()
 
 
 
@@ -268,11 +268,11 @@ def modelsGeoFilterGen(stem, keyField):
 def outputGeneratedCode(code, destFile, anchor, replace=False):
   print("\n######################################################\n")
   if replace:
-  	prompt = "Replace the line[s] after the '" + anchor + "' comment in "
-  	prompt += destFile + " with the following code:\n"
+    prompt = "Replace the line[s] after the '" + anchor + "' comment in "
+    prompt += destFile + " with the following code:\n"
   else:
-  	prompt = "Insert the following code after the '" + anchor + "' comment in "
-  	prompt += destFile + "\n\n"
+    prompt = "Insert the following code after the '" + anchor + "' comment in "
+    prompt += destFile + "\n\n"
   print(prompt)
   print(code)
 
