@@ -34,7 +34,7 @@ def main():
     if not os.path.exists(subdir):
       os.mkdir(subdir)
 
-  i = 0
+  first = True
   for f in os.listdir(dataDir):
     if f[-4:] == ".shp":
       stem = f[:-4].replace(".", "_").replace("-","_")
@@ -57,7 +57,9 @@ def main():
       modelsSnuggetRatings += stem + "_rating': " + stem + "_rating,\n"
 
       adminModelImports += ", " + stem
-      if i > 0:
+      if first:
+      	first = False
+      else:
         adminFilterRefs += ", "
       adminFilterRefs += "'" + stem + "_filter'"
       adminSiteRegistrations += "admin.site.register(" + stem
@@ -84,7 +86,6 @@ def main():
       viewsSnuggetMatches += "                n_sections += 1\n"
 
       print("")
-      i = i + 1
 
   # no need to keep repeating the import statement that ogrinspect puts in
   modelsClasses = modelsClasses.replace("from django.contrib.gis.db import models\n\n", "")
