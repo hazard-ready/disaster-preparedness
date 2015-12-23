@@ -53,9 +53,7 @@ def main():
       modelsSnuggetRatings += "                '" + stem + "_rating': " + stem + "_rating,\n"
 
       adminModelImports += ", " + stem
-      if first:
-        first = False
-      else:
+      if not first:
         adminFilterRefs += ", "
       adminFilterRefs += "'" + stem + "_filter'"
       adminSiteRegistrations += "admin.site.register(" + stem + ", GeoNoEditAdmin)\n"
@@ -76,6 +74,7 @@ def main():
       viewsSnuggetMatches += "                n_sections += 1\n"
 
       print("")
+      first = False
 
   # assemble the whole return statement for the snugget class after going through the loop
   modelsSnuggetReturns = "        return {'groups': {\n"
