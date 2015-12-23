@@ -47,7 +47,7 @@ def main():
       shapeType = detectGeometryType(sf, stem)
       encoding = findEncoding(sf, dataDir, stem)
 
-      modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType)
+      modelsClasses += modelClassGen(stem, sf, keyField, uniqueField, desiredSRID, shapeType)
       modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem
       modelsFilters += ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
       modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
@@ -221,22 +221,29 @@ def findEncoding(sf, inputDir, stem):
 
 
 
-def modelClassGen(stem, sf, keyField, srs, shapeType):
-  text = "class " + stem + "(models.Model):\n"
-  text += "    " + keyField + " = models."
+
+def findFieldType(sf, fieldName):
   for field in sf.fields:
-    if field[0] == keyField:
+    if field[0] == fieldName:
       if field[1] == 'C':
-        text += "CharField(max_length=" + str(field[2]) + ")\n"
+        return "CharField(max_length=" + str(field[2]) + ")"
       elif field[1] == 'N':
         if field[3] > 0:
-          text += "FloatField()\n"
+          return "FloatField()"
         else:
-          text += "IntegerField()\n"
+          return "IntegerField()"
       else:
         print("Field type unrecognised:")
         print(field)
         exit()
+
+
+
+def modelClassGen(stem, sf, keyField, uniqueField, srs, shapeType):
+  text = "class " + stem + "(models.Model):\n"
+  text += "    " + keyField + " = models." + findFieldType(sf, keyField) + "\n"
+  if uniqueField != keyField:
+    text += "    " + uniqueField + " = models." + findFieldType(sf, uniqueField) + "\n"
   text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
   text += "    objects = models.GeoManager()\n\n"
   text += "    def __str__(self):\n"
