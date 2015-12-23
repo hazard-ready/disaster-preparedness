@@ -145,7 +145,7 @@ def reprojectShapefile(f, inputDir, outputDir, srs):
 def simplifyShapefile(original, outputDir, tolerance):
   simplified = os.path.join(outputDir, os.path.basename(original))
   if os.path.exists(simplified):
-    print("Skipping simplification because this file has previously been reprojected.")
+    print("Skipping simplification because this file has previously been simplified.")
   else:
     print("Simplifying with tolerance", tolerance)
     ogrCmd = [
@@ -216,6 +216,7 @@ def findEncoding(sf, inputDir, stem):
 
 
 
+# See https://pypi.python.org/pypi/pyshp#reading-records for the array format
 def findFieldType(sf, fieldName):
   for field in sf.fields:
     if field[0] == fieldName:
