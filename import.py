@@ -44,14 +44,13 @@ def main():
       shapeType = detectGeometryType(sf, stem)
       encoding = findEncoding(sf, dataDir, stem)
 
+#Code generation: one line in this function writes one line of code to be copied elsewhere
+# one block represents the code generation for each destination file
       modelsClasses += modelClassGen(stem, sf, keyField, uniqueField, desiredSRID, shapeType)
-      modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem
-      modelsFilters += ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
+      modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem + ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
       modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
-      modelsSnuggetGroups += "                          '"
-      modelsSnuggetGroups += stem + "_snugs': " + stem + "_snuggets,\n"
-      modelsSnuggetRatings += "                '"
-      modelsSnuggetRatings += stem + "_rating': " + stem + "_rating,\n"
+      modelsSnuggetGroups += "                          '" + stem + "_snugs': " + stem + "_snuggets,\n"
+      modelsSnuggetRatings += "                '" + stem + "_rating': " + stem + "_rating,\n"
 
       adminModelImports += ", " + stem
       if first:
@@ -59,8 +58,7 @@ def main():
       else:
         adminFilterRefs += ", "
       adminFilterRefs += "'" + stem + "_filter'"
-      adminSiteRegistrations += "admin.site.register(" + stem
-      adminSiteRegistrations += ", GeoNoEditAdmin)\n"
+      adminSiteRegistrations += "admin.site.register(" + stem + ", GeoNoEditAdmin)\n"
 
       loadMappings += stem + "_mapping = {\n"
       loadMappings += "    '" + keyField.lower() + "': '" + keyField + "',\n"
@@ -68,17 +66,12 @@ def main():
         loadMappings += "    '" + uniqueField.lower() + "': '" + uniqueField + "',\n"
       loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
       loadMappings += "}\n\n"
-      loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__),"
-      loadPaths += " '../" + simplified + "'))\n"
+      loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + simplified + "'))\n"
       loadImports += "    from .models import " + stem + "\n"
-      loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", "
-      loadImports += stem + "_shp, " + stem + "_mapping, transform=True, "
-      loadImports += "encoding='" + encoding
-      loadImports += "', unique=['" + uniqueField.lower() + "'])\n"
+      loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + uniqueField.lower() + "'])\n"
       loadImports += "    lm_" + stem + ".save(strict=True, verbose=verbose)\n\n"
 
-      viewsSnuggetMatches += "            if snugget_content['structured']['moment']['"
-      viewsSnuggetMatches += stem + "_snugs']:\n"
+      viewsSnuggetMatches += "            if snugget_content['structured']['moment']['" + stem + "_snugs']:\n"
       viewsSnuggetMatches += "                wrapper_width += base_section_width\n"
       viewsSnuggetMatches += "                n_sections += 1\n"
 
@@ -87,15 +80,13 @@ def main():
   # assemble the whole return statement for the snugget class after going through the loop
   modelsSnuggetReturns = "        return {'groups': {\n"
   modelsSnuggetReturns += modelsSnuggetGroups.strip("\n").strip(",")
-  modelsSnuggetReturns += "\n                          },\n"
-  modelsSnuggetReturns += modelsSnuggetRatings.strip("\n").strip(",")
-  modelsSnuggetReturns += "\n                }"
+  modelsSnuggetReturns += "                          },\n"
+  modelsSnuggetReturns += modelsSnuggetRatings.strip("\n").strip(",") + "\n"
+  modelsSnuggetReturns += "                }\n"
 
   # assembling the complete lists for the start of class SnuggetAdmin in admin.py
-  adminLists = "    list_display = ('shortname', 'section', 'sub_section', "
-  adminLists += adminFilterRefs + ")\n"
-  adminLists += "    list_filter = ('section', 'sub_section', "
-  adminLists += adminFilterRefs + ")\n\n"
+  adminLists = "    list_display = ('shortname', 'section', 'sub_section', " + adminFilterRefs + ")\n"
+  adminLists += "    list_filter = ('section', 'sub_section', " + adminFilterRefs + ")\n\n"
   adminLists += "    fieldsets = (\n"
   adminLists += "        (None, {\n"
   adminLists += "            'fields': ('section', 'sub_section')\n"
@@ -105,6 +96,7 @@ def main():
   adminLists += "            'fields': ((" + adminFilterRefs + "))\n"
   adminLists += "        })\n"
   adminLists += "    )\n"
+
   outputGeneratedCode(modelsClasses, "world/models.py", "Insert generated modelsClasses here")
   outputGeneratedCode(modelsFilters, "world/models.py", "Insert generated modelsFilters here")
   outputGeneratedCode(modelsGeoFilters, "world/models.py", "Insert generated modelsGeoFilters here")
@@ -192,10 +184,10 @@ def detectGeometryType(sf, stem):
     return "MultiLineString"
   else:
     print("Geometry field type ", shapeType, "unrecognised")
-    # the list of valid geometry field type codes is at
-    # https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf p4
-    # but see also caveat at
-    # https://gis.stackexchange.com/questions/122816/shapefiles-polygon-type-is-it-in-fact-multipolygon
+# the list of valid geometry field type codes is at
+# https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf p4
+# but see also caveat at
+# https://gis.stackexchange.com/questions/122816/shapefiles-polygon-type-is-it-in-fact-multipolygon
     exit()
 
 
@@ -248,13 +240,9 @@ def modelClassGen(stem, sf, keyField, uniqueField, srs, shapeType):
 
 
 def modelsGeoFilterGen(stem, keyField):
-  text = "        qs_" + stem + " = "
-  text += stem + ".objects.filter(geom__contains=pnt)\n"
-  text += "        " + stem + "_rating = "
-  text += "qs_" + stem + ".values.list('" + keyField.lower() + "', flat=True)\n"
-  text += "        " + stem + "_snuggets = "
-  text += "Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact="
-  text += stem + "_rating).select_subclasses()\n\n"
+  text = "        qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
+  text += "        " + stem + "_rating = " + "qs_" + stem + ".values.list('" + keyField.lower() + "', flat=True)\n"
+  text += "        " + stem + "_snuggets = " + "Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact=" + stem + "_rating).select_subclasses()\n\n"
   return text
 
 
@@ -262,11 +250,9 @@ def modelsGeoFilterGen(stem, keyField):
 def outputGeneratedCode(code, destFile, anchor, replace=False):
   print("\n######################################################\n")
   if replace:
-    prompt = "Replace the line[s] after the '" + anchor + "' comment in "
-    prompt += destFile + " with the following code:\n"
+    prompt = "Replace the line[s] after the '" + anchor + "' comment in " + destFile + " with the following code:\n"
   else:
-    prompt = "Insert the following code after the '" + anchor + "' comment in "
-    prompt += destFile + "\n\n"
+    prompt = "Insert the following code after the '" + anchor + "' comment in " + destFile + "\n\n"
   print(prompt)
   print(code)
 
