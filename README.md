@@ -108,20 +108,10 @@ Save them to your `.bash_profile` or equivalent.
 0. Export a shapefile with at least the following minimum set of attributes for the shape:
     1. A unique ID for each shape
     2. A field which can be used as a lookup key (can be the same as the unique ID; I don't yet know if it has to be the same field or unique)
-1. Convert it to SRID EPSG:4326 (this can be done using `ogr2ogr reprojectedfile.shp sourcefile.shp -t_srs EPSG:4326` and we should automate the process)
-2. Put it into `/world/data/`
-3. Add a class to `models.py` extending `models.Model`, following the existing examples, that defines PostGIS datatypes for all the fields in the attribute table that we care about importing.  At a minimum this needs to include the geometry and the key we'll be using to look up by.
-4. Add the name of the class you just created to the `from .models import` line near the top of `admin.py` and the list of `admin.site.register()` calls towards the bottom
-5. At the start of the `Snugget()` class of `models.py`, add a filter definition that relates to the class you just created. Use an existing one (e.g. `shaking_filter`) as an example. *TODO: currently the name in the admin UI seems to come directly from the name here. Figure out if that has to be so and document findings.*
-6. In the `findSnuggetsForPoint()` method of the `Snugget()` class, add filter references in the same form as existing ones (see `qs_shaking`, `shake_rating` & `shake_snuggets` definitions).
-7. In the return statement for the same method, add the outputs you've just created.
-8. IN `views.py` add an `if snugget_content...` block to the existing ones, that matches the naming of the group you just created in `models.py`
-9. Back in `admin.py`, add references to the filter you've just created to the lists defined as `list_display` & `list_filter` and the `Filters` dictionary in the definition for the `SnuggetAdmin()` class.
-10. Add a dictionary to the start of `load.py` that maps field names you just used in `models.py` to field names in the attribute table.  Use existing ones as a examples.
-11. Add a variable definition to the block of `load.py` right after all those dictionaries, that tells it where to find the shapefile.
+1. Put it into `/world/data/`
+2. [remember to activate the virtualenv first] `python import.py` 
 12. Add appropriate sections to `templates/found_content.html`.
-13. In the `run()` method of `load.py`, add an import description for the new shapefile, following one of the `from .models import ...` examples.
-14. [remember to activate the virtualenv first] `python manage.py makemigrations`
+14. `python manage.py makemigrations`
 15. `python manage.py migrate`
 16. `python manage.py shell`
     1. `from world import load`

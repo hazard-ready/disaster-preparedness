@@ -86,6 +86,15 @@ class Location(SingletonModel):
     class Meta:
         verbose_name = "Location Information"
 
+        
+        
+######################################################
+# Insert generated modelsClasses here
+######################################################
+        
+        
+        
+        
 # This was an auto-generated Django model module created by ogrinspect.
 # EG commented out 3 fields that aren't in the shapefile
 # EG added one back in: zoneid is checked elsewhere and its absence causes crashes. 
@@ -217,6 +226,9 @@ class SnuggetSubSection(models.Model):
 
 class Snugget(models.Model):
     objects = InheritanceManager()
+######################################################
+# Insert generated modelsFilters here
+######################################################
     shaking_filter = models.ForeignKey(ExpectedGroundShaking, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     impact_zone_filter = models.ForeignKey(ImpactZone, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
     liquifaction_filter = models.ForeignKey(LiquefactionDeformation, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
@@ -232,6 +244,9 @@ class Snugget(models.Model):
     @staticmethod
     def findSnuggetsForPoint(lat=0, lng=0, merge_deform = True):
         pnt = Point(lng, lat)
+######################################################
+# Insert generated modelsGeoFilters here
+######################################################
         qs_impacts = ImpactZoneData.objects.filter(geom__contains=pnt)
         qs_shaking = ExpectedGroundShaking.objects.filter(geom__contains=pnt)
         qs_liquifaction = LiquefactionDeformation.objects.filter(geom__contains=pnt)
@@ -271,6 +286,10 @@ class Snugget(models.Model):
                 deform_rating = max(both_scores)
         
         impact_zones = qs_impacts.values()
+
+######################################################
+# Insert generated modelsSnuggetReturns here
+######################################################
 
         return {'groups': {
                           'tsunami_snugs': tsunami_snuggets,
