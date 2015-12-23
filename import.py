@@ -168,7 +168,6 @@ def askUserForFieldNames(sf, stem):
   keyField = False
   while keyField not in fieldNames:
     keyField = input(">> ")
-#TODO: make sure it really is OK for key & unique fields to be the same
   print("Which is unique for each shape? (can be the same field as before)")
   uniqueField = False
   while uniqueField not in fieldNames:
@@ -181,11 +180,11 @@ def askUserForFieldNames(sf, stem):
 
 
 def detectGeometryType(sf, stem):
-  shapeType = 0
-  i = 0
-  while shapeType == 0:
-    shapeType = sf.shapes()[i].shapeType
-    i = i + 1
+  try:
+    shapeType = next(shape for shape in sf.shapes() if shape.shapeType != 0).shapeType
+  except stopIteration:
+    print("No valid geometries found in", stem, "- please check the shapefile")
+    exit()
   if shapeType == 5:
     return "MultiPolygon"
   elif shapeType == 3:
