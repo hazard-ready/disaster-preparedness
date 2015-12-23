@@ -79,9 +79,9 @@ def main():
 
   # assemble the whole return statement for the snugget class after going through the loop
   modelsSnuggetReturns = "        return {'groups': {\n"
-  modelsSnuggetReturns += modelsSnuggetGroups.strip("\n").strip(",")
+  modelsSnuggetReturns += modelsSnuggetGroups.strip(",\n") + "\n"
   modelsSnuggetReturns += "                          },\n"
-  modelsSnuggetReturns += modelsSnuggetRatings.strip("\n").strip(",") + "\n"
+  modelsSnuggetReturns += modelsSnuggetRatings.strip(",\n") + "\n"
   modelsSnuggetReturns += "                }\n"
 
   # assembling the complete lists for the start of class SnuggetAdmin in admin.py
@@ -155,7 +155,7 @@ def simplifyShapefile(original, outputDir, tolerance):
 def askUserForFieldNames(sf, stem):
   fieldNames = [x[0] for x in sf.fields[1:]]
   print("Found the following fields in the attribute table:")
-  print(str(fieldNames).strip("[").strip("]").replace("'",""))
+  print(str(fieldNames).strip("[]").replace("'",""))
   print("Which would you like to use to look up snuggets by?")
   keyField = False
   while keyField not in fieldNames:
