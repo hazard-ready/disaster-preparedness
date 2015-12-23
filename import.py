@@ -9,9 +9,14 @@ def main():
   SRIDNamespace = "EPSG"
   simplificationTolerance = "0.0001"
 
-  dataDir = "world/data"
+  appDir = "world"
+  dataDir = os.path.join(appDir, "data")
   reprojectedDir = os.path.join(dataDir, "reprojected")
   simplifiedDir = os.path.join(dataDir, "simplified")
+  modelsFile = os.path.join(appDir, "models.py")
+  adminFile = os.path.join(appDir, "admin.py")
+  loadFile = os.path.join(appDir, "load.py")
+  viewsFile = os.path.join(appDir, "views.py")
 
   modelsClasses = ""
   modelsFilters = ""
@@ -96,20 +101,20 @@ def main():
   adminLists += "        })\n"
   adminLists += "    )\n"
 
-  outputGeneratedCode(modelsClasses, "world/models.py", "Insert generated modelsClasses here")
-  outputGeneratedCode(modelsFilters, "world/models.py", "Insert generated modelsFilters here")
-  outputGeneratedCode(modelsGeoFilters, "world/models.py", "Insert generated modelsGeoFilters here")
-  outputGeneratedCode(modelsSnuggetReturns, "world/models.py", "Insert generated modelsSnuggetReturns here")
+  outputGeneratedCode(modelsClasses, modelsFile, "Insert generated modelsClasses here")
+  outputGeneratedCode(modelsFilters, modelsFile, "Insert generated modelsFilters here")
+  outputGeneratedCode(modelsGeoFilters, modelsFile, "Insert generated modelsGeoFilters here")
+  outputGeneratedCode(modelsSnuggetReturns, modelsFile, "Insert generated modelsSnuggetReturns here")
 
-  outputGeneratedCode(adminModelImports, "world/admin.py", "Replace the next line with generated adminModelImports", replace=True)
-  outputGeneratedCode(adminLists, "world/admin.py", "Insert generated adminLists here", replace=True)
-  outputGeneratedCode(adminSiteRegistrations, "world/admin.py", "Insert generated adminSiteRegistrations here")
+  outputGeneratedCode(adminModelImports, adminFile, "Replace the next line with generated adminModelImports", replace=True)
+  outputGeneratedCode(adminLists, adminFile, "Insert generated adminLists here", replace=True)
+  outputGeneratedCode(adminSiteRegistrations, adminFile, "Insert generated adminSiteRegistrations here")
 
-  outputGeneratedCode(loadMappings, "world/load.py", "Insert generated loadMappings here")
-  outputGeneratedCode(loadPaths, "world/load.py", "Insert generated loadPaths here")
-  outputGeneratedCode(loadImports, "world/load.py", "Insert generated loadImports here")
+  outputGeneratedCode(loadMappings, loadFile, "Insert generated loadMappings here")
+  outputGeneratedCode(loadPaths, loadFile, "Insert generated loadPaths here")
+  outputGeneratedCode(loadImports, loadFile, "Insert generated loadImports here")
 
-  outputGeneratedCode(viewsSnuggetMatches, "world/views.py", "Insert generated viewsSnuggetMatches here")
+  outputGeneratedCode(viewsSnuggetMatches, viewsFile, "Insert generated viewsSnuggetMatches here")
 
   print("\n")
 
