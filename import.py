@@ -72,11 +72,11 @@ def main():
       loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__),"
       loadPaths += " '../" + simplified + "'))\n"
       loadImports += "    from .models import " + stem + "\n"
-      loadImports += "    lm_" + str(i) + " = LayerMapping(" + stem + ", "
+      loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", "
       loadImports += stem + "_shp, " + stem + "_mapping, transform=True, "
       loadImports += "encoding='" + encoding
       loadImports += "', unique=['" + uniqueField.lower() + "'])\n"
-      loadImports += "    lm_" + str(i) + ".save(strict=True, verbose=verbose)\n\n"
+      loadImports += "    lm_" + stem + ".save(strict=True, verbose=verbose)\n\n"
 
       viewsSnuggetMatches += "            if snugget_content['structured']['moment']['"
       viewsSnuggetMatches += stem + "_snugs']:\n"
