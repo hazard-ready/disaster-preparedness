@@ -19,8 +19,6 @@ def main():
   modelsSnuggetGroups = ""
   modelsSnuggetRatings = ""
   adminModelImports = "from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, RecoveryLevels, Location, SiteSettings"
-# taking infrastructure refs out for now; they may not be worth automating in the same way
-#  adminModelImports = "from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings"
   adminFilterRefs = ""
   adminSiteRegistrations = ""
   loadMappings = ""
