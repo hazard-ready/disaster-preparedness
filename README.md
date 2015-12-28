@@ -105,9 +105,7 @@ Save them to your `.bash_profile` or equivalent.
 
 *Probably need to put this stuff in its own document eventually, but for now it can live here.  Much of this should also be automatable; whatever isn't needs to be explained more clearly.  For now it's notes-to-self.*
 
-0. Export a shapefile with at least the following minimum set of attributes for the shape:
-    1. A unique ID for each shape
-    2. A field which can be used as a lookup key (can be the same as the unique ID; I don't yet know if it has to be the same field or unique)
+0. Export a shapefile with an attribute that can be used to look up appropriate snugget text and intensity values for each shape. It can be in any SRS, and it doesn't matter if there are additional attributes, but be aware that those will be lost in the import.
 1. Put it into `/world/data/`
 2. [remember to activate the virtualenv first] `python import.py` 
 12. Add appropriate sections to `templates/found_content.html`.
