@@ -7,7 +7,7 @@ import shapefile
 def main():
   desiredSRID = "4326"  # EPSG:4326 = Google Mercator
   SRIDNamespace = "EPSG"
-  simplificationTolerance = "0.00001"  # This is in the SRS's units. In the case of EPSG:4326, that's decimal degrees
+  simplificationTolerance = "0.00001"  # This is in the SRS's units. For EPSG:4326, that's decimal degrees
 
   appDir = "world"
   dataDir = os.path.join(appDir, "data")
