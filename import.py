@@ -41,11 +41,13 @@ def main():
     if f[-4:] == ".shp":
       stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening shapefile:", stem)
-      reprojected = reprojectShapefile(f, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID)
+      sf = shapefile.Reader(os.path.join(dataDir, f))
+      keyField, uniqueField = askUserForFieldNames(sf, stem)
+
+      reprojected = reprojectShapefile(f, stem, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID, keyField)
       simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
       sf = shapefile.Reader(simplified)
 
-      keyField, uniqueField = askUserForFieldNames(sf, stem)
       shapeType = detectGeometryType(sf, stem)
       encoding = findEncoding(sf, dataDir, stem)
 
@@ -120,22 +122,26 @@ def main():
 
 
 
-def reprojectShapefile(f, inputDir, outputDir, srs):
+#NB: this now dissolves shapes and reprojects.  Should I rename?
+def reprojectShapefile(f, stem, inputDir, outputDir, srs, keyField):
   original = os.path.join(inputDir, f)
   reprojected = os.path.join(outputDir, f)
   if os.path.exists(reprojected):
     print("Skipping reprojection because this file has previously been reprojected.")
   else:
     print("Reprojecting to", srs)
+    sqlCmd = 'select ST_Union(Geometry),' + keyField + ' from ' + stem + ' GROUP BY ' + keyField
     ogrCmd = [
       "ogr2ogr",
       reprojected,
       original,
+      "-dialect", "sqlite", "-sql", sqlCmd,
       "-t_srs", srs
     ]
+    print(ogrCmd)
     subprocess.call(ogrCmd)
   return reprojected
-
+# ogr2ogr dissolved_reproj.shp Flood_FEMA_DFIRM_2015.shp -dialect sqlite -sql "select ST_Union(Geometry),FEMADES from Flood_FEMA_DFIRM_2015 GROUP BY FEMADES" -t_srs "EPSG:4326"
 
 
 def simplifyShapefile(original, outputDir, tolerance):
