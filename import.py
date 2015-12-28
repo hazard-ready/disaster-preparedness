@@ -42,7 +42,7 @@ def main():
       stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening shapefile:", stem)
       sf = shapefile.Reader(os.path.join(dataDir, f))
-      keyField, uniqueField = askUserForFieldNames(sf, stem)
+      keyField = askUserForFieldNames(sf, stem)
 
       reprojected = reprojectShapefile(f, stem, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID, keyField)
       simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
@@ -53,7 +53,7 @@ def main():
 
 #Code generation: one line in this function writes one line of code to be copied elsewhere
 # one block represents the code generation for each destination file
-      modelsClasses += modelClassGen(stem, sf, keyField, uniqueField, desiredSRID, shapeType)
+      modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType)
       modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem + ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
       modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
       modelsSnuggetGroups += "                          '" + stem + "_snugs': " + stem + "_snuggets,\n"
@@ -67,13 +67,11 @@ def main():
 
       loadMappings += stem + "_mapping = {\n"
       loadMappings += "    '" + keyField.lower() + "': '" + keyField + "',\n"
-      if keyField != uniqueField:
-        loadMappings += "    '" + uniqueField.lower() + "': '" + uniqueField + "',\n"
       loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
       loadMappings += "}\n\n"
       loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + simplified + "'))\n"
       loadImports += "    from .models import " + stem + "\n"
-      loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + uniqueField.lower() + "'])\n"
+      loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
       loadImports += "    lm_" + stem + ".save(strict=True, verbose=verbose)\n\n"
 
       viewsSnuggetMatches += "            if snugget_content['structured']['moment']['" + stem + "_snugs']:\n"
@@ -170,14 +168,8 @@ def askUserForFieldNames(sf, stem):
   keyField = False
   while keyField not in fieldNames:
     keyField = input(">> ")
-  print("Which is unique for each shape? (can be the same field as before)")
-  uniqueField = False
-  while uniqueField not in fieldNames:
-    uniqueField = input(">> ")
-  print("Generating code for", stem, "using the following fields:")
-  print("'" + keyField + "' to look up snuggets.")
-  print("'" + uniqueField + "' as the unique ID.")
-  return keyField, uniqueField
+  print("Generating code for", stem, "using", keyField, "to look up snuggets.")
+  return keyField
 
 
 
@@ -235,11 +227,9 @@ def findFieldType(sf, fieldName):
 
 
 
-def modelClassGen(stem, sf, keyField, uniqueField, srs, shapeType):
+def modelClassGen(stem, sf, keyField, srs, shapeType):
   text = "class " + stem + "(models.Model):\n"
   text += "    " + keyField.lower() + " = models." + findFieldType(sf, keyField) + "\n"
-  if uniqueField != keyField:
-    text += "    " + uniqueField.lower() + " = models." + findFieldType(sf, uniqueField) + "\n"
   text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
   text += "    objects = models.GeoManager()\n\n"
   text += "    def __str__(self):\n"
