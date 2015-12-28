@@ -7,7 +7,7 @@ import shapefile
 def main():
   desiredSRID = "4326"
   SRIDNamespace = "EPSG"
-  simplificationTolerance = "0.0001"
+  simplificationTolerance = "0.00001"
 
   appDir = "world"
   dataDir = os.path.join(appDir, "data")
