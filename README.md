@@ -112,10 +112,12 @@ Save them to your `.bash_profile` or equivalent.
 2. [remember to activate the virtualenv first] `python import.py` 
 12. Add appropriate sections to `templates/found_content.html`.
 14. `python manage.py makemigrations`
+15. **As things stand, makemigrations is causing problems with its attempts at deleting old models. Temp fix: remove the migrations.DeleteModel(...) blocks from the new migration that's just been created. Proper fix: we'll probably want to ship this with a much cleaner slate to begin with.**
 15. `python manage.py migrate`
 16. `python manage.py shell`
     1. `from world import load`
     2. `load.run()`
+    3. `exit()`
 17. Restart the web server *(TODO: figure out if there's a way to just get Django to restart without rebooting Apache/etc)*
 18. Add some snuggets!
 19. test.
