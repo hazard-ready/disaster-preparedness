@@ -5,9 +5,9 @@ import sys
 import shapefile
 
 def main():
-  desiredSRID = "4326"
+  desiredSRID = "4326"  # EPSG:4326 = Google Mercator
   SRIDNamespace = "EPSG"
-  simplificationTolerance = "0.00001"
+  simplificationTolerance = "0.00001"  # This is in the SRS's units. In the case of EPSG:4326, that's decimal degrees
 
   appDir = "world"
   dataDir = os.path.join(appDir, "data")
@@ -41,13 +41,13 @@ def main():
     if f[-4:] == ".shp":
       stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening shapefile:", stem)
+      #TODO: if there's already a reprojected shapefile, use the field in that instead of prompting the user.
       sf = shapefile.Reader(os.path.join(dataDir, f))
       keyField = askUserForFieldNames(sf, stem)
 
-      reprojected = reprojectShapefile(f, stem, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID, keyField)
+      reprojected = processShapefile(f, stem, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID, keyField)
       simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
       sf = shapefile.Reader(simplified)
-
       shapeType = detectGeometryType(sf, stem)
       encoding = findEncoding(sf, dataDir, stem)
 
@@ -120,14 +120,22 @@ def main():
 
 
 
-#NB: this now dissolves shapes and reprojects.  Should I rename?
-def reprojectShapefile(f, stem, inputDir, outputDir, srs, keyField):
+"""
+processShapefile() makes two changes in one shot:
+* Reprojects the shapefile to srs, because geoDjango has issues if they're not all in the same SRS
+* Dissolves shapes on keyField so that we'll end up with one database row per unique keyField value
+Simplifying the shapefile is done by a separate function, because the units for simplification tolerance
+depend on the spatial representation system being used, and can't even be straightforwardly converted (since degrees
+to metres depends on the latitude). The simplest way to simplify with a uniform tolerance is to do it after
+standardising the SRS.
+"""
+def processShapefile(f, stem, inputDir, outputDir, srs, keyField):
   original = os.path.join(inputDir, f)
   reprojected = os.path.join(outputDir, f)
   if os.path.exists(reprojected):
     print("Skipping reprojection because this file has previously been reprojected.")
   else:
-    print("Reprojecting to", srs)
+    print("Aggregating shapes with the same value of", keyField, "and reprojecting to", srs)
     sqlCmd = 'select ST_Union(Geometry),' + keyField + ' from ' + stem + ' GROUP BY ' + keyField
     ogrCmd = [
       "ogr2ogr",
@@ -139,7 +147,8 @@ def reprojectShapefile(f, stem, inputDir, outputDir, srs, keyField):
     print(ogrCmd)
     subprocess.call(ogrCmd)
   return reprojected
-# ogr2ogr dissolved_reproj.shp Flood_FEMA_DFIRM_2015.shp -dialect sqlite -sql "select ST_Union(Geometry),FEMADES from Flood_FEMA_DFIRM_2015 GROUP BY FEMADES" -t_srs "EPSG:4326"
+
+
 
 
 def simplifyShapefile(original, outputDir, tolerance):
