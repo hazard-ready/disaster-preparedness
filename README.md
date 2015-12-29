@@ -5,7 +5,6 @@ The project will explore traditional and qualitative scoring assessments of “r
 # Dependencies
 ## Django Web Framework
 * PostgresSQL
-  * PostgresSQL in Django requires psycopg2 (but maybe we end up bypassing this or something with PostGIS?)
 
 ## GeoDjango Dependencies
 * PostresSQL
@@ -30,7 +29,6 @@ without worrying about overwriting globally installed versions.  It's easy!
 5. `source venv/bin/activate`  (type `deactivate` to leave)
 6. `pip install -r requirements.txt` or `pip3 install -r requirements.txt` to automatically install whatever we have in
 our requirements.txt. *On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.*  
-    * If you are in python3+, the wsgi install will fail.  But that's okay, because you won't need it in python3.  Just remove it from your local copy of the text file.
  
 
 # "World" App
@@ -97,9 +95,6 @@ Save them to your `.bash_profile` or equivalent.
 * `foreman start`
   * Any errors that pop up are probably from missing modules or missing environmental variables.
     Read the errors!
-
-### Just check to see some very simple checking if a point falls within a shape in the DB
-1.  Visit http://server.ip/zonecheck
 
 ### Adding new data
 
