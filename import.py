@@ -5,9 +5,9 @@ import sys
 import shapefile
 
 def main():
-  desiredSRID = "4326"
+  desiredSRID = "4326"  # EPSG:4326 = Google Mercator
   SRIDNamespace = "EPSG"
-  simplificationTolerance = "0.0001"
+  simplificationTolerance = "0.00001"  # This is in the SRS's units. For EPSG:4326, that's decimal degrees
 
   appDir = "world"
   dataDir = os.path.join(appDir, "data")
@@ -41,17 +41,19 @@ def main():
     if f[-4:] == ".shp":
       stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening shapefile:", stem)
-      reprojected = reprojectShapefile(f, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID)
+      #TODO: if there's already a reprojected shapefile, use the field in that instead of prompting the user.
+      sf = shapefile.Reader(os.path.join(dataDir, f))
+      keyField = askUserForFieldNames(sf, stem)
+
+      reprojected = processShapefile(f, stem, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID, keyField)
       simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
       sf = shapefile.Reader(simplified)
-
-      keyField, uniqueField = askUserForFieldNames(sf, stem)
       shapeType = detectGeometryType(sf, stem)
       encoding = findEncoding(sf, dataDir, stem)
 
 #Code generation: one line in this function writes one line of code to be copied elsewhere
 # one block represents the code generation for each destination file
-      modelsClasses += modelClassGen(stem, sf, keyField, uniqueField, desiredSRID, shapeType)
+      modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType)
       modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem + ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
       modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
       modelsSnuggetGroups += "                          '" + stem + "_snugs': " + stem + "_snuggets,\n"
@@ -65,13 +67,11 @@ def main():
 
       loadMappings += stem + "_mapping = {\n"
       loadMappings += "    '" + keyField.lower() + "': '" + keyField + "',\n"
-      if keyField != uniqueField:
-        loadMappings += "    '" + uniqueField.lower() + "': '" + uniqueField + "',\n"
       loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
       loadMappings += "}\n\n"
       loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + simplified + "'))\n"
       loadImports += "    from .models import " + stem + "\n"
-      loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + uniqueField.lower() + "'])\n"
+      loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
       loadImports += "    lm_" + stem + ".save(strict=True, verbose=verbose)\n\n"
 
       viewsSnuggetMatches += "            if snugget_content['structured']['moment']['" + stem + "_snugs']:\n"
@@ -120,21 +120,34 @@ def main():
 
 
 
-def reprojectShapefile(f, inputDir, outputDir, srs):
+"""
+processShapefile() makes two changes in one shot:
+* Reprojects the shapefile to srs, because geoDjango has issues if they're not all in the same SRS
+* Dissolves shapes on keyField so that we'll end up with one database row per unique keyField value
+Simplifying the shapefile is done by a separate function, because the units for simplification tolerance
+depend on the spatial representation system being used, and can't even be straightforwardly converted (since degrees
+to metres depends on the latitude). The simplest way to simplify with a uniform tolerance is to do it after
+standardising the SRS.
+"""
+def processShapefile(f, stem, inputDir, outputDir, srs, keyField):
   original = os.path.join(inputDir, f)
   reprojected = os.path.join(outputDir, f)
   if os.path.exists(reprojected):
     print("Skipping reprojection because this file has previously been reprojected.")
   else:
-    print("Reprojecting to", srs)
+    print("Aggregating shapes with the same value of", keyField, "and reprojecting to", srs)
+    sqlCmd = 'select ST_Union(Geometry),' + keyField + ' from ' + stem + ' GROUP BY ' + keyField
     ogrCmd = [
       "ogr2ogr",
       reprojected,
       original,
+      "-dialect", "sqlite", "-sql", sqlCmd,
       "-t_srs", srs
     ]
+    print(ogrCmd)
     subprocess.call(ogrCmd)
   return reprojected
+
 
 
 
@@ -164,14 +177,8 @@ def askUserForFieldNames(sf, stem):
   keyField = False
   while keyField not in fieldNames:
     keyField = input(">> ")
-  print("Which is unique for each shape? (can be the same field as before)")
-  uniqueField = False
-  while uniqueField not in fieldNames:
-    uniqueField = input(">> ")
-  print("Generating code for", stem, "using the following fields:")
-  print("'" + keyField + "' to look up snuggets.")
-  print("'" + uniqueField + "' as the unique ID.")
-  return keyField, uniqueField
+  print("Generating code for", stem, "using", keyField, "to look up snuggets.")
+  return keyField
 
 
 
@@ -229,11 +236,9 @@ def findFieldType(sf, fieldName):
 
 
 
-def modelClassGen(stem, sf, keyField, uniqueField, srs, shapeType):
+def modelClassGen(stem, sf, keyField, srs, shapeType):
   text = "class " + stem + "(models.Model):\n"
   text += "    " + keyField.lower() + " = models." + findFieldType(sf, keyField) + "\n"
-  if uniqueField != keyField:
-    text += "    " + uniqueField.lower() + " = models." + findFieldType(sf, uniqueField) + "\n"
   text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
   text += "    objects = models.GeoManager()\n\n"
   text += "    def __str__(self):\n"
