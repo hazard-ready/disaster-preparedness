@@ -100,7 +100,7 @@ Save them to your `.bash_profile` or equivalent.
 
 *Probably need to put this stuff in its own document eventually, but for now it can live here.  Much of this should also be automatable; whatever isn't needs to be explained more clearly.  For now it's notes-to-self.*
 
-0. Export a shapefile with an attribute that can be used to look up appropriate snugget text and intensity values for each shape. It can be in any SRS, and it doesn't matter if there are additional attributes, but be aware that those will be lost in the import.
+0. Export a shapefile with an attribute that can be used to look up appropriate snugget text and intensity values for each shape. It can be in any SRS, and it doesn't matter if there are additional attributes, but be aware that those will be lost in the import. *Note that if you use multiple shapefiles that cover different areas (e.g. some cover a county and some cover a whole state), users will see partial results without a warning that there's missing data. For clearest results, crop all your shapefiles to the same area.*
 1. Put it into `/world/data/`
 2. [remember to activate the virtualenv first] `python import.py` 
 12. Add appropriate sections to `templates/found_content.html`.
