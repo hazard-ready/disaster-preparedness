@@ -36,8 +36,10 @@ $( document ).ready(function() {
     keyboard: false,
     attributionControl: false
   }).setView([lat,lng], zoom);
-  L.esri.basemapLayer('Terrain').addTo(map);
-  var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png').addTo(map);
+
+  var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+  var layer = new L.TileLayer(osmUrl, {attribution: osmAttrib}).addTo(map);
   layer.setOpacity(0.6);
 
   document.getElementById('map').style.cursor='default';
