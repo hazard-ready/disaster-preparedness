@@ -25,19 +25,11 @@ $( document ).ready(function() {
   }
 
   // set up the map
-  var map = L.map('map', {
-    zoomControl: false,
-    dragging: false,
-    touchZoom: false,
-    scrollWheelZoom: false,
-    doubleClickZoom: false,
-    boxZoom:false,
-    tap: false,
-    keyboard: false,
-    attributionControl: false
-  }).setView([lat,lng], zoom);
-  L.esri.basemapLayer('Terrain').addTo(map);
-  var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png').addTo(map);
+  var map = L.map('map').setView([lat,lng], zoom);
+
+  var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+  var layer = new L.TileLayer(osmUrl, {attribution: osmAttrib}).addTo(map);
   layer.setOpacity(0.6);
 
   document.getElementById('map').style.cursor='default';
@@ -51,6 +43,11 @@ $( document ).ready(function() {
     }).addTo(map);
     layer.setOpacity(1);
   }
+
+  // Make a click on the map submit the location
+  map.on('click', function(e) {
+   submitLocation(e.latlng.lat, e.latlng.lng);
+  });
 
   // grab and set any previously entered query text
   var loc = getURLParameter('loc');
@@ -73,8 +70,18 @@ $( document ).ready(function() {
     location_query_text = $("#location-text").val();
     if (location_query_text.length == 0) return;
     disableForm();
-    // call google!
-    geocodeSend(location_query_text);
+
+    // request geocoding from google CLIENT SIDE!
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode( { 'address': location_query_text}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        var lat = results[0].geometry.location.lat();
+        var lon = results[0].geometry.location.lng();
+        submitLocation(lat,lon);
+      } else {
+        $(".geocode-error-message").html($('p').text("We had a problem finding that location.")); 
+      }
+    });
   });
 
   // auto location
@@ -109,27 +116,6 @@ $( document ).ready(function() {
     $("#location-submit").removeClass("disabled");
     $(".auto-location-submit").removeClass("disabled");
     $(".loading").hide();
-  }
-
-  // request geocoding from google CLIENT SIDE!
-  var geocoder = new google.maps.Geocoder();
-
-  function geocodeSend(query) {
-      geocoder.geocode( { 'address': query}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          var lat = results[0].geometry.location.lat();
-          var lon = results[0].geometry.location.lng();
-          // var position = results[0].geometry.location;
-          submitLocation(lat,lon);
-
-          console.log(results);
-          // console.log(position);
-
-
-        } else {
-          console.log('Geocode was not successful for the following reason: ' + status);
-        }
-      });
   }
 
   function submitLocation(lat,lng) {
