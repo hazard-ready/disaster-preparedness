@@ -49,6 +49,7 @@
                <div class="row collapse">
                  <div class="small-10 columns">
                    <input id="location-text" type="text" placeholder="Enter your {{ location.area_name }} address" />
+                   <div class="geocode-error-message"></div>
                  </div>
                  <div class="small-2 end columns">
                    <a id="location-submit" class="blue-bg button postfix"></a>
@@ -59,7 +60,6 @@
               <a class="auto-location-submit blue-bg button radius caps">Find Me</a>
            </div>
         </div>
-
       </div>
 {% endblock search %}
 

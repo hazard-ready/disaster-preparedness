@@ -70,8 +70,19 @@ $( document ).ready(function() {
     location_query_text = $("#location-text").val();
     if (location_query_text.length == 0) return;
     disableForm();
-    // call google!
-    geocodeSend(location_query_text);
+
+    // request geocoding from google CLIENT SIDE!
+    var geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode( { 'address': location_query_text}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        var lat = results[0].geometry.location.lat();
+        var lon = results[0].geometry.location.lng();
+        submitLocation(lat,lon);
+      } else {
+        $(".geocode-error-message").append($('p').text("We had a problem finding that location.")); 
+      }
+    });
   });
 
   // auto location
@@ -106,27 +117,6 @@ $( document ).ready(function() {
     $("#location-submit").removeClass("disabled");
     $(".auto-location-submit").removeClass("disabled");
     $(".loading").hide();
-  }
-
-  // request geocoding from google CLIENT SIDE!
-  var geocoder = new google.maps.Geocoder();
-
-  function geocodeSend(query) {
-      geocoder.geocode( { 'address': query}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          var lat = results[0].geometry.location.lat();
-          var lon = results[0].geometry.location.lng();
-          // var position = results[0].geometry.location;
-          submitLocation(lat,lon);
-
-          console.log(results);
-          // console.log(position);
-
-
-        } else {
-          console.log('Geocode was not successful for the following reason: ' + status);
-        }
-      });
   }
 
   function submitLocation(lat,lng) {
