@@ -14,18 +14,6 @@ class SnuggetAdmin(admin.ModelAdmin):
 ######################################################
 # Insert generated adminLists here
 ######################################################
-    list_display = ('shortname', 'section', 'sub_section')
-    list_filter = ('section', 'sub_section')
-
-    fieldsets = (
-        (None, {
-            'fields': ('section', 'sub_section'),
-        }),
-        ('Filters', {
-            'description': 'Choose a filter value this snugget will show up for.  It is recommended you only select a value for one filter and leave the rest empty.',
-            'fields': ((),)
-        }),
-    )
 
     def shortname(self, obj):
         return "Undefined"
