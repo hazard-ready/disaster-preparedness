@@ -48,15 +48,7 @@ def app_view(request):
 ######################################################
 # Insert generated viewsSnuggetMatches here
 ######################################################
-            if snugget_content['structured']['moment']['tsunami_snugs']:
-                wrapper_width += base_section_width
-                n_sections += 1
-            if snugget_content['structured']['moment']['shake_snugs']:
-                wrapper_width += base_section_width
-                n_sections += 1
-            if snugget_content['structured']['moment']['deform_snugs']:
-                wrapper_width += base_section_width
-                n_sections += 1
+
 
             try:
                 section_width = int(floor(12 / n_sections))
