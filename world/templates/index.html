@@ -15,9 +15,8 @@
   <link type="text/css" rel="stylesheet" href="{% static 'css/app.css' %}">
 
   <!-- Load Leaflet from CDN-->
-  <link type="text/css" rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
-  <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
-  <script src="http://cdn.jsdelivr.net/leaflet.esri/1.0.0/esri-leaflet.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 
   <!-- Load Google Maps from CDN-->
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
@@ -32,7 +31,8 @@
   <div class="row">
     <h2 class="project-title caps">{{ settings.site_title }}</h2>
     <h5 class="project-subtitle caps">{{ settings.site_description }}</h5>
-    <p>{{ location.disaster_description }} Enter your location for a personalized report on your risks and how to prepare.</p>
+    <p>{{ location.disaster_description }}</p>
+    <p>Give your location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your risks and how to prepare.</p>
   </div>
 
 {% block search %}
@@ -49,6 +49,7 @@
                <div class="row collapse">
                  <div class="small-10 columns">
                    <input id="location-text" type="text" placeholder="Enter your {{ location.area_name }} address" />
+                   <div class="geocode-error-message"></div>
                  </div>
                  <div class="small-2 end columns">
                    <a id="location-submit" class="blue-bg button postfix"></a>
@@ -59,7 +60,6 @@
               <a class="auto-location-submit blue-bg button radius caps">Find Me</a>
            </div>
         </div>
-
       </div>
 {% endblock search %}
 
