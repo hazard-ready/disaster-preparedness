@@ -73,14 +73,14 @@ $( document ).ready(function() {
 
     // request geocoding from google CLIENT SIDE!
     var geocoder = new google.maps.Geocoder();
-
+    console.log("geocoding");
     geocoder.geocode( { 'address': location_query_text}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         var lat = results[0].geometry.location.lat();
         var lon = results[0].geometry.location.lng();
         submitLocation(lat,lon);
       } else {
-        $(".geocode-error-message").append($('p').text("We had a problem finding that location.")); 
+        $(".geocode-error-message").html($('p').text("We had a problem finding that location.")); 
       }
     });
   });
