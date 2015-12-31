@@ -73,7 +73,6 @@ $( document ).ready(function() {
 
     // request geocoding from google CLIENT SIDE!
     var geocoder = new google.maps.Geocoder();
-    console.log("geocoding");
     geocoder.geocode( { 'address': location_query_text}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         var lat = results[0].geometry.location.lat();
