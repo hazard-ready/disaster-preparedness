@@ -90,7 +90,6 @@ class RecoveryLevels(models.Model):
 
 class Infrastructure(models.Model):
     name = models.CharField(max_length=255)
-    zone = models.ForeignKey(ImpactZone, related_name='+', on_delete=models.PROTECT)
     eventOccursRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
     firstDayRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
     threeDaysRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
@@ -116,7 +115,6 @@ class InfrastructureGroup(models.Model):
 
 class InfrastructureCategory(models.Model):
     name = models.CharField(max_length=50)
-    zone = models.ForeignKey(ImpactZone, related_name='+', on_delete=models.PROTECT)
     groups = models.ManyToManyField(InfrastructureGroup)
 
     def __str__(self):
@@ -150,6 +148,9 @@ class Snugget(models.Model):
 ######################################################
 # Insert generated modelsFilters here
 ######################################################
+
+    section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
+    sub_section = models.ForeignKey(SnuggetSubSection, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
  
     def getRelatedTemplate(self):
         return "snugget.html"
