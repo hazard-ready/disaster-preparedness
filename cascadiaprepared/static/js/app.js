@@ -25,17 +25,7 @@ $( document ).ready(function() {
   }
 
   // set up the map
-  var map = L.map('map', {
-    zoomControl: false,
-    dragging: false,
-    touchZoom: false,
-    scrollWheelZoom: false,
-    doubleClickZoom: false,
-    boxZoom:false,
-    tap: false,
-    keyboard: false,
-    attributionControl: false
-  }).setView([lat,lng], zoom);
+  var map = L.map('map').setView([lat,lng], zoom);
 
   var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
@@ -53,6 +43,11 @@ $( document ).ready(function() {
     }).addTo(map);
     layer.setOpacity(1);
   }
+
+  // Make a click on the map submit the location
+  map.on('click', function(e) {
+   submitLocation(e.latlng.lat, e.latlng.lng);
+  });
 
   // grab and set any previously entered query text
   var loc = getURLParameter('loc');
