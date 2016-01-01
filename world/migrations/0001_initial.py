@@ -112,9 +112,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TextSnugget',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('snugget_ptr', models.OneToOneField(auto_created=True, to='world.Snugget', serialize=False, primary_key=True, parent_link=True)),
                 ('content', models.TextField()),
             ],
+            bases=('world.snugget',),
         ),
         migrations.CreateModel(
             name='EmbedSnugget',
