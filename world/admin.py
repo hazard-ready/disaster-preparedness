@@ -45,10 +45,6 @@ admin.site.register(EmbedSnugget, EmbedAdmin)
 class GeoNoEditAdmin(admin.GeoModelAdmin):
     modifiable = False
 
-# Maybe in the future
-admin.site.register(InfrastructureGroup, admin.ModelAdmin)
-admin.site.register(Infrastructure, admin.ModelAdmin)
-admin.site.register(InfrastructureCategory, admin.ModelAdmin)
 admin.site.register(RecoveryLevels, admin.ModelAdmin)
 
 # To make the UI more general
