@@ -3,7 +3,7 @@ from embed_video.admin import AdminVideoMixin
 from solo.admin import SingletonModelAdmin
 ######################################################
 # Replace the next line with generated adminModelImports
-from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, TsunamiZone, ImpactZoneData, ImpactZone, ExpectedGroundShaking, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings
+from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings
 ######################################################
 
 admin.site.register(SnuggetSection, admin.ModelAdmin)
@@ -14,17 +14,14 @@ class SnuggetAdmin(admin.ModelAdmin):
 ######################################################
 # Insert generated adminLists here
 ######################################################
-    list_display = ('shortname', 'shaking_filter', 'impact_zone_filter', 'liquifaction_filter', 'landslide_filter', 'section', 'sub_section')
-    list_filter = ('shaking_filter', 'impact_zone_filter', 'liquifaction_filter', 'landslide_filter', 'section', 'sub_section')
-
     fieldsets = (
         (None, {
             'fields': ('section', 'sub_section'),
         }),
         ('Filters', {
-            'description': 'Choose a filter value this snugget will show up for.  It is recommended you only select a value for one filter and leave the rest empty.',
-            'fields': (('shaking_filter', 'impact_zone_filter', 'liquifaction_filter', 'landslide_filter'),)
-        }),
+            'description': 'Choose a filter value this snugget will show up for.',
+            'fields': ((),)
+            }),
     )
 
     def shortname(self, obj):
@@ -57,16 +54,6 @@ admin.site.register(EmbedSnugget, EmbedAdmin)
 class GeoNoEditAdmin(admin.GeoModelAdmin):
     modifiable = False
 
-# These are commented out because editing them seems to serve no purpose, currently.
-admin.site.register(TsunamiZone, GeoNoEditAdmin)
-admin.site.register(ImpactZoneData, GeoNoEditAdmin)
-admin.site.register(ExpectedGroundShaking, GeoNoEditAdmin)
-admin.site.register(ImpactZone, GeoNoEditAdmin)
-
-# Maybe in the future
-admin.site.register(InfrastructureGroup, admin.ModelAdmin)
-admin.site.register(Infrastructure, admin.ModelAdmin)
-admin.site.register(InfrastructureCategory, admin.ModelAdmin)
 admin.site.register(RecoveryLevels, admin.ModelAdmin)
 
 # To make the UI more general
