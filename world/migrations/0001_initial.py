@@ -114,6 +114,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('snugget_ptr', models.OneToOneField(auto_created=True, to='world.Snugget', serialize=False, primary_key=True, parent_link=True)),
                 ('content', models.TextField()),
+                ('heading', models.TextField(default="")),
+                ('image', models.TextField(default="")),
+                ('percentage', models.FloatField(null=True)),
             ],
             bases=('world.snugget',),
         ),

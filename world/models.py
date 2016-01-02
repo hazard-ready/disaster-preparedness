@@ -175,6 +175,9 @@ class Snugget(models.Model):
 class TextSnugget(Snugget):
     name = SNUGGET_TYPES[SNUG_TEXT]
     content = models.TextField()
+    heading = models.TextField(default="")
+    image = models.TextField(default="")
+    percentage = models.FloatField(null=True)
 
     def getRelatedTemplate(self):
         return "snugget_text.html"
