@@ -64,13 +64,13 @@ USE_L10N = True
 
 USE_TZ = True
 
- +# Enable template caching, per http://blog.ionelmc.ro/2012/01/19/tweaks-for-making-django-admin-faster/
-+TEMPLATE_LOADERS = (
-+    ('django.template.loaders.cached.Loader', (
-+        'django.template.loaders.filesystem.Loader',
-+        'django.template.loaders.app_directories.Loader',
-+    )),
-+)
+# Enable template caching, per http://blog.ionelmc.ro/2012/01/19/tweaks-for-making-django-admin-faster/
+TEMPLATE_LOADERS = (
+    ('django.template.loaders.cached.Loader', (
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )),
+)
 
 
 ### HEROKU CONFIGURATIONS ###
