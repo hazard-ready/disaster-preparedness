@@ -31,6 +31,7 @@
   <div class="row">
     <h2 class="project-title caps">{{ settings.site_title }}</h2>
     <h5 class="project-subtitle caps">{{ settings.site_description }}</h5>
+    <p>This site is designed to help people prepare for disasters that can occur in their area. {{ settings.about_text }}</p>
     <p>{{ location.disaster_description }}</p>
     <p>Give your location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your risks and how to prepare.</p>
   </div>
@@ -48,7 +49,7 @@
            <div class="small-12 medium-8 medium-push-1 columns">
                <div class="row collapse">
                  <div class="small-10 columns">
-                   <input id="location-text" type="text" placeholder="Enter your {{ location.area_name }} address" />
+                   <input id="location-text" type="text" placeholder="Enter your address in {{ location.area_name }}" />
                    <div class="geocode-error-message"></div>
                  </div>
                  <div class="small-2 end columns">
@@ -69,15 +70,15 @@
           <div id="map" style="height: 400px;"></div>
         </div>
       <div class="small-12 medium-5 column">
-        <h4 class="caps">What’s Your Disaster Recovery Story?</h4>
+        <h4 class="caps">What are my disaster risks?</h4>
         <h5 class="caps">What to Expect</h5>
         <p>{{ settings.site_title }} predicts what you will experience during {{ location.disaster_name }} based on your location in {{ location.area_name }}.</p>
 
-        <h5 class="caps">Recovery Time</h5>
-        <p>Find estimates for how long  your neighborhood will take to reconnect to basic services, such as water and power.</p>
+        <h5 class="caps">How to Prepare</h5>
+        <p>Find out how to prepare for disasters in {{ location.area_name }}.</p>
 
-        <h5 class="caps">What You Can Do To Prepare</h5>
-        <p>Prepare your home and collect the supplies you need.</p>
+        <h5 class="caps">Past Events</h5>
+        <p>What has happened in the past where you are, during {{ location.disaster_name }}? See descriptions and photos.</p>
       </div>
       </div>
 {% endblock map %}
