@@ -50,18 +50,17 @@ def main():
         for row in newSnuggets:
 #          print(', '.join(row))
 #          print(', '.join([row[key] for key in row]))
-          # shapefile -> world_snugget.shapefile_filter_id column name; store id we just looked up in that column
+          # "shapefile" -> world_snugget.shapefile_filter_id column name; store id we just looked up in that column
           filterColumn = row["shapefile"] + "_filter_id"
-          # section -> world_snugget.section_id
+          # "section" -> world_snugget.section_id
           sectionId = getSectionID(appName, row["section"], cur)
         
           # check if a snugget for this data already exists
           # if we have a lookup value then deal with this value specifically:
-          if row["lookup_value"] is not '':
+          if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
             filterID = findFilterID(appName, row["shapefile"], row["lookup_value"], cur)
             oldSnugget = checkForSnugget(appName, filterColumn, filterID, row["lookup_value"], cur)
             mode = askUserForMode(row["shapefile"], row["lookup_value"], oldSnugget, [], snuggetFile)
-          # otherwise deal with all the possible values, because blank means "apply to all"
           else: 
             filterIDs = findAllFilterIDs(appName, row["shapefile"], cur)
             oldSnuggets = []
@@ -71,12 +70,13 @@ def main():
                 oldSnuggets.append(oldSnugget)
             mode = askUserForMode(row["shapefile"], row["lookup_value"], None, oldSnuggets, snuggetFile)
 
+          
           #   get id for new row in world_snugget -> world_textsnugget.snugget_ptr_id
-          #   heading -> world_textsnugget.heading (null as '')
-          #   intensity -> world_textsnugget.percentage (numeric, null as null)
-          #   if intensity is blank, should we just generate the same row for all intensities?
-          #   image -> world_textsnugget.image
-          #   text -> world_textsnugget.content
+          #   "heading" -> world_textsnugget.heading (null as '')
+          #   "intensity" -> world_textsnugget.percentage (numeric, null as null)
+          #   if "intensity" is blank, should we just generate the same row for all intensities?
+          #   "image" -> world_textsnugget.image
+          #   "text" -> world_textsnugget.content
 
   
 ''' these functions probably redundant now
