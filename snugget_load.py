@@ -27,6 +27,7 @@ def main():
   
   with psycopg2.connect(host=dbHost, port=dbPort, user=dbUser, password=dbPass, database=dbName) as conn:
     with conn.cursor() as cur:
+      ''' this section probably redundant now      
       # Find out what's already set up
       sections = readValuesFrom(appName, "snuggetsection", cur)
       subsections = readValuesFrom(appName, "snuggetsubsection", cur)
@@ -40,6 +41,7 @@ def main():
       print(snuggetColumns)
       print("----------")
       #TODO: should I make snuggetRefs into a dict with snuggetColumns as the keys?
+      '''      
       
       # Then go through the new file, replacing or adding as appropriate
       with open(snuggetFile) as csvFile:
@@ -52,8 +54,7 @@ def main():
           filterColumn = row["shapefile"] + "_filter_id"
           # section -> world_snugget.section_id
           sectionId = getSectionID(appName, row["section"], cur)
-          # subsection -> world_snugget.sub_section_id
-          # in fact... do we want to use subsections at all?
+        
           # check if a snugget for this data already exists
           # if we have a lookup value then deal with this value specifically:
           if row["lookup_value"] is not '':
@@ -78,7 +79,7 @@ def main():
           #   text -> world_textsnugget.content
 
   
-
+''' these functions probably redundant now
 def readValuesFrom(appName, table, cur):
   vals = {}
   cur.execute("SELECT * FROM " + appName + "_" + table.lower() + ";")
@@ -89,15 +90,6 @@ def readValuesFrom(appName, table, cur):
 
 
 
-def readColumnsFrom(appName, table, cur):
-  cols = []
-  cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = '" + appName + "_" + table.lower() + "';")
-  for row in cur.fetchall():
-    cols.append(row[0])
-  return cols
-
-
-
 
 def readSnuggetCrossRefs(appName, table, cur):
   refs = []
@@ -105,6 +97,15 @@ def readSnuggetCrossRefs(appName, table, cur):
   for row in cur.fetchall():
     refs.extend(row)
   return refs
+'''
+
+def readColumnsFrom(appName, table, cur):
+  cols = []
+  cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = '" + appName + "_" + table.lower() + "';")
+  for row in cur.fetchall():
+    cols.append(row[0])
+  return cols
+
 
 
 
