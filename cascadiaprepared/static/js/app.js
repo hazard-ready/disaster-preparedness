@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+  $(document).foundation();
 
   // Initial map values for Oregon overview
   var lat = "44.1";
