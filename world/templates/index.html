@@ -30,7 +30,7 @@
 <body>
   <div class="row">
     <h2 class="project-title caps">{{ settings.site_title }}</h2>
-    <h5 class="project-subtitle caps">{{ settings.site_description }}</h5>
+    <h5 class="project-subtitle">{{ settings.site_description }}</h5>
     <p>This site is designed to help people prepare for disasters that can occur in their area. {{ settings.about_text }}</p>
     <p>{{ location.disaster_description }}</p>
     <p>Give your location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your risks and how to prepare.</p>
@@ -71,13 +71,13 @@
         </div>
       <div class="small-12 medium-5 column">
         <h4 class="caps">What are my disaster risks?</h4>
-        <h5 class="caps">What to Expect</h5>
+        <h5 class>What to Expect</h5>
         <p>{{ settings.site_title }} predicts what you will experience during {{ location.disaster_name }} based on your location in {{ location.area_name }}.</p>
 
-        <h5 class="caps">How to Prepare</h5>
+        <h5>How to Prepare</h5>
         <p>Find out how to prepare for disasters in {{ location.area_name }}.</p>
 
-        <h5 class="caps">Past Events</h5>
+        <h5>Past Events</h5>
         <p>What has happened in the past where you are, during {{ location.disaster_name }}? See descriptions and photos.</p>
       </div>
       </div>
@@ -89,13 +89,6 @@
 {% include "geek_box.html" %}
 
 <div class="loading hide"></div>
-
-<script src="http://opb-news-interactives.s3.amazonaws.com/lib/pym.js" type="text/javascript"></script>
-<script>
-
-var pymChild = new pym.Child({ id: 'aftershock' });
-
-</script>
 
 </body>
 </html>
