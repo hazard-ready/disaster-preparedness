@@ -66,7 +66,7 @@ def main():
             oldSnuggets = []
             for filterID in filterIDs:
               oldSnugget = checkForSnugget(appName, filterColumn, filterID, row["lookup_value"], cur)
-              if oldSnugget is not None:
+              if oldSnugget is not None and oldSnugget not in oldSnuggets:
                 oldSnuggets.append(oldSnugget)
             mode = askUserForMode(row["shapefile"], row["lookup_value"], None, oldSnuggets, snuggetFile)
 
@@ -157,11 +157,8 @@ def askUserForMode(shapefile, lookup_value, oldSnugget, oldSnuggets, snuggetFile
     print(oldSnugget)
   elif oldSnuggets != []:
     print("In shapefile", shapefile, "there are existing snuggets with the following text content:")
-    duplicates = []
     for snugget in oldSnuggets:
-      if snugget not in duplicates:
-        print(snugget)
-        duplicates.append(snugget)
+      print(snugget)
   else: # if both oldSnugget and oldSnuggets were empty, then we don't need to ask the user
     return "add"
     
