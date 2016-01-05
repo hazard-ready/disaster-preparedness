@@ -44,12 +44,11 @@
     </div>
     <div class="small-10 medium-5 column">
       <h4 class="caps">Know Your Routes</h4>
-      <p>Make sure your family and friends know where to gather after {{ location.disaster_name }} and how to get there. You'll need a reconnection plan. Do you cross a bridge on your way to school or work? It could be unsafe to cross after {{ location.disaster_name }}. Do you need an evacuation route? 
+      <p>Make sure your family and friends know where to gather after {{ location.disaster_name }} and how to get there.
       {% if location.evacuation_routes_link %}
-        <a href="{{ location.evacuation_routes_link }}">Find your route.</a>
+        Or <a href="{{ location.evacuation_routes_link }}">find an evacuation route</a>.
       {% endif %}
       </p>
-      <p>Also be aware that some major roads won't be safe or passable during and after {{ location.disaster_name }}. Contact your local public works department or <a href="{{ location.emergency_management_link }}">Office of Emergency Management</a> in advance to find out which routes could potentially be impassable in your area.</p>
     </div>
 
     <div class="small-2 medium-1 column">
@@ -57,7 +56,7 @@
     </div>
     <div class="small-10 medium-5 column">
       <h4 class="caps">Know Your Leaders</h4>
-      <p>Contacting local officials with questions and concerns can further preparedness efforts in your community. Recommended people to contact: building officials, who can assess vulnerable structures, local emergency planning committees, and <a href="http://www.commoncause.org/take-action/find-elected-officials/">elected officials</a>.</p>
+      <p>Contact your <a href="{{ location.emergency_management_link }}">Office of Emergency Management</a> in advance to find out more about how to prepare yourself.</p>
     </div>
   </div>
 
@@ -67,7 +66,7 @@
     </div>
     <div class="small-10 medium-5 column end">
       <h4 class="caps">The Importance of Community</h4>
-      <p>The most crucial thing you can do to increase the resiliency of your community is connect with your neighbors to plan as a group. One way to do this is through Community Emergency Response Teams. <a href="https://www.fema.gov/community-emergency-response-teams">Find out how to join or start a community team.</a></p>
+      <p>You can connect with your neighbors to plan as a group. Find out how to join or start a <a href="https://www.fema.gov/community-emergency-response-teams">community emergency response team.</a></p>
     </div>
   </div>
 
