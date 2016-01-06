@@ -40,7 +40,7 @@ written slightly better and with all of the datasets modelled better.
 * Python version: 3.5
 
 ## Installing App
-This assumes 'python' is the command configured to run the correct python version.
+This assumes `python` is the command configured to run the correct python version. Depending on your setup you may need to specify `python3`.
 
 ### Set up the "secret key" used by Django to secure forms.
 * Set up an environment variable `DJANGO_SECRET_KEY` to whatever you want to set it to.
@@ -98,19 +98,18 @@ Save them to your `.bash_profile` or equivalent.
 
 ### Adding new data
 
-*Probably need to put this stuff in its own document eventually, but for now it can live here.  Much of this should also be automatable; whatever isn't needs to be explained more clearly.  For now it's notes-to-self.*
+*Hooray!  Much of the process is now automated.  Still TODO: make this documentation clearer and add suggestions for less standardised content.*
 
 0. Export a shapefile with an attribute that can be used to look up appropriate snugget text and intensity values for each shape. It can be in any SRS, and it doesn't matter if there are additional attributes, but be aware that those will be lost in the import. *Note that if you use multiple shapefiles that cover different areas (e.g. some cover a county and some cover a whole state), users will see partial results without a warning that there's missing data. For clearest results, crop all your shapefiles to the same area.*
 1. Put it into `/world/data/`
 2. [remember to activate the virtualenv first] `python import.py` 
-12. Add appropriate sections to `templates/found_content.html`.
-14. `python manage.py makemigrations`
-15. **As things stand, makemigrations is causing problems with its attempts at deleting old models. Temp fix: remove the migrations.DeleteModel(...) blocks from the new migration that's just been created. Proper fix: we'll probably want to ship this with a much cleaner slate to begin with.**
-15. `python manage.py migrate`
-16. `python manage.py shell`
+3. `python manage.py makemigrations`
+4. `python manage.py migrate`
+5. `python manage.py shell`
     1. `from world import load`
     2. `load.run()`
     3. `exit()`
-17. Restart the web server *(TODO: figure out if there's a way to just get Django to restart without rebooting Apache/etc)*
-18. Add some snuggets!
-19. test.
+6. `python snugget_load.py`
+7. Restart the web server *(TODO: figure out if there's a way to just get Django to restart without rebooting Apache/etc)*
+8. Add manual snuggets if necessary.
+9. test.

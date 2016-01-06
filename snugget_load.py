@@ -3,8 +3,6 @@ import csv
 
 import psycopg2
 
-# I think this should eventually be rolled into import.py, along with the makemigrations, migrate and load.run() steps
-# but for now it's easier to develop as a separate script
 def main():
   appName = "world"
   appDir = "world"
@@ -28,13 +26,10 @@ def main():
   
   with psycopg2.connect(host=dbHost, port=dbPort, user=dbUser, password=dbPass, database=dbName) as conn:
     with conn.cursor() as cur:      
-      # go through the new file, replacing or adding as appropriate
       with open(snuggetFile) as csvFile:
         newSnuggets = csv.DictReader(csvFile)
         
         for row in newSnuggets:
-#          print(', '.join(row))
-#          print(', '.join([row[key] for key in row]))
           # "shapefile" -> world_snugget.shapefile_filter_id column name; store id we just looked up in that column
           filterColumn = row["shapefile"] + "_filter_id"
           # "section" -> world_snugget.section_id
@@ -43,11 +38,9 @@ def main():
           # check if a snugget for this data already exists
           # if we have a lookup value then deal with this value specifically:
           if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
-            filterID = findFilterID(appName, row["shapefile"], row["lookup_value"], cur)
-            oldSnugget = checkForSnugget(appName, sectionID, filterColumn, filterID, cur)
-#            print(oldSnugget)
+            filterIDs = [findFilterID(appName, row["shapefile"], row["lookup_value"], cur)]
+            oldSnugget = checkForSnugget(appName, sectionID, filterColumn, filterIDs[0], cur)
             overwriteAll = askUserAboutOverwriting(row["shapefile"], row["lookup_value"], oldSnugget, [], snuggetFile, overwriteAll)
-            filterIDs = [filterID]  # this will let the rest of the function be the same whether we had one ID or several
           else: 
             filterIDs = findAllFilterIDs(appName, row["shapefile"], cur)
             oldSnuggets = []
@@ -55,11 +48,9 @@ def main():
               oldSnugget = checkForSnugget(appName, sectionID, filterColumn, filterID, cur)
               if oldSnugget is not None and oldSnugget not in oldSnuggets:
                 oldSnuggets.append(oldSnugget)
-#            print(oldSnuggets)
             overwriteAll = askUserAboutOverwriting(row["shapefile"], row["lookup_value"], None, oldSnuggets, snuggetFile, overwriteAll)
 
           for filterID in filterIDs:
-            print(filterID)
             removeOldSnugget(appName, sectionID, filterColumn, filterID, cur)
             addTextSnugget(appName, row, sectionID, filterColumn, filterID, cur)
               
@@ -77,7 +68,6 @@ def addTextSnugget(appName, row, sectionID, filterColumn, filterID, cur):
     (str(sectionID), str(filterID))
   )
   snuggetID = getSnuggetID(appName, sectionID, filterColumn, filterID, cur);
-  print(row)
   cur.execute(
     'INSERT INTO ' + appName + '_textsnugget (snugget_ptr_id, content, heading, image, percentage) VALUES (%s, %s, %s, %s, %s);',
     (snuggetID, row["text"], row["heading"], row["image"], row["intensity"])
@@ -97,13 +87,15 @@ def readColumnsFrom(appName, table, cur):
 
 
 def getSectionID(appName, sectionName, cur):
-  cur.execute("SELECT id FROM " + appName + "_snuggetsection WHERE name = '" + sectionName + "';")
-  try:
-    return cur.fetchone()[0]
-  except:
+  cur.execute("SELECT MIN(id) FROM " + appName + "_snuggetsection WHERE name = '" + sectionName + "';")
+  sectionID = cur.fetchone()[0]
+  if sectionID is not None:
+    return sectionID
+  else:
     cur.execute("INSERT INTO " + appName + "_snuggetsection(name) VALUES(%s);", [sectionName])
     cur.execute("SELECT id FROM " + appName + "_snuggetsection WHERE name = '" + sectionName + "';")
-    return cur.fetchone()[0]
+    sectionID = cur.fetchone()[0]
+    return sectionID
   
   
 
@@ -126,10 +118,11 @@ def findAllFilterIDs(appName, shapefile, cur):
 
 
 def getSnuggetID(appName, sectionID, filterColumn, filterID, cur):
-  try:
-    cur.execute('SELECT MAX(id) FROM ' + appName + '_snugget WHERE section_id = ' + str(sectionID) + ' AND "' + filterColumn + '" = ' + str(filterID) + ';')
-    return str(cur.fetchone()[0])
-  except:
+  cur.execute('SELECT MAX(id) FROM ' + appName + '_snugget WHERE section_id = ' + str(sectionID) + ' AND "' + filterColumn + '" = ' + str(filterID) + ';')
+  snuggetID = cur.fetchone()[0]
+  if snuggetID is not None:
+    return str(snuggetID)
+  else:
     print(cur.mogrify('SELECT MAX(id) FROM ' + appName + '_snugget WHERE section_id = ' + str(sectionID) + ' AND "' + filterColumn + '" = ' + str(filterID) + ';'))
     return None
 
@@ -137,21 +130,21 @@ def getSnuggetID(appName, sectionID, filterColumn, filterID, cur):
 
 
 def checkForSnugget(appName, sectionID, filterColumn, filterID, cur):
-  # in each of the following DB queries, an empty return means there's no matching snugget
   try:
     snuggetID = getSnuggetID(appName, sectionID, filterColumn, filterID, cur)
     cur.execute("SELECT content FROM " + appName + "_textsnugget WHERE snugget_ptr_id = " + snuggetID + ";")
     return cur.fetchone()[0]
-  except:
+  except: # if nothing came back from the DB, just return None rather than failing
     return None
 
   
   
 def removeOldSnugget(appName, sectionID, filterColumn, filterID, cur):
   snuggetID = getSnuggetID(appName, sectionID, filterColumn, filterID, cur)
-  cur.execute("DELETE FROM " + appName + "_textsnugget WHERE snugget_ptr_id = " + snuggetID + ";")
-  cur.execute("DELETE FROM " + appName + "_snugget WHERE id = " + snuggetID + ";")
-  print("Removed snugget", snuggetID)
+  if snuggetID is not None:
+    cur.execute("DELETE FROM " + appName + "_textsnugget WHERE snugget_ptr_id = " + snuggetID + ";")
+    cur.execute("DELETE FROM " + appName + "_snugget WHERE id = " + snuggetID + ";")
+    print("Replacing snugget", snuggetID)
     
 
   
@@ -177,7 +170,7 @@ def askUserAboutOverwriting(shapefile, lookup_value, oldSnugget, oldSnuggets, sn
     print("Please enter one of the following letters to choose how to proceed:")
     print("R: Replace the existing snugget[s] with the new value loaded from", snuggetFile, " and ask again for the next one.")
     print("A: replace All without asking again.")
-    print("Q: quit so you can edit", snuggetFile, "and try again.")
+    print("Q: quit so you can edit", snuggetFile, "and/or check the snuggets in the Django admin panel and try again.")
     response = ""
     while response not in ["A", "R", "Q"]:
       response = input(">> ").upper()
