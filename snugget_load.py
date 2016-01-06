@@ -28,34 +28,41 @@ def main():
     with conn.cursor() as cur:      
       with open(snuggetFile) as csvFile:
         newSnuggets = csv.DictReader(csvFile)
-        
         for row in newSnuggets:
-          # "shapefile" -> world_snugget.shapefile_filter_id column name; store id we just looked up in that column
-          filterColumn = row["shapefile"] + "_filter_id"
-          # "section" -> world_snugget.section_id
-          sectionID = getSectionID(appName, row["section"], cur)
-        
-          # check if a snugget for this data already exists
-          # if we have a lookup value then deal with this value specifically:
-          if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
-            filterIDs = [findFilterID(appName, row["shapefile"], row["lookup_value"], cur)]
-            oldSnugget = checkForSnugget(appName, sectionID, filterColumn, filterIDs[0], cur)
-            overwriteAll = askUserAboutOverwriting(row["shapefile"], row["lookup_value"], oldSnugget, [], snuggetFile, overwriteAll)
-          else: 
-            filterIDs = findAllFilterIDs(appName, row["shapefile"], cur)
-            oldSnuggets = []
-            for filterID in filterIDs:
-              oldSnugget = checkForSnugget(appName, sectionID, filterColumn, filterID, cur)
-              if oldSnugget is not None and oldSnugget not in oldSnuggets:
-                oldSnuggets.append(oldSnugget)
-            overwriteAll = askUserAboutOverwriting(row["shapefile"], row["lookup_value"], None, oldSnuggets, snuggetFile, overwriteAll)
+          overwriteAll = processRow(appName, snuggetFile, cur, overwriteAll, row)
+          
+          
+          
+def processRow(appName, snuggetFile, cur, overwriteAll, row):
+  # "shapefile" -> world_snugget.shapefile_filter_id column name; store id we just looked up in that column
+  filterColumn = row["shapefile"] + "_filter_id"
+  # "section" -> world_snugget.section_id
+  sectionID = getSectionID(appName, row["section"], cur)
 
-          for filterID in filterIDs:
-            removeOldSnugget(appName, sectionID, filterColumn, filterID, cur)
-            addTextSnugget(appName, row, sectionID, filterColumn, filterID, cur)
+  # check if a snugget for this data already exists
+  # if we have a lookup value then deal with this value specifically:
+  if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
+    filterIDs = [findFilterID(appName, row["shapefile"], row["lookup_value"], cur)]
+    oldSnugget = checkForSnugget(appName, sectionID, filterColumn, filterIDs[0], cur)
+    overwriteAll = askUserAboutOverwriting(row["shapefile"], row["lookup_value"], oldSnugget, [], snuggetFile, overwriteAll)
+  else: 
+    filterIDs = findAllFilterIDs(appName, row["shapefile"], cur)
+    oldSnuggets = []
+    for filterID in filterIDs:
+      oldSnugget = checkForSnugget(appName, sectionID, filterColumn, filterID, cur)
+      if oldSnugget is not None and oldSnugget not in oldSnuggets:
+        oldSnuggets.append(oldSnugget)
+    overwriteAll = askUserAboutOverwriting(row["shapefile"], row["lookup_value"], None, oldSnuggets, snuggetFile, overwriteAll)
+
+  for filterID in filterIDs:
+    removeOldSnugget(appName, sectionID, filterColumn, filterID, cur)
+    addTextSnugget(appName, row, sectionID, filterColumn, filterID, cur)
+  
+  return overwriteAll
               
               
-              
+             
+          
 def addTextSnugget(appName, row, sectionID, filterColumn, filterID, cur):
 #   "heading" -> world_textsnugget.heading (null as '')
 #   "intensity" -> world_textsnugget.percentage (numeric, null as null)
