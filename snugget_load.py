@@ -30,8 +30,10 @@ def main():
         newSnuggets = csv.DictReader(csvFile)
         for row in newSnuggets:
           overwriteAll = processRow(appName, snuggetFile, cur, overwriteAll, row)
+
+
           
-          
+
           
 def processRow(appName, snuggetFile, cur, overwriteAll, row):
   # "shapefile" -> world_snugget.shapefile_filter_id column name; store id we just looked up in that column
@@ -44,7 +46,7 @@ def processRow(appName, snuggetFile, cur, overwriteAll, row):
   if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
     filterIDs = [findFilterID(appName, row["shapefile"], row["lookup_value"], cur)]
     oldSnugget = checkForSnugget(appName, sectionID, filterColumn, filterIDs[0], cur)
-    overwriteAll = askUserAboutOverwriting(row["shapefile"], row["lookup_value"], oldSnugget, [], snuggetFile, overwriteAll)
+    overwriteAll = askUserAboutOverwriting(row, oldSnugget, [], snuggetFile, overwriteAll)
   else: 
     filterIDs = findAllFilterIDs(appName, row["shapefile"], cur)
     oldSnuggets = []
@@ -52,7 +54,7 @@ def processRow(appName, snuggetFile, cur, overwriteAll, row):
       oldSnugget = checkForSnugget(appName, sectionID, filterColumn, filterID, cur)
       if oldSnugget is not None and oldSnugget not in oldSnuggets:
         oldSnuggets.append(oldSnugget)
-    overwriteAll = askUserAboutOverwriting(row["shapefile"], row["lookup_value"], None, oldSnuggets, snuggetFile, overwriteAll)
+    overwriteAll = askUserAboutOverwriting(row, None, oldSnuggets, snuggetFile, overwriteAll)
 
   for filterID in filterIDs:
     removeOldSnugget(appName, sectionID, filterColumn, filterID, cur)
@@ -98,7 +100,7 @@ def getSectionID(appName, sectionName, cur):
   sectionID = cur.fetchone()[0]
   if sectionID is not None:
     return sectionID
-  else:
+  else: # if no sectionID was found then we need to create the section
     cur.execute("INSERT INTO " + appName + "_snuggetsection(name) VALUES(%s);", [sectionName])
     cur.execute("SELECT id FROM " + appName + "_snuggetsection WHERE name = '" + sectionName + "';")
     sectionID = cur.fetchone()[0]
@@ -130,7 +132,6 @@ def getSnuggetID(appName, sectionID, filterColumn, filterID, cur):
   if snuggetID is not None:
     return str(snuggetID)
   else:
-    print(cur.mogrify('SELECT MAX(id) FROM ' + appName + '_snugget WHERE section_id = ' + str(sectionID) + ' AND "' + filterColumn + '" = ' + str(filterID) + ';'))
     return None
 
 
@@ -159,15 +160,15 @@ def removeOldSnugget(appName, sectionID, filterColumn, filterID, cur):
 
 # Check with the user about overwriting existing snuggets, giving them the options to:
 # either quit and check what's going on, or say "yes to all" and not get prompted again.
-def askUserAboutOverwriting(shapefile, lookup_value, oldSnugget, oldSnuggets, snuggetFile, overwriteAll):
+def askUserAboutOverwriting(row, oldSnugget, oldSnuggets, snuggetFile, overwriteAll):
   if overwriteAll: # if it's already set, then don't do anything else
     return overwriteAll
   else:
     if oldSnugget is not None:
-      print("In shapefile", shapefile, "there is already a snugget defined for intensity", lookup_value, "with the following text content:")
+      print("In shapefile", row["shapefile"], "there is already a snugget defined for section" , row["section"], "intensity", row["lookup_value"], "with the following text content:")
       print(oldSnugget)
     elif oldSnuggets != []:
-      print("In shapefile", shapefile, "there are existing snuggets with the following text content:")
+      print("In shapefile", row["shapefile"], "there are existing snuggets for section", row["section"], "with the following text content:")
       for snugget in oldSnuggets:
         print(snugget)
     else: 
