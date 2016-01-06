@@ -54,21 +54,21 @@ def main():
           # "shapefile" -> world_snugget.shapefile_filter_id column name; store id we just looked up in that column
           filterColumn = row["shapefile"] + "_filter_id"
           # "section" -> world_snugget.section_id
-          sectionId = getSectionID(appName, row["section"], cur)
+          sectionID = getSectionID(appName, row["section"], cur)
         
           # check if a snugget for this data already exists
           # if we have a lookup value then deal with this value specifically:
           if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
             filterID = findFilterID(appName, row["shapefile"], row["lookup_value"], cur)
-            oldSnugget = checkForSnugget(appName, filterColumn, filterID, cur)
-            print(oldSnugget)
+            oldSnugget = checkForSnugget(appName, sectionID, filterColumn, filterID, cur)
+#            print(oldSnugget)
             mode, globalMode = askUserForMode(row["shapefile"], row["lookup_value"], oldSnugget, [], snuggetFile, globalMode)
             filterIDs = [filterID]  # this will let the rest of the function be the same whether we had one ID or several
           else: 
             filterIDs = findAllFilterIDs(appName, row["shapefile"], cur)
             oldSnuggets = []
             for filterID in filterIDs:
-              oldSnugget = checkForSnugget(appName, filterColumn, filterID, cur)
+              oldSnugget = checkForSnugget(appName, sectionID, filterColumn, filterID, cur)
               if oldSnugget is not None and oldSnugget not in oldSnuggets:
                 oldSnuggets.append(oldSnugget)
 #            print(oldSnuggets)
@@ -76,20 +76,38 @@ def main():
 
           for filterID in filterIDs:
             print(filterID)
-            if mode == "R":  
+            if mode == "replace":  
               # then get the existing snuggetID so we can replace it
-              removeOldSnugget(appName, filterColumn, filterID, cur)
-#            addTextSnugget(appName, row, cur)
+              removeOldSnugget(appName, sectionID, filterColumn, filterID, cur)
+            addTextSnugget(appName, row, sectionID, filterColumn, filterID, cur)
               
               
               
-def addTextSnugget(appName, row, cur):              
-#   get id for new row in world_snugget -> world_textsnugget.snugget_ptr_id
+def addTextSnugget(appName, row, sectionID, filterColumn, filterID, cur):
 #   "heading" -> world_textsnugget.heading (null as '')
 #   "intensity" -> world_textsnugget.percentage (numeric, null as null)
 #   "image" -> world_textsnugget.image
 #   "text" -> world_textsnugget.content
-  pass
+  if row["intensity"] == '':
+    row["intensity"] = None
+  print(cur.mogrify(
+    'INSERT INTO ' + appName + '_snugget (section_id, "' + filterColumn + '") VALUES (%s, %s);', 
+    (str(sectionID), str(filterID))
+  ))
+  cur.execute(
+    'INSERT INTO ' + appName + '_snugget (section_id, "' + filterColumn + '") VALUES (%s, %s);', 
+    (str(sectionID), str(filterID))
+  )
+  snuggetID = getSnuggetID(appName, sectionID, filterColumn, filterID, cur);
+  print(row)
+  print(cur.mogrify(
+    'INSERT INTO ' + appName + '_textsnugget (snugget_ptr_id, content, heading, image, percentage) VALUES (%s, %s, %s, %s, %s);',
+    (snuggetID, row["text"], row["heading"], row["image"], row["intensity"])
+  ))
+  cur.execute(
+    'INSERT INTO ' + appName + '_textsnugget (snugget_ptr_id, content, heading, image, percentage) VALUES (%s, %s, %s, %s, %s);',
+    (snuggetID, row["text"], row["heading"], row["image"], row["intensity"])
+  )
 
   
 ''' these functions probably redundant now
@@ -152,21 +170,21 @@ def findAllFilterIDs(appName, shapefile, cur):
 
 
 
-def getSnuggetID(appName, filterColumn, filterID, cur):
+def getSnuggetID(appName, sectionID, filterColumn, filterID, cur):
   try:
-#    print(cur.mogrify('SELECT id FROM ' + appName + '_snugget WHERE "' + filterColumn + '" = ' + filterID + ';'))
-    cur.execute('SELECT id FROM ' + appName + '_snugget WHERE "' + filterColumn + '" = ' + filterID + ';')
+    cur.execute('SELECT id FROM ' + appName + '_snugget WHERE section_id = ' + str(sectionID) + ' AND "' + filterColumn + '" = ' + str(filterID) + ';')
     return str(cur.fetchone()[0])
   except:
+    print(cur.mogrify('SELECT id FROM ' + appName + '_snugget WHERE section_id = ' + str(sectionID) + ' AND "' + filterColumn + '" = ' + str(filterID) + ';'))
     return None
 
 
 
 
-def checkForSnugget(appName, filterColumn, filterID, cur):
+def checkForSnugget(appName, sectionID, filterColumn, filterID, cur):
   # in each of the following DB queries, an empty return means there's no matching snugget
   try:
-    snuggetID = getSnuggetID(appName, filterColumn, filterID, cur)
+    snuggetID = getSnuggetID(appName, sectionID, filterColumn, filterID, cur)
     cur.execute("SELECT content FROM " + appName + "_textsnugget WHERE snugget_ptr_id = " + snuggetID + ";")
     return cur.fetchone()[0]
   except:
@@ -174,8 +192,8 @@ def checkForSnugget(appName, filterColumn, filterID, cur):
 
   
   
-def removeOldSnugget(appName, filterColumn, filterID, cur):
-  snuggetID = getSnuggetID(appName, filterColumn, filterID, cur)
+def removeOldSnugget(appName, sectionID, filterColumn, filterID, cur):
+  snuggetID = getSnuggetID(appName, sectionID, filterColumn, filterID, cur)
   cur.execute("DELETE FROM " + appName + "_textsnugget WHERE snugget_ptr_id = " + snuggetID + ";")
   cur.execute("DELETE FROM " + appName + "_snugget WHERE id = " + snuggetID + ";")
   print("Removed snugget", snuggetID)
@@ -183,7 +201,7 @@ def removeOldSnugget(appName, filterColumn, filterID, cur):
 
   
 
-  
+#TODO: get rid of "add" mode, so it's just a question of replace or quit
 def askUserForMode(shapefile, lookup_value, oldSnugget, oldSnuggets, snuggetFile, globalMode):
   if oldSnugget is not None:
     print("In shapefile", shapefile, "there is already a snugget defined for intensity", lookup_value, "with the following text content:")
