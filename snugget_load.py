@@ -36,7 +36,6 @@ def main():
 
           
 def processRow(appName, snuggetFile, cur, overwriteAll, row):
-  # "shapefile" -> world_snugget.shapefile_filter_id column name; store id we just looked up in that column
   filterColumn = row["shapefile"] + "_filter_id"
   # "section" -> world_snugget.section_id
   sectionID = getSectionID(appName, row["section"], cur)
@@ -86,7 +85,10 @@ def addTextSnugget(appName, row, sectionID, filterColumn, filterID, cur):
 
 def readColumnsFrom(appName, table, cur):
   cols = []
-  cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = '" + appName + "_" + table.lower() + "';")
+  cur.execute(
+    "SELECT column_name FROM information_schema.columns WHERE table_name = %s;", 
+    [appName + "_" + table.lower()]
+  )
   for row in cur.fetchall():
     cols.append(row[0])
   return cols
@@ -96,13 +98,13 @@ def readColumnsFrom(appName, table, cur):
 
 
 def getSectionID(appName, sectionName, cur):
-  cur.execute("SELECT MIN(id) FROM " + appName + "_snuggetsection WHERE name = '" + sectionName + "';")
+  cur.execute("SELECT MIN(id) FROM " + appName + "_snuggetsection WHERE name = %s;", [sectionName])
   sectionID = cur.fetchone()[0]
   if sectionID is not None:
     return sectionID
   else: # if no sectionID was found then we need to create the section
     cur.execute("INSERT INTO " + appName + "_snuggetsection(name) VALUES(%s);", [sectionName])
-    cur.execute("SELECT id FROM " + appName + "_snuggetsection WHERE name = '" + sectionName + "';")
+    cur.execute("SELECT id FROM " + appName + "_snuggetsection WHERE name = %s;", [sectionName])
     sectionID = cur.fetchone()[0]
     return sectionID
   
@@ -112,7 +114,7 @@ def getSectionID(appName, sectionName, cur):
 def findFilterID(appName, shapefile, key, cur):
   cols = readColumnsFrom(appName, shapefile, cur)
   keyColumn = cols[1]
-  cur.execute("SELECT id FROM " + appName + "_" + shapefile + " WHERE " + keyColumn + "::text = '" + key + "';")
+  cur.execute("SELECT id FROM " + appName + "_" + shapefile + " WHERE " + keyColumn + "::text = %s;", [key])
   return str(cur.fetchone()[0])
 
     
@@ -127,7 +129,10 @@ def findAllFilterIDs(appName, shapefile, cur):
 
 
 def getSnuggetID(appName, sectionID, filterColumn, filterID, cur):
-  cur.execute('SELECT MAX(id) FROM ' + appName + '_snugget WHERE section_id = ' + str(sectionID) + ' AND "' + filterColumn + '" = ' + str(filterID) + ';')
+  cur.execute(
+    'SELECT MAX(id) FROM ' + appName + '_snugget WHERE section_id = %s AND "' + filterColumn + '" = %s;',
+    (sectionID, filterID)
+  )
   snuggetID = cur.fetchone()[0]
   if snuggetID is not None:
     return str(snuggetID)
@@ -140,7 +145,7 @@ def getSnuggetID(appName, sectionID, filterColumn, filterID, cur):
 def checkForSnugget(appName, sectionID, filterColumn, filterID, cur):
   try:
     snuggetID = getSnuggetID(appName, sectionID, filterColumn, filterID, cur)
-    cur.execute("SELECT content FROM " + appName + "_textsnugget WHERE snugget_ptr_id = " + snuggetID + ";")
+    cur.execute("SELECT content FROM " + appName + "_textsnugget WHERE snugget_ptr_id = %s;", [snuggetID])
     return cur.fetchone()[0]
   except: # if nothing came back from the DB, just return None rather than failing
     return None
@@ -150,8 +155,8 @@ def checkForSnugget(appName, sectionID, filterColumn, filterID, cur):
 def removeOldSnugget(appName, sectionID, filterColumn, filterID, cur):
   snuggetID = getSnuggetID(appName, sectionID, filterColumn, filterID, cur)
   if snuggetID is not None:
-    cur.execute("DELETE FROM " + appName + "_textsnugget WHERE snugget_ptr_id = " + snuggetID + ";")
-    cur.execute("DELETE FROM " + appName + "_snugget WHERE id = " + snuggetID + ";")
+    cur.execute("DELETE FROM " + appName + "_textsnugget WHERE snugget_ptr_id = %s;", [snuggetID])
+    cur.execute("DELETE FROM " + appName + "_snugget WHERE id = %s;", [snuggetID])
     print("Replacing snugget", snuggetID)
     
 
