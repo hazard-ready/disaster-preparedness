@@ -10,6 +10,7 @@ def main():
   appDir = "world"
   dataDir = os.path.join(appDir, "data")
   snuggetFile = os.path.join(dataDir, "snuggets.csv")
+  globalMode = None  # none for "keep asking for a mode each time"; False for "stop asking"
 
   try:
     dbURL = os.environ['DATABASE_URL']
@@ -59,24 +60,36 @@ def main():
           # if we have a lookup value then deal with this value specifically:
           if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
             filterID = findFilterID(appName, row["shapefile"], row["lookup_value"], cur)
-            oldSnugget = checkForSnugget(appName, filterColumn, filterID, row["lookup_value"], cur)
-            mode = askUserForMode(row["shapefile"], row["lookup_value"], oldSnugget, [], snuggetFile)
+            oldSnugget = checkForSnugget(appName, filterColumn, filterID, cur)
+            print(oldSnugget)
+            mode, globalMode = askUserForMode(row["shapefile"], row["lookup_value"], oldSnugget, [], snuggetFile, globalMode)
+            filterIDs = [filterID]  # this will let the rest of the function be the same whether we had one ID or several
           else: 
             filterIDs = findAllFilterIDs(appName, row["shapefile"], cur)
             oldSnuggets = []
             for filterID in filterIDs:
-              oldSnugget = checkForSnugget(appName, filterColumn, filterID, row["lookup_value"], cur)
+              oldSnugget = checkForSnugget(appName, filterColumn, filterID, cur)
               if oldSnugget is not None and oldSnugget not in oldSnuggets:
                 oldSnuggets.append(oldSnugget)
-            mode = askUserForMode(row["shapefile"], row["lookup_value"], None, oldSnuggets, snuggetFile)
+#            print(oldSnuggets)
+            mode, globalMode = askUserForMode(row["shapefile"], row["lookup_value"], None, oldSnuggets, snuggetFile, globalMode)
 
-          
-          #   get id for new row in world_snugget -> world_textsnugget.snugget_ptr_id
-          #   "heading" -> world_textsnugget.heading (null as '')
-          #   "intensity" -> world_textsnugget.percentage (numeric, null as null)
-          #   if "intensity" is blank, should we just generate the same row for all intensities?
-          #   "image" -> world_textsnugget.image
-          #   "text" -> world_textsnugget.content
+          for filterID in filterIDs:
+            print(filterID)
+            if mode == "R":  
+              # then get the existing snuggetID so we can replace it
+              removeOldSnugget(appName, filterColumn, filterID, cur)
+#            addTextSnugget(appName, row, cur)
+              
+              
+              
+def addTextSnugget(appName, row, cur):              
+#   get id for new row in world_snugget -> world_textsnugget.snugget_ptr_id
+#   "heading" -> world_textsnugget.heading (null as '')
+#   "intensity" -> world_textsnugget.percentage (numeric, null as null)
+#   "image" -> world_textsnugget.image
+#   "text" -> world_textsnugget.content
+  pass
 
   
 ''' these functions probably redundant now
@@ -136,14 +149,24 @@ def findAllFilterIDs(appName, shapefile, cur):
   for row in cur.fetchall():
     ids.extend(row)
   return ids
-  
 
 
-def checkForSnugget(appName, filterColumn, filterID, key, cur):
+
+def getSnuggetID(appName, filterColumn, filterID, cur):
+  try:
+#    print(cur.mogrify('SELECT id FROM ' + appName + '_snugget WHERE "' + filterColumn + '" = ' + filterID + ';'))
+    cur.execute('SELECT id FROM ' + appName + '_snugget WHERE "' + filterColumn + '" = ' + filterID + ';')
+    return str(cur.fetchone()[0])
+  except:
+    return None
+
+
+
+
+def checkForSnugget(appName, filterColumn, filterID, cur):
   # in each of the following DB queries, an empty return means there's no matching snugget
   try:
-    cur.execute('SELECT id FROM ' + appName + '_snugget WHERE "' + filterColumn + '" = ' + filterID + ';')
-    snuggetID = str(cur.fetchone()[0])
+    snuggetID = getSnuggetID(appName, filterColumn, filterID, cur)
     cur.execute("SELECT content FROM " + appName + "_textsnugget WHERE snugget_ptr_id = " + snuggetID + ";")
     return cur.fetchone()[0]
   except:
@@ -151,8 +174,17 @@ def checkForSnugget(appName, filterColumn, filterID, key, cur):
 
   
   
+def removeOldSnugget(appName, filterColumn, filterID, cur):
+  snuggetID = getSnuggetID(appName, filterColumn, filterID, cur)
+  cur.execute("DELETE FROM " + appName + "_textsnugget WHERE snugget_ptr_id = " + snuggetID + ";")
+  cur.execute("DELETE FROM " + appName + "_snugget WHERE id = " + snuggetID + ";")
+  print("Removed snugget", snuggetID)
+    
+
   
-def askUserForMode(shapefile, lookup_value, oldSnugget, oldSnuggets, snuggetFile):
+
+  
+def askUserForMode(shapefile, lookup_value, oldSnugget, oldSnuggets, snuggetFile, globalMode):
   if oldSnugget is not None:
     print("In shapefile", shapefile, "there is already a snugget defined for intensity", lookup_value, "with the following text content:")
     print(oldSnugget)
@@ -161,23 +193,45 @@ def askUserForMode(shapefile, lookup_value, oldSnugget, oldSnuggets, snuggetFile
     for snugget in oldSnuggets:
       print(snugget)
   else: # if both oldSnugget and oldSnuggets were empty, then we don't need to ask the user
-    return "add"
-    
-  print("Please enter one of the following letters to choose how to proceed:")
-  print("A: add a new snugget, in addition to the existing one.")
-  print("R: replace the old snugget with the new value loaded from", snuggetFile)
-  print("Q: quit so you can edit", snuggetFile, "and try again.")
-
-  response = False
-  while response not in ["A", "R", "Q"]:
-    response = input(">> ").upper()
+    return "add", globalMode
   
-  if response == "Q":
-    exit(0)
-  elif response == "A":
-    return "add"
-  elif response == "R":
-    return "replace"
+  if globalMode:
+    return globalMode, globalMode
+  else:
+
+    print("Please enter one of the following letters to choose how to proceed:")
+    print("A: add a new snugget, in addition to the existing one.")
+    print("R: replace the old snugget with the new value loaded from", snuggetFile)
+    print("Q: quit so you can edit", snuggetFile, "and try again.")
+
+    response = False
+    while response not in ["A", "R", "Q"]:
+      response = input(">> ").upper()
+
+    if response == "Q":
+      exit(0)
+    elif response == "A":
+      mode = "add"
+    elif response == "R":
+      mode = "replace"
+    
+    if globalMode != False:
+      print("Would you like this to apply to all other existing snuggets?")
+      print("Y: Yes, apply to all.")
+      print("N: No, ask me again next time.")
+      print("X: No, and stop asking this question.")
+      response = False
+      while response not in ["Y", "N", "X"]:
+        response = input(">> ").upper()
+      
+      if response == "Y":
+        return mode, mode
+      elif response == "N":
+        return mode, None
+
+    # if globalMode was either already set to False or the user selected "X" then:
+    return mode, False
+      
 
 
 
