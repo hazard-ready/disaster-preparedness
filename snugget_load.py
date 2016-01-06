@@ -27,24 +27,8 @@ def main():
   dbName = dbParts[1][1]
   
   with psycopg2.connect(host=dbHost, port=dbPort, user=dbUser, password=dbPass, database=dbName) as conn:
-    with conn.cursor() as cur:
-      ''' this section probably redundant now      
-      # Find out what's already set up
-      sections = readValuesFrom(appName, "snuggetsection", cur)
-      subsections = readValuesFrom(appName, "snuggetsubsection", cur)
-      oldSnuggets = readValuesFrom(appName, "textsnugget", cur)
-      snuggetRefs = readSnuggetCrossRefs(appName, "snugget", cur)
-      snuggetColumns = readColumnsFrom(appName, "snugget", cur)
-      print(sections)
-      print(subsections)
-      print(oldSnuggets)
-      print(snuggetRefs)
-      print(snuggetColumns)
-      print("----------")
-      #TODO: should I make snuggetRefs into a dict with snuggetColumns as the keys?
-      '''      
-      
-      # Then go through the new file, replacing or adding as appropriate
+    with conn.cursor() as cur:      
+      # go through the new file, replacing or adding as appropriate
       with open(snuggetFile) as csvFile:
         newSnuggets = csv.DictReader(csvFile)
         
@@ -90,45 +74,18 @@ def addTextSnugget(appName, row, sectionID, filterColumn, filterID, cur):
 #   "text" -> world_textsnugget.content
   if row["intensity"] == '':
     row["intensity"] = None
-  print(cur.mogrify(
-    'INSERT INTO ' + appName + '_snugget (section_id, "' + filterColumn + '") VALUES (%s, %s);', 
-    (str(sectionID), str(filterID))
-  ))
   cur.execute(
     'INSERT INTO ' + appName + '_snugget (section_id, "' + filterColumn + '") VALUES (%s, %s);', 
     (str(sectionID), str(filterID))
   )
   snuggetID = getSnuggetID(appName, sectionID, filterColumn, filterID, cur);
   print(row)
-  print(cur.mogrify(
-    'INSERT INTO ' + appName + '_textsnugget (snugget_ptr_id, content, heading, image, percentage) VALUES (%s, %s, %s, %s, %s);',
-    (snuggetID, row["text"], row["heading"], row["image"], row["intensity"])
-  ))
   cur.execute(
     'INSERT INTO ' + appName + '_textsnugget (snugget_ptr_id, content, heading, image, percentage) VALUES (%s, %s, %s, %s, %s);',
     (snuggetID, row["text"], row["heading"], row["image"], row["intensity"])
   )
 
-  
-''' these functions probably redundant now
-def readValuesFrom(appName, table, cur):
-  vals = {}
-  cur.execute("SELECT * FROM " + appName + "_" + table.lower() + ";")
-  for item in cur.fetchall():
-    vals[item[1]] = item[0]
-  return vals  
 
-
-
-
-
-def readSnuggetCrossRefs(appName, table, cur):
-  refs = []
-  cur.execute("SELECT * FROM " + appName + "_" + table + ";")
-  for row in cur.fetchall():
-    refs.extend(row)
-  return refs
-'''
 
 def readColumnsFrom(appName, table, cur):
   cols = []
