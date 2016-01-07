@@ -22,29 +22,33 @@
 {% endblock map %}
 
 {% block main-content %}
-  <div class="row vert-pad-medium">
-    <ul class="tabs disaster-tabs" data-tab>
+  <div class="row">
+    <div class="small-12 column">
+      <ul class="tabs disaster-tabs" data-tab>
+        {% for section, values in data.groups.items %}
+          {% if forloop.first %}
+            <li class="tab-title active"><a href="#{{section}}">{{section}}</a></li>
+          {% else %}
+            <li class="tab-title"><a href="#{{section}}">{{section}}</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+      <div class="tabs-content disaster-container">
       {% for section, values in data.groups.items %}
         {% if forloop.first %}
-          <li class="tab-title caps active"><a href="#{{section}}">{{section}}</a></li>
+          <div class="content active disaster-content" id="{{section}}">
         {% else %}
-          <li class="tab-title caps"><a href="#{{section}}">{{section}}</a></li>
+          <div class="content disaster-content" id="{{section}}">
         {% endif %}
+          {% for value in values %}
+            <div class="snugget-text">
+              <h4>{{ value.section.name }}</h4>
+              {% show_snugget value %}
+            </div>
+          {% endfor %}
+        </div>
       {% endfor %}
-    </ul>
-    <div class="tabs-content disaster-content">
-    {% for section, values in data.groups.items %}
-      {% if forloop.first %}
-        <div class="content active" id="{{section}}">
-      {% else %}
-        <div class="content" id="{{section}}">
-      {% endif %}
-        {% for value in values %}
-          <h4>{{ value.section.name }}</h4>
-          <div class="snugget-text">{% show_snugget value %}</div>
-        {% endfor %}
       </div>
-    {% endfor %}
     </div>
   </div>
 
@@ -54,30 +58,30 @@
       {% include "supply-kit.html" %}
     </div>
 
-  <div class="small-10 medium-5 column end">
-    <h4>Community Leaders</h4>
-    <p>Contact your <a href="{{ location.emergency_management_link }}">Office of Emergency Management</a> in advance to find out more about how to prepare yourself.</p>
-  </div>
-</div>
+    <div class="small-10 medium-5 column">
+      <h4>Get Hazard Ready</h4>
+      <p>Make sure your family and friends know where to gather after {{ location.disaster_name }} and how to get there.
+      {% if location.evacuation_routes_link %}
+        Or <a href="{{ location.evacuation_routes_link }}">find an evacuation route</a>.
+      {% endif %}
+      </p>
+    </div>
 
-<div class="row">
-  <div class="small-10 medium-5 column">
-    <h4>Get Hazard Ready</h4>
-    <p>Make sure your family and friends know where to gather after {{ location.disaster_name }} and how to get there.
-    {% if location.evacuation_routes_link %}
-      Or <a href="{{ location.evacuation_routes_link }}">find an evacuation route</a>.
-    {% endif %}
-    </p>
-  </div>
-
-  <div class="small-10 medium-5 column end">
-    <h4>Stay Tuned</h4>
-    <p>Real time weather alerts and information goes here</p>
-  </div>
     <div class="small-10 medium-5 column end">
-    <h4>Important Links</h4>
-    <p>Important Links go here - should the kids' activities and community blog stuff go here?</p>
+      <h4>Community Leaders</h4>
+      <p>Contact your <a href="{{ location.emergency_management_link }}">Office of Emergency Management</a> in advance to find out more about how to prepare yourself.</p>
+    </div>
   </div>
-</div> 
+
+  <div class="row">
+    <div class="small-10 medium-5 column end">
+      <h4>Stay Tuned</h4>
+      <p>Real time weather alerts and information goes here</p>
+    </div>
+      <div class="small-10 medium-5 column end">
+      <h4>Important Links</h4>
+      <p>Important Links go here - should the kids' activities and community blog stuff go here?</p>
+    </div>
+  </div> 
 
 {% endblock main-content %}

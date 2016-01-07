@@ -98,15 +98,16 @@ h5 {
   height: 400px;
 }
 
-/* main content and snugget styles */
-.chapter-content p {
-  font-size: 1.25em;
-  line-height: 1.5em;
+.disaster-content {
+  background-color: #ffffff;
 }
 
-.disaster-content {
+.disaster-container {
   background-color: #efefef;
-  padding: 5px;
+}
+
+.snugget-text {
+  margin: 5px;
 }
 
 .section-icon {
@@ -222,6 +223,11 @@ h5 {
 
 .location-instructions-large {
   display: block;
+}
+
+.tab-title {
+  font-size: 16px;
+  font-weight: bold;
 }
 
 /* adjustments for smaller screens */
