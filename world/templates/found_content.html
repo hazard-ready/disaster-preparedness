@@ -40,8 +40,8 @@
         <div class="content" id="{{section}}">
       {% endif %}
         {% for value in values %}
-          {{ value.section.name }}
-          {% show_snugget value %}
+          <h4>{{ value.section.name }}</h4>
+          <div class="snugget-text">{% show_snugget value %}</div>
         {% endfor %}
       </div>
     {% endfor %}
@@ -49,35 +49,35 @@
   </div>
 
   <div class="row">
-    <div class="small-2 medium-1 column">
-      <div class="section-icon routes"></div>
-    </div>
     <div class="small-10 medium-5 column">
-      <h4>Know Your Routes</h4>
-      <p>Make sure your family and friends know where to gather after {{ location.disaster_name }} and how to get there.
-      {% if location.evacuation_routes_link %}
-        Or <a href="{{ location.evacuation_routes_link }}">find an evacuation route</a>.
-      {% endif %}
-      </p>
+      <h4>Supply Kit</h4>
+      {% include "supply-kit.html" %}
     </div>
 
-    <div class="small-2 medium-1 column">
-      <div class="section-icon leaders"></div>
-    </div>
-    <div class="small-10 medium-5 column">
-      <h4>Know Your Leaders</h4>
-      <p>Contact your <a href="{{ location.emergency_management_link }}">Office of Emergency Management</a> in advance to find out more about how to prepare yourself.</p>
-    </div>
+  <div class="small-10 medium-5 column end">
+    <h4>Community Leaders</h4>
+    <p>Contact your <a href="{{ location.emergency_management_link }}">Office of Emergency Management</a> in advance to find out more about how to prepare yourself.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-10 medium-5 column">
+    <h4>Get Hazard Ready</h4>
+    <p>Make sure your family and friends know where to gather after {{ location.disaster_name }} and how to get there.
+    {% if location.evacuation_routes_link %}
+      Or <a href="{{ location.evacuation_routes_link }}">find an evacuation route</a>.
+    {% endif %}
+    </p>
   </div>
 
-  <div class="row">
-    <div class="small-2 medium-1 column">
-      <div class="section-icon community"></div>
-    </div>
+  <div class="small-10 medium-5 column end">
+    <h4>Stay Tuned</h4>
+    <p>Real time weather alerts and information goes here</p>
+  </div>
     <div class="small-10 medium-5 column end">
-      <h4>The Importance of Community</h4>
-      <p>You can connect with your neighbors to plan as a group. Find out how to join or start a <a href="https://www.fema.gov/community-emergency-response-teams">community emergency response team.</a></p>
-    </div>
+    <h4>Important Links</h4>
+    <p>Important Links go here - should the kids' activities and community blog stuff go here?</p>
   </div>
+</div> 
 
 {% endblock main-content %}
