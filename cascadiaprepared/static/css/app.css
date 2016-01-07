@@ -81,6 +81,10 @@ body {
   padding: 9px 1em;
 }
 
+.geocode-error-message {
+  color: #5e001d;
+}
+
 #map {
   height: 400px;
 }
