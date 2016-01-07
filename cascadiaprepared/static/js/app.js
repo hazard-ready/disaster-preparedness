@@ -27,6 +27,7 @@ $( document ).ready(function() {
 
   // set up the map
   var map = L.map('map').setView([lat,lng], zoom);
+  map.scrollWheelZoom.disable();
 
   var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
