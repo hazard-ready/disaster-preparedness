@@ -3,8 +3,7 @@ from embed_video.admin import AdminVideoMixin
 from solo.admin import SingletonModelAdmin
 ######################################################
 # Replace the next line with generated adminModelImports
-from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, RecoveryLevels, Location, SiteSettings, EQ_GroundShaking_MostLike, Flood_FEMA_DFIRM_2015, MT_groundshaking
-
+from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings
 ######################################################
 
 admin.site.register(SnuggetSection, admin.ModelAdmin)
@@ -15,17 +14,14 @@ class SnuggetAdmin(admin.ModelAdmin):
 ######################################################
 # Insert generated adminLists here
 ######################################################
-    list_display = ('shortname', 'section', 'sub_section', 'EQ_GroundShaking_MostLike_filter', 'Flood_FEMA_DFIRM_2015_filter', 'MT_groundshaking_filter')
-    list_filter = ('section', 'sub_section', 'EQ_GroundShaking_MostLike_filter', 'Flood_FEMA_DFIRM_2015_filter', 'MT_groundshaking_filter')
-
     fieldsets = (
         (None, {
-            'fields': ('section', 'sub_section')
+            'fields': ('section', 'sub_section'),
         }),
         ('Filters', {
-            'description': 'Choose a filter value this snugget will show up for.  It is recommended you only select a value for one filter and leave the rest empty.',
-            'fields': (('EQ_GroundShaking_MostLike_filter', 'Flood_FEMA_DFIRM_2015_filter', 'MT_groundshaking_filter'))
-        })
+            'description': 'Choose a filter value this snugget will show up for.',
+            'fields': ((),)
+            }),
     )
 
     def shortname(self, obj):
@@ -67,9 +63,4 @@ admin.site.register(Location, SingletonModelAdmin)
 ######################################################
 # Insert generated adminSiteRegistrations here
 ######################################################
-admin.site.register(EQ_GroundShaking_MostLike, GeoNoEditAdmin)
-admin.site.register(Flood_FEMA_DFIRM_2015, GeoNoEditAdmin)
-admin.site.register(MT_groundshaking, GeoNoEditAdmin)
-
-
 

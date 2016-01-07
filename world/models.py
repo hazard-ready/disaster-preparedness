@@ -78,31 +78,6 @@ class Location(SingletonModel):
 ######################################################
 # Insert generated modelsClasses here
 ######################################################
-
-
-class EQ_GroundShaking_MostLike(models.Model):
-    intensity = models.IntegerField()
-    geom = models.MultiPolygonField(srid=4326)
-    objects = models.GeoManager()
-
-    def __str__(self):
-        return str(self.intensity)
-
-class Flood_FEMA_DFIRM_2015(models.Model):
-    femades = models.CharField(max_length=80)
-    geom = models.MultiPolygonField(srid=4326)
-    objects = models.GeoManager()
-
-    def __str__(self):
-        return str(self.femades)
-
-class MT_groundshaking(models.Model):
-    intensity = models.IntegerField()
-    geom = models.MultiPolygonField(srid=4326)
-    objects = models.GeoManager()
-
-    def __str__(self):
-        return str(self.intensity)
         
  
 class RecoveryLevels(models.Model):
@@ -174,12 +149,6 @@ class Snugget(models.Model):
 # Insert generated modelsFilters here
 ######################################################
 
-    EQ_GroundShaking_MostLike_filter = models.ForeignKey(EQ_GroundShaking_MostLike, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
-    Flood_FEMA_DFIRM_2015_filter = models.ForeignKey(Flood_FEMA_DFIRM_2015, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
-    MT_groundshaking_filter = models.ForeignKey(MT_groundshaking, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
-
-
-
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
     sub_section = models.ForeignKey(SnuggetSubSection, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
  
@@ -193,34 +162,10 @@ class Snugget(models.Model):
 # Insert generated modelsGeoFilters here
 ######################################################
 
-        qs_EQ_GroundShaking_MostLike = EQ_GroundShaking_MostLike.objects.filter(geom__contains=pnt)
-        EQ_GroundShaking_MostLike_rating = qs_EQ_GroundShaking_MostLike.values_list('intensity', flat=True)
-        EQ_GroundShaking_MostLike_snuggets = Snugget.objects.filter(EQ_GroundShaking_MostLike_filter__intensity__exact=EQ_GroundShaking_MostLike_rating).select_subclasses()
-
-        qs_Flood_FEMA_DFIRM_2015 = Flood_FEMA_DFIRM_2015.objects.filter(geom__contains=pnt)
-        Flood_FEMA_DFIRM_2015_rating = qs_Flood_FEMA_DFIRM_2015.values_list('femades', flat=True)
-        Flood_FEMA_DFIRM_2015_snuggets = Snugget.objects.filter(Flood_FEMA_DFIRM_2015_filter__femades__exact=Flood_FEMA_DFIRM_2015_rating).select_subclasses()
-
-        qs_MT_groundshaking = MT_groundshaking.objects.filter(geom__contains=pnt)
-        MT_groundshaking_rating = qs_MT_groundshaking.values_list('intensity', flat=True)
-        MT_groundshaking_snuggets = Snugget.objects.filter(MT_groundshaking_filter__intensity__exact=MT_groundshaking_rating).select_subclasses()
-
-
 
 ######################################################
 # Insert generated modelsSnuggetReturns here
 ######################################################
-
-        return {'groups': {
-                          'EQ_GroundShaking_MostLike_snugs': EQ_GroundShaking_MostLike_snuggets,
-                          'Flood_FEMA_DFIRM_2015_snugs': Flood_FEMA_DFIRM_2015_snuggets,
-                          'MT_groundshaking_snugs': MT_groundshaking_snuggets
-                          },
-                'EQ_GroundShaking_MostLike_rating': EQ_GroundShaking_MostLike_rating,
-                'Flood_FEMA_DFIRM_2015_rating': Flood_FEMA_DFIRM_2015_rating,
-                'MT_groundshaking_rating': MT_groundshaking_rating
-                }
-
 
 
     def __str__(self):
