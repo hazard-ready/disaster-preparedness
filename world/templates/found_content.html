@@ -12,169 +12,51 @@
 {% endblock map %}
 
 {% block main-content %}
-<!-------------- THE MOMENT -------------->
-    <div class="row vert-pad-medium">
-        <div class="medium-8 column medium-push-1">
-          <h3 class="caps">What to expect</h3>
-          <div class="chapter-content ">
-          {% for snugget in data.structured.moment.impact_snugs %}
-            {% if snugget.sub_section.name == "header" %}
-              {% show_snugget snugget %}
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-
-<!---------------------------------------------------------
-Add templateMomentSnuggets here
----------------------------------------------------------->
-
-    {% if data.structured.moment.shake_snugs %}
-    <div class="row">
-      <div class="small-2 medium-1 medium-push-1 column collapse">
-        <div class="section-icon shaking"></div>
-      </div>
-      <div class="small-10 medium-6 medium-push-1 column end">
-        <div class="section-scale">
-        {% comment %}Using "first" because data.shake_score is coming in as a list.{% endcomment %}
-        {% with data.shake_score|first as level %}
-        {% if level == "Light" %}
-        <div class="clearfix">
-          <div class="light-color">
-            <h4 class="chart-label">Low Intensity</h4>
-            <img src="static/img/intensity-low.svg">
-          </div>
-        </div>
-        {% elif level == "Moderate" %}
-        <div class="clearfix">
-          <div class="moderate-color">
-            <h4 class="chart-label">Moderate Intensity</h4>
-            <img src="static/img/intensity-moderate.svg">
-          </div>
-        </div>
-       {% elif level == "Strong" %}
-        <div class="clearfix">
-          <div class="strong-color">
-            <h4 class="chart-label">High Intensity</h4>
-            <img src="static/img/intensity-high.svg">
-          </div>
-        </div>
-       {% elif level == "Very Strong" %}
-        <div class="clearfix">
-          <div class="very-strong-color">
-            <h4 class="chart-label">Very High Intensity</h4>
-            <img src="static/img/intensity-very-high.svg">
-          </div>
-        </div>
-        {% elif level == "Severe" %}
-          <div class="clearfix">
-            <div class="severe-color">
-              <h4 class="chart-label">Extreme Intensity</h4>
-              <img src="static/img/intensity-extreme.svg">
-            </div>
-          </div>
-        {% elif level == "Violent" %}
-        <!-- todo: we only have 5 levels now so get rid of this -->
-          <div class="clearfix">
-            <div class="severe-color">
-              <h4 class="chart-label">Extreme Intensity</h4>
-              <img src="static/img/intensity-extreme.svg"> 
-            </div>
-          </div>
-        {% endif %}
-        {% endwith %}
-        </div>
-        {% for snugget in data.structured.moment.shake_snugs %}
-          {% if snugget.sub_section.name != "header" %}
-            {% show_snugget snugget %}
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
-
-<!-------------- COMMUNITY RECOVERY -------------->
-
   <div class="row vert-pad-medium">
-      <div class="medium-8 column medium-push-1">
-        <h3 class="caps">Your Community’s Recovery</h3>
-        <div class="chapter-content ">
-          {% for snugget in data.structured.recovery.impact_snugs %}
-            {% if snugget.sub_section.name == "header" %}
-              {% show_snugget snugget %}
-            {% endif %}
-          {% endfor %}
-      </div>
-    </div>
-  </div>
-
-
-<!-------------- HOW TO PREPARE -------------->
-
-  <div class="row vert-pad-medium">
-      <div class="medium-8 column medium-push-1">
-        <h3 class="caps">How To Prepare</h3>
-        <div class="chapter-content ">
-          {% for snugget in data.structured.prepare.impact_snugs %}
-            {% if snugget.sub_section.name == "header" %}
-                {% show_snugget snugget %}
-            {% endif %}
-          {% endfor %}
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="small-2 medium-1 column">
-      <div class="section-icon kit"></div>
-    </div>
-    <div class="small-10 medium-5 column">
-      <h4 class="caps">Your Supply Kit</h4>
-      {% include "supply-kit.html" with zones=data.impact_zones %}
-    </div>
-
-    <div class="small-2 medium-1 column">
-      <div class="section-icon home"></div>
-    </div>
-    <div class="small-10 medium-5 column">
-    <h4 class="caps">Your Home</h4>
-    {% if data.structured.prepare.shake_snugs %}
-      {% for snugget in data.structured.prepare.shake_snugs %}
-        {% if snugget.sub_section.name != "header" %}
-          {% show_snugget snugget %}
+    <ul class="tabs disaster-tabs" data-tab>
+      {% for section, values in data.groups.items %}
+        {% if forloop.first %}
+          <li class="tab-title active"><a href="#{{section}}">{{section}}</a></li>
+        {% else %}
+          <li class="tab-title"><a href="#{{section}}">{{section}}</a></li>
         {% endif %}
       {% endfor %}
-    {% endif %}
-    {% for snugget in data.structured.prepare.deform_snugs %}
-      {% if snugget.sub_section.name != "header" %}
-        {% show_snugget snugget %}
+    </ul>
+    <div class="tabs-content disaster-content">
+    {% for section, values in data.groups.items %}
+      {% if forloop.first %}
+        <div class="content active" id="{{section}}">
+      {% else %}
+        <div class="content" id="{{section}}">
       {% endif %}
+        {% for value in values %}
+          {{ value.section.name }}
+          {% show_snugget value %}
+        {% endfor %}
+      </div>
     {% endfor %}
     </div>
   </div>
-
 
   <div class="row">
     <div class="small-2 medium-1 column">
       <div class="section-icon routes"></div>
     </div>
     <div class="small-10 medium-5 column">
-      <h4 class="caps">Know Your Routes</h4>
-      <p>Make sure your family and friends know where to gather after {{ location.disaster_name }} and how to get there. You'll need a reconnection plan. Do you cross a bridge on your way to school or work? It could be unsafe to cross after {{ location.disaster_name }}. Do you need an evacuation route? 
+      <h4>Know Your Routes</h4>
+      <p>Make sure your family and friends know where to gather after {{ location.disaster_name }} and how to get there.
       {% if location.evacuation_routes_link %}
-        <a href="{{ location.evacuation_routes_link }}">Find your route.</a>
+        Or <a href="{{ location.evacuation_routes_link }}">find an evacuation route</a>.
       {% endif %}
       </p>
-      <p>Also be aware that some major roads won't be safe or passable during and after {{ location.disaster_name }}. Contact your local public works department or <a href="{{ location.emergency_management_link }}">Office of Emergency Management</a> in advance to find out which routes could potentially be impassable in your area.</p>
     </div>
 
     <div class="small-2 medium-1 column">
       <div class="section-icon leaders"></div>
     </div>
     <div class="small-10 medium-5 column">
-      <h4 class="caps">Know Your Leaders</h4>
-      <p>Contacting local officials with questions and concerns can further preparedness efforts in your community. Recommended people to contact: building officials, who can assess vulnerable structures, local emergency planning committees, and <a href="http://www.commoncause.org/take-action/find-elected-officials/">elected officials</a>.</p>
+      <h4>Know Your Leaders</h4>
+      <p>Contact your <a href="{{ location.emergency_management_link }}">Office of Emergency Management</a> in advance to find out more about how to prepare yourself.</p>
     </div>
   </div>
 
@@ -183,8 +65,8 @@ Add templateMomentSnuggets here
       <div class="section-icon community"></div>
     </div>
     <div class="small-10 medium-5 column end">
-      <h4 class="caps">The Importance of Community</h4>
-      <p>The most crucial thing you can do to increase the resiliency of your community is connect with your neighbors to plan as a group. One way to do this is through Community Emergency Response Teams. <a href="https://www.fema.gov/community-emergency-response-teams">Find out how to join or start a community team.</a></p>
+      <h4>The Importance of Community</h4>
+      <p>You can connect with your neighbors to plan as a group. Find out how to join or start a <a href="https://www.fema.gov/community-emergency-response-teams">community emergency response team.</a></p>
     </div>
   </div>
 

@@ -1,6 +1,5 @@
 import os
 import subprocess
-import sys
 
 import shapefile
 
@@ -74,10 +73,6 @@ def main():
       loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
       loadImports += "    lm_" + stem + ".save(strict=True, verbose=verbose)\n\n"
 
-      viewsSnuggetMatches += "            if snugget_content['structured']['moment']['" + stem + "_snugs']:\n"
-      viewsSnuggetMatches += "                wrapper_width += base_section_width\n"
-      viewsSnuggetMatches += "                n_sections += 1\n"
-
       print("")
       first = False
 
@@ -113,8 +108,6 @@ def main():
   outputGeneratedCode(loadMappings, loadFile, "Insert generated loadMappings here")
   outputGeneratedCode(loadPaths, loadFile, "Insert generated loadPaths here")
   outputGeneratedCode(loadImports, loadFile, "Insert generated loadImports here")
-
-  outputGeneratedCode(viewsSnuggetMatches, viewsFile, "Insert generated viewsSnuggetMatches here")
 
   print("\n")
 
@@ -250,7 +243,7 @@ def modelClassGen(stem, sf, keyField, srs, shapeType):
 
 def modelsGeoFilterGen(stem, keyField):
   text = "        qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
-  text += "        " + stem + "_rating = " + "qs_" + stem + ".values.list('" + keyField.lower() + "', flat=True)\n"
+  text += "        " + stem + "_rating = " + "qs_" + stem + ".values_list('" + keyField.lower() + "', flat=True)\n"
   text += "        " + stem + "_snuggets = " + "Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact=" + stem + "_rating).select_subclasses()\n\n"
   return text
 
