@@ -10,6 +10,14 @@ body {
   color: #444;
 }
 
+h3 {
+  font-weight: bold;
+}
+
+h5 {
+  font-weight: bold;
+}
+
 /* helper classes for colors and fonts */
 .sans-serif {  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
 .vert-pad-large { padding: 3em 0; }
@@ -47,6 +55,7 @@ body {
   font-size: 34px;
   line-height: 1.2em;
 }
+
 #location-text {
   color: #444444;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -89,10 +98,16 @@ body {
   height: 400px;
 }
 
-/* main content and snugget styles */
-.chapter-content p {
-  font-size: 1.25em;
-  line-height: 1.5em;
+.disaster-content {
+  background-color: #ffffff;
+}
+
+.disaster-container {
+  background-color: #efefef;
+}
+
+.snugget-text {
+  margin: 5px;
 }
 
 .section-icon {
@@ -156,7 +171,7 @@ body {
   font-size: 50px;
   line-height: .9em;
   margin: 0 15px;
-  color: #FF9933;
+  color: #5e001d;
 }
 .supply-kit .text-label {
   padding-top: .2em;
@@ -169,12 +184,21 @@ body {
   line-height: 1em;
 }
 
-#geek-box h6 {
-    color: #717273;
+#geek-box {
+  background-color: #ccccdd;
+  color: #717273;
 }
 
-#geek-box p {
-    color: #717273;
+#geek-box-container {
+  background-color: #ccccdd;
+}
+
+#geek-box a {
+  color: #004444;
+}
+
+#geek-box h6 {
+  color: #444444;
 }
 
 /* loading spinner during geolocation */
@@ -189,6 +213,23 @@ body {
   background-size: 110px 110px;
 }
 
+.project-title .project-subtitle {
+  text-align: center;
+}
+
+.location-instructions-small {
+  display: none;
+}
+
+.location-instructions-large {
+  display: block;
+}
+
+.tab-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
 /* adjustments for smaller screens */
 @media only screen and (max-width: 40em) {
 
@@ -198,10 +239,12 @@ body {
   .project-title {
     font-size: 50px;
     line-height: 1.2em;
+    text-align: center;
   }
   .project-subtitle {
     font-size: 20px;
     line-height: 1.2em;
+    text-align: center;
   }
   .location-label {
     font-size: 22px;
@@ -232,17 +275,59 @@ body {
      font-size: 1.25em;
   }
 
+  .location-instructions-large {
+    display: none;
+  }
 
+  .location-instructions-small {
+    display: block;
+  }
 
 }
 
 /* adjustments for the smallest screens */
 @media only screen and (max-width: 26em) {
+  #location-text {
+    color: #444444;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 1.3em;
+    border-color: #e1e1e1;
+    border-width: 1px;
+  }
 
+  .organization-information {
+    margin-top: 20px;
+  }
+
+  .project-title {
+    font-size: 30px;
+    line-height: 1.2em;
+    text-align: center;
+  }
+  .project-subtitle {
+    font-size: 16px;
+    line-height: 1.2em;
+    text-align: center;
+  }
   .section-icon {
     width: 40px;
     height: 40px;
     background-size: 40px auto;
+  }
+
+  .tab-title {
+    font-size: 16px;
+  }
+
+  .title-header {
+    padding: 5px;
+    background-color: #ccccdd;
+  }
+
+  .information-instructions {
+    padding: 5px;
   }
 
   .section-icon.kit         { background-position: 0 -40px; }
