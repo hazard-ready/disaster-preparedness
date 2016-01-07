@@ -37,7 +37,6 @@ def main():
           
 def processRow(appName, snuggetFile, cur, overwriteAll, row):
   filterColumn = row["shapefile"] + "_filter_id"
-  # "section" -> world_snugget.section_id
   sectionID = getSectionID(appName, row["section"], cur)
 
   # check if a snugget for this data already exists
@@ -165,9 +164,9 @@ def removeOldSnugget(appName, sectionID, filterColumn, filterID, cur):
 
 # Check with the user about overwriting existing snuggets, giving them the options to:
 # either quit and check what's going on, or say "yes to all" and not get prompted again.
-def askUserAboutOverwriting(row, oldSnugget, oldSnuggets, snuggetFile, overwriteAll):
-  if overwriteAll: # if it's already set, then don't do anything else
-    return overwriteAll
+def askUserAboutOverwriting(row, oldSnugget, oldSnuggets, snuggetFile, overwriteAlreadySet):
+  if overwriteAlreadySet: # if it's already set, then don't do anything else
+    return True
   else:
     if oldSnugget is not None:
       print("In shapefile", row["shapefile"], "there is already a snugget defined for section" , row["section"], "intensity", row["lookup_value"], "with the following text content:")
@@ -177,8 +176,8 @@ def askUserAboutOverwriting(row, oldSnugget, oldSnuggets, snuggetFile, overwrite
       for snugget in oldSnuggets:
         print(snugget)
     else: 
-      # if no existing snuggets were found, then we neither need to ask the user this time nor change overwriteAll
-      return overwriteAll
+      # if no existing snuggets were found, then we neither need to ask the user this time nor change overwriteAll in the calling function
+      return overwriteAlreadySet
 
     print("Please enter one of the following letters to choose how to proceed:")
     print("R: Replace the existing snugget[s] with the new value loaded from", snuggetFile, " and ask again for the next one.")
