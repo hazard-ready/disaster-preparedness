@@ -165,7 +165,7 @@ h5 {
   font-size: 50px;
   line-height: .9em;
   margin: 0 15px;
-  color: #FF9933;
+  color: #5e001d;
 }
 .supply-kit .text-label {
   padding-top: .2em;
@@ -181,6 +181,10 @@ h5 {
 #geek-box {
   background-color: #ccccdd;
   color: #717273;
+}
+
+#geek-box-container {
+  background-color: #ccccdd;
 }
 
 #geek-box a {
