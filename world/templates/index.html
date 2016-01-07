@@ -28,37 +28,42 @@
 
 </head>
 <body>
+{% block header %}
   <div class="row">
-    <h2 class="project-title caps">{{ settings.site_title }}</h2>
-    <h5 class="project-subtitle">{{ settings.site_description }}</h5>
-    <p>This site is designed to help people prepare for disasters that can occur in their area. {{ settings.about_text }}</p>
-    <p>{{ location.disaster_description }}</p>
-    <p>Give your location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your risks and how to prepare.</p>
+    <div class="title-header">
+      <h2 class="project-title caps">{{ settings.site_title }}</h2>
+      <h3 class="project-subtitle">{{ settings.site_description }}</h3>
+    </div>
+    <div class="information-instructions">
+      <p class="organization-information">{{ settings.about_text }} This site is designed to help people prepare for disasters that can occur in their area.</p>
+      <p>{{ location.disaster_description }}</p>
+      <p class="location-instructions-large">Give your location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your risks and how to prepare.</p>
+      <p class="location-instructions-small">Give your location by typing in the box below or clicking 'find me'. You'll get a personalized report on your risks and how to prepare.</p>
+    </div>
   </div>
+{% endblock header %}
 
 {% block search %}
-      <div class="location-form vert-pad-small ">
-
-        <div class="row hidden-for-medium-up">
-          <div class="small-6 small-centered columns form-icon-button">
-             <a class="auto-location-submit blue-bg button radius caps">Find Me</a>
-          </div>
-        </div>
-
+      <div class="location-form">
         <div class="row">
            <div class="small-12 medium-8 medium-push-1 columns">
                <div class="row collapse">
                  <div class="small-10 columns">
-                   <input id="location-text" type="text" placeholder="Enter your address in {{ location.area_name }}" />
+                   <input id="location-text" type="text" placeholder="An address in {{ location.area_name }}" />
                    <div class="geocode-error-message"></div>
                  </div>
                  <div class="small-2 end columns">
                    <a id="location-submit" class="blue-bg button postfix"></a>
                  </div>
                </div>
-           </div>
-           <div class="small-12 hide-for-small medium-3 columns form-icon-button">
-              <a class="auto-location-submit blue-bg button radius caps">Find Me</a>
+              <div class="row hidden-for-medium-up">
+                <div class="small-6 small-centered columns form-icon-button">
+                   <a class="auto-location-submit blue-bg button radius caps">Find Me</a>
+                </div>
+                <div class="small-12 hide-for-small medium-3 columns form-icon-button">
+                  <a class="auto-location-submit blue-bg button radius caps">Find Me</a>
+               </div>
+              </div>
            </div>
         </div>
       </div>
@@ -70,7 +75,7 @@
           <div id="map" style="height: 400px;"></div>
         </div>
       <div class="small-12 medium-5 column">
-        <h4 class="caps">What are my disaster risks?</h4>
+        <h3 class="caps">What are my disaster risks?</h3>
         <h5 class>What to Expect</h5>
         <p>{{ settings.site_title }} predicts what you will experience during {{ location.disaster_name }} based on your location in {{ location.area_name }}.</p>
 
