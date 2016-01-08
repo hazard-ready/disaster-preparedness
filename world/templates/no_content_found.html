@@ -1,6 +1,19 @@
 {% extends "index.html" %}
 {% load staticfiles %}
 
+{% block header %}
+  <div class="row">
+    <div class="title-header">
+      <h2 class="project-title caps">{{ settings.site_title }}</h2>
+      <h3 class="project-subtitle">{{ settings.site_description }}</h3>
+    </div>
+    <div class="information-instructions">
+      <p class="location-instructions-large">Give your location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your risks and how to prepare.</p>
+      <p class="location-instructions-small">Give your location by typing in the box below or clicking 'find me'. You'll get a personalized report on your risks and how to prepare.</p>
+    </div>
+  </div>
+{% endblock header %}
+
 {% block map %}
   <div class="row">
     <div class="small-12 column">
@@ -13,8 +26,8 @@
 {% block main-content %}
     <div class="row vert-pad-medium">
         <div class="medium-8 column medium-push-1">
-          <h3 class="caps">Oops!</h3>
-          <div class="chapter-content underline">
+          <h3 class="caps">No information available.</h3>
+          <div>
             <p>It looks like your location is outside of {{ location.area_name }}.</p>
             <p>While we value and promote resilience everywhere, the data that powers this site isn't available for other places.</p>
         </div>
