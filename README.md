@@ -89,6 +89,7 @@ Save them to your `.bash_profile` or equivalent.
     2. You'll need to apply the "Using a virtualenv" addition.
     3. You'll need to set up a `/static/` alias pointing to `cascadiaprepared/static`
     4. Depending on your server configuration, you *may* also need to set up a redirect rule to add trailing slashes to URLs, to get the static files (CSS, images etc) included.
+    5. You may also need to alter the `STATIC_URL` constant in `settings.py` based on your server setup
 3. Set up the environment values from above (`DJANGO_SECRET_KEY` and `DATABASE_URL`) for all users by putting their declarations in `/etc/environment/` and rebooting the machine.
 
 ### Use foreman to run the server Heroku-style
@@ -110,6 +111,7 @@ Save them to your `.bash_profile` or equivalent.
     2. `load.run()`
     3. `exit()`
 6. `python snugget_load.py`
+7. `python manage.py collectstatic`
 7. Restart the web server *(TODO: figure out if there's a way to just get Django to restart without rebooting Apache/etc)*
 8. Add manual snuggets if necessary.
 9. test.
