@@ -169,10 +169,10 @@ def askUserAboutOverwriting(row, oldSnugget, oldSnuggets, snuggetFile, overwrite
     return True
   else:
     if oldSnugget is not None:
-      print("In shapefile", row["shapefile"], "there is already a snugget defined for section" , row["section"], "intensity", row["lookup_value"], "with the following text content:")
+      print("In shapefile", repr(row["shapefile"]), "there is already a snugget defined for section" , repr(row["section"]), "intensity", repr(row["lookup_value"]), "with the following text content:")
       print(oldSnugget)
     elif oldSnuggets != []:
-      print("In shapefile", row["shapefile"], "there are existing snuggets for section", row["section"], "with the following text content:")
+      print("In shapefile", repr(row["shapefile"]), "there are existing snuggets for section", repr(row["section"]), "with the following text content:")
       for snugget in oldSnuggets:
         print(snugget)
     else: 
