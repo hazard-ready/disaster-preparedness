@@ -251,22 +251,23 @@ def modelsGeoFilterGen(stem, keyField):
 
 
 def outputGeneratedCode(code, destFile, anchor):
-  startFound = False
-  endFound = False
+  linesWanted = True
+  insertComplete = False
   tempFile = destFile + ".tmp"
   with open(destFile, 'r') as f_in:
     with open (tempFile, 'w') as f_out:
       for line in f_in:
-        if startFound:
+        if not linesWanted:
           if ("# END OF GENERATED CODE BLOCK") in line:
-            endFound = True
-        if (not startFound) or endFound:
+            linesWanted = True
+            insertComplete = True
+        if linesWanted:
           f_out.write(line)
         if ("# " + anchor) in line:
-          startFound = True
+          linesWanted = False
           f_out.write(code) 
             
-  if endFound:
+  if insertComplete:
     os.remove(destFile)
     os.rename(tempFile, destFile)
     print(anchor, "code written to", destFile)
