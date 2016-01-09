@@ -16,9 +16,10 @@ def app_view(request):
         if len(lat) > 0:
             snugget_content = Snugget.findSnuggetsForPoint(lat=float(lat), lng=float(lng))
 
-            for keys, values in snugget_content['groups'].items():
-                if values:
-                    template = 'found_content.html'
+            if snugget_content is not None:
+                for keys, values in snugget_content['groups'].items():
+                    if values:
+                        template = 'found_content.html'
                 
         return render(request, template, {
             'location': location,
