@@ -5,6 +5,7 @@ from solo.admin import SingletonModelAdmin
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminModelImports
+from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings
 # END OF GENERATED CODE BLOCK
 ######################################################
 
@@ -17,6 +18,15 @@ class SnuggetAdmin(admin.ModelAdmin):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminLists
+    fieldsets = (
+        (None, {
+            'fields': ('section', 'sub_section'),
+        }),
+        ('Filters', {
+            'description': 'Choose a filter value this snugget will show up for.',
+            'fields': ((),)
+            }),
+    )
 # END OF GENERATED CODE BLOCK
 ######################################################
 
