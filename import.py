@@ -83,6 +83,9 @@ def main():
   modelsSnuggetReturns += modelsSnuggetRatings.strip(",\n") + "\n"
   modelsSnuggetReturns += "                }\n"
 
+  # make sure this gets its own line of code
+  adminModelImports += "\n"
+  
   # assembling the complete lists for the start of class SnuggetAdmin in admin.py
   adminLists = "    list_display = ('shortname', 'section', 'sub_section', " + adminFilterRefs + ")\n"
   adminLists += "    list_filter = ('section', 'sub_section', " + adminFilterRefs + ")\n\n"
