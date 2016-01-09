@@ -3,19 +3,20 @@ from django.contrib.gis.utils import LayerMapping
 
 
 ######################################################
-# Insert generated loadMappings here
+# GENERATED CODE GOES HERE
+# DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
+# loadMappings
+# END OF GENERATED CODE BLOCK
 ######################################################
-
-
-######################################################
-# Insert generated loadPaths here
-######################################################
-
+# note to self: loadPaths comes right after loadMappings
 
 
 def run(verbose=True):
 
 ######################################################
-# Insert generated loadImports here
+# GENERATED CODE GOES HERE
+# DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
+# loadImports
+# END OF GENERATED CODE BLOCK
 ######################################################
-    
+

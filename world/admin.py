@@ -2,8 +2,10 @@ from django.contrib.gis import admin
 from embed_video.admin import AdminVideoMixin
 from solo.admin import SingletonModelAdmin
 ######################################################
-# Replace the next line with generated adminModelImports
-from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings
+# GENERATED CODE GOES HERE
+# DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
+# adminModelImports
+# END OF GENERATED CODE BLOCK
 ######################################################
 
 admin.site.register(SnuggetSection, admin.ModelAdmin)
@@ -12,7 +14,10 @@ admin.site.register(SnuggetSubSection, admin.ModelAdmin)
 
 class SnuggetAdmin(admin.ModelAdmin):
 ######################################################
-# Insert generated adminLists here
+# GENERATED CODE GOES HERE
+# DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
+# adminLists
+# END OF GENERATED CODE BLOCK
 ######################################################
     fieldsets = (
         (None, {
@@ -61,6 +66,8 @@ admin.site.register(SiteSettings, SingletonModelAdmin)
 admin.site.register(Location, SingletonModelAdmin)
 
 ######################################################
-# Insert generated adminSiteRegistrations here
+# GENERATED CODE GOES HERE
+# DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
+# adminSiteRegistrations
+# END OF GENERATED CODE BLOCK
 ######################################################
-

@@ -76,9 +76,11 @@ class Location(SingletonModel):
         verbose_name = "Location Information"
       
 ######################################################
-# Insert generated modelsClasses here
-######################################################
-        
+# GENERATED CODE GOES HERE
+# DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
+# modelsClasses
+# END OF GENERATED CODE BLOCK
+######################################################        
  
 class RecoveryLevels(models.Model):
     name = models.CharField(max_length=50)
@@ -145,8 +147,12 @@ class SnuggetSubSection(models.Model):
 
 class Snugget(models.Model):
     objects = InheritanceManager()
+    
 ######################################################
-# Insert generated modelsFilters here
+# GENERATED CODE GOES HERE
+# DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
+# modelsFilters
+# END OF GENERATED CODE BLOCK
 ######################################################
 
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
@@ -158,10 +164,13 @@ class Snugget(models.Model):
     @staticmethod
     def findSnuggetsForPoint(lat=0, lng=0, merge_deform = True):
         pnt = Point(lng, lat)
-######################################################
-# Insert generated modelsGeoFilters here
-######################################################
 
+######################################################
+# GENERATED CODE GOES HERE
+# DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
+# modelsGeoFilters
+# END OF GENERATED CODE BLOCK
+######################################################
 
 ######################################################
 # Insert generated modelsSnuggetReturns here
