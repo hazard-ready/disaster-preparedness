@@ -37,7 +37,8 @@ def main():
           
 def processRow(appName, snuggetFile, cur, overwriteAll, row):
   filterColumn = row["shapefile"] + "_filter_id"
-  sectionID = getSectionID(appName, row["section"], cur)
+  sectionID = getSectionID(appName, row["section"], cur, subsection=False)
+  subSectionID = getSectionID(appName, row["subsection"], cur, subsection=True)
 
   # check if a snugget for this data already exists
   # if we have a lookup value then deal with this value specifically:
@@ -96,14 +97,19 @@ def readColumnsFrom(appName, table, cur):
 
 
 
-def getSectionID(appName, sectionName, cur):
-  cur.execute("SELECT MIN(id) FROM " + appName + "_snuggetsection WHERE name = %s;", [sectionName])
+def getSectionID(appName, sectionName, cur, subsection=False):
+  if subsection:
+    tableName = appName + "_snuggetsubsection"
+  else:
+    tableName = appName + "_snuggetsection"
+  
+  cur.execute("SELECT MIN(id) FROM " + tableName + " WHERE name = %s;", [sectionName])
   sectionID = cur.fetchone()[0]
   if sectionID is not None:
     return sectionID
   else: # if no sectionID was found then we need to create the section
-    cur.execute("INSERT INTO " + appName + "_snuggetsection(name) VALUES(%s);", [sectionName])
-    cur.execute("SELECT id FROM " + appName + "_snuggetsection WHERE name = %s;", [sectionName])
+    cur.execute("INSERT INTO " + tableName + "(name) VALUES(%s);", [sectionName])
+    cur.execute("SELECT id FROM " + tableName + " WHERE name = %s;", [sectionName])
     sectionID = cur.fetchone()[0]
     return sectionID
   
