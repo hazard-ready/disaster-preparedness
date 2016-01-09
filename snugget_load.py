@@ -38,33 +38,33 @@ def main():
 def processRow(appName, snuggetFile, cur, overwriteAll, row):
   filterColumn = row["shapefile"] + "_filter_id"
   sectionID = getSectionID(appName, row["section"], cur, subsection=False)
-  subSectionID = getSectionID(appName, row["subsection"], cur, subsection=True)
+  subsectionID = getSectionID(appName, row["subsection"], cur, subsection=True)
 
   # check if a snugget for this data already exists
   # if we have a lookup value then deal with this value specifically:
   if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
     filterIDs = [findFilterID(appName, row["shapefile"], row["lookup_value"], cur)]
-    oldSnugget = checkForSnugget(appName, sectionID, filterColumn, filterIDs[0], cur)
+    oldSnugget = checkForSnugget(appName, sectionID, subsectionID, filterColumn, filterIDs[0], cur)
     overwriteAll = askUserAboutOverwriting(row, oldSnugget, [], snuggetFile, overwriteAll)
   else: 
     filterIDs = findAllFilterIDs(appName, row["shapefile"], cur)
     oldSnuggets = []
     for filterID in filterIDs:
-      oldSnugget = checkForSnugget(appName, sectionID, filterColumn, filterID, cur)
+      oldSnugget = checkForSnugget(appName, sectionID, subsectionID, filterColumn, filterID, cur)
       if oldSnugget is not None and oldSnugget not in oldSnuggets:
         oldSnuggets.append(oldSnugget)
     overwriteAll = askUserAboutOverwriting(row, None, oldSnuggets, snuggetFile, overwriteAll)
 
   for filterID in filterIDs:
-    removeOldSnugget(appName, sectionID, filterColumn, filterID, cur)
-    addTextSnugget(appName, row, sectionID, filterColumn, filterID, cur)
+    removeOldSnugget(appName, sectionID, subsectionID, filterColumn, filterID, cur)
+    addTextSnugget(appName, row, sectionID, subsectionID, filterColumn, filterID, cur)
   
   return overwriteAll
               
               
              
           
-def addTextSnugget(appName, row, sectionID, filterColumn, filterID, cur):
+def addTextSnugget(appName, row, sectionID, subsectionID, filterColumn, filterID, cur):
 #   "heading" -> world_textsnugget.heading (null as '')
 #   "intensity" -> world_textsnugget.percentage (numeric, null as null)
 #   "image" -> world_textsnugget.image
@@ -72,10 +72,10 @@ def addTextSnugget(appName, row, sectionID, filterColumn, filterID, cur):
   if row["intensity"] == '':
     row["intensity"] = None
   cur.execute(
-    'INSERT INTO ' + appName + '_snugget (section_id, "' + filterColumn + '") VALUES (%s, %s);', 
-    (str(sectionID), str(filterID))
+    'INSERT INTO ' + appName + '_snugget (section_id, sub_section_id, "' + filterColumn + '") VALUES (%s, %s, %s);', 
+    (str(sectionID), str(subsectionID), str(filterID))
   )
-  snuggetID = getSnuggetID(appName, sectionID, filterColumn, filterID, cur);
+  snuggetID = getSnuggetID(appName, sectionID, subsectionID, filterColumn, filterID, cur);
   cur.execute(
     'INSERT INTO ' + appName + '_textsnugget (snugget_ptr_id, content, heading, image, percentage) VALUES (%s, %s, %s, %s, %s);',
     (snuggetID, row["text"], row["heading"], row["image"], row["intensity"])
@@ -133,10 +133,10 @@ def findAllFilterIDs(appName, shapefile, cur):
 
 
 
-def getSnuggetID(appName, sectionID, filterColumn, filterID, cur):
+def getSnuggetID(appName, sectionID, subsectionID, filterColumn, filterID, cur):
   cur.execute(
-    'SELECT MAX(id) FROM ' + appName + '_snugget WHERE section_id = %s AND "' + filterColumn + '" = %s;',
-    (sectionID, filterID)
+    'SELECT MAX(id) FROM ' + appName + '_snugget WHERE section_id = %s AND sub_section_id = %s AND "' + filterColumn + '" = %s;',
+    (sectionID, subsectionID, filterID)
   )
   snuggetID = cur.fetchone()[0]
   if snuggetID is not None:
@@ -147,9 +147,9 @@ def getSnuggetID(appName, sectionID, filterColumn, filterID, cur):
 
 
 
-def checkForSnugget(appName, sectionID, filterColumn, filterID, cur):
+def checkForSnugget(appName, sectionID, subsectionID, filterColumn, filterID, cur):
   try:
-    snuggetID = getSnuggetID(appName, sectionID, filterColumn, filterID, cur)
+    snuggetID = getSnuggetID(appName, sectionID, subsectionID, filterColumn, filterID, cur)
     cur.execute("SELECT content FROM " + appName + "_textsnugget WHERE snugget_ptr_id = %s;", [snuggetID])
     return cur.fetchone()[0]
   except: # if nothing came back from the DB, just return None rather than failing
@@ -157,8 +157,8 @@ def checkForSnugget(appName, sectionID, filterColumn, filterID, cur):
 
   
   
-def removeOldSnugget(appName, sectionID, filterColumn, filterID, cur):
-  snuggetID = getSnuggetID(appName, sectionID, filterColumn, filterID, cur)
+def removeOldSnugget(appName, sectionID, subsectionID, filterColumn, filterID, cur):
+  snuggetID = getSnuggetID(appName, sectionID, subsectionID, filterColumn, filterID, cur)
   if snuggetID is not None:
     cur.execute("DELETE FROM " + appName + "_textsnugget WHERE snugget_ptr_id = %s;", [snuggetID])
     cur.execute("DELETE FROM " + appName + "_snugget WHERE id = %s;", [snuggetID])
