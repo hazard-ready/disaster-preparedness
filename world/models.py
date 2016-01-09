@@ -172,9 +172,6 @@ class Snugget(models.Model):
 # END OF GENERATED CODE BLOCK
 ######################################################
 
-######################################################
-# Insert generated modelsSnuggetReturns here
-######################################################
 
 
     def __str__(self):

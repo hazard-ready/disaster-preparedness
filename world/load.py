@@ -8,7 +8,6 @@ from django.contrib.gis.utils import LayerMapping
 # loadMappings
 # END OF GENERATED CODE BLOCK
 ######################################################
-# note to self: loadPaths comes right after loadMappings
 
 
 def run(verbose=True):
