@@ -83,6 +83,9 @@ def main():
   modelsSnuggetReturns += modelsSnuggetRatings.strip(",\n") + "\n"
   modelsSnuggetReturns += "                }\n"
 
+  # make sure this gets its own line of code
+  adminModelImports += "\n"
+  
   # assembling the complete lists for the start of class SnuggetAdmin in admin.py
   adminLists = "    list_display = ('shortname', 'section', 'sub_section', " + adminFilterRefs + ")\n"
   adminLists += "    list_filter = ('section', 'sub_section', " + adminFilterRefs + ")\n\n"
@@ -96,18 +99,16 @@ def main():
   adminLists += "        })\n"
   adminLists += "    )\n"
 
-  outputGeneratedCode(modelsClasses, modelsFile, "Insert generated modelsClasses here")
-  outputGeneratedCode(modelsFilters, modelsFile, "Insert generated modelsFilters here")
-  outputGeneratedCode(modelsGeoFilters, modelsFile, "Insert generated modelsGeoFilters here")
-  outputGeneratedCode(modelsSnuggetReturns, modelsFile, "Insert generated modelsSnuggetReturns here")
+  outputGeneratedCode(modelsClasses, modelsFile, "modelsClasses")
+  outputGeneratedCode(modelsFilters, modelsFile, "modelsFilters")
+  outputGeneratedCode(modelsGeoFilters + "\n" + modelsSnuggetReturns, modelsFile, "modelsGeoFilters")
 
-  outputGeneratedCode(adminModelImports, adminFile, "Replace the next line with generated adminModelImports", replace=True)
-  outputGeneratedCode(adminLists, adminFile, "Insert generated adminLists here", replace=True)
-  outputGeneratedCode(adminSiteRegistrations, adminFile, "Insert generated adminSiteRegistrations here")
+  outputGeneratedCode(adminModelImports, adminFile, "adminModelImports")
+  outputGeneratedCode(adminLists, adminFile, "adminLists")
+  outputGeneratedCode(adminSiteRegistrations, adminFile, "adminSiteRegistrations")
 
-  outputGeneratedCode(loadMappings, loadFile, "Insert generated loadMappings here")
-  outputGeneratedCode(loadPaths, loadFile, "Insert generated loadPaths here")
-  outputGeneratedCode(loadImports, loadFile, "Insert generated loadImports here")
+  outputGeneratedCode(loadMappings + "\n" + loadPaths, loadFile, "loadMappings")
+  outputGeneratedCode(loadImports, loadFile, "loadImports")
 
   print("\n")
 
@@ -249,16 +250,31 @@ def modelsGeoFilterGen(stem, keyField):
 
 
 
-def outputGeneratedCode(code, destFile, anchor, replace=False):
-  print("\n######################################################\n")
-  if replace:
-    prompt = "Replace the line[s] after the '" + anchor + "' comment in " + destFile + " with the following code:\n"
+def outputGeneratedCode(code, destFile, anchor):
+  linesWanted = True
+  insertComplete = False
+  tempFile = destFile + ".tmp"
+  with open(destFile, 'r') as f_in:
+    with open (tempFile, 'w') as f_out:
+      for line in f_in:
+        if not linesWanted:
+          if ("# END OF GENERATED CODE BLOCK") in line:
+            linesWanted = True
+            insertComplete = True
+        if linesWanted:
+          f_out.write(line)
+        if ("# " + anchor) in line:
+          linesWanted = False
+          f_out.write(code) 
+            
+  if insertComplete:
+    os.remove(destFile)
+    os.rename(tempFile, destFile)
+    print(anchor, "code written to", destFile)
   else:
-    prompt = "Insert the following code after the '" + anchor + "' comment in " + destFile + "\n\n"
-  print(prompt)
-  print(code)
+    print(anchor, "not found in", destFile)
 
-
-
+  
+  
 if __name__ == "__main__":
   main()
