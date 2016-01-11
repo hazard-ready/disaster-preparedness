@@ -40,6 +40,15 @@ h5 {
    color: #444;
 }
 
+.title-header {
+  padding: 5px;
+  background-color: #ccccdd;
+}
+
+.top-header {
+  max-width: none;
+}
+
 .underline:after {
   display: block;
   content: " ";
@@ -104,6 +113,10 @@ h5 {
 
 .disaster-container {
   background-color: #efefef;
+}
+
+.information-instructions {
+  padding: 5px;
 }
 
 .snugget-text {
@@ -236,6 +249,7 @@ h5 {
   #location-submit {
     background-size: 23px 23px;
   }
+
   .project-title {
     font-size: 50px;
     line-height: 1.2em;
@@ -319,15 +333,6 @@ h5 {
 
   .tab-title {
     font-size: 16px;
-  }
-
-  .title-header {
-    padding: 5px;
-    background-color: #ccccdd;
-  }
-
-  .information-instructions {
-    padding: 5px;
   }
 
   .section-icon.kit         { background-position: 0 -40px; }
