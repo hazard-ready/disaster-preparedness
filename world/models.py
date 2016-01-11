@@ -79,6 +79,54 @@ class Location(SingletonModel):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # modelsClasses
+class EQ_Fault_Buffer(models.Model):
+    snugget_id = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = models.GeoManager()
+
+    def __str__(self):
+        return str(self.snugget_id)
+
+class EQ_GroundShaking_MostLike(models.Model):
+    intensity = models.IntegerField()
+    geom = models.MultiPolygonField(srid=4326)
+    objects = models.GeoManager()
+
+    def __str__(self):
+        return str(self.intensity)
+
+class EQ_Historic_Distance(models.Model):
+    lookup_val = models.IntegerField()
+    geom = models.MultiPolygonField(srid=4326)
+    objects = models.GeoManager()
+
+    def __str__(self):
+        return str(self.lookup_val)
+
+class Fire_hist_nrocky_1889_2003_all(models.Model):
+    lookup_val = models.IntegerField()
+    geom = models.MultiPolygonField(srid=4326)
+    objects = models.GeoManager()
+
+    def __str__(self):
+        return str(self.lookup_val)
+
+class Flood_FEMA_DFIRM_2015(models.Model):
+    femades = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = models.GeoManager()
+
+    def __str__(self):
+        return str(self.femades)
+
+class MT_groundshaking(models.Model):
+    intensity = models.IntegerField()
+    geom = models.MultiPolygonField(srid=4326)
+    objects = models.GeoManager()
+
+    def __str__(self):
+        return str(self.intensity)
+
 # END OF GENERATED CODE BLOCK
 ######################################################        
  
@@ -152,6 +200,12 @@ class Snugget(models.Model):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # modelsFilters
+    EQ_Fault_Buffer_filter = models.ForeignKey(EQ_Fault_Buffer, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    EQ_GroundShaking_MostLike_filter = models.ForeignKey(EQ_GroundShaking_MostLike, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    EQ_Historic_Distance_filter = models.ForeignKey(EQ_Historic_Distance, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    Fire_hist_nrocky_1889_2003_all_filter = models.ForeignKey(Fire_hist_nrocky_1889_2003_all, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    Flood_FEMA_DFIRM_2015_filter = models.ForeignKey(Flood_FEMA_DFIRM_2015, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    MT_groundshaking_filter = models.ForeignKey(MT_groundshaking, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
 # END OF GENERATED CODE BLOCK
 ######################################################
 
@@ -169,6 +223,46 @@ class Snugget(models.Model):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # modelsGeoFilters
+        qs_EQ_Fault_Buffer = EQ_Fault_Buffer.objects.filter(geom__contains=pnt)
+        EQ_Fault_Buffer_rating = qs_EQ_Fault_Buffer.values_list('snugget_id', flat=True)
+        EQ_Fault_Buffer_snuggets = Snugget.objects.filter(EQ_Fault_Buffer_filter__snugget_id__exact=EQ_Fault_Buffer_rating).select_subclasses()
+
+        qs_EQ_GroundShaking_MostLike = EQ_GroundShaking_MostLike.objects.filter(geom__contains=pnt)
+        EQ_GroundShaking_MostLike_rating = qs_EQ_GroundShaking_MostLike.values_list('intensity', flat=True)
+        EQ_GroundShaking_MostLike_snuggets = Snugget.objects.filter(EQ_GroundShaking_MostLike_filter__intensity__exact=EQ_GroundShaking_MostLike_rating).select_subclasses()
+
+        qs_EQ_Historic_Distance = EQ_Historic_Distance.objects.filter(geom__contains=pnt)
+        EQ_Historic_Distance_rating = qs_EQ_Historic_Distance.values_list('lookup_val', flat=True)
+        EQ_Historic_Distance_snuggets = Snugget.objects.filter(EQ_Historic_Distance_filter__lookup_val__exact=EQ_Historic_Distance_rating).select_subclasses()
+
+        qs_Fire_hist_nrocky_1889_2003_all = Fire_hist_nrocky_1889_2003_all.objects.filter(geom__contains=pnt)
+        Fire_hist_nrocky_1889_2003_all_rating = qs_Fire_hist_nrocky_1889_2003_all.values_list('lookup_val', flat=True)
+        Fire_hist_nrocky_1889_2003_all_snuggets = Snugget.objects.filter(Fire_hist_nrocky_1889_2003_all_filter__lookup_val__exact=Fire_hist_nrocky_1889_2003_all_rating).select_subclasses()
+
+        qs_Flood_FEMA_DFIRM_2015 = Flood_FEMA_DFIRM_2015.objects.filter(geom__contains=pnt)
+        Flood_FEMA_DFIRM_2015_rating = qs_Flood_FEMA_DFIRM_2015.values_list('femades', flat=True)
+        Flood_FEMA_DFIRM_2015_snuggets = Snugget.objects.filter(Flood_FEMA_DFIRM_2015_filter__femades__exact=Flood_FEMA_DFIRM_2015_rating).select_subclasses()
+
+        qs_MT_groundshaking = MT_groundshaking.objects.filter(geom__contains=pnt)
+        MT_groundshaking_rating = qs_MT_groundshaking.values_list('intensity', flat=True)
+        MT_groundshaking_snuggets = Snugget.objects.filter(MT_groundshaking_filter__intensity__exact=MT_groundshaking_rating).select_subclasses()
+
+
+        return {'groups': {
+                          'EQ_Fault_Buffer_snugs': EQ_Fault_Buffer_snuggets,
+                          'EQ_GroundShaking_MostLike_snugs': EQ_GroundShaking_MostLike_snuggets,
+                          'EQ_Historic_Distance_snugs': EQ_Historic_Distance_snuggets,
+                          'Fire_hist_nrocky_1889_2003_all_snugs': Fire_hist_nrocky_1889_2003_all_snuggets,
+                          'Flood_FEMA_DFIRM_2015_snugs': Flood_FEMA_DFIRM_2015_snuggets,
+                          'MT_groundshaking_snugs': MT_groundshaking_snuggets
+                          },
+                'EQ_Fault_Buffer_rating': EQ_Fault_Buffer_rating,
+                'EQ_GroundShaking_MostLike_rating': EQ_GroundShaking_MostLike_rating,
+                'EQ_Historic_Distance_rating': EQ_Historic_Distance_rating,
+                'Fire_hist_nrocky_1889_2003_all_rating': Fire_hist_nrocky_1889_2003_all_rating,
+                'Flood_FEMA_DFIRM_2015_rating': Flood_FEMA_DFIRM_2015_rating,
+                'MT_groundshaking_rating': MT_groundshaking_rating
+                }
 # END OF GENERATED CODE BLOCK
 ######################################################
 
