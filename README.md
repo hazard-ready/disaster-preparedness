@@ -147,7 +147,7 @@ Once `snuggets.csv` is ready, simply put it and the relevant shapefiles in `worl
 
 If you make changes to `snuggets.csv` you should only need to re-run `python snugget_load.py` and possibly restart your web server.
 
-If you make changes to the shapefiles, or change which field from the shapefiles you want to use as the ID, then you will also need to remove the `world/data/reprojected` and `word/data/simplified` directories that the importer had created. It uses these to avoid having to repeat the time-consuming reprojection and simplification of the shapefiles every time it is run, but that means changes to the shapefiles themselves won't be picked up unless they are removed.
+If you make changes to the shapefiles, or change which field from the shapefiles you want to use as the ID, then before running `python import.py` you will also need to remove the `world/data/reprojected` and `word/data/simplified` directories that the importer had created. It uses these to avoid having to repeat the time-consuming reprojection and simplification of the shapefiles every time it is run, but that means changes to the shapefiles themselves won't be picked up unless they are removed.
 
 If you have existing data that needs to be removed—perhaps because you are replacing our sample data, or retiring a shapefile you previously used—you may have to clear the database first.  To do this:
 
@@ -168,7 +168,7 @@ Using QGIS or ArcGIS, add two columns to the shapefile: one with a lookup value 
 
 #### If you can't edit the shapefile, or are more comfortable editing code
 
-Take a look at `world/models.py`, `world/load.py` and `world/admin.py` after running the automated pipeline on some sample data, and write appropriate equivalents for all of the generated code (marked by prominent comments) that fit your data and text model. Then run just the `manage.py` parts of the [Load Some Data](#load-some-data), and use the Django admin panel to enter snuggets by hand.
+Take a look at `world/models.py`, `world/load.py` and `world/admin.py` after running the automated pipeline on some sample data, and write appropriate equivalents for all of the generated code (marked by prominent comments) that fit your data and text model. You may also need to edit `world/templates/found_content.html` which is the page template to be displayed when there is at least one snugget available for a location. Then run just the `manage.py` parts of the [Load Some Data](#load-some-data), and use the Django admin panel to enter snuggets by hand.
 
 If you have some data that fits that automated import model and some that does not, you can combine the two. Just watch for three things:
 
