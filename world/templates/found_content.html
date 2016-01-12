@@ -58,29 +58,26 @@
       {% include "supply-kit.html" %}
     </div>
 
-    <div class="small-10 medium-5 column">
-      <h4>Get Hazard Ready</h4>
-      <p>Make sure your family and friends know where to gather after {{ location.disaster_name }} and how to get there.
-      {% if location.evacuation_routes_link %}
-        Or <a href="{{ location.evacuation_routes_link }}">find an evacuation route</a>.
-      {% endif %}
-      </p>
+    <div class="small-10 medium-5 column end">
+      <h4>Stay Tuned</h4>
+      <h6>Winter Weather, Wind &amp; Thunderstorms</h6>
+      <p>Weather can strike at anytime. Keep up to date on weather advisories for Missoula County with this <a href="http://www.wrh.noaa.gov/map/?wfo=mso">handy interactive web map</a>.<p>
+      <p>Weather can strike at anytime. Keep up to date on weather advisories for Missoula County with <a href="http://alerts.weather.gov/cap/wwaatmget.php?x=MTC063&y=1">NOAA alerts</a>.</p>
+      <h6>Volcano</h6>
+      <p>Though no volcanoes exist in Missoula County it is possible that a Cascade Volcanic Eruption could impact the area by covering it is volcanic ash. To stay up to date on current volcano conditions <a href=" http://volcanoes.usgs.gov/observatories/cvo/">click here</a>.</p>
     </div>
 
-    <div class="small-10 medium-5 column end">
-      <h4>Community Leaders</h4>
-      <p>Contact your <a href="{{ location.emergency_management_link }}">Office of Emergency Management</a> in advance to find out more about how to prepare yourself.</p>
-    </div>
   </div>
 
   <div class="row">
-    <div class="small-10 medium-5 column end">
-      <h4>Stay Tuned</h4>
-      <p>Real time weather alerts and information goes here</p>
-    </div>
       <div class="small-10 medium-5 column end">
+      <h4>Community Leaders</h4>
+      <p>Contact your <a href="{{ location.emergency_management_link }}">Office of Emergency Management</a> in advance to find out more about how to prepare yourself.</p>
+    </div>
+
+    <div class="small-10 medium-5 column end">
       <h4>Important Links</h4>
-      <p>Important Links go here - should the kids' activities and community blog stuff go here?</p>
+      <p>Important Links about community resources go here.</p>
     </div>
   </div> 
 
