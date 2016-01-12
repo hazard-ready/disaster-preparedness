@@ -23,7 +23,7 @@ Set up a virtual environment so that you can freely install python modules witho
 2. Move to the project directory (e.g. `/Applications/MAMP/htdocs/disaster-preparedness`).
 3. `virtualenv --python=python3 venv --no-site-packages` 
 4. Wait for things to happen.
-5. `source venv/bin/activate`  (type `deactivate` to leave)
+5. `source venv/bin/activate`  (type `deactivate` to leave). Remember to reactivate the virtual environment every time you open a terminal window and start running Python commands.
 6. `pip install -r requirements.txt` or `pip3 install -r requirements.txt` to automatically install the Python dependencies listed in [requirements.txt](./requirements.txt). 
 
 *On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.*  
@@ -33,9 +33,7 @@ Set up a virtual environment so that you can freely install python modules witho
 
 **TODO: can we combine what are currently our "world" and "cascadiaprepared" folders, and get rid of the "aftershock" one entirely?**
 
-Included is an app called World that was used to initially figure out
-how GeoDjango works.  "Real" work will probably be taking place in another app
-written slightly better and with all of the datasets modelled better.
+Currently, the data and Django files for this app live in the `world` directory, while static content and web hosting config are in `cascadiaprepared`.
 
 ## Written using:
 * Postgres version: 9.4 
@@ -67,24 +65,28 @@ This assumes `python` is the command configured to run the correct python versio
 *[detailed instructions for reference](http://postgis.net/docs/manual-2.1/postgis_installation.html#create_new_db_extensions)*
 5. Set up an environment variable `DATABASE_URL` that will be used by the Django Database URL app to load our database.
   * example on Mac/Linux: `export DATABASE_URL="postgres://USER:PASSWORD@HOST:PORT/DBNAME"` where the USER & PASSWORD are the django account you created above in postgres, and the default HOST:PORT is localhost:5432 .
-6. Run `python manage.py migrate` to initialize the database's structure.
-7. Unzip `data.zip` inside world, so that the data is in `world/data`. This data includes some sample shapefiles and related data for Missoula County, Montana, USA, to get you started. See below for instructions on replacing this with your own data.
-8. `python import.py` to process these shapefiles and update some Django code to fit. The script will prompt you for which field to use to look up snuggets (see below for definition), here is a list that corresponds to the sample data we have provided (shapefilename: fieldname):
-    * `EQ_Fault_Buffer`: snugget_ID
-    * `EQ_GroundShaking_MostLike`: Intensity
-    * `EQ_Historic_Distance`: lookup_val
-    * `Fire_hist_nrocky_1889_2003_all`: lookup_val
-    * `Flood_FEMA_DFIRM_2015`: FEMADES
-    * `MT_groundshaking`: intensity
-9. `python manage.py makemigrations` - this and the next 2 steps combined load the new data into the database.
-10. `python manage.py migrate`
-11. `python manage.py shell`
+6. `source venv/bin/activate` if you haven't already activated the virtualenv this session. 
+7. Run `python manage.py migrate` to initialize the database's structure.
+
+### Load some data
+0. `source venv/bin/activate` if you haven't already activated the virtualenv this session.
+1. Unzip `data.zip` inside world, so that the data is in `world/data`. This data includes some sample shapefiles and related data for Missoula County, Montana, USA, to get you started. See below for instructions on replacing this with your own data.
+2. `python import.py` to process these shapefiles and update some Django code to fit. The script will prompt you for which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition), here is a list that corresponds to the sample data we have provided (shapefilename: fieldname):
+    * `EQ_Fault_Buffer` : snugget_ID
+    * `EQ_GroundShaking_MostLike` : Intensity
+    * `EQ_Historic_Distance` : lookup_val
+    * `Fire_hist_nrocky_1889_2003_all` : lookup_val
+    * `Flood_FEMA_DFIRM_2015` : FEMADES
+    * `MT_groundshaking` : intensity
+3. `python manage.py makemigrations` - this and the next 2 steps combined load the new data into the database.
+4. `python manage.py migrate`
+5. `python manage.py shell`
     1. [inside the shell that this opens] `from world import load`
     2. `load.run()`
     3. `exit()` [to go back to the normal command line]
-12. `python snugget_load.py` to import text that will be displayed in the site.  See below for an explanation of "snuggets" and the format of this file.
-13. `python manage.py createsuperuser` and follow the instructions to add a Django admin user
-14. If you don't already have web hosting set up, you can test your work on localhost:8000 with `python manage.py runserver`
+6. `python snugget_load.py` to import text that will be displayed in the site.  See [Adding New Data](#adding-new-data) below for an explanation of "snuggets" and the format of this file.
+7. If this is your first time through, or you emptied the database before loading new data: `python manage.py createsuperuser` and follow the instructions to add a Django admin user
+8. If you don't already have web hosting set up, you can test your work on localhost:8000 with `python manage.py runserver`
 
 #### Environmental Variable Permanence
 On Linux/Mac, as soon as you close your shell you lose those nice complicated database urls.
@@ -104,7 +106,7 @@ Save them to your `.bash_profile` or equivalent.
     2. You'll need to apply the "Using a virtualenv" addition.
     3. You'll need to set up a `/static/` alias pointing to `cascadiaprepared/static`
     4. Depending on your server configuration, you *may* also need to set up a redirect rule to add trailing slashes to URLs, to get the static files (CSS, images etc) included.
-    5. You may also need to alter the `STATIC_URL` constant in `settings.py` based on your server setup
+    5. You may also need to alter the `STATIC_URL` constant in `settings.py` based on your server setup.
 3. Set up the environment values from above (`DJANGO_SECRET_KEY` and `DATABASE_URL`) for all users by putting their declarations in `/etc/environment/` and rebooting the machine.
 
 ### Use foreman to run the server Heroku-style
@@ -115,11 +117,61 @@ Save them to your `.bash_profile` or equivalent.
 
 ## Adding new data
 
-*Hooray!  Much of the process is now automated.  Still TODO: make this documentation clearer and add suggestions for less standardised content.*
+### What you need
 
-0. Export a shapefile with an attribute that can be used to look up appropriate snugget text and intensity values for each shape. It can be in any SRS, and it doesn't matter if there are additional attributes, but be aware that those will be lost in the import. *Note that if you use multiple shapefiles that cover different areas (e.g. some cover a county and some cover a whole state), users will see partial results without a warning that there's missing data. For clearest results, crop all your shapefiles to the same area.*
-1. Put it into `/world/data/`
-2. [then skip to 8 of the initial deploy instructions]
-8. [Re]start the web server *(TODO: figure out if there's a way to just get Django to restart without rebooting Apache/etc)*
-9. Add manual snuggets if necessary.
-10. test.
+1. At least one shapefile, meeting the following requirements:
+    1. Each shapefile's attribute table must contain a column with a unique identifier for each set of text to display (e.g. all the areas for which you want to display "Expected ground shaking: severe" have one ID, and all the areas for which you want to display "Expected ground shaking: moderate" have another). This column will be used to look up text when a user selects a location.
+    2. That column's name must comply with the [Django field name restrictions](https://docs.djangoproject.com/en/1.9/topics/db/models/#field-name-restrictions), including not being one of the [Python 3 reserved words](https://stackoverflow.com/questions/22864221/is-the-list-of-python-reserved-words-and-builtins-available-in-a-library/22864250#22864250). For example, if the column is called `id`, `object`, `map`, `property` or `type`, you'll have to rename it.
+    3. It doesn't matter which coordinate reference system the shapefile has been saved with, but if you're making them yourself then we recommend using EPSG:4326, because the import pipeline will reproject it to that anyway.
+    4. If you have multiple shapefiles, clip them all to cover the same area. Otherwise, if users click on a location that is covered by some shapefiles but not others they will see partial data without a clear explanation that there is missing data.
+2. Some text content to display when a user chooses a location in one or more of your shapefiles. In this project, the text content is referred to as **snuggets**, from "story nuggets".
+
+### Fully automated pipeline
+
+If the structure of your text content is simple enough, you can import shapefiles and snuggets automatically without having to do much manual work. We recommend using this pathway if possible, because it makes moving the site to a new server significantly easier. To do this, you will need a `snuggets.csv` file with the same columns as the example one we've included in `data.zip`.  The columns can be in any order, but the headings must be exactly as typed here:
+
+* `section` : A section name that will be displayed on the page (must not be empty)
+* `subsection` : A subsection name (must not be empty) **TODO: allow empty values for subsection**
+* `shapefile` : The file name for the shapefile this row corresponds to, without the extenstion. For example: `EQ_GroundShaking_MostLike` for text that relates to the content of `EQ_GroundShaking_MostLike.shp`. (must not be empty; must correspond exactly to the available shapefiles)
+* `heading` : A human-readable heading that describes the content of this shapefile, to be displayed on the page.
+* `lookup_value` : The value of the unique identifier in the shapefile (e.g. an intensity value or a hazard classification). This field can be empty; if it is then the rest of this row will be applied to every available value.
+* `intensity` : Relative severity scaled from 0-100, to display graphically on the page. If this is empty, or if a value is provided for `image`, it will simply not be displayed.
+* `image` : The file name for an image, stored `cascadiaprepared/static/img`, that illustrates the severity. If this is empty it won't be displayed. If there is a value here, it overrides the value of `intensity`.
+* `text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria.
+
+You can have any number of sections and subsections, but every row must be a unique combination of `shapefile`, `section`, `subsection` and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used.
+
+Once `snuggets.csv` is ready, simply put it and the relevant shapefiles in `world/data` (and remove any other files or subdirectories from there), and follow the instructions in [Load Some Data](#load-some-data) above.
+
+#### Updating existing data
+
+If you make changes to `snuggets.csv` you should only need to re-run `python snugget_load.py` and possibly restart your web server.
+
+If you make changes to the shapefiles, or change which field from the shapefiles you want to use as the ID, then you will also need to remove the `world/data/reprojected` and `word/data/simplified` directories that the importer had created. It uses these to avoid having to repeat the time-consuming reprojection and simplification of the shapefiles every time it is run, but that means changes to the shapefiles themselves won't be picked up unless they are removed.
+
+If you have existing data that needs to be removed—perhaps because you are replacing our sample data, or retiring a shapefile you previously used—you may have to clear the database first.  To do this:
+
+1. `psql -d [DBNAME] -c "DROP SCHEMA public CASCADE;"`
+2. `psql -d [DBNAME] -c "CREATE SCHEMA public;"`
+3. `psql -d [DBNAME] -c "CREATE EXTENSION postgis;"`
+4. `python manage.py migrate` - if this step throws errors, delete all the .py files in `world/migrations` **except** `__init__.py` and `0001_initial.py`, and try again.
+
+Then continue with the instructions in [Load Some Data](#load-some-data) above.
+
+### Working with more complex text templates
+
+You may want to use multiple fields from a shapefile to fill in blanks from a template, such as "In year [YEAR] the [FIRENAME] fire burned [AREA] acres here". The automated import pipeline is not sophisticated enough to do this for you, so you have two options:
+
+#### If you can edit the shapefile
+
+Using QGIS or ArcGIS, add two columns to the shapefile: one with a lookup value composed of all the variables you're using (e.g. `[FIRENAME]_[YEAR]_[AREA]`), and one with the complete text. You can create both of these using calculdated fields in either program. Then copy-paste the attribute table into Excel or an equivalent, and use the complete texts to populate the `text` column of `snuggets.csv` and the lookup values for the `lookup_value` column. With this, you can use the automated pipeline to do the rest.
+
+#### If you can't edit the shapefile, or are more comfortable editing code
+
+Take a look at `world/models.py`, `world/load.py` and `world/admin.py` after running the automated pipeline on some sample data, and write appropriate equivalents for all of the generated code (marked by prominent comments) that fit your data and text model. Then run just the `manage.py` parts of the [Load Some Data](#load-some-data), and use the Django admin panel to enter snuggets by hand.
+
+If you have some data that fits that automated import model and some that does not, you can combine the two. Just watch for three things:
+
+1. You'll have to reproject the shapefiles that aren't going through the import pipeline to EPSG:4326 yourself.
+2. Put the shapefiles that aren't being manually imported somewhere other than `world/data` to keep them out of the automated pipeline.
+3. Be very careful to avoid putting any of your manually edited code between the `# GENERATED CODE GOES HERE` and `# END OF GENERATED CODE BLOCK` comment pairs in the Python files, because that part gets overwritten by `import.py` each time.
