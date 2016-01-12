@@ -136,7 +136,7 @@ If the structure of your text content is simple enough, you can import shapefile
 * `heading` : A human-readable heading that describes the content of this shapefile, to be displayed on the page.
 * `lookup_value` : The value of the unique identifier in the shapefile (e.g. an intensity value or a hazard classification). This field can be empty; if it is then the rest of this row will be applied to every available value.
 * `intensity` : Relative severity scaled from 0-100, to display graphically on the page. If this is empty, or if a value is provided for `image`, it will simply not be displayed.
-* `image` : The file name for an image, stored `cascadiaprepared/static/img`, that illustrates the severity. If this is empty it won't be displayed. If there is a value here, it overrides the value of `intensity`.
+* `image` : The file name for an image, stored in `cascadiaprepared/static/img`, that illustrates the severity. If this is empty it won't be displayed. If there is a value here, it overrides the value of `intensity`.
 * `text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria.
 
 You can have any number of sections and subsections, but every row must be a unique combination of `shapefile`, `section`, `subsection` and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used.
@@ -145,7 +145,7 @@ Once `snuggets.csv` is ready, simply put it and the relevant shapefiles in `worl
 
 #### Updating existing data
 
-If you make changes to `snuggets.csv` you should only need to re-run `python snugget_load.py` and possibly restart your web server.
+If you make changes to `snuggets.csv` you should only need to re-run `python snugget_load.py` and restart your web server.
 
 If you make changes to the shapefiles, or change which field from the shapefiles you want to use as the ID, then before running `python import.py` you will also need to remove the `world/data/reprojected` and `word/data/simplified` directories that the importer had created. It uses these to avoid having to repeat the time-consuming reprojection and simplification of the shapefiles every time it is run, but that means changes to the shapefiles themselves won't be picked up unless they are removed.
 
