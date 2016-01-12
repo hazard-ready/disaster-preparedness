@@ -114,6 +114,11 @@ h5 {
   padding: 5px;
 }
 
+.disaster-tabs {
+  background-color: #ccccdd;
+  padding: 5px;
+}
+
 .disaster-tabs-content {
   background-color: #ccccdd;
 }
@@ -250,6 +255,11 @@ h5 {
   font-weight: bold;
 }
 
+.tabs-content > .content {
+  width: auto;
+}
+
+
 .tabs dd.active a, .tabs .tab-title.active a {
   background-color: #ccccdd;
 }
@@ -343,7 +353,8 @@ h5 {
   }
 
   .tab-title {
-    font-size: 16px;
+    float: right !important;
+    width: 95%;
   }
 
   .section-icon.kit         { background-position: 0 -40px; }
