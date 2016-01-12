@@ -29,16 +29,16 @@
 </head>
 <body>
 {% block header %}
-  <div class="row">
+  <div class="row top-header">
     <div class="title-header">
       <h2 class="project-title caps">{{ settings.site_title }}</h2>
       <h3 class="project-subtitle">{{ settings.site_description }}</h3>
     </div>
     <div class="information-instructions">
-      <p class="organization-information">{{ settings.about_text }} This site is designed to help people prepare for disasters that can occur in their area.</p>
+      <p class="organization-information">{{ settings.about_text }}</p>
       <p>{{ location.disaster_description }}</p>
-      <p class="location-instructions-large">Give your location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your risks and how to prepare.</p>
-      <p class="location-instructions-small">Give your location by typing in the box below or clicking 'find me'. You'll get a personalized report on your risks and how to prepare.</p>
+      <p class="location-instructions-large">Give your location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your risks and steps you can take to prepare.</p>
+      <p class="location-instructions-small">Give your location by typing in the box below or clicking 'find me'. You'll get a personalized report on your risks and steps you can take to prepare.</p>
     </div>
   </div>
 {% endblock header %}
@@ -75,15 +75,15 @@
           <div id="map" style="height: 400px;"></div>
         </div>
       <div class="small-12 medium-5 column">
-        <h3 class="caps">What are my disaster risks?</h3>
+        <h3 class="caps">What am I at risk for?</h3>
         <h5 class>What to Expect</h5>
-        <p>{{ settings.site_title }} predicts what you will experience during {{ location.disaster_name }} based on your location in {{ location.area_name }}.</p>
+        <p>{{ settings.site_title }} predicts what you will experience for each disaster based on your location in {{ location.area_name }}.</p>
+
+        <h5>In Recent History</h5>
+        <p>Find out what disasters have struck {{ location.area_name }} in the past. See photos, news articles, and more.</p>
 
         <h5>How to Prepare</h5>
-        <p>Find out how to prepare for disasters in {{ location.area_name }}.</p>
-
-        <h5>Past Events</h5>
-        <p>What has happened in the past where you are, during {{ location.disaster_name }}? See descriptions and photos.</p>
+        <p>You have the power to make a difference. Find out how you can protect your loved ones and be ready for the next event.</p>
       </div>
       </div>
 {% endblock map %}

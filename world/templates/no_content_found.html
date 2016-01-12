@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block header %}
-  <div class="row">
+  <div class="row top-header">
     <div class="title-header">
       <h2 class="project-title caps">{{ settings.site_title }}</h2>
       <h3 class="project-subtitle">{{ settings.site_description }}</h3>
@@ -29,7 +29,7 @@
           <h3 class="caps">No information available.</h3>
           <div>
             <p>It looks like your location is outside of {{ location.area_name }}.</p>
-            <p>While we value and promote resilience everywhere, the data that powers this site isn't available for other places.</p>
+            <p>While we value and promote resilience everywhere, the data that powers this site isn't available for other places yet.</p>
         </div>
       </div>
     </div>
