@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from math import floor
+from collections import OrderedDict
 from .models import Snugget, Location, SiteSettings
 
 
@@ -16,7 +16,7 @@ def app_view(request):
         if len(lat) > 0:
             snugget_content = Snugget.findSnuggetsForPoint(lat=float(lat), lng=float(lng))
 
-            data = {}
+            data = OrderedDict()
             if snugget_content is not None:
                 for key, values in snugget_content['groups'].items():
                     sections = {}
@@ -26,15 +26,15 @@ def app_view(request):
                         for text_snugget in values:
                             sections[text_snugget.section] = text_snugget
                 
-                    data[key] = {
-                        'heading': heading,
-                        'sections': sections
-                    }
+                        data[key] = {
+                            'heading': heading,
+                            'sections': sections
+                        }
 
         return render(request, template, {
             'location': location,
             'settings': settings,
-            'data': data,
+            'data': data
         })
 
 
