@@ -30,6 +30,7 @@ def main():
         newSnuggets = csv.DictReader(csvFile)
         for row in newSnuggets:
           overwriteAll = processRow(appName, snuggetFile, cur, overwriteAll, row)
+  print("Snugget load complete.")
 
 
           
