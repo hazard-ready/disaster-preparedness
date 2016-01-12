@@ -22,7 +22,7 @@
 {% endblock map %}
 
 {% block main-content %}
-  <div class="row">
+  <div class="row disaster-container">
     <div class="small-12 column">
       <ul class="tabs disaster-tabs" data-tab>
         {% for group, hazard in data.items %}
@@ -33,7 +33,7 @@
           {% endif %}
         {% endfor %}
       </ul>
-      <div class="tabs-content disaster-container">
+      <div class="tabs-content disaster-tabs-content">
       {% for group, hazard in data.items %}
         {% if forloop.first %}
           <div class="content active disaster-content" id="{{group}}">
