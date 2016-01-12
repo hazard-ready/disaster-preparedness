@@ -1,10 +1,10 @@
 $( document ).ready(function() {
   $(document).foundation();
 
-  // Initial map values for Oregon overview
-  var lat = "44.1";
-  var lng = "-120.5";
-  var zoom = "6";
+  // Initial map values for Missoula overview
+  var lat = "46.874359";
+  var lng = "-113.974229";
+  var zoom = "8";
 
   // convenience function to extract url parameters
   function getURLParameter(name) {
