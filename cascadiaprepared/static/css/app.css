@@ -114,11 +114,6 @@ h5 {
   padding: 5px;
 }
 
-.disaster-tabs {
-  background-color: #ccccdd;
-  padding: 5px;
-}
-
 .disaster-tabs-content {
   background-color: #ccccdd;
 }
@@ -367,6 +362,11 @@ h5 {
 
   .chart-meter {
       width:28px;
+  }
+
+.disaster-tabs {
+    background-color: #ccccdd;
+    padding: 5px;
   }
 
 }
