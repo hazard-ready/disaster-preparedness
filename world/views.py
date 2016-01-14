@@ -16,7 +16,7 @@ def app_view(request):
         if len(lat) > 0:
             snugget_content = Snugget.findSnuggetsForPoint(lat=float(lat), lng=float(lng))
 
-            data = OrderedDict()
+            data = {}
             if snugget_content is not None:
                 for key, values in snugget_content['groups'].items():
                     sections = {}
@@ -34,7 +34,7 @@ def app_view(request):
         return render(request, template, {
             'location': location,
             'settings': settings,
-            'data': data
+            'data': OrderedDict(sorted(data.items(), key=lambda t: t[0]))
         })
 
 
