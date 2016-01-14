@@ -155,11 +155,11 @@ h5 {
 
 .intensity-meter {
     float:left;
+    margin-right: 5px;
     width:100px;
 }
 
 .intensity-content {
-  float:left;
   margin-top: 10px;
 }
 
