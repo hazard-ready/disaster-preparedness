@@ -42,7 +42,7 @@
         {% endif %}
           {% for section, value in hazard.sections.items %}
             <div class="snugget-text">
-              <h4>{{ section }}</h4>
+              <h4 class="section-title">{{ section }}</h4>
               {% show_snugget value %}
             </div>
           {% endfor %}
