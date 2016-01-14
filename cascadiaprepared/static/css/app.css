@@ -127,6 +127,7 @@ h5 {
 }
 
 .snugget-text {
+  display:inline-block;
   margin: 5px;
 }
 
@@ -152,13 +153,18 @@ h5 {
   margin: 15px 0;
 }
 
-.chart-meter {
+.intensity-meter {
     float:left;
-    width:40px;
-    height: 18px;
-    background-color: #f1f2f3;
-    border: 1px solid #888;
-    margin-bottom: 0.5em;
+    width:100px;
+}
+
+.intensity-content {
+  float:left;
+  margin-top: 10px;
+}
+
+.intensity {
+  margin-bottom:20px;
 }
 
 .light-color { color: #006666;}
@@ -252,6 +258,10 @@ h5 {
 
 .tabs-content > .content {
   width: auto;
+}
+
+.tabs-content > .content.active {
+  display:inline-block;
 }
 
 
