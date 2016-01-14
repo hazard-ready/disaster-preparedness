@@ -74,7 +74,7 @@
      id="layer1"
      transform="translate(-105.07686,-245.57977)">
     <path
-       style="fill:#5e001d;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#f03b20;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
        id="path5274"
        sodipodi:type="arc"
        sodipodi:cx="282.42093"
@@ -94,9 +94,9 @@
        sodipodi:cx="282.47815"
        sodipodi:type="arc"
        id="path5984"
-       style="fill:#64822d;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none" />
+       style="fill:#fed976;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none" />
     <path
-       style="fill:#006666;fill-opacity:1;stroke:#2c2c2c;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ffffb2;fill-opacity:1;stroke:#2c2c2c;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path5986"
        sodipodi:type="arc"
        sodipodi:cx="282.19339"
@@ -107,7 +107,7 @@
        sodipodi:end="3.7699112"
        d="M 107.19339,423.43023 A 175,175 0 0 1 140.61542,320.56782 L 282.19339,423.43024 Z" />
     <path
-       style="fill:#d7642d;fill-opacity:1;stroke:#2c2c2c;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#fd8d3c;fill-opacity:1;stroke:#2c2c2c;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path5992"
        sodipodi:type="arc"
        sodipodi:cx="282.38025"
@@ -127,7 +127,7 @@
        sodipodi:cx="282.31772"
        sodipodi:type="arc"
        id="path5994"
-       style="fill:#c8a30a;fill-opacity:1;stroke:#2c2c2c;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#feb24c;fill-opacity:1;stroke:#2c2c2c;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        d="m 107.07684,422.57976 a 175,175 0 0 1 175.00001,-174.99999 175,175 0 0 1 174.99999,175 l -175,0 z"
        sodipodi:end="0"
