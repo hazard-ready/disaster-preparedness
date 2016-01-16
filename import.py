@@ -243,9 +243,12 @@ def modelClassGen(stem, sf, keyField, srs, shapeType):
 
 
 def modelsGeoFilterGen(stem, keyField):
-  text = "        qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
+  text  = "        qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
   text += "        " + stem + "_rating = " + "qs_" + stem + ".values_list('" + keyField.lower() + "', flat=True)\n"
-  text += "        " + stem + "_snuggets = " + "Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact=" + stem + "_rating).select_subclasses()\n\n"
+  text += "        " + stem + "_snuggets = []\n"
+  text += "        for rating in " + stem + "_rating:\n"
+  text += "            individualSnugget = Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact=" + stem + "_rating).select_subclasses()\n"
+  text += "            " + stem + "_snuggets.extend(individualSnugget)\n\n"
   return text
 
 
