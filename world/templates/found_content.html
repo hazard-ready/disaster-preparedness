@@ -40,10 +40,12 @@
         {% else %}
           <div class="content disaster-content" id="{{group}}">
         {% endif %}
-          {% for section, value in hazard.sections.items %}
+          {% for section, snuggets in hazard.sections.items %}
             <div class="snugget-text">
               <h4 class="section-title">{{ section }}</h4>
-              {% show_snugget value %}
+              {% for snugget in snuggets %}
+                {% show_snugget snugget %}
+              {% endfor %}
             </div>
           {% endfor %}
         </div>
