@@ -1,6 +1,17 @@
-{% extends "snugget.html" %}
-
 {% block snugget-content %}
   <h5>{{ value.sub_section.name }}</h5>
-  <p>{{ snugget.content }}</p>
+  {% if value.sub_section.name == "Intensity" %}
+  <div class="intensity">
+    <div class="intensity-meter">
+      {% if value.image %}
+        <img src="static/img/{{ value.image }}">
+      {% endif %}
+    </div>
+    <div class="intensity-content">
+      {{ snugget.content }}
+    </div>
+  </div>
+  {% else %}
+    <p>{{ snugget.content }}</p>
+  {% endif %}
 {% endblock %}
