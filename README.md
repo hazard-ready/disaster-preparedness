@@ -76,6 +76,7 @@ This assumes `python` is the command configured to run the correct python versio
     * `EQ_GroundShaking_MostLike` : Intensity
     * `EQ_Historic_Distance` : lookup_val
     * `Fire_hist_nrocky_1889_2003_all` : lookup_val
+    * `fire_risk`: DN
     * `Flood_FEMA_DFIRM_2015` : FEMADES
     * `MT_groundshaking` : intensity
 3. `python manage.py makemigrations` - this and the next 2 steps combined load the new data into the database.
@@ -126,6 +127,8 @@ Save them to your `.bash_profile` or equivalent.
     4. If you have multiple shapefiles, clip them all to cover the same area. Otherwise, if users click on a location that is covered by some shapefiles but not others they will see partial data without a clear explanation that there is missing data.
 2. Some text content to display when a user chooses a location in one or more of your shapefiles. In this project, the text content is referred to as **snuggets**, from "story nuggets".
 
+If you have raster data, first convert it to a shapefile.  See [Converting raster files](#converting-raster-files) below for pointers if you don't already know how to do that.
+
 ### Fully automated pipeline
 
 If the structure of your text content is simple enough, you can import shapefiles and snuggets automatically without having to do much manual work. We recommend using this pathway if possible, because it makes moving the site to a new server significantly easier. To do this, you will need a `snuggets.csv` file with the same columns as the example one we've included in `data.zip`.  The columns can be in any order, but the headings must be exactly as typed here:
@@ -175,3 +178,35 @@ If you have some data that fits that automated import model and some that does n
 1. You'll have to reproject the shapefiles that aren't going through the import pipeline to EPSG:4326 yourself.
 2. Put the shapefiles that aren't being manually imported somewhere other than `world/data` to keep them out of the automated pipeline.
 3. Be very careful to avoid putting any of your manually edited code between the `# GENERATED CODE GOES HERE` and `# END OF GENERATED CODE BLOCK` comment pairs in the Python files, because that part gets overwritten by `import.py` each time.
+
+### Converting raster files
+
+The import pipeline doesn't currently have a way to handle raster data. Instead you'll have to convert the file to vector data first, and save the shapefile this creates in `world/data`. Here are three ways to do that:
+
+#### Using GDAL from the command line
+
+GDAL includes a [polygonize](http://www.gdal.org/gdal_polygonize.html) tool. If you have this available, then simply run:
+
+```shell
+gdal_polygonize.py RASTERFILENAME.tif -f 'ESRI Shapefile' OUTPUTFILENAME.shp
+```
+
+This is the preferred method if you already have GDAL installed, but if you don't then be aware that installing GDAL can be complicated. 
+
+The output file will have an attribute `DN` that contains the pixel values from the raster file.
+
+#### Using QGIS
+
+* Open the raster file in QGIS
+* Choose `Raster > Conversion > Polygonize` from the menus
+* Use the Select button by "Output file" to give this a destination in `world/data`, and leave the other options as they are
+* Click "OK" and be warned that it may take a while
+* When it's finished, check the shapefile it's created.  It likes to create lines instead of polygons - if it did that, then use `Vector > Geometry Tools > Lines to Polygons` to make an actual polygons file, and take the lines file out of `world/data`.
+
+The output file will have an attribute `DN` that contains the pixel values from the raster file.
+
+#### Using ArcGIS
+
+Try [these instructions](http://help.arcgis.com/en/arcgisdesktop/10.0/help/index.html#/Raster_to_Polygon/001200000008000000/).
+
+

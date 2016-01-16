@@ -87,7 +87,7 @@ def main():
   adminModelImports += "\n"
   
   # assembling the complete lists for the start of class SnuggetAdmin in admin.py
-  adminLists = "    list_display = ('shortname', 'section', 'sub_section', " + adminFilterRefs + ")\n"
+  adminLists  = "    list_display = ('shortname', 'section', 'sub_section', " + adminFilterRefs + ")\n"
   adminLists += "    list_filter = ('section', 'sub_section', " + adminFilterRefs + ")\n\n"
   adminLists += "    fieldsets = (\n"
   adminLists += "        (None, {\n"
@@ -231,7 +231,7 @@ def findFieldType(sf, fieldName):
 
 
 def modelClassGen(stem, sf, keyField, srs, shapeType):
-  text = "class " + stem + "(models.Model):\n"
+  text  = "class " + stem + "(models.Model):\n"
   text += "    " + keyField.lower() + " = models." + findFieldType(sf, keyField) + "\n"
   text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
   text += "    objects = models.GeoManager()\n\n"
