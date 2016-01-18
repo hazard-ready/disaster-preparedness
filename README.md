@@ -134,15 +134,17 @@ If you have raster data, first convert it to a shapefile.  See [Converting raste
 If the structure of your text content is simple enough, you can import shapefiles and snuggets automatically without having to do much manual work. We recommend using this pathway if possible, because it makes moving the site to a new server significantly easier. To do this, you will need a `snuggets.csv` file with the same columns as the example one we've included in `data.zip`.  The columns can be in any order, but the headings must be exactly as typed here:
 
 * `section` : A section name that will be displayed on the page (must not be empty)
-* `subsection` : A subsection name (must not be empty) **TODO: allow empty values for subsection**
+* `subsection` : A subsection name (must not be empty)
 * `shapefile` : The file name for the shapefile this row corresponds to, without the extenstion. For example: `EQ_GroundShaking_MostLike` for text that relates to the content of `EQ_GroundShaking_MostLike.shp`. (must not be empty; must correspond exactly to the available shapefiles)
 * `heading` : A human-readable heading that describes the content of this shapefile, to be displayed on the page.
 * `lookup_value` : The value of the unique identifier in the shapefile (e.g. an intensity value or a hazard classification). This field can be empty; if it is then the rest of this row will be applied to every available value.
 * `intensity` : Relative severity scaled from 0-100, to display graphically on the page. If this is empty, or if a value is provided for `image`, it will simply not be displayed.
-* `image` : The file name for an image, stored in `cascadiaprepared/static/img`, that illustrates the severity. If this is empty it won't be displayed. If there is a value here, it overrides the value of `intensity`.
+* `image` : The file name for an image, stored in `cascadiaprepared/static/img`, that illustrates the severity. If this is empty it won't be displayed. If there is a value here (including '0' or NULL), it overrides the value of `intensity`.
 * `text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria.
 
-You can have any number of sections and subsections, but every row must be a unique combination of `shapefile`, `section`, `subsection` and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used.
+You can have any number of sections and subsections, but every row must be a unique combination of `shapefile`, `section`, `subsection` and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used. Note that this allows you to create a default value, by having a row with `lookup_value` blank (so it applies to all values present in the shapefile), followed by rows with specified `lookup_value`s which will overwrite the default for that value only.
+
+Blank rows or additional columns won't cause problems. Any row that is missing any of the required fields will simply be skipped.
 
 Once `snuggets.csv` is ready, simply put it and the relevant shapefiles in `world/data` (and remove any other files or subdirectories from there), and follow the instructions in [Load Some Data](#load-some-data) above.
 
