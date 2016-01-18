@@ -33,9 +33,13 @@ def main():
   print("Snugget load complete.")
 
 
-          
 
-          
+
+
+
+
+
+
 def processRow(appName, snuggetFile, cur, overwriteAll, row):
   filterColumn = row["shapefile"] + "_filter_id"
   sectionID = getSectionID(appName, row["section"], cur, subsection=False)
@@ -61,10 +65,10 @@ def processRow(appName, snuggetFile, cur, overwriteAll, row):
     addTextSnugget(appName, row, sectionID, subsectionID, filterColumn, filterID, cur)
   
   return overwriteAll
-              
-              
-             
-          
+
+
+
+
 def addTextSnugget(appName, row, sectionID, subsectionID, filterColumn, filterID, cur):
 #   "heading" -> world_textsnugget.heading (null as '')
 #   "intensity" -> world_textsnugget.percentage (numeric, null as null)
@@ -123,14 +127,16 @@ def findFilterID(appName, shapefile, key, cur):
   cur.execute("SELECT id FROM " + appName + "_" + shapefile + " WHERE " + keyColumn + "::text = %s;", [key])
   return str(cur.fetchone()[0])
 
-    
-    
+
+
+
 def findAllFilterIDs(appName, shapefile, cur):
   ids = []
   cur.execute("SELECT id FROM " + appName + "_" + shapefile + ";")
   for row in cur.fetchall():
     ids.extend(row)
   return ids
+
 
 
 
@@ -156,17 +162,17 @@ def checkForSnugget(appName, sectionID, subsectionID, filterColumn, filterID, cu
   except: # if nothing came back from the DB, just return None rather than failing
     return None
 
-  
-  
+
+
 def removeOldSnugget(appName, sectionID, subsectionID, filterColumn, filterID, cur):
   snuggetID = getSnuggetID(appName, sectionID, subsectionID, filterColumn, filterID, cur)
   if snuggetID is not None:
     cur.execute("DELETE FROM " + appName + "_textsnugget WHERE snugget_ptr_id = %s;", [snuggetID])
     cur.execute("DELETE FROM " + appName + "_snugget WHERE id = %s;", [snuggetID])
     print("Replacing snugget", snuggetID)
-    
 
-  
+
+
 
 
 # Check with the user about overwriting existing snuggets, giving them the options to:
@@ -201,7 +207,7 @@ def askUserAboutOverwriting(row, oldSnugget, oldSnuggets, snuggetFile, overwrite
     elif response == "R":
       return False
 
-      
+
 
 
 
