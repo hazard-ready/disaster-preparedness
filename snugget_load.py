@@ -34,7 +34,7 @@ def main():
           rowCount += 1
           if allRequiredFieldsPresent(row, optionalFields, rowCount):
             overwriteAll = processRow(appName, snuggetFile, cur, overwriteAll, row)
-  print("Snugget load complete.")
+  print("Snugget load complete. Processed", rowCount, "rows in", snuggetFile)
 
 
 
