@@ -71,14 +71,7 @@ This assumes `python` is the command configured to run the correct python versio
 ### Load some data
 0. `source venv/bin/activate` if you haven't already activated the virtualenv this session.
 1. Unzip `data.zip` inside world, so that the data is in `world/data`. This data includes some sample shapefiles and related data for Missoula County, Montana, USA, to get you started. See below for instructions on replacing this with your own data.
-2. `python import.py` to process these shapefiles and update some Django code to fit. The script will prompt you for which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition), here is a list that corresponds to the sample data we have provided (shapefilename: fieldname):
-    * `EQ_Fault_Buffer` : snugget_ID
-    * `EQ_GroundShaking_MostLike` : Intensity
-    * `EQ_Historic_Distance` : lookup_val
-    * `Fire_hist_nrocky_1889_2003_all` : lookup_val
-    * `fire_risk`: DN
-    * `Flood_FEMA_DFIRM_2015` : FEMADES
-    * `MT_groundshaking` : intensity
+2. `python import.py` to process these shapefiles and update some Django code to fit. The script will prompt you for which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition). If you use the example `data.zip` provided in this project, use the field name `lookup_val` for every shapefile except `Flood_FEMA_DFRIM_2015`, for which you should use `FEMADES`.
 3. `python manage.py makemigrations` - this and the next 2 steps combined load the new data into the database.
 4. `python manage.py migrate`
 5. `python manage.py shell`
@@ -125,6 +118,7 @@ Save them to your `.bash_profile` or equivalent.
     2. That column's name must comply with the [Django field name restrictions](https://docs.djangoproject.com/en/1.9/topics/db/models/#field-name-restrictions), including not being one of the [Python 3 reserved words](https://stackoverflow.com/questions/22864221/is-the-list-of-python-reserved-words-and-builtins-available-in-a-library/22864250#22864250). For example, if the column is called `id`, `object`, `map`, `property` or `type`, you'll have to rename it.
     3. It doesn't matter which coordinate reference system the shapefile has been saved with, but if you're making them yourself then we recommend using EPSG:4326, because the import pipeline will reproject it to that anyway.
     4. If you have multiple shapefiles, clip them all to cover the same area. Otherwise, if users click on a location that is covered by some shapefiles but not others they will see partial data without a clear explanation that there is missing data.
+    5. Multiple shapes may overlap, but each shape may only have one value for the lookup field. If you have multiple shapes with the same lookup value, the import process will combine them.
 2. Some text content to display when a user chooses a location in one or more of your shapefiles. In this project, the text content is referred to as **snuggets**, from "story nuggets".
 
 If you have raster data, first convert it to a shapefile.  See [Converting raster files](#converting-raster-files) below for pointers if you don't already know how to do that.
@@ -134,15 +128,17 @@ If you have raster data, first convert it to a shapefile.  See [Converting raste
 If the structure of your text content is simple enough, you can import shapefiles and snuggets automatically without having to do much manual work. We recommend using this pathway if possible, because it makes moving the site to a new server significantly easier. To do this, you will need a `snuggets.csv` file with the same columns as the example one we've included in `data.zip`.  The columns can be in any order, but the headings must be exactly as typed here:
 
 * `section` : A section name that will be displayed on the page (must not be empty)
-* `subsection` : A subsection name (must not be empty) **TODO: allow empty values for subsection**
+* `subsection` : A subsection name (must not be empty)
 * `shapefile` : The file name for the shapefile this row corresponds to, without the extenstion. For example: `EQ_GroundShaking_MostLike` for text that relates to the content of `EQ_GroundShaking_MostLike.shp`. (must not be empty; must correspond exactly to the available shapefiles)
 * `heading` : A human-readable heading that describes the content of this shapefile, to be displayed on the page.
 * `lookup_value` : The value of the unique identifier in the shapefile (e.g. an intensity value or a hazard classification). This field can be empty; if it is then the rest of this row will be applied to every available value.
 * `intensity` : Relative severity scaled from 0-100, to display graphically on the page. If this is empty, or if a value is provided for `image`, it will simply not be displayed.
-* `image` : The file name for an image, stored in `cascadiaprepared/static/img`, that illustrates the severity. If this is empty it won't be displayed. If there is a value here, it overrides the value of `intensity`.
+* `image` : The file name for an image, stored in `cascadiaprepared/static/img`, that illustrates the severity. If this is empty it won't be displayed. If there is a value here (including '0' or NULL), it overrides the value of `intensity`.
 * `text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria.
 
-You can have any number of sections and subsections, but every row must be a unique combination of `shapefile`, `section`, `subsection` and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used.
+You can have any number of sections and subsections, but every row must be a unique combination of `shapefile`, `section`, `subsection` and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used. Note that this allows you to create a default value for a given section, subsection and shapefile, by having a row with `lookup_value` blank (so it applies to all values present in the shapefile), followed by rows with specified `lookup_value`s which will overwrite the default for that value only.
+
+Blank rows or additional columns won't cause problems. Any row that is missing any of the required fields will be skipped and a warning will be printed.
 
 Once `snuggets.csv` is ready, simply put it and the relevant shapefiles in `world/data` (and remove any other files or subdirectories from there), and follow the instructions in [Load Some Data](#load-some-data) above.
 

@@ -138,7 +138,6 @@ def processShapefile(f, stem, inputDir, outputDir, srs, keyField):
       "-dialect", "sqlite", "-sql", sqlCmd,
       "-t_srs", srs
     ]
-    print(ogrCmd)
     subprocess.call(ogrCmd)
   return reprojected
 
