@@ -10,7 +10,7 @@ def main():
   snuggetFile = os.path.join(dataDir, "snuggets.csv")
   overwriteAll = False
   optionalFields = ['intensity', 'image', 'lookup_value', ''] # all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
-
+ 
   try:
     dbURL = os.environ['DATABASE_URL']
   except:
@@ -67,13 +67,19 @@ def processRow(appName, snuggetFile, cur, overwriteAll, row):
   filterColumn = row["shapefile"] + "_filter_id"
   sectionID = getSectionID(appName, row["section"], cur, subsection=False)
   subsectionID = getSectionID(appName, row["subsection"], cur, subsection=True)
-
+ 
   # check if a snugget for this data already exists
   # if we have a lookup value then deal with this value specifically:
   if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
     filterIDs = [findFilterID(appName, row["shapefile"], row["lookup_value"], cur)]
-    oldSnugget = checkForSnugget(appName, sectionID, subsectionID, filterColumn, filterIDs[0], cur)
-    overwriteAll = askUserAboutOverwriting(row, oldSnugget, [], snuggetFile, overwriteAll)
+    if filterIDs[0] is None:
+      print("Skipping row:")
+      print(row)
+      print("Because no filter for lookup_value", row["lookup_value"], "was found in", row["shapefile"])
+      return overwriteAll
+    else:
+      oldSnugget = checkForSnugget(appName, sectionID, subsectionID, filterColumn, filterIDs[0], cur)
+      overwriteAll = askUserAboutOverwriting(row, oldSnugget, [], snuggetFile, overwriteAll)
   else: 
     filterIDs = findAllFilterIDs(appName, row["shapefile"], cur)
     oldSnuggets = []
@@ -82,7 +88,7 @@ def processRow(appName, snuggetFile, cur, overwriteAll, row):
       if oldSnugget is not None and oldSnugget not in oldSnuggets:
         oldSnuggets.append(oldSnugget)
     overwriteAll = askUserAboutOverwriting(row, None, oldSnuggets, snuggetFile, overwriteAll)
-
+ 
   for filterID in filterIDs:
     removeOldSnugget(appName, sectionID, subsectionID, filterColumn, filterID, cur)
     addTextSnugget(appName, row, sectionID, subsectionID, filterColumn, filterID, cur)
@@ -140,15 +146,23 @@ def getSectionID(appName, sectionName, cur, subsection=False):
     cur.execute("SELECT id FROM " + tableName + " WHERE name = %s;", [sectionName])
     sectionID = cur.fetchone()[0]
     return sectionID
-  
-  
+
+
 
 
 def findFilterID(appName, shapefile, key, cur):
   cols = readColumnsFrom(appName, shapefile, cur)
-  keyColumn = cols[1]
-  cur.execute("SELECT id FROM " + appName + "_" + shapefile + " WHERE " + keyColumn + "::text = %s;", [key])
-  return str(cur.fetchone()[0])
+  if len(cols) > 0:
+    keyColumn = cols[1]
+    cur.execute("SELECT id FROM " + appName + "_" + shapefile + " WHERE " + keyColumn + "::text = %s;", [key])
+    ref = cur.fetchone()
+    if ref is not None:
+      return str(ref[0])
+    else: # if cur.fetchone() returns None it means that no matching id was found
+      return None
+  else: # if readColumnsFrom() returns an empty list it means that nothing was found in the database for the shapefile name we read from snuggetFile
+    print("No shapefile with the name", shapefile, "appears to have been loaded. If the shapefile exists, you may still need to run the migration and loading steps - see the 'Load some data' section of the readme file.")
+    return None
 
 
 
