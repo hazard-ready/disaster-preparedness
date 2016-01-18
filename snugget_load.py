@@ -9,6 +9,7 @@ def main():
   dataDir = os.path.join(appDir, "data")
   snuggetFile = os.path.join(dataDir, "snuggets.csv")
   overwriteAll = False
+  optionalFields = ['intensity', 'image', 'lookup_value', ''] # all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
 
   try:
     dbURL = os.environ['DATABASE_URL']
@@ -28,14 +29,36 @@ def main():
     with conn.cursor() as cur:      
       with open(snuggetFile) as csvFile:
         newSnuggets = csv.DictReader(csvFile)
+        rowCount = 1
         for row in newSnuggets:
-          overwriteAll = processRow(appName, snuggetFile, cur, overwriteAll, row)
+          rowCount += 1
+          if allRequiredFieldsPresent(row, optionalFields, rowCount):
+            overwriteAll = processRow(appName, snuggetFile, cur, overwriteAll, row)
   print("Snugget load complete.")
 
 
 
 
 
+def allRequiredFieldsPresent(row, optionalFields, rowCount):
+  if any(a != '' for a in row.values()): # if the entire row is not empty
+    blanks = []
+    for key in row.keys():
+      if (key not in optionalFields) and (row[key] == ''):
+        blanks.append(key)
+    if blanks == []:
+      return True
+    else:
+      print("Unable to process row", rowCount, "with content:")
+      print(row)
+      if len(blanks) > 1:
+        print("Because required fields", blanks, "are empty.")
+      else:
+        print("Because required field", "'" + blanks[0] + "'", "is empty.")
+      return False
+  else: # the entire row is blank
+    print("Skipping empty row", rowCount)
+    return False
 
 
 
