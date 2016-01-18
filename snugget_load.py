@@ -161,7 +161,8 @@ def findFilterID(appName, shapefile, key, cur):
     else: # if cur.fetchone() returns None it means that no matching id was found
       return None
   else: # if readColumnsFrom() returns an empty list it means that nothing was found in the database for the shapefile name we read from snuggetFile
-    print("No shapefile with the name", shapefile, "appears to have been loaded. If the shapefile exists, you may still need to run the migration and loading steps - see the 'Load some data' section of the readme file.")
+    print("No shapefile with the name", shapefile, "appears to have been loaded.")
+    print("If the shapefile exists, you may still need to run the migration and loading steps - see the 'Load some data' section of the readme file.")
     return None
 
 
