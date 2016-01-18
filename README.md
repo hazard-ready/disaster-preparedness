@@ -71,14 +71,7 @@ This assumes `python` is the command configured to run the correct python versio
 ### Load some data
 0. `source venv/bin/activate` if you haven't already activated the virtualenv this session.
 1. Unzip `data.zip` inside world, so that the data is in `world/data`. This data includes some sample shapefiles and related data for Missoula County, Montana, USA, to get you started. See below for instructions on replacing this with your own data.
-2. `python import.py` to process these shapefiles and update some Django code to fit. The script will prompt you for which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition), here is a list that corresponds to the sample data we have provided (shapefilename: fieldname):
-    * `EQ_Fault_Buffer` : snugget_ID
-    * `EQ_GroundShaking_MostLike` : Intensity
-    * `EQ_Historic_Distance` : lookup_val
-    * `Fire_hist_nrocky_1889_2003_all` : lookup_val
-    * `fire_risk`: DN
-    * `Flood_FEMA_DFIRM_2015` : FEMADES
-    * `MT_groundshaking` : intensity
+2. `python import.py` to process these shapefiles and update some Django code to fit. The script will prompt you for which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition). If you use the example `data.zip` provided in this project, use the field name `lookup_val` for every shapefile except `Flood_FEMA_DFRIM_2015`, for which you should use `FEMADES`.
 3. `python manage.py makemigrations` - this and the next 2 steps combined load the new data into the database.
 4. `python manage.py migrate`
 5. `python manage.py shell`
