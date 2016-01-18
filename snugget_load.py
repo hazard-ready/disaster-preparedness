@@ -29,7 +29,7 @@ def main():
     with conn.cursor() as cur:      
       with open(snuggetFile) as csvFile:
         newSnuggets = csv.DictReader(csvFile)
-        rowCount = 1
+        rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
         for row in newSnuggets:
           rowCount += 1
           if allRequiredFieldsPresent(row, optionalFields, rowCount):

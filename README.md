@@ -118,6 +118,7 @@ Save them to your `.bash_profile` or equivalent.
     2. That column's name must comply with the [Django field name restrictions](https://docs.djangoproject.com/en/1.9/topics/db/models/#field-name-restrictions), including not being one of the [Python 3 reserved words](https://stackoverflow.com/questions/22864221/is-the-list-of-python-reserved-words-and-builtins-available-in-a-library/22864250#22864250). For example, if the column is called `id`, `object`, `map`, `property` or `type`, you'll have to rename it.
     3. It doesn't matter which coordinate reference system the shapefile has been saved with, but if you're making them yourself then we recommend using EPSG:4326, because the import pipeline will reproject it to that anyway.
     4. If you have multiple shapefiles, clip them all to cover the same area. Otherwise, if users click on a location that is covered by some shapefiles but not others they will see partial data without a clear explanation that there is missing data.
+    5. Multiple shapes may overlap, but each shape may only have one value for the lookup field. If you have multiple shapes with the same lookup value, the import process will combine them.
 2. Some text content to display when a user chooses a location in one or more of your shapefiles. In this project, the text content is referred to as **snuggets**, from "story nuggets".
 
 If you have raster data, first convert it to a shapefile.  See [Converting raster files](#converting-raster-files) below for pointers if you don't already know how to do that.
@@ -135,9 +136,9 @@ If the structure of your text content is simple enough, you can import shapefile
 * `image` : The file name for an image, stored in `cascadiaprepared/static/img`, that illustrates the severity. If this is empty it won't be displayed. If there is a value here (including '0' or NULL), it overrides the value of `intensity`.
 * `text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria.
 
-You can have any number of sections and subsections, but every row must be a unique combination of `shapefile`, `section`, `subsection` and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used. Note that this allows you to create a default value, by having a row with `lookup_value` blank (so it applies to all values present in the shapefile), followed by rows with specified `lookup_value`s which will overwrite the default for that value only.
+You can have any number of sections and subsections, but every row must be a unique combination of `shapefile`, `section`, `subsection` and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used. Note that this allows you to create a default value for a given section, subsection and shapefile, by having a row with `lookup_value` blank (so it applies to all values present in the shapefile), followed by rows with specified `lookup_value`s which will overwrite the default for that value only.
 
-Blank rows or additional columns won't cause problems. Any row that is missing any of the required fields will simply be skipped.
+Blank rows or additional columns won't cause problems. Any row that is missing any of the required fields will be skipped and a warning will be printed.
 
 Once `snuggets.csv` is ready, simply put it and the relevant shapefiles in `world/data` (and remove any other files or subdirectories from there), and follow the instructions in [Load Some Data](#load-some-data) above.
 
