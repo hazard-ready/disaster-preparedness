@@ -29,8 +29,10 @@ def main():
       with open(snuggetFile) as csvFile:
         newSnuggets = csv.DictReader(csvFile)
         for row in newSnuggets:
+          print(any(a != [] for a in row.values()))
           overwriteAll = processRow(appName, snuggetFile, cur, overwriteAll, row)
   print("Snugget load complete.")
+
 
 
 
