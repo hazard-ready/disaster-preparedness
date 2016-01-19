@@ -155,7 +155,7 @@ h5 {
 
 .intensity-meter {
     float:left;
-    margin-right: 5px;
+    margin: 0 15px;
     width:100px;
 }
 
@@ -169,9 +169,10 @@ h5 {
 
 .intensity-meter-segment {
   stroke: #2c2c2c;
-  stroke-width:1;
-  stroke-miterlimit:4;
+  stroke-width: 1;
+  stroke-miterlimit: 4;
 }
+
 
 .low-color { fill: #ffffb2;}
 .moderate-color { fill: #fed976;}
