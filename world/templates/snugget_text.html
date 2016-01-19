@@ -5,7 +5,7 @@
       <div class="intensity-meter">
         {% if snugget.image %}
           <img src="static/img/{{ snugget.image }}">
-        {% else %}
+        {% elif snugget.dynamic_image %}
           {{ snugget.dynamic_image | safe }}
         {% endif %}
       </div>
