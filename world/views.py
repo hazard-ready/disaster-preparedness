@@ -59,8 +59,8 @@ def fire_dial_icon(percentage):
        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
        xmlns:svg="http://www.w3.org/2000/svg"
        xmlns="http://www.w3.org/2000/svg"
-       width="200px"
-       height="100px"
+       width="100px"
+       height="50px"
        viewBox="0 0 354.00001 179.16412"
        id="svg4816"
        version="1.1">
