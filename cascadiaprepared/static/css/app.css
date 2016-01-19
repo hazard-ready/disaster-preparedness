@@ -167,12 +167,11 @@ h5 {
   margin-bottom:20px;
 }
 
-.light-color { color: #006666;}
-.moderate-color { color: #64822d;}
-.strong-color { color: #c8a30a}
-.very-strong-color { color: #d7642d;}
-.severe-color { color: #5e001d;}
-.violent-color { color: #5e001d;}
+.low-color { fill: #ffffb2;}
+.moderate-color { fill: #fed976;}
+.high-color { fill: #feb24c;}
+.very-high-color { fill: #fd8d3c;}
+.extreme-color { fill: #f03b20;}
 
 .chart-label{
   margin-top: 0.5em;
