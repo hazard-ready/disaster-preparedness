@@ -40,11 +40,14 @@
         {% else %}
           <div class="content disaster-content" id="{{group}}">
         {% endif %}
-          {% for section, snuggets in hazard.sections.items %}
+          {% for section, sub_sections in hazard.sections.items %}
             <div class="snugget-text">
               <h4 class="section-title">{{ section }}</h4>
-              {% for snugget in snuggets %}
-                {% show_snugget snugget %}
+              {% for sub_section, snuggets in sub_sections.items %}
+                <h5>{{ sub_section }}</h5>
+                {% for snugget in snuggets %}
+                  {% show_snugget snugget %}
+                {% endfor %}
               {% endfor %}
             </div>
           {% endfor %}
@@ -81,6 +84,6 @@
       <h4>Important Links</h4>
       <p>Important Links about community resources go here.</p>
     </div>
-  </div> 
+  </div>
 
 {% endblock main-content %}
