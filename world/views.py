@@ -99,37 +99,27 @@ def fire_dial_icon(percentage):
 
     <!-- leftmost segment -->
         <path
-           style="stroke:#2c2c2c;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path5986"
-           class="low-color"
+           class="intensity-meter-segment low-color"
            d="M 107.19339,423.43023 A 175,175 0 0 1 140.61542,320.56782 L 282.19339,423.43024 Z" />
 
     <!-- middle-left segment -->
         <path
-           d="m 140.90018,320.39188 a 175,175 0 0 1 87.49999,-63.57247 l 54.07798,166.43489 z"
-           id="path5984"
-           class="moderate-color"
-           style="stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none" />
+            class="intensity-meter-segment moderate-color"
+            d="m 140.90018,320.39188 a 175,175 0 0 1 87.49999,-63.57247 l 54.07798,166.43489 z" />
 
     <!-- middle segment -->
         <path
-           d="m 228.23974,256.69096 a 175,175 0 0 1 108.15594,0 l -54.07796,166.43489 z"
-           id="path5994"
-           class="high-color"
-           style="stroke:#2c2c2c;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+            class="intensity-meter-segment high-color"
+            d="m 228.23974,256.69096 a 175,175 0 0 1 108.15594,0 l -54.07796,166.43489 z" />
 
     <!-- middle-right segment -->
         <path
-           style="stroke:#2c2c2c;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path5992"
-           class="very-high-color"
+           class="intensity-meter-segment very-high-color"
            d="m 336.45822,256.70085 a 175,175 0 0 1 87.50001,63.57248 L 282.38025,423.13574 Z" />
 
     <!-- rightmost segment -->
         <path
-           style="stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
-           id="path5274"
-           class="extreme-color"
+           class="intensity-meter-segment extreme-color"
            d="m 423.99891,320.28102 a 175,175 0 0 1 33.42202,102.86241 l -175,0 z" />
 
 

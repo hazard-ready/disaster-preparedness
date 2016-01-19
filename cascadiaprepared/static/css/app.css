@@ -167,6 +167,12 @@ h5 {
   margin-bottom:20px;
 }
 
+.intensity-meter-segment {
+  stroke: #2c2c2c;
+  stroke-width:1;
+  stroke-miterlimit:4;
+}
+
 .low-color { fill: #ffffb2;}
 .moderate-color { fill: #fed976;}
 .high-color { fill: #feb24c;}
