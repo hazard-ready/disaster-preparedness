@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from collections import OrderedDict
 from .models import Snugget, Location, SiteSettings
-
+from .fire_dial import make_icon
 
 def app_view(request):
     location = Location.get_solo()
@@ -24,11 +24,13 @@ def app_view(request):
                         template = 'found_content.html'
                         heading = values[0].heading
                         for text_snugget in values:
+                            if not text_snugget.image:
+                                text_snugget.dynamic_image = make_icon(text_snugget.percentage)
                             if text_snugget.section in sections:
                                 sections[text_snugget.section].append(text_snugget)
                             else:
                                 sections[text_snugget.section] = [text_snugget]
-                
+
                         data[key] = {
                             'heading': heading,
                             'sections': sections
