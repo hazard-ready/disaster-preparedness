@@ -1,17 +1,18 @@
 {% block snugget-content %}
-  <h5>{{ value.sub_section.name }}</h5>
-  {% if value.sub_section.name == "Intensity" %}
-  <div class="intensity">
-    <div class="intensity-meter">
-      {% if value.image %}
-        <img src="static/img/{{ value.image }}">
-      {% endif %}
+  {% if snugget.sub_section.name == "Intensity" %}
+    <div class="intensity">
+      <div class="intensity-meter">
+        {% if snugget.image %}
+          <img src="static/img/{{ snugget.image }}">
+        {% elif snugget.dynamic_image %}
+          {{ snugget.dynamic_image | safe }}
+        {% endif %}
+      </div>
+      <div class="intensity-content">
+        {{ snugget.content }}
+      </div>
     </div>
-    <div class="intensity-content">
-      {{ snugget.content }}
-    </div>
-  </div>
-  {% else %}
-    <p>{{ snugget.content }}</p>
+    {% else %}
+      <p>{{ snugget.content }}</p>
   {% endif %}
 {% endblock %}
