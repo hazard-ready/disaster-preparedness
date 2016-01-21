@@ -20,9 +20,7 @@ h5 {
 
 /* helper classes for colors and fonts */
 .sans-serif {  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
-.vert-pad-large { padding: 3em 0; }
 .vert-pad-medium { padding: 2em 0; }
-.vert-pad-small { padding: 1em 0; }
 .caps {
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -49,22 +47,7 @@ h5 {
   max-width: none;
 }
 
-.underline:after {
-  display: block;
-  content: " ";
-  height: 4px;
-  width: 64px;
-  margin: 0.5em 0 1em 0;
-  background-color: #444;
-}
-
 /* header styles */
-.location-label {
-  margin: 15px 0 12px 0;
-  font-size: 34px;
-  line-height: 1.2em;
-}
-
 #location-text {
   color: #444444;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -173,18 +156,11 @@ h5 {
   stroke-miterlimit: 4;
 }
 
-
 .low-color { fill: #ffffb2;}
 .moderate-color { fill: #fed976;}
 .high-color { fill: #feb24c;}
 .very-high-color { fill: #fd8d3c;}
 .extreme-color { fill: #f03b20;}
-
-.chart-label{
-  margin-top: 0.5em;
-  padding-left: 1em;
-  font-weight: bold;
-}
 
 .supply-kit {
   font-size: 16px;
@@ -270,7 +246,6 @@ h5 {
   display:inline-block;
 }
 
-
 .tabs dd.active a, .tabs .tab-title.active a {
   background-color: #ccccdd;
 }
@@ -294,18 +269,6 @@ h5 {
   }
   .location-label {
     font-size: 22px;
-    line-height: 1.2em;
-  }
-  .welcome {
-    font-size: 20px;
-    line-height: 1.3em;
-  }
-  .chapter-title {
-    font-size: 30px;
-    line-height: 1.2em;
-  }
-  .social .title {
-    font-size: 32px;
     line-height: 1.2em;
   }
 
@@ -375,10 +338,6 @@ h5 {
   .section-icon.deformation { background-position: 0 -200px; }
   .section-icon.routes      { background-position: 0 -240px; }
   .section-icon.shaking     { background-position: 0 -280px; }
-
-  .chart-meter {
-      width:28px;
-  }
 
 .disaster-tabs {
     background-color: #ccccdd;
