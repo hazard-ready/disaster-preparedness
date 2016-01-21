@@ -240,7 +240,7 @@ def modelClassGen(stem, sf, keyField, srs, shapeType):
   text  = "class " + stem + "(models.Model):\n"
   text += "    " + keyField.lower() + " = models." + findFieldType(sf, keyField) + "\n"
   text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
-  text += "    objects = models.GeoManager()\n\n"
+  text += "    objects = ShapeManager()\n\n"
   text += "    def __str__(self):\n"
   text += "        return str(self." + keyField.lower() + ")\n\n"
 
