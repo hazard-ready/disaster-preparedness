@@ -77,11 +77,10 @@ class Location(SingletonModel):
     @staticmethod
     def get_data_bounds():
         bounds = {
-
     ######################################################
     # GENERATED CODE GOES HERE
     # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
-    # Location
+    # locationsList
     # END OF GENERATED CODE BLOCK
     ######################################################
         }
