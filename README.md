@@ -9,25 +9,25 @@ The project will explore traditional and qualitative scoring assessments of “r
 ## GeoDjango Dependencies
 * PostresSQL
   * GeoDjango has other dependencies.  [See this more complete list](https://docs.djangoproject.com/en/1.7/ref/contrib/gis/install/geolibs/) of required and optional additions.
-  
-  
+
+
 # Note about Python Command Usage
 Commands indicated are always just `python` but on some systems you might need to use `python3` in order to use a specific python version.  If so, other commands such as `pip` have a `pip3` equivalent.
 
 Use whichever base command is appropriate for your environment.
-  
+
 # Configure Dev Environment
 Set up a virtual environment so that you can freely install python modules without worrying about overwriting globally installed versions.  It's easy!
 
 1. `pip install virtualenv` (for python3, `pip3 install virtualenv`)
 2. Move to the project directory (e.g. `/Applications/MAMP/htdocs/disaster-preparedness`).
-3. `virtualenv --python=python3 venv --no-site-packages` 
+3. `virtualenv --python=python3 venv --no-site-packages`
 4. Wait for things to happen.
 5. `source venv/bin/activate`  (type `deactivate` to leave). Remember to reactivate the virtual environment every time you open a terminal window and start running Python commands.
-6. `pip install -r requirements.txt` or `pip3 install -r requirements.txt` to automatically install the Python dependencies listed in [requirements.txt](./requirements.txt). 
+6. `pip install -r requirements.txt` or `pip3 install -r requirements.txt` to automatically install the Python dependencies listed in [requirements.txt](./requirements.txt).
 
-*On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.*  
- 
+*On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.*
+
 
 # "World" App
 
@@ -36,7 +36,7 @@ Set up a virtual environment so that you can freely install python modules witho
 Currently, the data and Django files for this app live in the `world` directory, while static content and web hosting config are in `cascadiaprepared`.
 
 ## Written using:
-* Postgres version: 9.4 
+* Postgres version: 9.4
 * Python version: 3.5
 
 ## Installing App
@@ -46,10 +46,10 @@ This assumes `python` is the command configured to run the correct python versio
 * Set up an environment variable `DJANGO_SECRET_KEY` to whatever you want to set it to.
   * See http://techblog.leosoto.com/django-secretkey-generation/ for an example approach.
   * On Mac/Linux: `export DJANGO_SECRET_KEY="gibberishrandomstring"`
-  
+
 ### Set up the database
 
-1. Set up Postgres with PostGIS: 
+1. Set up Postgres with PostGIS:
  * To install PostGIS on a Mac using Homebrew: `brew install postgis`. Here are [PostGIS install instructions for Ubuntu](https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS21UbuntuPGSQL93Apt).
  * The Mac or Ubuntu instructions will also install Postgres if you don't already have that.
  * Run `brew info postgres` to see options for starting Postgres - you can have it start automatically when your computer starts, or not.
@@ -61,11 +61,11 @@ This assumes `python` is the command configured to run the correct python versio
     createdb [DBNAME]
     psql -d [DBNAME] -c "CREATE EXTENSION postgis;"
     ```
-4. In order to run unit tests, your user will need to be able to create and delete databases, since the test framework creates (and destroys) a new test DB for each test run. You can accomplish this using ```psql -d [DBNAME] -c "ALTER USER [USERNAME] SUPERUSER;" 
+4. In order to run unit tests, your user will need to be able to create and delete databases, since the test framework creates (and destroys) a new test DB for each test run. You can accomplish this using ```psql -d [DBNAME] -c "ALTER USER [USERNAME] SUPERUSER;"
 *[detailed instructions for reference](http://postgis.net/docs/manual-2.1/postgis_installation.html#create_new_db_extensions)*
 5. Set up an environment variable `DATABASE_URL` that will be used by the Django Database URL app to load our database.
   * example on Mac/Linux: `export DATABASE_URL="postgres://USER:PASSWORD@HOST:PORT/DBNAME"` where the USER & PASSWORD are the django account you created above in postgres, and the default HOST:PORT is localhost:5432 .
-6. `source venv/bin/activate` if you haven't already activated the virtualenv this session. 
+6. `source venv/bin/activate` if you haven't already activated the virtualenv this session.
 7. Run `python manage.py migrate` to initialize the database's structure.
 
 ### Load some data
@@ -134,7 +134,7 @@ If the structure of your text content is simple enough, you can import shapefile
 * `lookup_value` : The value of the unique identifier in the shapefile (e.g. an intensity value or a hazard classification). This field can be empty; if it is then the rest of this row will be applied to every available value.
 * `intensity` : Relative severity scaled from 0-100, to display graphically on the page. If this is empty, or if a value is provided for `image`, it will simply not be displayed.
 * `image` : The file name for an image, stored in `cascadiaprepared/static/img`, that illustrates the severity. If this is empty it won't be displayed. If there is a value here (including '0' or NULL), it overrides the value of `intensity`.
-* `text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria.
+* `text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria. If you put a url in the snugget text, like `http://www.github.com`, we'll automatically make it into a link for you.
 
 You can have any number of sections and subsections, but every row must be a unique combination of `shapefile`, `section`, `subsection` and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used. Note that this allows you to create a default value for a given section, subsection and shapefile, by having a row with `lookup_value` blank (so it applies to all values present in the shapefile), followed by rows with specified `lookup_value`s which will overwrite the default for that value only.
 
@@ -187,7 +187,7 @@ GDAL includes a [polygonize](http://www.gdal.org/gdal_polygonize.html) tool. If 
 gdal_polygonize.py RASTERFILENAME.tif -f 'ESRI Shapefile' OUTPUTFILENAME.shp
 ```
 
-This is the preferred method if you already have GDAL installed, but if you don't then be aware that installing GDAL can be complicated. 
+This is the preferred method if you already have GDAL installed, but if you don't then be aware that installing GDAL can be complicated.
 
 The output file will have an attribute `DN` that contains the pixel values from the raster file.
 
