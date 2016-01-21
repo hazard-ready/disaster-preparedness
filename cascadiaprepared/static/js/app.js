@@ -1,11 +1,6 @@
 $( document ).ready(function() {
   $(document).foundation();
 
-  // Initial map values for Missoula overview
-  var lat = "46.874359";
-  var lng = "-113.974229";
-  var zoom = "8";
-
   // convenience function to extract url parameters
   function getURLParameter(name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -19,14 +14,15 @@ $( document ).ready(function() {
   // grab the position, if possible
   var query_lat = getURLParameter('lat');
   var query_lng = getURLParameter('lng');
-  if (query_lat && query_lng) {
-    lat = query_lat;
-    lng = query_lng;
-    zoom = 15;
-  }
 
   // set up the map
-  var map = L.map('map').setView([lat,lng], zoom);
+  var map = L.map('map');
+  if (query_lat && query_lng) {
+    zoom = 15;
+    map.setView([query_lat, query_lng], zoom);
+  } else { // use the data bounds if we don't have a position in the query string
+    map.fitBounds(mapBounds);
+  }
   map.scrollWheelZoom.disable();
 
   var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -35,10 +31,10 @@ $( document ).ready(function() {
   layer.setOpacity(0.6);
 
   document.getElementById('map').style.cursor='default';
-  if (zoom > 10) {
+  if (query_lat && query_lng) {
     var icon = new L.Icon.Default;
     icon.options.iconUrl = "static/img/marker-icon.png";
-    var marker = L.marker([lat,lng], {
+    var marker = L.marker([query_lat, query_lng], {
       icon: icon,
       clickable: false,
       keyboard: false
@@ -53,7 +49,7 @@ $( document ).ready(function() {
 
   // grab and set any previously entered query text
   var loc = getURLParameter('loc');
-  var location_query_text = (loc) ? decodeURIComponent(loc) : lat + "," + lng;
+  var location_query_text = (loc) ? decodeURIComponent(loc) : query_lat + "," + query_lng;
   if (!query_lat || !query_lng)
     location_query_text = "";
   $("#location-text").val(location_query_text);
@@ -81,7 +77,7 @@ $( document ).ready(function() {
         var lon = results[0].geometry.location.lng();
         submitLocation(lat,lon);
       } else {
-        $(".geocode-error-message").html($('p').text("We had a problem finding that location.")); 
+        $(".geocode-error-message").html($('p').text("We had a problem finding that location."));
       }
     });
   });
