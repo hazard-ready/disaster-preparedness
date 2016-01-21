@@ -8,7 +8,10 @@
 secure_settings.py
 
 # Data directory full of binary or large data sets we don't need in a code repository.
-data/
+# data/
+# Temp directories made by the importer
+data/reprojected/
+data/simplified/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
