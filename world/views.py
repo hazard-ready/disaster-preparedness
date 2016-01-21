@@ -6,6 +6,7 @@ from .fire_dial import make_icon
 def app_view(request):
     location = Location.get_solo()
     settings = SiteSettings.get_solo()
+    data_bounds = Location.get_data_bounds()
     template = "no_content_found.html"
 
     # if user submitted lat/lng, find our snuggets and send them to our template
@@ -41,6 +42,7 @@ def app_view(request):
         return render(request, template, {
             'location': location,
             'settings': settings,
+            'data_bounds': data_bounds,
             'data': OrderedDict(sorted(data.items(), key=lambda t: t[0]))
         })
 
@@ -49,5 +51,6 @@ def app_view(request):
     else:
         return render(request, 'index.html', {
             'location': location,
-            'settings': settings
+            'settings': settings,
+            'data_bounds': data_bounds
             })
