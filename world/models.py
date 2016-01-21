@@ -85,10 +85,10 @@ class Location(SingletonModel):
     # END OF GENERATED CODE BLOCK
     ######################################################
         }
-        north = []
-        west = []
-        south = []
-        east = []
+        north = [-180]
+        west = [-90]
+        south = [180]
+        east = [90]
 
         for box in bounds.values():
             west.append(box[0])
