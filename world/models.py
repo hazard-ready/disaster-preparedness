@@ -88,10 +88,10 @@ class Location(SingletonModel):
 
         # The smallest/largest possible values, as appropriate, so the map will display
         # something if there is no data
-        north = [-180]
-        west = [-90]
-        south = [180]
-        east = [90]
+        north = [-80]
+        west = [180]
+        south = [80]
+        east = [-180]
 
         for box in bounds.values():
             west.append(box[0])
@@ -100,7 +100,7 @@ class Location(SingletonModel):
             north.append(box[3])
 
         # The largest box that contains all the bounding boxes, how Leaflet wants it.
-        return [[min(south), max(west)], [max(north), min(east)]]
+        return [[min(south), min(west)], [max(north), max(east)]]
 
 
     class Meta:
