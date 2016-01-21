@@ -1,5 +1,7 @@
+
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
+from django.contrib.gis.db.models import Extent
 from embed_video.fields import EmbedVideoField
 from model_utils.managers import InheritanceManager
 from solo.models import SingletonModel
@@ -56,7 +58,7 @@ class Location(SingletonModel):
         help_text="Something like 'a tsunami', 'an earthquake', 'a fire'"
     )
     disaster_description = models.TextField(
-        default="A natural disaster could strike your area at any time.", 
+        default="A natural disaster could strike your area at any time.",
         help_text="A description of what we are trying to help people prepare for."
     )
     evacuation_routes_link = models.URLField(
@@ -68,13 +70,49 @@ class Location(SingletonModel):
         default="http://www.fema.gov",
         help_text="A link to your local office of emergency management."
     )
-    
+
     def __unicode__(self):
         return u"Location Information"
 
+    @staticmethod
+    def get_data_bounds():
+        bounds = {
+
+    ######################################################
+    # GENERATED CODE GOES HERE
+    # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
+    # Location
+    # END OF GENERATED CODE BLOCK
+    ######################################################
+        }
+
+        # The smallest/largest possible values, as appropriate, so the map will display
+        # something if there is no data
+        north = [-80]
+        west = [180]
+        south = [80]
+        east = [-180]
+
+        for box in bounds.values():
+            west.append(box[0])
+            south.append(box[1])
+            east.append(box[2])
+            north.append(box[3])
+
+        # The largest box that contains all the bounding boxes, how Leaflet wants it.
+        return [[min(south), min(west)], [max(north), max(east)]]
+
+
     class Meta:
         verbose_name = "Location Information"
-      
+
+class ShapeManager(models.GeoManager):
+    def has_point(self, pnt):
+        return self.filter(geom__contains=pnt)
+
+    def data_bounds(self):
+        return self.aggregate(Extent('geom'))['geom__extent']
+
 ######################################################
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN

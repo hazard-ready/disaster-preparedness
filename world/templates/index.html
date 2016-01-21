@@ -1,5 +1,5 @@
 {% load staticfiles %}
-{% load show_snugget %}
+{% load js %}
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
@@ -24,6 +24,9 @@
   <script src="{% static 'js/vendor/modernizr.js' %}"></script>
   <script src="{% static 'js/vendor/jquery.js' %}"></script>
   <script src="{% static 'js/foundation.min.js' %}"></script>
+  <script type="text/javascript">
+    var mapBounds = {{ data_bounds | js }};
+  </script>
   <script src="{% static 'js/app.js' %}"></script>
 
 </head>
