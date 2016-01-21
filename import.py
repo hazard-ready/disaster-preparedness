@@ -53,7 +53,7 @@ def main():
       
 #Code generation: one line in this function writes one line of code to be copied elsewhere
 # one block represents the code generation for each destination file
-      modelsLocationsList += "'" + stem + "': " + stem + ".objects.data_bounds(),\n"
+      modelsLocationsList += "            '" + stem + "': " + stem + ".objects.data_bounds(),\n"
       
       modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType)
       modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem + ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
