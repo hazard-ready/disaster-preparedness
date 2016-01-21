@@ -37,6 +37,10 @@ class SiteSettings(SingletonModel):
         default="A disaster preparedness website",
         help_text="A small, catchy description for this site."
     )
+    intro_text= models.TextField(
+        default="A natural disaster could strike your area at any time.",
+        help_text="A description of what we are trying to help people prepare for, or the goal of your site."
+    )
 
     def __unicode__(self):
         return u"Site Settings"
@@ -51,24 +55,6 @@ class Location(SingletonModel):
         max_length=100,
         default="the affected area",
         help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'."
-    )
-    disaster_name = models.CharField(
-        max_length=50,
-        default="some disaster",
-        help_text="Something like 'a tsunami', 'an earthquake', 'a fire'"
-    )
-    disaster_description = models.TextField(
-        default="A natural disaster could strike your area at any time.",
-        help_text="A description of what we are trying to help people prepare for."
-    )
-    evacuation_routes_link = models.URLField(
-        default="",
-        blank=True,
-        help_text="A link to website that can help people find an evacuation route"
-    )
-    emergency_management_link = models.URLField(
-        default="http://www.fema.gov",
-        help_text="A link to your local office of emergency management."
     )
 
     def __unicode__(self):
