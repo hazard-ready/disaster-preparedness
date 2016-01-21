@@ -85,6 +85,9 @@ class Location(SingletonModel):
     # END OF GENERATED CODE BLOCK
     ######################################################
         }
+
+        # The smallest/largest possible values, as appropriate, so the map will display
+        # something if there is no data
         north = [-180]
         west = [-90]
         south = [180]
