@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from collections import OrderedDict
-from .models import Snugget, Location, SiteSettings
+from .models import Snugget, Location, SiteSettings, SupplyKit
 from .fire_dial import make_icon
 
 def app_view(request):
     location = Location.get_solo()
+    important_links = location.importantlink_set.all()
     settings = SiteSettings.get_solo()
     data_bounds = Location.get_data_bounds()
+    supply_kit = SupplyKit.get_solo()
+    supply_kit.meals = 3 * supply_kit.days
     template = "no_content_found.html"
 
     # if user submitted lat/lng, find our snuggets and send them to our template
@@ -42,6 +45,8 @@ def app_view(request):
         return render(request, template, {
             'location': location,
             'settings': settings,
+            'supply_kit': supply_kit,
+            'important_links': important_links,
             'data_bounds': data_bounds,
             'data': OrderedDict(sorted(data.items(), key=lambda t: t[0]))
         })
