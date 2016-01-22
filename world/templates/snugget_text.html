@@ -13,6 +13,6 @@
       </div>
     </div>
     {% else %}
-      <p>{{ snugget.content }}</p>
+      <p>{{ snugget.content | urlize }}</p>
   {% endif %}
 {% endblock %}

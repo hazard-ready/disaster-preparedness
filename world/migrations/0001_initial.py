@@ -13,10 +13,13 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('about_text', models.TextField(help_text='Describe the data and the agencies that it came from.', default='Information about your organization goes here.')),
-                ('contact_email', models.EmailField(default='contact@youremail.com', help_text='Put a contact email for the maintainer of this site here.', max_length=254)),
+                ('contact_email', models.EmailField(blank=True, help_text='Put a contact email for the maintainer of this site here.', max_length=254)),
                 ('site_url', models.URLField(default='http://www.example.com', help_text='Put the URL to this site here.')),
                 ('site_title', models.CharField(default='Your Title Here!', max_length=50)),
                 ('site_description', models.CharField(default='A disaster preparedness website', help_text='A small, catchy description for this site.', max_length=200)),
+                ('data_download', models.URLField(help_text='A link where people can download a zipfile of all the data that powers this site.', blank=True)),
+                ('intro_text', models.TextField(help_text='A description of what we are trying to help people prepare for, or the goal of your site.', default='A natural disaster could strike your area at any time.')),
+                ('who_made_this', models.TextField(help_text='Include information about who you are and how to contact you.', default='Information about the creators and maintainers of this particular site.'))
             ],
             options={
                 'verbose_name': 'Site Settings',
@@ -27,14 +30,30 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('area_name', models.CharField(default='the affected area', help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.", max_length=100)),
-                ('emergency_management_link', models.URLField(default='http://www.fema.gov', help_text='A link to your local office of emergency management.')),
-                ('evacuation_routes_link', models.URLField(default='', help_text='A link to website that can help people find an evacuation route', blank=True)),
-                ('disaster_description', models.TextField(help_text='A description of what we are trying to help people prepare for.', default='A natural disaster could strike your area at any time.')),
-                ('disaster_name', models.CharField(default='some disaster', help_text="Something like 'a tsunami', 'an earthquake', 'a fire'", max_length=50)),
+                ('community_leaders', models.TextField(help_text='Information about community leaders, how to contact them, and form groups.', default='Information about community leaders goes here.')),
             ],
             options={
                 'verbose_name': 'Location Information'
             },
+        ),
+        migrations.CreateModel(
+            name='SupplyKit',
+            fields=[
+                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
+                ('days', models.PositiveIntegerField(help_text="The number of days' worth of supplies prepared residents should have on hand.", default=3)),
+                ('text', models.TextField(help_text='More information about building your supply kit. Any web address in here gets turned into a link automatically.')),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
+            name='ImportantLink',
+            fields=[
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
+                ('title', models.CharField(max_length=50, help_text="A title for your important link, like 'Evacuation Information'")),
+                ('link', models.TextField(help_text='Your link and any information about it. Any web address in here gets turned into a link automatically.')),
+            ],
         ),
         migrations.CreateModel(
             name='RecoveryLevels',

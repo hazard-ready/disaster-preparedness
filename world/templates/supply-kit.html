@@ -3,18 +3,20 @@
       <div class="supply-kit sans-serif">
         <div class="clearfix">
           <div class="supply-kit-icon left"></div>
-          <div class="big-num left">1</div>
-          <div class="text-label left">Week of supplies</br><span>per person</span></div>
+          <div class="big-num left">{{ supply_kit.days }}</div>
+          <div class="text-label left">Days of supplies</br><span>per person</span></div>
         </div>
         <div class="clearfix">
           <div class="supply-kit-icon water left"></div>
-          <div class="big-num left">7</div>
+          <div class="big-num left">{{ supply_kit.days }}</div>
           <div class="text-label left">Gallons of water</br><span>per person</span></div>
-        </div> 
+        </div>
         <div class="clearfix">
           <div class="supply-kit-icon food left"></div>
-          <div class="big-num left">21</div>
+          <div class="big-num left">{{ supply_kit.meals }}</div>
           <div class="text-label left">Meals</br><span>per person</span></div>
         </div>
       </div>
-      <p>For more information on making your kit, check out these emergency supply lists from <a href="http://www.opb.org/news/series/unprepared/a-visual-guide-to-emergency-supplies-everyone-needs/">Oregon Public Broadcasting</a> and the <a href="http://www.redcross.org/prepare/location/home-family/get-kit">American Red Cross</a>.</p>
+      {% if supply_kit.text %}
+        <p>{{ supply_kit.text | safe }}</p>
+      {% endif %}

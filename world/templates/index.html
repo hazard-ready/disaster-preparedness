@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta property="og:url" content="{{ settings.site_url }}"/>
   <meta property="og:title" content="{{ settings.site_description }}">
-  <meta property="og:description" content="{{ location.disaster_description }} Enter your location for a personalized report on your risks and how to prepare.">
+  <meta property="og:description" content="{{ settings.intro_text }} Enter your location for a personalized report on your risks and how to prepare.">
 
   <title>{{ settings.site_title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,12 +34,12 @@
 {% block header %}
   <div class="row top-header">
     <div class="title-header">
-      <h2 class="project-title caps">{{ settings.site_title }}</h2>
+      <h2 class="project-title caps"><a href="{{ settings.site_url }}">{{ settings.site_title }}</a></h2>
       <h3 class="project-subtitle">{{ settings.site_description }}</h3>
     </div>
     <div class="information-instructions">
       <p class="organization-information">{{ settings.about_text }}</p>
-      <p>{{ location.disaster_description }}</p>
+      <p>{{ settings.intro_text }}</p>
       <p class="location-instructions-large">Give your location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your risks and steps you can take to prepare.</p>
       <p class="location-instructions-small">Give your location by typing in the box below or clicking 'find me'. You'll get a personalized report on your risks and steps you can take to prepare.</p>
     </div>

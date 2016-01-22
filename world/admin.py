@@ -5,7 +5,7 @@ from solo.admin import SingletonModelAdmin
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminModelImports
-from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, Infrastructure, InfrastructureGroup, InfrastructureCategory, RecoveryLevels, Location, SiteSettings
+from .models import EmbedSnugget, TextSnugget, SnuggetSection, SnuggetSubSection, Location, SiteSettings, SupplyKit, ImportantLink
 # END OF GENERATED CODE BLOCK
 ######################################################
 
@@ -60,11 +60,10 @@ admin.site.register(EmbedSnugget, EmbedAdmin)
 class GeoNoEditAdmin(admin.GeoModelAdmin):
     modifiable = False
 
-admin.site.register(RecoveryLevels, admin.ModelAdmin)
-
-# To make the UI more general
+admin.site.register(ImportantLink, admin.ModelAdmin)
 admin.site.register(SiteSettings, SingletonModelAdmin)
 admin.site.register(Location, SingletonModelAdmin)
+admin.site.register(SupplyKit, SingletonModelAdmin)
 
 ######################################################
 # GENERATED CODE GOES HERE
