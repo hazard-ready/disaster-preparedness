@@ -122,4 +122,4 @@ def make_icon(percentage):
 
     # Look for {0} and {1} above to see where the arrow path goes.
     # The third argument is a salt for the marker element IDs, which must be unique per page.
-    return dial.format(transform_x, transform_y, randint(0, 9999))
+    return dial.format(transform_x, transform_y, randint(0, 99999))
