@@ -1,4 +1,5 @@
 from math import sin, cos, radians
+from random import randint
 
 dial = """<svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -9,17 +10,15 @@ dial = """<svg
    width="105px"
    height="65px"
    viewBox="0 0 354.00001 179.16412"
-   id="svg4816"
    version="1.1">
-  <defs
-     id="defs4818">
+  <defs>
 
 <!-- the arrowhead -->
     <marker
        orient="auto"
        refY="0"
        refX="0"
-       id="arrowhead"
+       id="arrowhead-{2}"
        style="overflow:visible">
       <path
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
@@ -82,21 +81,18 @@ X=448.2 is lined up with the inside-right
 This gives a length range from 164.4 to 165.8.  Hrm....
 -->
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:4.00000024;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#arrowhead)"
-       d="M 282.4,420.6 {0}, {1}"
-       id="path7305" />
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:4.00000024;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#arrowhead-{2})"
+       d="M 282.4,420.6 {0}, {1}"/>
 
 <!-- this path is the outline -->
     <path
        d="m 107.07684,422.57976 a 175,175 0 0 1 175.00001,-174.99999 175,175 0 0 1 174.99999,175 l -175,0 z"
-       id="path5990"
        style="fill:#000000;fill-opacity:0;stroke:#2c2c2c;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
 
 
 <!-- this path is the centre point that the arrow comes out of -->
     <path
        style="fill:#2c2c2c;fill-opacity:1;stroke:#2c2c2c;stroke-width:4;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path4870"
        d="m 264.12235,422.00333 a 18.15621,18.15621 0 0 1 18.15621,-18.15621 18.15621,18.15621 0 0 1 18.15621,18.15621 l -18.15621,0 z" />
 
   </g>
@@ -125,4 +121,5 @@ def make_icon(percentage):
     transform_y = y_center - y
 
     # Look for {0} and {1} above to see where the arrow path goes.
-    return dial.format(transform_x, transform_y)
+    # The third argument is a salt for the marker element IDs, which must be unique per page.
+    return dial.format(transform_x, transform_y, randint(0, 99999))

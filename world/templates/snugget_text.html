@@ -1,5 +1,5 @@
 {% block snugget-content %}
-  {% if snugget.sub_section.name == "Intensity" %}
+  {% if snugget.image or snugget.dynamic_image %}
     <div class="intensity">
       <div class="intensity-meter">
         {% if snugget.image %}
