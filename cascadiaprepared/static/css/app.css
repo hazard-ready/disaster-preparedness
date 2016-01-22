@@ -244,6 +244,7 @@ h5 {
 
 .tabs-content > .content.active {
   display:inline-block;
+  width: 100%;
 }
 
 .tabs dd.active a, .tabs .tab-title.active a {
