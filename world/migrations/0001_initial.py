@@ -53,7 +53,6 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('title', models.CharField(max_length=50, help_text="A title for your important link, like 'Evacuation Information'")),
                 ('link', models.TextField(help_text='Your link and any information about it. Any web address in here gets turned into a link automatically.')),
-                ('location', models.ForeignKey(to='world.Location', help_text="Choose'Location Object' here.")),
             ],
         ),
         migrations.CreateModel(

@@ -123,10 +123,6 @@ class ImportantLink(models.Model):
     link = models.TextField(
         help_text="Your link and any information about it. Any web address in here gets turned into a link automatically."
     )
-    location = models.ForeignKey(
-        Location,
-        help_text="Choose'Location Object' here."
-    )
     def __str__(self):
         return self.title +': ' + self.link
 

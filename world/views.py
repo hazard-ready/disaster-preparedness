@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from collections import OrderedDict
-from .models import Snugget, Location, SiteSettings, SupplyKit
+from .models import Snugget, Location, SiteSettings, SupplyKit, ImportantLink
 from .fire_dial import make_icon
 
 def app_view(request):
     location = Location.get_solo()
-    important_links = location.importantlink_set.all()
+    important_links = ImportantLink.objects.all()
     settings = SiteSettings.get_solo()
     data_bounds = Location.get_data_bounds()
     supply_kit = SupplyKit.get_solo()
