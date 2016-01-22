@@ -21,7 +21,7 @@ class SiteSettings(SingletonModel):
         help_text="Describe the data and the agencies that it came from."
     )
     contact_email = models.EmailField(
-        default="contact@youremail.com",
+        blank=True,
         help_text="Put a contact email for the maintainer of this site here."
     )
     site_url = models.URLField(
@@ -36,6 +36,18 @@ class SiteSettings(SingletonModel):
         max_length=200,
         default="A disaster preparedness website",
         help_text="A small, catchy description for this site."
+    )
+    intro_text= models.TextField(
+        default="A natural disaster could strike your area at any time.",
+        help_text="A description of what we are trying to help people prepare for, or the goal of your site."
+    )
+    who_made_this = models.TextField(
+        default="Information about the creators and maintainers of this particular site.",
+        help_text="Include information about who you are and how to contact you."
+    )
+    data_download = models.URLField(
+        blank=True,
+        help_text="A link where people can download a zipfile of all the data that powers this site."
     )
 
     def __unicode__(self):
@@ -52,23 +64,10 @@ class Location(SingletonModel):
         default="the affected area",
         help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'."
     )
-    disaster_name = models.CharField(
-        max_length=50,
-        default="some disaster",
-        help_text="Something like 'a tsunami', 'an earthquake', 'a fire'"
-    )
-    disaster_description = models.TextField(
-        default="A natural disaster could strike your area at any time.",
-        help_text="A description of what we are trying to help people prepare for."
-    )
-    evacuation_routes_link = models.URLField(
-        default="",
-        blank=True,
-        help_text="A link to website that can help people find an evacuation route"
-    )
-    emergency_management_link = models.URLField(
-        default="http://www.fema.gov",
-        help_text="A link to your local office of emergency management."
+
+    community_leaders = models.TextField(
+        default="Information about community leaders goes here.",
+        help_text="Information about community leaders, how to contact them, and form groups."
     )
 
     def __unicode__(self):
@@ -105,6 +104,28 @@ class Location(SingletonModel):
     class Meta:
         verbose_name = "Location Information"
 
+class SupplyKit(SingletonModel):
+    """ A singleton model representing the supply kit information """
+    days = models.PositiveIntegerField(
+        default=3,
+        help_text="The number of days' worth of supplies prepared residents should have on hand."
+    )
+    text = models.TextField(
+        help_text="More information about building your supply kit. Any web address in here gets turned into a link automatically."
+    )
+
+class ImportantLink(models.Model):
+    """ A model representing a link with a title """
+    title = models.CharField(
+        max_length=50,
+        help_text="A title for your important link, like 'Evacuation Information'"
+    )
+    link = models.TextField(
+        help_text="Your link and any information about it. Any web address in here gets turned into a link automatically."
+    )
+    def __str__(self):
+        return self.title +': ' + self.link
+
 class ShapeManager(models.GeoManager):
     def has_point(self, pnt):
         return self.filter(geom__contains=pnt)
@@ -117,8 +138,8 @@ class ShapeManager(models.GeoManager):
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # modelsClasses
 # END OF GENERATED CODE BLOCK
-######################################################        
- 
+######################################################
+
 class RecoveryLevels(models.Model):
     name = models.CharField(max_length=50)
     shortLabel = models.CharField(max_length=2)
@@ -184,7 +205,7 @@ class SnuggetSubSection(models.Model):
 
 class Snugget(models.Model):
     objects = InheritanceManager()
-    
+
 ######################################################
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
@@ -194,7 +215,7 @@ class Snugget(models.Model):
 
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
     sub_section = models.ForeignKey(SnuggetSubSection, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
- 
+
     def getRelatedTemplate(self):
         return "snugget.html"
 

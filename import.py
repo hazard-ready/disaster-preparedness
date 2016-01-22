@@ -7,7 +7,7 @@ def main():
   desiredSRID = "4326"  # EPSG:4326 = Google Mercator
   SRIDNamespace = "EPSG"
   simplificationTolerance = "0.00001"  # This is in the SRS's units. For EPSG:4326, that's decimal degrees
- 
+
   appDir = "world"
   dataDir = os.path.join(appDir, "data")
   reprojectedDir = os.path.join(dataDir, "reprojected")
@@ -16,14 +16,14 @@ def main():
   adminFile = os.path.join(appDir, "admin.py")
   loadFile = os.path.join(appDir, "load.py")
   viewsFile = os.path.join(appDir, "views.py")
-  
+
   modelsLocationsList = ""
   modelsClasses = ""
   modelsFilters = ""
   modelsGeoFilters = ""
   modelsSnuggetGroups = ""
   modelsSnuggetRatings = ""
-  adminModelImports = "from .models import TextSnugget, EmbedSnugget, SnuggetSection, SnuggetSubSection, RecoveryLevels, Location, SiteSettings"
+  adminModelImports = "from .models import EmbedSnugget, TextSnugget, SnuggetSection, SnuggetSubSection, Location, SiteSettings, SupplyKit, ImportantLink"
   adminFilterRefs = ""
   adminSiteRegistrations = ""
   loadMappings = ""
@@ -31,11 +31,11 @@ def main():
   loadImports = ""
   viewsSnuggetMatches = ""
   templateMomentSnuggets = ""
- 
+
   for subdir in [reprojectedDir, simplifiedDir]:
     if not os.path.exists(subdir):
       os.mkdir(subdir)
- 
+
   first = True
   for f in os.listdir(dataDir):
     if f[-4:] == ".shp":
@@ -44,29 +44,29 @@ def main():
       #TODO: if there's already a reprojected shapefile, use the field in that instead of prompting the user.
       sf = shapefile.Reader(os.path.join(dataDir, f))
       keyField = askUserForFieldNames(sf, stem)
-      
+
       reprojected = processShapefile(f, stem, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID, keyField)
       simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
       sf = shapefile.Reader(simplified)
       shapeType = detectGeometryType(sf, stem)
       encoding = findEncoding(sf, dataDir, stem)
-      
+
 #Code generation: one line in this function writes one line of code to be copied elsewhere
 # one block represents the code generation for each destination file
       modelsLocationsList += "            '" + stem + "': " + stem + ".objects.data_bounds(),\n"
-      
+
       modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType)
       modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem + ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
       modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
       modelsSnuggetGroups += "                          '" + stem + "_snugs': " + stem + "_snuggets,\n"
       modelsSnuggetRatings += "                '" + stem + "_rating': " + stem + "_rating,\n"
-      
+
       adminModelImports += ", " + stem
       if not first:
         adminFilterRefs += ", "
       adminFilterRefs += "'" + stem + "_filter'"
       adminSiteRegistrations += "admin.site.register(" + stem + ", GeoNoEditAdmin)\n"
-      
+
       loadMappings += stem + "_mapping = {\n"
       loadMappings += "    '" + keyField.lower() + "': '" + keyField + "',\n"
       loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
@@ -75,23 +75,23 @@ def main():
       loadImports += "    from .models import " + stem + "\n"
       loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
       loadImports += "    lm_" + stem + ".save(strict=True, verbose=verbose)\n\n"
-      
+
       print("")
       first = False
-  
+
   # clear trailing comma from this one
   modelsLocationsList = modelsLocationsList.strip(",\n") + "\n"
-  
+
   # assemble the whole return statement for the snugget class after going through the loop
   modelsSnuggetReturns = "        return {'groups': {\n"
   modelsSnuggetReturns += modelsSnuggetGroups.strip(",\n") + "\n"
   modelsSnuggetReturns += "                          },\n"
   modelsSnuggetReturns += modelsSnuggetRatings.strip(",\n") + "\n"
   modelsSnuggetReturns += "                }\n"
-  
+
   # make sure this gets its own line of code
   adminModelImports += "\n"
-  
+
   # assembling the complete lists for the start of class SnuggetAdmin in admin.py
   adminLists  = "    list_display = ('shortname', 'section', 'sub_section', " + adminFilterRefs + ")\n"
   adminLists += "    list_filter = ('section', 'sub_section', " + adminFilterRefs + ")\n\n"
@@ -104,19 +104,19 @@ def main():
   adminLists += "            'fields': ((" + adminFilterRefs + "))\n"
   adminLists += "        })\n"
   adminLists += "    )\n"
-  
+
   outputGeneratedCode(modelsLocationsList, modelsFile, "locationsList")
   outputGeneratedCode(modelsClasses, modelsFile, "modelsClasses")
   outputGeneratedCode(modelsFilters, modelsFile, "modelsFilters")
   outputGeneratedCode(modelsGeoFilters + "\n" + modelsSnuggetReturns, modelsFile, "modelsGeoFilters")
-  
+
   outputGeneratedCode(adminModelImports, adminFile, "adminModelImports")
   outputGeneratedCode(adminLists, adminFile, "adminLists")
   outputGeneratedCode(adminSiteRegistrations, adminFile, "adminSiteRegistrations")
-  
+
   outputGeneratedCode(loadMappings + "\n" + loadPaths, loadFile, "loadMappings")
   outputGeneratedCode(loadImports, loadFile, "loadImports")
-  
+
   print("\n")
 
 
@@ -274,8 +274,8 @@ def outputGeneratedCode(code, destFile, anchor):
           f_out.write(line)
         if ("# " + anchor) in line:
           linesWanted = False
-          f_out.write(code) 
-            
+          f_out.write(code)
+
   if insertComplete:
     os.remove(destFile)
     os.rename(tempFile, destFile)
@@ -283,7 +283,7 @@ def outputGeneratedCode(code, destFile, anchor):
   else:
     print(anchor, "not found in", destFile)
 
-  
-  
+
+
 if __name__ == "__main__":
   main()

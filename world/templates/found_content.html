@@ -64,25 +64,18 @@
     </div>
 
     <div class="small-10 medium-5 column end">
-      <h4>Stay Tuned</h4>
-      <h6>Winter Weather, Wind &amp; Thunderstorms</h6>
-      <p>Weather can strike at anytime. Keep up to date on weather advisories for Missoula County with this <a href="http://www.wrh.noaa.gov/map/?wfo=mso">handy interactive web map</a>.<p>
-      <p>Weather can strike at anytime. Keep up to date on weather advisories for Missoula County with <a href="http://alerts.weather.gov/cap/wwaatmget.php?x=MTC063&y=1">NOAA alerts</a>.</p>
-      <h6>Volcano</h6>
-      <p>Though no volcanoes exist in Missoula County it is possible that a Cascade Volcanic Eruption could impact the area by covering it is volcanic ash. To stay up to date on current volcano conditions <a href=" http://volcanoes.usgs.gov/observatories/cvo/">click here</a>.</p>
+      <h4>Important Links</h4>
+      {% for link in important_links %}
+      <h5>{{ link.title }}</h5>
+      <p>{{ link.link | urlize }}
+      {% endfor %}
     </div>
-
   </div>
 
   <div class="row">
       <div class="small-10 medium-5 column end">
       <h4>Community Leaders</h4>
-      <p>Contact your <a href="{{ location.emergency_management_link }}">Office of Emergency Management</a> in advance to find out more about how to prepare yourself.</p>
-    </div>
-
-    <div class="small-10 medium-5 column end">
-      <h4>Important Links</h4>
-      <p>Important Links about community resources go here.</p>
+      <p>{{ location.community_leaders | urlize }}</p>
     </div>
   </div>
 
