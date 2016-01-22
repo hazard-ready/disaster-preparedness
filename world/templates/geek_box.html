@@ -2,11 +2,16 @@
   <div id="geek-box" class="row vert-pad-medium">
       <div class="small-12 medium-6 columns">
         <h6>How does it work?</h6>
-        <p>MissoulaReady is designed to help people prepare for disasters that occur in their area. Disasters don’t strike locations equally so we found it important to give people location
-        specific information in order to properly prepare. MissoulaReady organizes current information and packages it in a way that makes it accessible for any Missoula County
+        <p>{{ settings.site_title }} is designed to help people prepare for disasters that occur in their area. Disasters don’t strike locations equally so we found it important to give people location
+        specific information in order to properly prepare. {{ settings.site_title }} organizes current information and packages it in a way that makes it accessible for any {{ location.area_name }}
         resident.</p>
-        <p>This site uses the most up-to-date hazard risk data available for Missoula County, Montana. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency. Data used for MissoulaReady is available for download <a href="https://github.com/missoula-ready/disaster-preparedness/blob/master/world/data.zip">here</a>.</p>
-        <p>Have questions? <a href="mailto:{{ settings.contact_email }}">Email the creators</a> for more information.</p>
+        <p>This site uses the most up-to-date hazard risk data available for {{ location.area_name }}. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.
+        {% if settings.data_download %}
+            Data used for {{ settings.site_title }} is available for download <a href="{{settings.data_download}}">here</a>.</p>
+        {% endif %}
+        {% if settings.contact_email %}
+            <p>Have questions? <a href="mailto:{{ settings.contact_email }}">Email the creators</a> for more information.</p>
+        {% endif %}
     </div>
     <div class="small-12 medium-6 columns">
         <h6>Is this available for other Counties or States?</h6>
@@ -14,7 +19,7 @@
     </div>
     <div class="small-12 medium-6 columns">
         <h6>Who made this?</h6>
-        <p>This is based on <a href="http://www.opb.org/news/widget/aftershock-find-your-cascadia-earthquake-story/">Aftershock</a>, an earthquake preparedness application for Oregon residents. Carson MacPherson-Krutsky and <a href="http://www.hs.umt.edu/geosciences/faculty/bendick/">Dr. Rebecca Bendick</a>, a graduate student and her advisor at the Unversity of Montana, had the idea to expand it for other locales and types of disasters. <a href="https://github.com/nein09">Melinda Minch</a> and <a href="https://github.com/eldang">Eldan Goldenberg</a> adapted it for that purpose.</p>
+        <p>{{ settings.who_made_this | safe}}</p>
     </div>
   </div>
 </div>
