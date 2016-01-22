@@ -150,10 +150,8 @@ If you make changes to the shapefiles, or change which field from the shapefiles
 
 If you have existing data that needs to be removed—perhaps because you are replacing our sample data, or retiring a shapefile you previously used—you may have to clear the database first.  To do this:
 
-1. `psql -d [DBNAME] -c "DROP SCHEMA public CASCADE;"`
-2. `psql -d [DBNAME] -c "CREATE SCHEMA public;"`
-3. `psql -d [DBNAME] -c "CREATE EXTENSION postgis;"`
-4. `python manage.py migrate` - if this step throws errors, delete all the .py files in `world/migrations` **except** `__init__.py` and `0001_initial.py`, and try again.
+1. `psql -d [DBNAME] -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public; CREATE EXTENSION postgis;"`
+2. `python manage.py migrate` - if this step throws errors, delete all the .py files in `world/migrations` **except** `__init__.py` and `0001_initial.py`, and try again.
 
 Then continue with the instructions in [Load Some Data](#load-some-data) above.
 
