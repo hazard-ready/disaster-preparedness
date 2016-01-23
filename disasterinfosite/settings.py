@@ -1,5 +1,5 @@
 """
-Django settings for cascadiaprepared project.
+Django settings for disasterinfosite project.
 """
 
 ADMINS = (
@@ -47,9 +47,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'cascadiaprepared.urls'
+ROOT_URLCONF = 'disasterinfosite.urls'
 
-WSGI_APPLICATION = 'cascadiaprepared.wsgi.application'
+WSGI_APPLICATION = 'disasterinfosite.wsgi.application'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/

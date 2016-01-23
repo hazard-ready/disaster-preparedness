@@ -1,1 +1,1 @@
-web: gunicorn cascadiaprepared.wsgi --log-file -
+web: gunicorn disasterinfosite.wsgi --log-file -
