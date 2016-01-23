@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib.gis import admin
 from django.conf import settings
 
-from world import views
+from disasterinfosite import views
 
 urlpatterns = patterns('',
                        url(r'^$', views.app_view, name='index'),

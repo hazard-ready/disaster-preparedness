@@ -69,16 +69,16 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('name', models.CharField(max_length=255)),
-                ('eventOccursRecovery', models.ForeignKey(to='world.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
-                ('firstDayRecovery', models.ForeignKey(to='world.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
-                ('threeDaysRecovery', models.ForeignKey(to='world.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
-                ('sevenDaysRecovery', models.ForeignKey(to='world.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
-                ('fourWeeksRecovery', models.ForeignKey(to='world.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
-                ('threeMonthsRecovery', models.ForeignKey(to='world.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
-                ('sixMonthsRecovery', models.ForeignKey(to='world.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
-                ('twelveMonthsRecovery', models.ForeignKey(to='world.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
-                ('threeYearsRecovery', models.ForeignKey(to='world.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
-                ('threePlusYearsRecovery', models.ForeignKey(to='world.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
+                ('eventOccursRecovery', models.ForeignKey(to='disasterinfosite.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
+                ('firstDayRecovery', models.ForeignKey(to='disasterinfosite.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
+                ('threeDaysRecovery', models.ForeignKey(to='disasterinfosite.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
+                ('sevenDaysRecovery', models.ForeignKey(to='disasterinfosite.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
+                ('fourWeeksRecovery', models.ForeignKey(to='disasterinfosite.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
+                ('threeMonthsRecovery', models.ForeignKey(to='disasterinfosite.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
+                ('sixMonthsRecovery', models.ForeignKey(to='disasterinfosite.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
+                ('twelveMonthsRecovery', models.ForeignKey(to='disasterinfosite.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
+                ('threeYearsRecovery', models.ForeignKey(to='disasterinfosite.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
+                ('threePlusYearsRecovery', models.ForeignKey(to='disasterinfosite.RecoveryLevels', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
 
             ],
         ),
@@ -87,7 +87,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('name', models.CharField(max_length=50)),
-                ('items', models.ManyToManyField(to='world.Infrastructure')),
+                ('items', models.ManyToManyField(to='disasterinfosite.Infrastructure')),
             ],
         ),
         migrations.CreateModel(
@@ -95,7 +95,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('name', models.CharField(max_length=50)),
-                ('groups', models.ManyToManyField(to='world.InfrastructureGroup'))
+                ('groups', models.ManyToManyField(to='disasterinfosite.InfrastructureGroup'))
             ],
         ),
         migrations.CreateModel(
@@ -124,27 +124,27 @@ class Migration(migrations.Migration):
             name='Snugget',
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('section', models.ForeignKey(to='world.SnuggetSection', on_delete=django.db.models.deletion.PROTECT, related_name='+')),
-                ('sub_section', models.ForeignKey(to='world.SnuggetSubSection', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
+                ('section', models.ForeignKey(to='disasterinfosite.SnuggetSection', on_delete=django.db.models.deletion.PROTECT, related_name='+')),
+                ('sub_section', models.ForeignKey(to='disasterinfosite.SnuggetSubSection', on_delete=django.db.models.deletion.PROTECT, related_name='+', blank=True, null=True)),
             ],
         ),
         migrations.CreateModel(
             name='TextSnugget',
             fields=[
-                ('snugget_ptr', models.OneToOneField(auto_created=True, to='world.Snugget', serialize=False, primary_key=True, parent_link=True)),
+                ('snugget_ptr', models.OneToOneField(auto_created=True, to='disasterinfosite.Snugget', serialize=False, primary_key=True, parent_link=True)),
                 ('content', models.TextField()),
                 ('heading', models.TextField(default="")),
                 ('image', models.TextField(default="")),
                 ('percentage', models.FloatField(null=True)),
             ],
-            bases=('world.snugget',),
+            bases=('disasterinfosite.snugget',),
         ),
         migrations.CreateModel(
             name='EmbedSnugget',
             fields=[
-                ('snugget_ptr', models.OneToOneField(auto_created=True, to='world.Snugget', serialize=False, primary_key=True, parent_link=True)),
+                ('snugget_ptr', models.OneToOneField(auto_created=True, to='disasterinfosite.Snugget', serialize=False, primary_key=True, parent_link=True)),
                 ('embed', embed_video.fields.EmbedVideoField()),
             ],
-            bases=('world.snugget',),
+            bases=('disasterinfosite.snugget',),
         ),
     ]

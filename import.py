@@ -8,7 +8,7 @@ def main():
   SRIDNamespace = "EPSG"
   simplificationTolerance = "0.00001"  # This is in the SRS's units. For EPSG:4326, that's decimal degrees
 
-  appDir = "world"
+  appDir = "disasterinfosite"
   dataDir = os.path.join(appDir, "data")
   reprojectedDir = os.path.join(dataDir, "reprojected")
   simplifiedDir = os.path.join(dataDir, "simplified")
