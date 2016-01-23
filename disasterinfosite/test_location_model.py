@@ -5,10 +5,7 @@ class LocationModelTestCase(TestCase):
   def setUp(self):
     Location.objects.create(
       area_name="Melindaville",
-      disaster_name="a zombie attack",
-      disaster_description="Zombies are real, you know.",
-      evacuation_routes_link="http://default.com",
-      emergency_management_link="http://www.fema.gov"
+      community_leaders="Some information about community leaders"
     )
 
   def testObjectFormation(self):
