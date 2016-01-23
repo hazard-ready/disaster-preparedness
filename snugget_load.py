@@ -4,8 +4,8 @@ import csv
 import psycopg2
 
 def main():
-  appName = "world"
-  appDir = "world"
+  appName = "disasterinfosite"
+  appDir = "disasterinfosite"
   dataDir = os.path.join(appDir, "data")
   snuggetFile = os.path.join(dataDir, "snuggets.csv")
   overwriteAll = False
@@ -99,10 +99,10 @@ def processRow(appName, snuggetFile, cur, overwriteAll, row):
 
 
 def addTextSnugget(appName, row, sectionID, subsectionID, filterColumn, filterID, cur):
-#   "heading" -> world_textsnugget.heading (null as '')
-#   "intensity" -> world_textsnugget.percentage (numeric, null as null)
-#   "image" -> world_textsnugget.image
-#   "text" -> world_textsnugget.content
+#   "heading" -> disasterinfosite_textsnugget.heading (null as '')
+#   "intensity" -> disasterinfosite_textsnugget.percentage (numeric, null as null)
+#   "image" -> disasterinfosite_textsnugget.image
+#   "text" -> disasterinfosite_textsnugget.content
   if row["intensity"] == '':
     row["intensity"] = None
   cur.execute(

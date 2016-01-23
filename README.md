@@ -1,15 +1,15 @@
-# Earthquake Preparedness Web Interactive
+# Disaster Preparedness Web Interactive
 
-The project will explore traditional and qualitative scoring assessments of “risk/resiliency   factors” associated with regional crisis preparedness and demonstrate how actionable steps in community engagement can create a different portrait of resiliency. Stories will engage examples of communities in distinct regions across Oregon facing knowable challenges in the event of a major earthquake.
+The project will explore traditional and qualitative scoring assessments of “risk/resiliency factors” associated with regional crisis preparedness and demonstrate how actionable steps in community engagement can create a different portrait of resiliency. It is based on [a pioneering project from Oregon](https://github.com/Oregon-Public-Broadcasting/earthquake-preparedness) but has been generalized to make it easy to clone and tailor to other regions.
 
 # Dependencies
-## Django Web Framework
+* Django Web Framework
+* GeoDjango
 * PostgresSQL
-
-## GeoDjango Dependencies
-* PostresSQL
-  * GeoDjango has other dependencies.  [See this more complete list](https://docs.djangoproject.com/en/1.7/ref/contrib/gis/install/geolibs/) of required and optional additions.
-
+* PostGIS
+* Python modules listed in [requirements.txt](./requirements.txt)
+  * On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.
+  * GeoDjango has other dependencies, but if you install it from a package manager they will usually be included automatically.  [See this more complete list](https://docs.djangoproject.com/en/1.7/ref/contrib/gis/install/geolibs/) of required and optional additions.
 
 # Note about Python Command Usage
 Commands indicated are always just `python` but on some systems you might need to use `python3` in order to use a specific python version.  If so, other commands such as `pip` have a `pip3` equivalent.
@@ -26,18 +26,22 @@ Set up a virtual environment so that you can freely install python modules witho
 5. `source venv/bin/activate`  (type `deactivate` to leave). Remember to reactivate the virtual environment every time you open a terminal window and start running Python commands.
 6. `pip install -r requirements.txt` or `pip3 install -r requirements.txt` to automatically install the Python dependencies listed in [requirements.txt](./requirements.txt).
 
-*On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.*
+# "disasterinfosite" App
 
-
-# "World" App
-
-**TODO: can we combine what are currently our "world" and "cascadiaprepared" folders, and get rid of the "aftershock" one entirely?**
-
-Currently, the data and Django files for this app live in the `world` directory, while static content and web hosting config are in `cascadiaprepared`.
+While management and data loading files are in this project's root directory, everything else is in `/disasterinfosite`.
 
 ## Written using:
 * Postgres version: 9.4
 * Python version: 3.5
+
+## File structure
+
+* `/disasterinfosite/data` contains the shapefiles and text content (snuggets - see [Adding New Data](#adding-new-data) below for explanation) that will be loaded.
+* `/disasterinfosite/migrations` contains Django-generated files that specify how to set the database up. We don't recommend editing these manually.
+* `/disasterinfosite/static/css` contains all the stylesheets for this site.
+* `/disasterinfosite/static/img` contains all the static images - if you want to change icons, etc, look here.
+* `/disasterinfosite/static/js` contains JavaScript libraries that need to be included for various site functions.
+* `/disasterinfosite/templates` and `/disasterinfosite/templatetags` contain HTML templates for the site's various pages and subsections, and Python code that processes them. Many of the simpler customizations to this site will involve editing the HTML templates.
 
 ## Installing App
 This assumes `python` is the command configured to run the correct python version. Depending on your setup you may need to specify `python3`.
@@ -70,12 +74,12 @@ This assumes `python` is the command configured to run the correct python versio
 
 ### Load some data
 0. `source venv/bin/activate` if you haven't already activated the virtualenv this session.
-1. Unzip `data.zip` inside world, so that the data is in `world/data`. This data includes some sample shapefiles and related data for Missoula County, Montana, USA, to get you started. See below for instructions on replacing this with your own data.
+1. Unzip `data.zip` inside disasterinfosite, so that the data is in `disasterinfosite/data`. This data includes some sample shapefiles and related data for Missoula County, Montana, USA, to get you started. See below for instructions on replacing this with your own data.
 2. `python import.py` to process these shapefiles and update some Django code to fit. The script will prompt you for which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition). If you use the example `data.zip` provided in this project, use the field name `lookup_val` for every shapefile except `Flood_FEMA_DFRIM_2015`, for which you should use `FEMADES`.
 3. `python manage.py makemigrations` - this and the next 2 steps combined load the new data into the database.
 4. `python manage.py migrate`
 5. `python manage.py shell`
-    1. [inside the shell that this opens] `from world import load`
+    1. [inside the shell that this opens] `from disasterinfosite import load`
     2. `load.run()`
     3. `exit()` [to go back to the normal command line]
 6. `python snugget_load.py` to import text that will be displayed in the site.  See [Adding New Data](#adding-new-data) below for an explanation of "snuggets" and the format of this file.
@@ -90,15 +94,20 @@ Save them to your `.bash_profile` or equivalent.
 1. `python manage.py createsuperuser`
 2. `python manage.py runserver` to run a development server on localhost:8000 or see below for how to deploy via Apache.
 3. Visit http://server.ip/admin and log in with new user.
-4. Should see a list of content.  *Don't try to directly edit data that came from the shapefiles - they are liable to be so complex with so many points that attempting this freezes or crashes the browser.*
+4. You should see a list of content.  *Don't try to directly edit data that came from the shapefiles - they are liable to be so complex with so many points that attempting this freezes or crashes the browser.* **TODO: Do those shapefiles need to show up in here at all?**
+5. There are other pieces of content that you can and should edit, though! They are bits of text and other information that show up on this site.
+  1. **Important Links** - Add as many of these as you want. They show up under 'Important Links' when location-specific information is found. You can put any text in the 'link' field and web addresses are turned into links automatically. The title shows up in bold over each link.
+  1. **Location Information** - Area Name shows up all over the place, especially in the instructions on the home page. 'Community leaders' appears under location-specific information.
+  1. **Site Settings** - Basic information about this site and who created it. This stuff shows up in the page headers and footers. The 'who made this' section especially deserves lots of details, and the Data Download link is if you'd like to share the data that you used to create this site. The site title is the big text at the top.
+  1. **Supply Kit** - The numbers in the supply kit information is based on the number you enter here for 'days', and the text can be anything you like.
 
 ### Deploying to the web via Apache
 
 1. Install a version of `mod_wsgi` that is compiled for Python 3. On Debian/Ubuntu you can do this with `aptitude install libapache2-mod-wsgi-py3`. On other systems it may be easier to use `pip` as per [these instructions](https://pypi.python.org/pypi/mod_wsgi).
 2. Use [these instructions](https://docs.djangoproject.com/en/1.9/howto/deployment/wsgi/modwsgi/) to configure Apache. Note in particular:
-    1. You'll need `WSGIScriptAlias` to point to `cascadiaprepared/wsgi.py`
+    1. You'll need `WSGIScriptAlias` to point to `disasterinfosite/wsgi.py`
     2. You'll need to apply the "Using a virtualenv" addition.
-    3. You'll need to set up a `/static/` alias pointing to `cascadiaprepared/static`
+    3. You'll need to set up a `/static/` alias pointing to `disasterinfosite/static`
     4. Depending on your server configuration, you *may* also need to set up a redirect rule to add trailing slashes to URLs, to get the static files (CSS, images etc) included.
     5. You may also need to alter the `STATIC_URL` constant in `settings.py` based on your server setup.
 3. Set up the environment values from above (`DJANGO_SECRET_KEY` and `DATABASE_URL`) for all users by putting their declarations in `/etc/environment/` and rebooting the machine.
@@ -133,25 +142,25 @@ If the structure of your text content is simple enough, you can import shapefile
 * `heading` : A human-readable heading that describes the content of this shapefile, to be displayed on the page.
 * `lookup_value` : The value of the unique identifier in the shapefile (e.g. an intensity value or a hazard classification). This field can be empty; if it is then the rest of this row will be applied to every available value.
 * `intensity` : Relative severity scaled from 0-100, to display graphically on the page. If this is empty, or if a value is provided for `image`, it will simply not be displayed.
-* `image` : The file name for an image, stored in `cascadiaprepared/static/img`, that illustrates the severity. If this is empty it won't be displayed. If there is a value here (including '0' or NULL), it overrides the value of `intensity`.
+* `image` : The file name for an image, stored in `disasterinfosite/static/img`, that illustrates the severity. If this is empty it won't be displayed. If there is a value here (including '0' or NULL), it overrides the value of `intensity`.
 * `text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria. If you put a url in the snugget text, like `http://www.github.com`, we'll automatically make it into a link for you.
 
 You can have any number of sections and subsections, but every row must be a unique combination of `shapefile`, `section`, `subsection` and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used. Note that this allows you to create a default value for a given section, subsection and shapefile, by having a row with `lookup_value` blank (so it applies to all values present in the shapefile), followed by rows with specified `lookup_value`s which will overwrite the default for that value only.
 
 Blank rows or additional columns won't cause problems. Any row that is missing any of the required fields will be skipped and a warning will be printed.
 
-Once `snuggets.csv` is ready, simply put it and the relevant shapefiles in `world/data` (and remove any other files or subdirectories from there), and follow the instructions in [Load Some Data](#load-some-data) above.
+Once `snuggets.csv` is ready, simply put it and the relevant shapefiles in `disasterinfosite/data` (and remove any other files or subdirectories from there), and follow the instructions in [Load Some Data](#load-some-data) above.
 
 #### Updating existing data
 
 If you make changes to `snuggets.csv` you should only need to re-run `python snugget_load.py` and restart your web server.
 
-If you make changes to the shapefiles, or change which field from the shapefiles you want to use as the ID, then before running `python import.py` you will also need to remove the `world/data/reprojected` and `word/data/simplified` directories that the importer had created. It uses these to avoid having to repeat the time-consuming reprojection and simplification of the shapefiles every time it is run, but that means changes to the shapefiles themselves won't be picked up unless they are removed.
+If you make changes to the shapefiles, or change which field from the shapefiles you want to use as the ID, then before running `python import.py` you will also need to remove the `disasterinfosite/data/reprojected` and `word/data/simplified` directories that the importer had created. It uses these to avoid having to repeat the time-consuming reprojection and simplification of the shapefiles every time it is run, but that means changes to the shapefiles themselves won't be picked up unless they are removed.
 
 If you have existing data that needs to be removed—perhaps because you are replacing our sample data, or retiring a shapefile you previously used—you may have to clear the database first.  To do this:
 
 1. `psql -d [DBNAME] -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public; CREATE EXTENSION postgis;"`
-2. `python manage.py migrate` - if this step throws errors, delete all the .py files in `world/migrations` **except** `__init__.py` and `0001_initial.py`, and try again.
+2. `python manage.py migrate` - if this step throws errors, delete all the .py files in `disasterinfosite/migrations` **except** `__init__.py` and `0001_initial.py`, and try again.
 
 Then continue with the instructions in [Load Some Data](#load-some-data) above.
 
@@ -165,17 +174,17 @@ Using QGIS or ArcGIS, add two columns to the shapefile: one with a lookup value 
 
 #### If you can't edit the shapefile, or are more comfortable editing code
 
-Take a look at `world/models.py`, `world/load.py` and `world/admin.py` after running the automated pipeline on some sample data, and write appropriate equivalents for all of the generated code (marked by prominent comments) that fit your data and text model. You may also need to edit `world/templates/found_content.html` which is the page template to be displayed when there is at least one snugget available for a location. Then run just the `manage.py` parts of the [Load Some Data](#load-some-data), and use the Django admin panel to enter snuggets by hand.
+Take a look at `disasterinfosite/models.py`, `disasterinfosite/load.py` and `disasterinfosite/admin.py` after running the automated pipeline on some sample data, and write appropriate equivalents for all of the generated code (marked by prominent comments) that fit your data and text model. You may also need to edit `disasterinfosite/templates/found_content.html` which is the page template to be displayed when there is at least one snugget available for a location. Then run just the `manage.py` parts of the [Load Some Data](#load-some-data), and use the Django admin panel to enter snuggets by hand.
 
 If you have some data that fits that automated import model and some that does not, you can combine the two. Just watch for three things:
 
 1. You'll have to reproject the shapefiles that aren't going through the import pipeline to EPSG:4326 yourself.
-2. Put the shapefiles that aren't being manually imported somewhere other than `world/data` to keep them out of the automated pipeline.
+2. Put the shapefiles that aren't being manually imported somewhere other than `disasterinfosite/data` to keep them out of the automated pipeline.
 3. Be very careful to avoid putting any of your manually edited code between the `# GENERATED CODE GOES HERE` and `# END OF GENERATED CODE BLOCK` comment pairs in the Python files, because that part gets overwritten by `import.py` each time.
 
 ### Converting raster files
 
-The import pipeline doesn't currently have a way to handle raster data. Instead you'll have to convert the file to vector data first, and save the shapefile this creates in `world/data`. Here are three ways to do that:
+The import pipeline doesn't currently have a way to handle raster data. Instead you'll have to convert the file to vector data first, and save the shapefile this creates in `disasterinfosite/data`. Here are three ways to do that:
 
 #### Using GDAL from the command line
 
@@ -193,9 +202,9 @@ The output file will have an attribute `DN` that contains the pixel values from 
 
 * Open the raster file in QGIS
 * Choose `Raster > Conversion > Polygonize` from the menus
-* Use the Select button by "Output file" to give this a destination in `world/data`, and leave the other options as they are
+* Use the Select button by "Output file" to give this a destination in `disasterinfosite/data`, and leave the other options as they are
 * Click "OK" and be warned that it may take a while
-* When it's finished, check the shapefile it's created.  It likes to create lines instead of polygons - if it did that, then use `Vector > Geometry Tools > Lines to Polygons` to make an actual polygons file, and take the lines file out of `world/data`.
+* When it's finished, check the shapefile it's created.  It likes to create lines instead of polygons - if it did that, then use `Vector > Geometry Tools > Lines to Polygons` to make an actual polygons file, and take the lines file out of `disasterinfosite/data`.
 
 The output file will have an attribute `DN` that contains the pixel values from the raster file.
 
