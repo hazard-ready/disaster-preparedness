@@ -94,7 +94,12 @@ Save them to your `.bash_profile` or equivalent.
 1. `python manage.py createsuperuser`
 2. `python manage.py runserver` to run a development server on localhost:8000 or see below for how to deploy via Apache.
 3. Visit http://server.ip/admin and log in with new user.
-4. Should see a list of content.  *Don't try to directly edit data that came from the shapefiles - they are liable to be so complex with so many points that attempting this freezes or crashes the browser.*
+4. You should see a list of content.  *Don't try to directly edit data that came from the shapefiles - they are liable to be so complex with so many points that attempting this freezes or crashes the browser.* **TODO: Do those shapefiles need to show up in here at all?**
+5. There are other pieces of content that you can and should edit, though! They are bits of text and other information that show up on this site.
+  1. **Important Links** - Add as many of these as you want. They show up under 'Important Links' when location-specific information is found. You can put any text in the 'link' field and web addresses are turned into links automatically. The title shows up in bold over each link.
+  1. **Location Information** - Area Name shows up all over the place, especially in the instructions on the home page. 'Community leaders' appears under location-specific information.
+  1. **Site Settings** - Basic information about this site and who created it. This stuff shows up in the page headers and footers. The 'who made this' section especially deserves lots of details, and the Data Download link is if you'd like to share the data that you used to create this site. The site title is the big text at the top.
+  1. **Supply Kit** - The numbers in the supply kit information is based on the number you enter here for 'days', and the text can be anything you like.
 
 ### Deploying to the web via Apache
 
