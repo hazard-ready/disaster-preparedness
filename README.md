@@ -1,15 +1,15 @@
-# Earthquake Preparedness Web Interactive
+# Disaster Preparedness Web Interactive
 
-The project will explore traditional and qualitative scoring assessments of “risk/resiliency   factors” associated with regional crisis preparedness and demonstrate how actionable steps in community engagement can create a different portrait of resiliency. Stories will engage examples of communities in distinct regions across Oregon facing knowable challenges in the event of a major earthquake.
+The project will explore traditional and qualitative scoring assessments of “risk/resiliency factors” associated with regional crisis preparedness and demonstrate how actionable steps in community engagement can create a different portrait of resiliency. It is based on [a pioneering project from Oregon](https://github.com/Oregon-Public-Broadcasting/earthquake-preparedness) but has been generalized to make it easy to clone and tailor to other regions.
 
 # Dependencies
-## Django Web Framework
+* Django Web Framework
+* GeoDjango
 * PostgresSQL
-
-## GeoDjango Dependencies
-* PostresSQL
-  * GeoDjango has other dependencies.  [See this more complete list](https://docs.djangoproject.com/en/1.7/ref/contrib/gis/install/geolibs/) of required and optional additions.
-
+* PostGIS
+* Python modules listed in [requirements.txt](./requirements.txt)
+  * On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.
+  * GeoDjango has other dependencies, but if you install it from a package manager they will usually be included automatically.  [See this more complete list](https://docs.djangoproject.com/en/1.7/ref/contrib/gis/install/geolibs/) of required and optional additions.
 
 # Note about Python Command Usage
 Commands indicated are always just `python` but on some systems you might need to use `python3` in order to use a specific python version.  If so, other commands such as `pip` have a `pip3` equivalent.
@@ -26,12 +26,13 @@ Set up a virtual environment so that you can freely install python modules witho
 5. `source venv/bin/activate`  (type `deactivate` to leave). Remember to reactivate the virtual environment every time you open a terminal window and start running Python commands.
 6. `pip install -r requirements.txt` or `pip3 install -r requirements.txt` to automatically install the Python dependencies listed in [requirements.txt](./requirements.txt).
 
-*On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.*
-
-
 # "disasterinfosite" App
 
 While management and data loading files are in this project's root directory, everything else is in `/disasterinfosite`.
+
+## Written using:
+* Postgres version: 9.4
+* Python version: 3.5
 
 ## File structure
 
@@ -41,10 +42,6 @@ While management and data loading files are in this project's root directory, ev
 * `/disasterinfosite/static/img` contains all the static images - if you want to change icons, etc, look here.
 * `/disasterinfosite/static/js` contains JavaScript libraries that need to be included for various site functions.
 * `/disasterinfosite/templates` and `/disasterinfosite/templatetags` contain HTML templates for the site's various pages and subsections, and Python code that processes them. Many of the simpler customizations to this site will involve editing the HTML templates.
-
-## Written using:
-* Postgres version: 9.4
-* Python version: 3.5
 
 ## Installing App
 This assumes `python` is the command configured to run the correct python version. Depending on your setup you may need to specify `python3`.
