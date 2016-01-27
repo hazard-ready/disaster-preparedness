@@ -24,7 +24,7 @@ Set up a virtual environment so that you can freely install python modules witho
 3. `virtualenv --python=python3 venv --no-site-packages`
 4. Wait for things to happen.
 5. `source venv/bin/activate`  (type `deactivate` to leave). Remember to reactivate the virtual environment every time you open a terminal window and start running Python commands.
-6. `pip install -r requirements.txt` or `pip3 install -r requirements.txt` to automatically install the Python dependencies listed in [requirements.txt](./requirements.txt).
+6. `pip install -r requirements.txt` or `pip3 install -r requirements.txt` to automatically install the Python dependencies listed in [requirements.txt](./requirements.txt). You may see "Failed building wheel for ..." errors for some of the modules. If so, try repeating the command. If the second run shows "Requirement already satisfied" for every module then you can safely ignore the previous error.
 
 # "disasterinfosite" App
 
