@@ -3,10 +3,11 @@
 The project will explore traditional and qualitative scoring assessments of “risk/resiliency factors” associated with regional crisis preparedness and demonstrate how actionable steps in community engagement can create a different portrait of resiliency. It is based on [a pioneering project from Oregon](https://github.com/Oregon-Public-Broadcasting/earthquake-preparedness) but has been generalized to make it easy to clone and tailor to other regions.
 
 # Dependencies
-* Django Web Framework
-* GeoDjango
-* PostgresSQL
+* Django Web Framework (installed automatically as part of setup)
+* GeoDjango (installed automatically as part of setup)
+* PostgresSQL (most package managers will auto-install this as a dependency of either of the following items)
 * PostGIS
+* Postgresql-server-dev-all
 * Python modules listed in [requirements.txt](./requirements.txt)
   * On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.
   * GeoDjango has other dependencies, but if you install it from a package manager they will usually be included automatically.  [See this more complete list](https://docs.djangoproject.com/en/1.7/ref/contrib/gis/install/geolibs/) of required and optional additions.
@@ -23,7 +24,7 @@ Set up a virtual environment so that you can freely install python modules witho
 2. Move to the project directory (e.g. `/Applications/MAMP/htdocs/disaster-preparedness`).
 3. `virtualenv --python=python3 venv --no-site-packages`
 4. Wait for things to happen.
-5. `source venv/bin/activate`  (type `deactivate` to leave). Remember to reactivate the virtual environment every time you open a terminal window and start running Python commands.
+5. `source venv/bin/activate`  (type `deactivate` to leave). Remember to reactivate the virtual environment every time you open a terminal window and start running Python commands. Note that on some machines, you'll need to use `. venv/bin/activate` instead.
 6. `pip install -r requirements.txt` or `pip3 install -r requirements.txt` to automatically install the Python dependencies listed in [requirements.txt](./requirements.txt). You may see "Failed building wheel for ..." errors for some of the modules. If so, try repeating the command. If the second run shows "Requirement already satisfied" for every module then you can safely ignore the previous error.
 
 # "disasterinfosite" App
