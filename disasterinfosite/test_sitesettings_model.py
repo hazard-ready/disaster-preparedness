@@ -3,11 +3,11 @@ from .models import SiteSettings
 
 class SiteSettingsModelTestCase(TestCase):
   def setUp(self):
-    SiteSettings.objects.create(    
+    SiteSettings.objects.create(
       about_text="Some sample text",
       contact_email="foo@bar.com",
       site_url="http://www.whatever.com:4949/stuff.aspx?whatever",
-      site_description="This is an example disaster website"
+      site_description="This is an example disaster website",
     )
 
   def testObjectFormation(self):
