@@ -59,6 +59,7 @@ This assumes `python` is the command configured to run the correct python versio
  * The Mac or Ubuntu instructions will also install Postgres if you don't already have that.
  * Run `brew info postgres` to see options for starting Postgres - you can have it start automatically when your computer starts, or not.
  * Homebrew sets Postgres up with one user to start with, and that user is you. You should probably make a separate user for Django. If you want your user to be named `django`, do `createuser django --password`. You will then get a prompt for the password. Use only letters and numbers in the password, because you'll need to use it in a URL later.
+ * Linux installers don't necessarily create any users! You may need [these instructions](https://help.ubuntu.com/community/PostgreSQL#Basic_Server_Setup) and to run the next few Postgres commands as `sudo -u postgres`
 2. Clone repo.
 3. Create a Postgres database on the Postgres server, and install PostGIS to it.
 
@@ -70,11 +71,11 @@ This assumes `python` is the command configured to run the correct python versio
 *[detailed instructions for reference](http://postgis.net/docs/manual-2.1/postgis_installation.html#create_new_db_extensions)*
 5. Set up an environment variable `DATABASE_URL` that will be used by the Django Database URL app to load our database.
   * example on Mac/Linux: `export DATABASE_URL="postgres://USER:PASSWORD@HOST:PORT/DBNAME"` where the USER & PASSWORD are the django account you created above in postgres, and the default HOST:PORT is localhost:5432 .
-6. `source venv/bin/activate` if you haven't already activated the virtualenv this session.
+6. `source venv/bin/activate` or `. venv/bin/activate` if you haven't already activated the virtualenv this session.
 7. Run `python manage.py migrate` to initialize the database's structure.
 
 ### Load some data
-0. `source venv/bin/activate` if you haven't already activated the virtualenv this session.
+0. `source venv/bin/activate` or `. venv/bin/activate` if you haven't already activated the virtualenv this session.
 1. Unzip `data.zip` inside disasterinfosite, so that the data is in `disasterinfosite/data`. This data includes some sample shapefiles and related data for Missoula County, Montana, USA, to get you started. See below for instructions on replacing this with your own data.
 2. `python import.py` to process these shapefiles and update some Django code to fit. The script will prompt you for which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition). If you use the example `data.zip` provided in this project, use the field name `lookup_val` for every shapefile except `Flood_FEMA_DFRIM_2015`, for which you should use `FEMADES`.
 3. `python manage.py makemigrations` - this and the next 2 steps combined load the new data into the database.
