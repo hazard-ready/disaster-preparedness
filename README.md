@@ -8,6 +8,7 @@ The project will explore traditional and qualitative scoring assessments of “r
 * PostgresSQL (most package managers will auto-install this as a dependency of either of the following items)
 * PostGIS
 * Postgresql-server-dev-all
+* GDAL
 * Python modules listed in [requirements.txt](./requirements.txt)
   * On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.
   * GeoDjango has other dependencies, but if you install it from a package manager they will usually be included automatically.  [See this more complete list](https://docs.djangoproject.com/en/1.7/ref/contrib/gis/install/geolibs/) of required and optional additions.
