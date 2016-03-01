@@ -9,6 +9,7 @@ The project will explore traditional and qualitative scoring assessments of “r
 * PostGIS
 * Postgresql-server-dev-all
 * GDAL
+* libjpeg-dev
 * Python modules listed in [requirements.txt](./requirements.txt)
   * On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.
   * GeoDjango has other dependencies, but if you install it from a package manager they will usually be included automatically.  [See this more complete list](https://docs.djangoproject.com/en/1.7/ref/contrib/gis/install/geolibs/) of required and optional additions.
@@ -78,7 +79,9 @@ This assumes `python` is the command configured to run the correct python versio
 ### Load some data
 0. `source venv/bin/activate` or `. venv/bin/activate` if you haven't already activated the virtualenv this session.
 1. Unzip `data.zip` inside disasterinfosite, so that the data is in `disasterinfosite/data`. This data includes some sample shapefiles and related data for Missoula County, Montana, USA, to get you started. See below for instructions on replacing this with your own data.
-2. `python import.py` to process these shapefiles and update some Django code to fit. The script will prompt you for which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition). If you use the example `data.zip` provided in this project, use the field name `lookup_val` for every shapefile except `Flood_FEMA_DFRIM_2015`, for which you should use `FEMADES`.
+2. `python import.py` to process these shapefiles and update some Django code to fit. For each shapefile, the script will prompt you for two things:
+    * Which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition). If you use the example `data.zip` provided in this project, use the field name `lookup_val` for every shapefile except `Flood_FEMA_DFRIM_2015`, for which you should use `FEMADES`.
+    * Whether you want to group the content from this shapefile in a tab with content from any others. If you want a shapefile to have its own unique tab, just press return at this prompt. If you want to group 2 or more shapefiles together under 1 tab (e.g. if you have a shapefile for wildfire probability and another with historical wildfire information), just enter the same group name for both at this prompt. Note that these group names are only used in the code--headings displayed to the user come from the "snugget" file loaded in step 6 below--and should contain only letters, no spaces or punctuation.
 3. `python manage.py makemigrations` - this and the next 2 steps combined load the new data into the database.
 4. `python manage.py migrate`
 5. `python manage.py shell`
