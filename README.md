@@ -76,6 +76,16 @@ This assumes `python` is the command configured to run the correct python versio
 6. `source venv/bin/activate` or `. venv/bin/activate` if you haven't already activated the virtualenv this session.
 7. Run `python manage.py migrate` to initialize the database's structure.
 
+### Add API Keys
+
+`disasterinfosite/templates/index.html` loads the Google Maps JavaScript API with no API key.  This is fine for initial testing, but you should get a key before deployment.  Go to https://developers.google.com/maps/documentation/javascript/get-api-key to do so, and then simply edit the line that currently says:
+
+` <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>`
+
+to
+
+` <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=KEYGOESHERE"></script>`
+
 ### Load some data
 0. `source venv/bin/activate` or `. venv/bin/activate` if you haven't already activated the virtualenv this session.
 1. Unzip `data.zip` inside disasterinfosite, so that the data is in `disasterinfosite/data`. This data includes some sample shapefiles and related data for Missoula County, Montana, USA, to get you started. See below for instructions on replacing this with your own data.
