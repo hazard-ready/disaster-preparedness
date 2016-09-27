@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('about_text', models.TextField(help_text='Describe the data and the agencies that it came from.', default='Information about your organization goes here.')),
                 ('contact_email', models.EmailField(blank=True, help_text='Put a contact email for the maintainer of this site here.', max_length=254)),
-                ('site_url', models.URLField(default='http://www.example.com', help_text='Put the URL to this site here.')),
+                ('site_url', models.URLField(default='https://www.example.com', help_text='Put the URL to this site here.')),
                 ('site_title', models.CharField(default='Your Title Here!', max_length=50)),
                 ('site_description', models.CharField(default='A disaster preparedness website', help_text='A small, catchy description for this site.', max_length=200)),
                 ('data_download', models.URLField(help_text='A link where people can download a zipfile of all the data that powers this site.', blank=True)),
@@ -111,6 +111,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('name', models.CharField(max_length=50)),
+                ('order', models.IntegerField(default=0, help_text="The order in which you'd like this to appear in the tab. 0 is at the top."))
             ],
         ),
         migrations.CreateModel(
@@ -118,6 +119,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('name', models.CharField(max_length=50)),
+                ('order', models.IntegerField(default=0, help_text="The order in which you'd like this to appear in the section. 0 is at the top. These can be in different sections or mutually exclusive, hence the non-unique values."))
             ],
         ),
         migrations.CreateModel(

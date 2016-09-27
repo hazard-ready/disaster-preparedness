@@ -191,6 +191,10 @@ class SnuggetType(models.Model):
 
 class SnuggetSection(models.Model):
     name = models.CharField(max_length=50)
+    order = models.IntegerField(
+        default=0,
+        help_text="The order in which you'd like this to appear in the tab. 0 is at the top."
+    )
 
     def __str__(self):
         return self.name
@@ -198,6 +202,10 @@ class SnuggetSection(models.Model):
 
 class SnuggetSubSection(models.Model):
     name = models.CharField(max_length=50)
+    order = models.IntegerField(
+        default=0,
+        help_text="The order in which you'd like this to appear in the section. 0 is at the top. These can be in different sections or mutually exclusive, hence the non-unique values."
+    )
 
     def __str__(self):
         return self.name
