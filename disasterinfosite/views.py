@@ -37,9 +37,12 @@ def app_view(request):
                             else:
                                 sections[text_snugget.section][text_snugget.sub_section] = [text_snugget]
 
+                        for section, sub_section_dict in sections.items():
+                            sections[section] = OrderedDict(sorted(sub_section_dict.items(), key=lambda t: t[0].order))
+
                         data[key] = {
                             'heading': heading,
-                            'sections': sections
+                            'sections': OrderedDict(sorted(sections.items(), key=lambda t: t[0].order )),
                         }
 
         return render(request, template, {
