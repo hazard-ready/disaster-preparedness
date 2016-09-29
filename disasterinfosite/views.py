@@ -40,9 +40,16 @@ def app_view(request):
                         for section, sub_section_dict in sections.items():
                             sections[section] = OrderedDict(sorted(sub_section_dict.items(), key=lambda t: t[0].order))
 
+                        photos = []
+                        for p in PastEventsPhoto.objects.filter(group=values[0].group):
+                            photos.append(str(p))
+
                         data[key] = {
                             'heading': heading,
                             'sections': OrderedDict(sorted(sections.items(), key=lambda t: t[0].order )),
+                            'likely_scenario_title': values[0].group.likely_scenario_title,
+                            'likely_scenario_text': values[0].group.likely_scenario_text,
+                            'photos': photos
                         }
 
         return render(request, template, {
