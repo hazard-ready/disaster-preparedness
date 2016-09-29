@@ -18,14 +18,14 @@ $( document ).ready(function() {
   // set up the map
   var map = L.map('map');
   if (query_lat && query_lng) {
-    zoom = 15;
+    zoom = 14;
     map.setView([query_lat, query_lng], zoom);
   } else { // use the data bounds if we don't have a position in the query string
     map.fitBounds(mapBounds);
   }
   map.scrollWheelZoom.disable();
 
-  var osmUrl='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  var osmUrl='//{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png';
   var osmAttrib='Map data © <a href="//openstreetmap.org">OpenStreetMap</a> contributors';
   var layer = new L.TileLayer(osmUrl, {attribution: osmAttrib}).addTo(map);
   layer.setOpacity(0.6);
