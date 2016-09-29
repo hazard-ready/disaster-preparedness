@@ -14,17 +14,6 @@
             <p>Have questions? <a href="mailto:{{ settings.contact_email }}">Email the creators</a> for more information.</p>
         {% endif %}
     </div>
-    {% if quick_data_overview %}
-        <div class="small-12 medium-6 columns">
-            <h5 class="caps">Quick Data Overview</h5>
-            <p>Take a look at some overviews of the data we used for {{ location.area_name }}:</p>
-            <ul>
-                {% for item in quick_data_overview %}
-                    <li><a  target="_blank" href="{{ item }}">{{ item.link_text }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
     <div class="small-12 medium-6 columns">
         <h5 class="caps">Who made this?</h5>
         <p>{{ settings.who_made_this | safe}}</p>
