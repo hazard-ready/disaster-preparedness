@@ -44,7 +44,9 @@ $( document ).ready(function() {
 
   // Make a click on the map submit the location
   map.on('click', function(e) {
-   submitLocation(e.latlng.lat, e.latlng.lng);
+    location_query_text = "";
+    $("#location-text").val(location_query_text);  // clear query text
+    submitLocation(e.latlng.lat, e.latlng.lng);
   });
 
   // grab and set any previously entered query text
