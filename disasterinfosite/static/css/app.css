@@ -122,6 +122,16 @@ MAP AND SEARCH STYLES
   height: 400px;
 }
 
+/* overriding ugly Leaflet defaults */
+/* Change cursor when mousing over the area masked because it's outside the covered area */
+.leaflet-clickable {
+  cursor: not-allowed !important;
+}
+/* Change cursor when over the area users can click in */
+.leaflet-container {
+  cursor: default !important;
+}
+
 /* loading spinner during geolocation */
 .loading {
   position: fixed;
@@ -155,8 +165,10 @@ DISASTER TABS
 }
 
 .tab-title {
+  float: right !important;
   font-size: 16px;
   font-weight: bold;
+  width: 95%;
 }
 
 .tabs-content > .content {
@@ -170,6 +182,11 @@ DISASTER TABS
 
 .tabs dd.active a, .tabs .tab-title.active a {
   background-color: #ccccdd;
+}
+
+.disaster-tabs {
+  background-color: #91AB9B;
+  padding: 5px;
 }
 
 /*****
@@ -290,7 +307,7 @@ GEEK BOX
 
 
 /* adjustments for smaller screens */
-@media only screen and (max-width: 40em) {
+@media only screen and (max-width: 40rem) {
 
   #location-submit {
     background-size: 23px 23px;
@@ -334,7 +351,7 @@ GEEK BOX
 }
 
 /* adjustments for the smallest screens */
-@media only screen and (max-width: 26em) {
+@media only screen and (max-width: 26rem) {
   #location-text {
     color: #444444;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
