@@ -30,6 +30,24 @@ $( document ).ready(function() {
   var layer = new L.TileLayer(osmUrl, {attribution: osmAttrib}).addTo(map);
   layer.setOpacity(0.6);
 
+  $.ajax({
+    type: "POST",
+    url: "static/img/boundary.geojson",
+    dataType: "json",
+    success: function(boundaryShape) {
+      var boundaryStyle = {
+        "color": "rgb(253, 141, 60)",
+        "weight": 4,
+        "opacity": 1,
+        "fillColor": "#ffffff",
+        "fillOpacity": 0.7
+      };
+      var boundaryLayer = L.geoJson(boundaryShape, {
+        style: boundaryStyle
+      }).addTo(map);
+    }
+  });
+
   document.getElementById('map').style.cursor='default';
   if (query_lat && query_lng) {
     var icon = new L.Icon.Default;
