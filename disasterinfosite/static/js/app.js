@@ -123,4 +123,25 @@ $( document ).ready(function() {
     document.location =  encodeURI(document.location.hash + "?lat=" + lat + "&lng=" + lng + "&loc=" + location_query_text);
   }
 
+    // Set up slick photo slideshow
+  function loadGallery() {
+    var currentSlideElement = $('.disaster-content.active .past-photos');
+    currentSlideElement.slick({
+      slidesToShow: 1,
+      variableWidth: true,
+      prevArrow: '<button type="button" class="slick-prev"><</button>',
+      nextArrow: '<button type="button" class="slick-next">></button>'
+    });
+    return currentSlideElement;
+  }
+
+  // Initialize the slide gallery on the open disaster tab
+  var slideContainer = loadGallery();
+
+  // Open a new image gallery when a new tab is opened
+  $('.disaster-tabs').on('toggled', function () {
+    slideContainer.slick('unslick');
+    slideContainer = loadGallery();
+  });
+
 });
