@@ -3,7 +3,7 @@
     <div class="intensity">
       <div class="intensity-meter">
         {% if snugget.image %}
-          <img src="static/img/{{ snugget.image }}">
+          <img alt="Image representing an intensity of {{ snugget.percentage }}%" src="static/img/{{ snugget.image }}">
         {% elif snugget.dynamic_image %}
           {{ snugget.dynamic_image | safe }}
         {% endif %}
@@ -13,6 +13,6 @@
       </div>
     </div>
     {% else %}
-      <p>{{ snugget.content | urlize }}</p>
+      <p>{{ snugget.content | safe }}</p>
   {% endif %}
 {% endblock %}

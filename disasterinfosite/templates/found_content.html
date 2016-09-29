@@ -8,7 +8,7 @@
       <h2 class="project-title caps">{{ settings.site_title }}</h2>
       <h3 class="project-subtitle">{{ settings.site_description }}</h3>
     </div>
-    <div class="information-instructions"><p>Look below the map to see information for your location, or enter another location.</p></div>
+    <div class="information-instructions" role="complementary"><p>Look below the map to see information for your location, or enter another location.</p></div>
   </div>
 {% endblock header %}
 
@@ -22,9 +22,9 @@
 {% endblock map %}
 
 {% block main-content %}
-  <div class="row disaster-container">
+  <div class="row disaster-container" role="main">
     <div class="small-12 column">
-      <ul class="tabs disaster-tabs" data-tab>
+      <ul class="tabs disaster-tabs" data-tab role="group">
         {% for group, hazard in data.items %}
           {% if forloop.first %}
             <li class="tab-title active"><a href="#{{group}}">{{hazard.heading}}</a></li>
@@ -42,13 +42,25 @@
         {% endif %}
           {% for section, sub_sections in hazard.sections.items %}
             <div class="snugget-text">
-              <h4 class="section-title">{{ section }}</h4>
-              {% for sub_section, snuggets in sub_sections.items %}
-                <h5>{{ sub_section }}</h5>
-                {% for snugget in snuggets %}
-                  {% show_snugget snugget %}
+              <div class="section-icon section-icon--dynamic section-icon--{{ section }}">
+                <h2 class="caps section-title">{{ section }}</h2>
+              </div>
+              <div class="section-content">
+                {% for sub_section, snuggets in sub_sections.items %}
+                  <h3>{{ sub_section }}</h3>
+                  {% for snugget in snuggets %}
+                    {% show_snugget snugget %}
+                  {% endfor %}
                 {% endfor %}
-              {% endfor %}
+                {% if section.name == "Past Events" and hazard.photos %}
+                  <h3>Photos of Past Events</h3>
+                  <div class="past-photos">
+                    {% for photo in hazard.photos %}
+                     <img alt="A historical image of {{ hazard.heading }} in {{ location.areaname }}" class="slideshow-image" src="{{ photo }}"/>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
             </div>
           {% endfor %}
         </div>
@@ -67,7 +79,7 @@
       <h4>Important Links</h4>
       {% for link in important_links %}
       <h5>{{ link.title }}</h5>
-      <p>{{ link.link | urlize }}
+      <p>{{ link.link | safe }}
       {% endfor %}
     </div>
   </div>
@@ -75,7 +87,7 @@
   <div class="row">
       <div class="small-10 medium-5 column end">
       <h4>Community Leaders</h4>
-      <p>{{ location.community_leaders | urlize }}</p>
+      <p>{{ location.community_leaders | safe }}</p>
     </div>
   </div>
 

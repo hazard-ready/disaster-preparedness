@@ -21,6 +21,10 @@
   <!-- Load Google Maps from CDN-->
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 
+    <!-- Load Slick from CDN -->
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+
   <script src="{% static 'js/vendor/modernizr.js' %}"></script>
   <script src="{% static 'js/vendor/jquery.js' %}"></script>
   <script src="{% static 'js/foundation.min.js' %}"></script>
@@ -31,40 +35,45 @@
 
 </head>
 <body>
-{% block header %}
   <div class="row top-header">
-    <div class="title-header">
-      <h2 class="project-title caps"><a href="{{ settings.site_url }}">{{ settings.site_title }}</a></h2>
-      <h3 class="project-subtitle">{{ settings.site_description }}</h3>
+    <div id="title" class="title-header">
+      <a href="#user-interaction-container" class="button radius caps button--top">Sign Up / Log In</a>
+      <h1 class="project-title caps">
+        <a href="{{ settings.site_url }}">{{ settings.site_title }}</a>
+      </h1>
+      <h2 class="project-subtitle">{{ settings.site_description | safe }}</h2>
     </div>
-    <div class="information-instructions">
-      <p class="organization-information">{{ settings.about_text }}</p>
-      <p>{{ settings.intro_text }}</p>
-      <p class="location-instructions-large">Give your location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your risks and steps you can take to prepare.</p>
-      <p class="location-instructions-small">Give your location by typing in the box below or clicking 'find me'. You'll get a personalized report on your risks and steps you can take to prepare.</p>
-    </div>
+    {% block info-instructions %}
+      <div class="information-container">
+      <div class="information-instructions" role="main">
+        <p class="organization-information">{{ settings.about_text | safe }}</p>
+        <p>{{ settings.intro_text | safe }}</p>
+        <p class="location-instructions">Give a location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare.</p>
+      </div>
+      </div>
+    {% endblock info-instructions %}
   </div>
-{% endblock header %}
 
 {% block search %}
-      <div class="location-form">
+      <div class="location-form" role="form">
         <div class="row">
-           <div class="small-12 medium-8 medium-push-1 columns">
+           <div class="small-12 medium-8 medium-push-2 columns">
                <div class="row collapse">
+                  <label for="location-text">Location</label>
                  <div class="small-10 columns">
-                   <input id="location-text" type="text" placeholder="An address in {{ location.area_name }}" />
+                   <input name="location-text" id="location-text" type="text" placeholder="Your address, your city" />
                    <div class="geocode-error-message"></div>
                  </div>
                  <div class="small-2 end columns">
-                   <a id="location-submit" class="blue-bg button postfix"></a>
+                   <a id="location-submit" class="button postfix"></a>
                  </div>
                </div>
               <div class="row hidden-for-medium-up">
                 <div class="small-6 small-centered columns form-icon-button">
-                   <a class="auto-location-submit blue-bg button radius caps">Find Me</a>
+                   <a class="auto-location-submit button radius caps">Find Me</a>
                 </div>
                 <div class="small-12 hide-for-small medium-3 columns form-icon-button">
-                  <a class="auto-location-submit blue-bg button radius caps">Find Me</a>
+                  <a class="auto-location-submit button radius caps">Find Me</a>
                </div>
               </div>
            </div>
@@ -73,26 +82,28 @@
 {% endblock search %}
 
 {% block map %}
-      <div class="row">
+      <div class="row map-container">
         <div class="small-12 medium-7 hide-for-small column">
           <div id="map" style="height: 400px;"></div>
         </div>
       <div class="small-12 medium-5 column">
-        <h3 class="caps">What am I at risk for?</h3>
-        <h5 class>What to Expect</h5>
-        <p>{{ settings.site_title }} predicts what you will experience for each disaster based on your location in {{ location.area_name }}.</p>
+        <h2 class="caps">What are my risks?</h2>
+        <h4 class>What to Expect</h4>
+        <p>{{ settings.site_title }} gives you an idea of which natural disasters you might experience in the future based on a location in {{ location.area_name }}.</p>
 
-        <h5>In Recent History</h5>
-        <p>Find out what disasters have struck {{ location.area_name }} in the past. See photos, news articles, and more.</p>
+        <h4>In Recent History</h4>
+        <p>Find out which disasters have struck {{ location.area_name }} in the past, what impact they had, and where they happened.</p>
 
-        <h5>How to Prepare</h5>
-        <p>You have the power to make a difference. Find out how you can protect your loved ones and be ready for the next event.</p>
+        <h4>How to Prepare</h4>
+        <p>You have the power to make a difference. Find out how you can protect your loved ones and home before the next disaster hits.</p>
       </div>
       </div>
 {% endblock map %}
 
 {% block main-content %}
 {% endblock main-content %}
+
+{% include "user_interactions.html" %}
 
 {% include "geek_box.html" %}
 

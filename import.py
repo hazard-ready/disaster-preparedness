@@ -17,11 +17,12 @@ def main():
   loadFile = os.path.join(appDir, "load.py")
   viewsFile = os.path.join(appDir, "views.py")
 
+  existingShapefileGroups = []
+
   modelsLocationsList = ""
   modelsClasses = ""
   modelsFilters = ""
   modelsGeoFilters = ""
-  modelsSnuggetGroups = ""
   modelsSnuggetRatings = ""
   adminModelImports = "from .models import EmbedSnugget, TextSnugget, SnuggetSection, SnuggetSubSection, Location, SiteSettings, SupplyKit, ImportantLink"
   adminFilterRefs = ""
@@ -29,6 +30,7 @@ def main():
   loadMappings = ""
   loadPaths = ""
   loadImports = ""
+  loadGroups = "    from .models import ShapefileGroup\n"
   viewsSnuggetMatches = ""
   templateMomentSnuggets = ""
 
@@ -44,6 +46,7 @@ def main():
       #TODO: if there's already a reprojected shapefile, use the field in that instead of prompting the user.
       sf = shapefile.Reader(os.path.join(dataDir, f))
       keyField = askUserForFieldNames(sf, stem)
+      shapefileGroup = askUserForShapefileGroup(stem, existingShapefileGroups)
 
       reprojected = processShapefile(f, stem, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID, keyField)
       simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
@@ -55,10 +58,12 @@ def main():
 # one block represents the code generation for each destination file
       modelsLocationsList += "            '" + stem + "': " + stem + ".objects.data_bounds(),\n"
 
-      modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType)
+      modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType, shapefileGroup)
       modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem + ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
       modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
-      modelsSnuggetGroups += "                          '" + stem + "_snugs': " + stem + "_snuggets,\n"
+      if shapefileGroup not in existingShapefileGroups:
+        existingShapefileGroups.append(shapefileGroup)
+        loadGroups += "    " + shapefileGroup + " = ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')\n"
       modelsSnuggetRatings += "                '" + stem + "_rating': " + stem + "_rating,\n"
 
       adminModelImports += ", " + stem
@@ -83,9 +88,7 @@ def main():
   modelsLocationsList = modelsLocationsList.strip(",\n") + "\n"
 
   # assemble the whole return statement for the snugget class after going through the loop
-  modelsSnuggetReturns = "        return {'groups': {\n"
-  modelsSnuggetReturns += modelsSnuggetGroups.strip(",\n") + "\n"
-  modelsSnuggetReturns += "                          },\n"
+  modelsSnuggetReturns = "        return {'groups': groupsDict,\n"
   modelsSnuggetReturns += modelsSnuggetRatings.strip(",\n") + "\n"
   modelsSnuggetReturns += "                }\n"
 
@@ -115,9 +118,26 @@ def main():
   outputGeneratedCode(adminSiteRegistrations, adminFile, "adminSiteRegistrations")
 
   outputGeneratedCode(loadMappings + "\n" + loadPaths, loadFile, "loadMappings")
+  outputGeneratedCode(loadGroups, loadFile, "loadGroups")
   outputGeneratedCode(loadImports, loadFile, "loadImports")
 
   print("\n")
+
+
+
+
+def sanitiseInput(inputString):
+  '''
+  Character replacement algorithm from http://stackoverflow.com/a/27086669/2121470
+  I chose the fastest of the solutions I found easily legible.
+  The reason for anticipating so many variants of dashes and quotes is that MS Word can insert many of these without the user intending them.
+  '''
+  for char in ['\\', '`', '*', ' ', '{', '}', '[', ']', '(', ')', '>', '<', '#', '№', '+', '-', '‐', '‒', '–', '—', '.', '¡', '!', '$', '\'', ',', '"', '/', '%', '‰', '‱', '‘', '’', '“', '”', '&', '@', '¿', '?', '~', '^', '=', ';', ':', '|']:
+    if char in inputString:
+      inputString = inputString.replace(char, '_')
+
+  return inputString
+
 
 
 
@@ -182,6 +202,28 @@ def askUserForFieldNames(sf, stem):
 
 
 
+def askUserForShapefileGroup(stem, existingShapefileGroups):
+  if existingShapefileGroups != []:
+    print("So far, you have defined the following shapefile groups:")
+    print((str(existingShapefileGroups).strip("[]").replace("'","")))
+  print("If you would like to group", stem, "in a tab with content from other shapefiles, type a group name here:")
+  print("(Leave blank to give content from this shapefile its own unique tab.)")
+  groupName = input(">> ")
+  groupName = sanitiseInput(groupName)
+  # Doing the above replacement here is somewhat wasteful, but it means that the user will consistently see the sanitised group name echoed back to them in prompts.
+
+  if groupName in existingShapefileGroups:
+    print("Adding", stem, "to group:", groupName)
+  else:
+    print("Creating new group", groupName, "and adding", stem, "to it.")
+
+  if groupName == "":
+    return stem
+  else:
+    return groupName
+
+
+
 def detectGeometryType(sf, stem):
   try:
     shapeType = next(shape for shape in sf.shapes() if shape.shapeType != 0).shapeType
@@ -236,11 +278,14 @@ def findFieldType(sf, fieldName):
 
 
 
-def modelClassGen(stem, sf, keyField, srs, shapeType):
+def modelClassGen(stem, sf, keyField, srs, shapeType, shapefileGroup):
   text  = "class " + stem + "(models.Model):\n"
+  text += "    def getGroup():\n"
+  text += "        return ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')[0]\n\n"
   text += "    " + keyField.lower() + " = models." + findFieldType(sf, keyField) + "\n"
   text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
   text += "    objects = ShapeManager()\n\n"
+  text += "    group = models.ForeignKey(ShapefileGroup, default=getGroup)\n"
   text += "    def __str__(self):\n"
   text += "        return str(self." + keyField.lower() + ")\n\n"
 
@@ -251,10 +296,9 @@ def modelClassGen(stem, sf, keyField, srs, shapeType):
 def modelsGeoFilterGen(stem, keyField):
   text  = "        qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
   text += "        " + stem + "_rating = " + "qs_" + stem + ".values_list('" + keyField.lower() + "', flat=True)\n"
-  text += "        " + stem + "_snuggets = []\n"
   text += "        for rating in " + stem + "_rating:\n"
   text += "            individualSnugget = Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact=rating).select_subclasses()\n"
-  text += "            " + stem + "_snuggets.extend(individualSnugget)\n\n"
+  text += "            groupsDict[individualSnugget[0].group.name].extend(individualSnugget)\n\n"
   return text
 
 

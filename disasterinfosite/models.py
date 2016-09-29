@@ -1,10 +1,11 @@
-
+from django.contrib.auth.models import User
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models import Extent
 from embed_video.fields import EmbedVideoField
 from model_utils.managers import InheritanceManager
 from solo.models import SingletonModel
+from django.core.files.storage import FileSystemStorage
 
 SNUG_TEXT = 0
 SNUG_AUDIO = 1
@@ -13,6 +14,21 @@ SNUG_VID = 2
 SNUGGET_TYPES = (
                  ('SNUG_TEXT', 'TextSnugget'),
                  )
+class UserProfile(models.Model):
+    """ A model representing a user's information that isn't their username, password, or email address """
+    user = models.OneToOneField(User)
+    address1 = models.CharField(max_length=200, blank=True)
+    address2 = models.CharField(max_length=200, blank=True)
+    city = models.CharField(max_length=200, blank=True)
+    state = models.CharField(max_length=50, blank=True)
+    zip_code = models.CharField(max_length=50, blank=True)
+
+    class Meta:
+        verbose_name = "User Profile"
+
+    def __str__(self):
+        return "{0}: {1}, {2} {3}, {4} {5}".format(self.user, self.address1, self.address2, self.city, self.state, self.zip_code)
+
 
 class SiteSettings(SingletonModel):
     """A singleton model to represent site-wide settings."""
@@ -133,6 +149,19 @@ class ShapeManager(models.GeoManager):
     def data_bounds(self):
         return self.aggregate(Extent('geom'))['geom__extent']
 
+class ShapefileGroup(models.Model):
+    name = models.CharField(max_length=50)
+    display_name = models.CharField(max_length=50)
+    order_of_appearance = models.IntegerField(
+        default=0,
+        help_text="The order, from left to right, in which you would like this group to appear, when applicable."
+    )
+    likely_scenario_title = models.CharField(max_length=80, blank=True)
+    likely_scenario_text = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+
 ######################################################
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
@@ -191,6 +220,10 @@ class SnuggetType(models.Model):
 
 class SnuggetSection(models.Model):
     name = models.CharField(max_length=50)
+    order_of_appearance = models.IntegerField(
+        default=0,
+        help_text="The order in which you'd like this to appear in the tab. 0 is at the top."
+    )
 
     def __str__(self):
         return self.name
@@ -198,6 +231,10 @@ class SnuggetSection(models.Model):
 
 class SnuggetSubSection(models.Model):
     name = models.CharField(max_length=50)
+    order_of_appearance = models.IntegerField(
+        default=0,
+        help_text="The order in which you'd like this to appear in the section. 0 is at the top. These can be in different sections or mutually exclusive, hence the non-unique values."
+    )
 
     def __str__(self):
         return self.name
@@ -215,6 +252,7 @@ class Snugget(models.Model):
 
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
     sub_section = models.ForeignKey(SnuggetSubSection, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
+    group = models.ForeignKey(ShapefileGroup, on_delete=models.PROTECT, null=True)
 
     def getRelatedTemplate(self):
         return "snugget.html"
@@ -222,6 +260,11 @@ class Snugget(models.Model):
     @staticmethod
     def findSnuggetsForPoint(lat=0, lng=0, merge_deform = True):
         pnt = Point(lng, lat)
+        groups = ShapefileGroup.objects.all()
+        groupsDict = {}
+
+        for group in groups:
+            groupsDict[group.name] = []
 
 ######################################################
 # GENERATED CODE GOES HERE
@@ -239,7 +282,6 @@ class Snugget(models.Model):
 class TextSnugget(Snugget):
     name = SNUGGET_TYPES[SNUG_TEXT]
     content = models.TextField()
-    heading = models.TextField(default="")
     image = models.TextField(default="")
     percentage = models.FloatField(null=True)
 
@@ -258,3 +300,22 @@ class EmbedSnugget(Snugget):
 
     def __str__(self):
         return "Embed Snugget: " + str(self.embed)
+
+class PastEventsPhoto(models.Model):
+    group = models.ForeignKey(ShapefileGroup, on_delete=models.PROTECT, null=True)
+    image = models.ImageField(upload_to="photos")
+
+    def __str__(self):
+        return self.image.url
+
+class OverwriteStorage(FileSystemStorage):
+    def get_available_name(self, name):
+        self.delete(name)
+        return name
+
+class DataOverviewImage(models.Model):
+    link_text = models.CharField(default="", max_length=100)
+    image = models.ImageField(upload_to="data", storage=OverwriteStorage())
+
+    def __str__(self):
+        return self.image.url

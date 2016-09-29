@@ -1,24 +1,32 @@
-<div id="geek-box-container">
+{% load staticfiles %}
+<div role="content-info" id="geek-box-container">
   <div id="geek-box" class="row vert-pad-medium">
       <div class="small-12 medium-6 columns">
-        <h6>How does it work?</h6>
-        <p>{{ settings.site_title }} is designed to help people prepare for disasters that occur in their area. Disasters don’t strike locations equally so we found it important to give people location
+        <h5 class="caps">How does it work?</h5>
+        <p>{{ settings.site_title }} is designed to help educate and prepare people for disasters that occur in their area. Disasters don’t strike locations equally so we found it important to give location
         specific information in order to properly prepare. {{ settings.site_title }} organizes current information and packages it in a way that makes it accessible for any {{ location.area_name }}
         resident.</p>
-        <p>This site uses the most up-to-date hazard risk data available for {{ location.area_name }}. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.
+        <p>This site uses the most up-to-date hazard risk data available for {{ location.area_name }}. The user of this site is responsible for verifying any particular information with the original data sources. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.
         {% if settings.data_download %}
-            Data used for {{ settings.site_title }} is available for download <a href="{{settings.data_download}}">here</a>.</p>
+            Data used for {{ settings.site_title }} is available for download <a href="{{settings.data_download}}" target="_blank">here</a>.</p>
         {% endif %}
         {% if settings.contact_email %}
             <p>Have questions? <a href="mailto:{{ settings.contact_email }}">Email the creators</a> for more information.</p>
         {% endif %}
     </div>
+    {% if quick_data_overview %}
+        <div class="small-12 medium-6 columns">
+            <h5 class="caps">Quick Data Overview</h5>
+            <p>Take a look at some overviews of the data we used for {{ location.area_name }}:</p>
+            <ul>
+                {% for item in quick_data_overview %}
+                    <li><a  target="_blank" href="{{ item }}">{{ item.link_text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
     <div class="small-12 medium-6 columns">
-        <h6>Is this available for other Counties or States?</h6>
-        <p>You can make it available! If you can put up a webserver and you have the data, you can set this up. Visit us on <a href="https://github.com/missoula-ready/disaster-preparedness">Github</a> for more information.</p>
-    </div>
-    <div class="small-12 medium-6 columns">
-        <h6>Who made this?</h6>
+        <h5 class="caps">Who made this?</h5>
         <p>{{ settings.who_made_this | safe}}</p>
     </div>
   </div>

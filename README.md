@@ -127,6 +127,8 @@ Save them to your `.bash_profile` or equivalent.
     4. Depending on your server configuration, you *may* also need to set up a redirect rule to add trailing slashes to URLs, to get the static files (CSS, images etc) included.
     5. You may also need to alter the `STATIC_URL` constant in `settings.py` based on your server setup.
 3. Set up the environment values from above (`DJANGO_SECRET_KEY` and `DATABASE_URL`) for all users by putting their declarations in `/etc/environment/` and rebooting the machine.
+4. There are directories called 'photos' and 'data' in disasterinfosite/img. This is where images go when you upload them via Django Admin, under 'Photos of Past Events' and 'Data Overview Images'. In order for that upload to work, you need to change the owner (chown) those directories to whatever user Apache is running as (www-data, perhaps).
+
 
 ### Use foreman to run the server Heroku-style
 *Not tested by the current maintainers*
@@ -227,5 +229,13 @@ The output file will have an attribute `DN` that contains the pixel values from 
 #### Using ArcGIS
 
 Try [these instructions](http://help.arcgis.com/en/arcgisdesktop/10.0/help/index.html#/Raster_to_Polygon/001200000008000000/).
+
+## Django Admin settings and what they mean
+
++###### Past Events Photos
+Upload photos to show in a photo gallery in the search results, under Past Events. Make sure that the heading you enter here matches the heading that the photos will appear under.
+
++###### Data Overview Images
+In the box at the bottom of every page, there's a section called 'Quick Data Overview'. That's where these will show up, as links that open in a new tab or window. The link_text field is what the link says, like 'Earthquakes: Distance from a Fault', and you can upload the appropriate image here.
 
 

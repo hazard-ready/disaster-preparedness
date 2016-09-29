@@ -11,6 +11,7 @@ dial = """<svg
    height="65px"
    viewBox="0 0 354.00001 179.16412"
    version="1.1">
+   <title>A fire dial showing {3} percent intensity</title>
   <defs>
 
 <!-- the arrowhead -->
@@ -122,4 +123,4 @@ def make_icon(percentage):
 
     # Look for {0} and {1} above to see where the arrow path goes.
     # The third argument is a salt for the marker element IDs, which must be unique per page.
-    return dial.format(transform_x, transform_y, randint(0, 99999))
+    return dial.format(transform_x, transform_y, randint(0, 99999), percentage)
