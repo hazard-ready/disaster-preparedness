@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from collections import OrderedDict
-from .models import Snugget, Location, SiteSettings, SupplyKit, ImportantLink
+from .models import Snugget, Location, SiteSettings, SupplyKit, ImportantLink, ShapefileGroup
 from .fire_dial import make_icon
 
 def app_view(request):
@@ -51,7 +51,7 @@ def app_view(request):
             'supply_kit': supply_kit,
             'important_links': important_links,
             'data_bounds': data_bounds,
-            'data': OrderedDict(sorted(data.items(), key=lambda t: t[0]))
+            'data': OrderedDict(sorted(data.items(), key=lambda t: ShapefileGroup.objects.get(name=t[0]).order_of_appearance ))
         })
 
 

@@ -133,6 +133,19 @@ class ShapeManager(models.GeoManager):
     def data_bounds(self):
         return self.aggregate(Extent('geom'))['geom__extent']
 
+class ShapefileGroup(models.Model):
+    name = models.CharField(max_length=50)
+    display_name = models.CharField(max_length=50)
+    order_of_appearance = models.IntegerField(
+        default=0,
+        help_text="The order, from left to right, in which you would like this group to appear, when applicable."
+    )
+    likely_scenario_title = models.CharField(max_length=80, blank=True)
+    likely_scenario_text = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+
 ######################################################
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
@@ -191,7 +204,7 @@ class SnuggetType(models.Model):
 
 class SnuggetSection(models.Model):
     name = models.CharField(max_length=50)
-    order = models.IntegerField(
+    order_of_appearance = models.IntegerField(
         default=0,
         help_text="The order in which you'd like this to appear in the tab. 0 is at the top."
     )
@@ -202,7 +215,7 @@ class SnuggetSection(models.Model):
 
 class SnuggetSubSection(models.Model):
     name = models.CharField(max_length=50)
-    order = models.IntegerField(
+    order_of_appearance = models.IntegerField(
         default=0,
         help_text="The order in which you'd like this to appear in the section. 0 is at the top. These can be in different sections or mutually exclusive, hence the non-unique values."
     )
@@ -223,6 +236,7 @@ class Snugget(models.Model):
 
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
     sub_section = models.ForeignKey(SnuggetSubSection, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
+    group = models.ForeignKey(ShapefileGroup, on_delete=models.PROTECT, null=True)
 
     def getRelatedTemplate(self):
         return "snugget.html"
@@ -230,6 +244,11 @@ class Snugget(models.Model):
     @staticmethod
     def findSnuggetsForPoint(lat=0, lng=0, merge_deform = True):
         pnt = Point(lng, lat)
+        groups = ShapefileGroup.objects.all()
+        groupsDict = {}
+
+        for group in groups:
+            groupsDict[group.name] = []
 
 ######################################################
 # GENERATED CODE GOES HERE
@@ -247,7 +266,6 @@ class Snugget(models.Model):
 class TextSnugget(Snugget):
     name = SNUGGET_TYPES[SNUG_TEXT]
     content = models.TextField()
-    heading = models.TextField(default="")
     image = models.TextField(default="")
     percentage = models.FloatField(null=True)
 
