@@ -284,3 +284,10 @@ class EmbedSnugget(Snugget):
 
     def __str__(self):
         return "Embed Snugget: " + str(self.embed)
+
+class PastEventsPhoto(models.Model):
+    group = models.ForeignKey(ShapefileGroup, on_delete=models.PROTECT, null=True)
+    image = models.ImageField(upload_to="photos")
+
+    def __str__(self):
+        return self.image.url
