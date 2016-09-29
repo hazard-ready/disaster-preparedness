@@ -1,3 +1,7 @@
+/****
+GLOBAL STYLES
+*****/
+
 html {
   width:auto !important;
 	height:auto !important;
@@ -18,7 +22,9 @@ h5 {
   font-weight: bold;
 }
 
-/* helper classes for colors and fonts */
+/*****
+TYPOGRAPHY STYLES
+******/
 .sans-serif {  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
 .vert-pad-medium { padding: 2em 0; }
 .caps {
@@ -26,6 +32,10 @@ h5 {
   letter-spacing: 0.06em;
   font-weight: bold;
 }
+
+/*****
+HEADER STYLES
+*****/
 
 #title a {
    /*font-family: Georgia, Times, 'Times New Roman', serif;*/
@@ -47,7 +57,29 @@ h5 {
   max-width: none;
 }
 
-/* header styles */
+.project-title .project-subtitle {
+  text-align: center;
+}
+
+/*****
+INFORMATION AND INSTRUCTIONS STYLES
+*****/
+.information-instructions {
+  padding: 5px;
+}
+
+.location-instructions-small {
+  display: none;
+}
+
+.location-instructions-large {
+  display: block;
+}
+
+/*****
+MAP AND SEARCH STYLES
+******/
+
 #location-text {
   color: #444444;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -90,6 +122,23 @@ h5 {
   height: 400px;
 }
 
+/* loading spinner during geolocation */
+.loading {
+  position: fixed;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(255,255,255,.5) url(../img/thinking.gif) no-repeat center center;
+  background-size: 110px 110px;
+}
+
+
+/****
+DISASTER TABS
+****/
+
 .disaster-content {
   background-color: #ffffff;
   margin: 5px;
@@ -105,14 +154,27 @@ h5 {
   padding-top: 20px;
 }
 
-.information-instructions {
-  padding: 5px;
+.tab-title {
+  font-size: 16px;
+  font-weight: bold;
 }
 
-.snugget-text {
-  display:inline-block;
-  margin: 5px;
+.tabs-content > .content {
+  width: auto;
 }
+
+.tabs-content > .content.active {
+  display:inline-block;
+  width: 100%;
+}
+
+.tabs dd.active a, .tabs .tab-title.active a {
+  background-color: #ccccdd;
+}
+
+/*****
+SECTIONS
+*****/
 
 .section-icon {
   margin-top: 0.2rem;
@@ -134,6 +196,15 @@ h5 {
   line-height: 1.2em;
   text-transform: uppercase;
   margin: 15px 0;
+}
+
+/*****
+SNUGGET CONTENT
+*****/
+
+.snugget-text {
+  display:inline-block;
+  margin: 5px;
 }
 
 .intensity-meter {
@@ -173,6 +244,10 @@ h5 {
   background-size: 43px auto;
   overflow: hidden;
 }
+
+/*****
+SUPPLY KIT
+*****/
 .supply-kit-icon.food { background-position: 0 -45px; }
 .supply-kit-icon.water { background-position: 0 -90px; }
 .supply-kit .big-num {
@@ -192,6 +267,10 @@ h5 {
   line-height: 1em;
 }
 
+/*****
+GEEK BOX
+*****/
+
 #geek-box {
   background-color: #ccccdd;
   color: #717273;
@@ -209,47 +288,6 @@ h5 {
   color: #444444;
 }
 
-/* loading spinner during geolocation */
-.loading {
-  position: fixed;
-  z-index: 999;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background: rgba(255,255,255,.5) url(../img/thinking.gif) no-repeat center center;
-  background-size: 110px 110px;
-}
-
-.project-title .project-subtitle {
-  text-align: center;
-}
-
-.location-instructions-small {
-  display: none;
-}
-
-.location-instructions-large {
-  display: block;
-}
-
-.tab-title {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.tabs-content > .content {
-  width: auto;
-}
-
-.tabs-content > .content.active {
-  display:inline-block;
-  width: 100%;
-}
-
-.tabs dd.active a, .tabs .tab-title.active a {
-  background-color: #ccccdd;
-}
 
 /* adjustments for smaller screens */
 @media only screen and (max-width: 40em) {
