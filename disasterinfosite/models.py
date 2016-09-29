@@ -291,3 +291,15 @@ class PastEventsPhoto(models.Model):
 
     def __str__(self):
         return self.image.url
+
+class OverwriteStorage(FileSystemStorage):
+    def get_available_name(self, name):
+        self.delete(name)
+        return name
+
+class DataOverviewImage(models.Model):
+    link_text = models.CharField(default="", max_length=100)
+    image = models.ImageField(upload_to="data", storage=OverwriteStorage())
+
+    def __str__(self):
+        return self.image.url

@@ -169,4 +169,12 @@ class Migration(migrations.Migration):
                 ('image', models.ImageField(upload_to='photos')),
             ],
         ),
+         migrations.CreateModel(
+            name='DataOverviewImage',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
+                ('link_text', models.CharField(max_length=100, default='')),
+                ('image', models.ImageField(storage=OverwriteStorage(), upload_to='data')),
+            ],
+        ),
     ]
