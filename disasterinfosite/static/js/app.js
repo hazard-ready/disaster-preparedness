@@ -18,7 +18,7 @@ $( document ).ready(function() {
   // set up the map
   var map = L.map('map');
   if (query_lat && query_lng) {
-    zoom = 15;
+    zoom = 14;
     map.setView([query_lat, query_lng], zoom);
   } else { // use the data bounds if we don't have a position in the query string
     map.fitBounds(mapBounds);
