@@ -136,6 +136,38 @@ MAP AND SEARCH STYLES
   background-size: 110px 110px;
 }
 
+/*****
+LOGIN / SIGNUP FORM
+*****/
+
+#user-interaction-container {
+  background-color: #f2f2f2;
+}
+
+.user-interaction__buttons {
+  text-align: right;
+}
+
+.user-interaction__buttons .button:not(:last-child) {
+  margin-right: 2rem;
+}
+
+#user-interaction-container label {
+  color: #444;
+}
+
+#user-info-container,
+#user-info-container--invalid,
+#user-signup-result-container,
+#user-login-container,
+#user-signup-container,
+#user-profile-container,
+#user-profile-result-container,
+#failure-container {
+  display: none;
+}
+
+
 
 /****
 DISASTER TABS
@@ -379,18 +411,22 @@ GEEK BOX
      font-size: 1.25em;
   }
 
-  .location-instructions-large {
-    display: none;
+  .user-interaction__buttons {
+    text-align: center;
   }
 
-  .location-instructions-small {
-    display: block;
+  .user-interaction__buttons .button:not(:last-child) {
+      margin-right: 1rem;
   }
 
 }
 
 /* adjustments for the smallest screens */
 @media only screen and (max-width: 26rem) {
+  #title .button--top {
+    width: 90px;
+  }
+
   #location-text {
     color: #444444;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -434,9 +470,18 @@ GEEK BOX
   .section-icon.routes      { background-position: 0 -240px; }
   .section-icon.shaking     { background-position: 0 -280px; }
 
-.disaster-tabs {
+  .disaster-tabs {
     background-color: #ccccdd;
     padding: 5px;
+  }
+
+  .user-interaction__buttons .button:not(:last-child) {
+      margin-right: 0.5rem;
+  }
+
+  .user-interactions-help {
+    padding-top: 1rem;
+    font-size: 0.75em
   }
 
 }
