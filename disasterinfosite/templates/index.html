@@ -37,6 +37,7 @@
 <body>
   <div class="row top-header">
     <div id="title" class="title-header">
+      <a href="#user-interaction-container" class="button radius caps button--top">Sign Up / Log In</a>
       <h1 class="project-title caps">
         <a href="{{ settings.site_url }}">{{ settings.site_title }}</a>
       </h1>
@@ -101,6 +102,8 @@
 
 {% block main-content %}
 {% endblock main-content %}
+
+{% include "user_interactions.html" %}
 
 {% include "geek_box.html" %}
 

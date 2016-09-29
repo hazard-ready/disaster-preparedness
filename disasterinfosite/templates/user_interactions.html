@@ -1,0 +1,177 @@
+<div role="content-info" id="user-interaction-container">
+  {% if username and profile %}
+    <div id="user-button-container--logged-in" class="row vert-pad-medium">
+      <div class="small-12 medium-6 columns">
+        <p><strong>Welcome back!</strong></p>
+        <p>If your username isn't {{ username }}, you might want to log out.</p>
+      </div>
+      <div class="small-12 medium-6 columns user-interaction__buttons">
+        <a href="#user-login-container" class="button radius caps button--logout">Log Out</a>
+        <a href="#user-info-container" class="button radius caps button--update">Update My Info</a>
+      </div>
+    </div>
+    <div id="user-button-container" class="row vert-pad-medium hide">
+  {% else %}
+    <div id="user-button-container" class="row vert-pad-medium">
+  {% endif %}
+      <div class="small-12 medium-6 columns">
+        <p><strong>Why should you sign up?</strong></p>
+        <p>Sign up for free to access customized hazard preparedness information. By providing your address, you will get updates about seasonal hazards and ongoing incidents specific to your location. We want you to be better prepared so you can keep your family, friends, and neighbors safe when a disaster strikes! Personal information will be protected and secure.</p>
+      </div>
+      <div class="small-12 medium-6 columns user-interaction__buttons">
+        <a href="#user-login-container" class="button radius caps button--login">Log In</a>
+        <a href="#user-signup-container" class="button radius caps button--signup">Sign Up</a>
+      </div>
+    </div>
+  <div id="user-login-container" class="row vert-pad-medium">
+    <form id="user-login__form">
+      <div class="small-12 medium-6 columns">
+        <label>Username (your email address)
+          <input type="text" id="user-login__username" required placeholder="Required."/>
+        </label>
+        <label>Password
+          <input type="password" id="user-login__password" required placeholder="Required." />
+        </label>
+      </div>
+      <div class="small-12 medium-6 columns user-interaction__buttons">
+        <a href="#user-info-container" class="button radius caps" id="user-login__submit">Log In</a>
+        <a href-"#user-button-container" class="button radius caps button--cancel">Cancel</a>
+      </div>
+    </form>
+    <div class="user-interactions-help small-12 columns">
+      <p>Need some help (like a password reset)? <a href="mailto:help@hazardgready.org">Email us.</a></p>
+    </div>
+  </div>
+  <div id="user-signup-container" class="row vert-pad-medium">
+    <form id="user-signup__form">
+      <div class="small-12 medium-6 columns">
+        <label>Email address (this will be your username)
+          <input type="email" id="user-signup__username" required placeholder="Required."/>
+        </label>
+      </div>
+      <div class="small-12 medium-6 columns">
+        <label>Password (more than 8 characters long, please)
+          <input type="password" id="user-signup__password" required pattern=".{8,}" placeholder="Required." />
+        </label>
+      </div>
+      <div class="small-12 medium-6 columns">
+        <label>Street Address
+          <input type="text" id="user-signup__address1" />
+        </label>
+      </div>
+      <div class="small-12 medium-6 columns">
+        <label>Other Address Information
+          <input type="text" id="user-signup__address2" />
+        </label>
+      </div>
+      <div class="small-12 medium-6 columns">
+        <label>City
+          <input type="text" id="user-signup__city" />
+        </label>
+      </div>
+      <div class="small-6 medium-3 columns">
+        <label>State
+          <input type="text" id="user-signup__state" placeholder="MT" />
+        </label>
+      </div>
+      <div class="small-6 medium-3 columns">
+        <label>Zip Code
+          <input type="text" id="user-signup__zip" placeholder="598..." />
+        </label>
+      </div>
+      <div class="small-12 columns user-interaction__buttons">
+        <a href="#user-signup-result-container" class="button radius caps" id="user-signup__submit">Sign Up</a>
+        <a href-"#user-button-container" class="button radius caps button--cancel">Cancel</a>
+      </div>
+    </form>
+    <div class="user-interactions-help small-12 columns">
+      <p>Need some help? <a href="mailto:help@hazardgready.org">Email us.</a></p>
+    </div>
+  </div>
+  <div id="user-signup-result-container" class="row vert-pad-medium">
+   <div class="small-12 columns">
+    <p>Thanks for signing up! We'll get ahold of you with relevant news and information. You can come back anytime to update your address.</p>
+    </div>
+  </div>
+  <div id="user-info-container" class="row vert-pad-medium">
+     {% if username %}
+      <div class="small-12 medium-6 columns">
+        <p><strong>Welcome back, {{ username }}!</strong></p>
+      </div>
+      <div class="small-12 medium-6 columns user-interaction__buttons">
+        <a href="#user-login-container" class="button radius caps button--logout">Log Out</a>
+        <a href="#user-info-container" class="button radius caps button--update">Update My Info</a>
+      </div>
+     {% else %}
+      <div class="small-12 medium-6 columns">
+       <p>We're logging you in. Just a moment...</p>
+      </div>
+     {% endif %}
+  </div>
+  <div id="user-info-container--invalid" class="row vert-pad-medium">
+    <div class="small-12 medium-6 columns">
+      <p>Whoops, it looks like that username or password didn't work.</p>
+    </div>
+    <div class="small-12 medium-6 columns user-interaction__buttons">
+      <a href="#user-login-container" class="button radius caps button--login" id="">Log In</a>
+      <a href="#user-signup-container" class="button radius caps button--signup">Sign Up</a>
+    </div>
+  </div>
+   {% if username %}
+     <div id="user-profile-container" class="row vert-pad-medium">
+      <form id="user-profile__form">
+        <div class="small-12 medium-6 columns">
+          <label>Street Address
+            <input type="text" id="user-profile__address1" value="{{ profile.address1 }}" />
+          </label>
+        </div>
+        <div class="small-12 medium-6 columns">
+          <label>Other Address Information
+            <input type="text" id="user-profile__address2" value="{{ profile.address2 }}"/>
+          </label>
+        </div>
+        <div class="small-12 medium-6 columns">
+          <label>City
+            <input type="text" id="user-profile__city" value="{{ profile.city }}"/>
+          </label>
+        </div>
+        <div class="small-6 medium-3 columns">
+          <label>State
+            <input type="text" id="user-profile__state" value="{{ profile.state }}" />
+          </label>
+        </div>
+        <div class="small-6 medium-3 columns">
+          <label>Zip Code
+            <input type="text" id="user-profile__zip" value="{{ profile.zip_code }}" />
+          </label>
+        </div>
+        <div class="small-12 columns user-interaction__buttons">
+          <a href="#user-signup-result-container" class="button radius caps" id="user-profile__submit">Update</a>
+          <a href-"#user-button-container" class="button radius caps button--cancel-update">Cancel</a>
+        </div>
+      </form>
+    </div>
+    <div id="user-profile-result-container" class="row vert-pad-medium">
+      <div class="small-12 columns">
+      <p>Thanks for keeping us up to date!</p>
+      </div>
+    </div>
+  {% endif %}
+  <div id="failure-container" class="row vert-pad medium">
+    <div class="small-12 medium-6 columns">
+      <p>Whoops, we're not sure what happened there. Maybe you should try again.</p>
+    </div>
+    {% if username %}
+      <div class="small-12 medium-6 columns user-interaction__buttons">
+        {% csrf_token %}
+        <a href="#user-login-container" class="button radius caps button--logout">Log Out</a>
+        <a href="#user-info-container" class="button radius caps button--update">Update My Info</a>
+      </div>
+    {% else %}
+      <div class="small-12 medium-6 columns user-interaction__buttons">
+        <a href="#user-login-container" class="button radius caps button--login">Log In</a>
+        <a href="#user-signup-container" class="button radius caps button--signup">Sign Up</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
