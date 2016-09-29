@@ -8,9 +8,10 @@ from solo.admin import SingletonModelAdmin
 from .models import EmbedSnugget, TextSnugget, SnuggetSection, SnuggetSubSection, Location, SiteSettings, SupplyKit, ImportantLink
 # END OF GENERATED CODE BLOCK
 ######################################################
-
+from .models import ShapefileGroup
 admin.site.register(SnuggetSection, admin.ModelAdmin)
 admin.site.register(SnuggetSubSection, admin.ModelAdmin)
+admin.site.register(ShapefileGroup, admin.ModelAdmin)
 
 
 class SnuggetAdmin(admin.ModelAdmin):

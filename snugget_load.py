@@ -10,23 +10,23 @@ def main():
   snuggetFile = os.path.join(dataDir, "snuggets.csv")
   overwriteAll = False
   optionalFields = ['intensity', 'image', 'lookup_value', ''] # all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
- 
+
   try:
     dbURL = os.environ['DATABASE_URL']
   except:
     print("Error: DATABASE_URL environment variable is not set. See README.md for how to set it.")
     exit()
-  
-# dbURL should be in the form protocol://user:password@host:port/databasename  
+
+# dbURL should be in the form protocol://user:password@host:port/databasename
   dbParts = [x.split('/') for x in dbURL.split('@')]
   dbHost = dbParts[1][0].split(":")[0]
   dbPort = dbParts[1][0].split(":")[1]
   dbUser = dbParts[0][2].split(":")[0]
   dbPass = dbParts[0][2].split(":")[1]
   dbName = dbParts[1][1]
-  
+
   with psycopg2.connect(host=dbHost, port=dbPort, user=dbUser, password=dbPass, database=dbName) as conn:
-    with conn.cursor() as cur:      
+    with conn.cursor() as cur:
       with open(snuggetFile) as csvFile:
         newSnuggets = csv.DictReader(csvFile)
         rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
@@ -67,7 +67,7 @@ def processRow(appName, snuggetFile, cur, overwriteAll, row):
   filterColumn = row["shapefile"] + "_filter_id"
   sectionID = getSectionID(appName, row["section"], cur, subsection=False)
   subsectionID = getSectionID(appName, row["subsection"], cur, subsection=True)
- 
+
   # check if a snugget for this data already exists
   # if we have a lookup value then deal with this value specifically:
   if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
@@ -80,7 +80,7 @@ def processRow(appName, snuggetFile, cur, overwriteAll, row):
     else:
       oldSnugget = checkForSnugget(appName, sectionID, subsectionID, filterColumn, filterIDs[0], cur)
       overwriteAll = askUserAboutOverwriting(row, oldSnugget, [], snuggetFile, overwriteAll)
-  else: 
+  else:
     filterIDs = findAllFilterIDs(appName, row["shapefile"], cur)
     oldSnuggets = []
     for filterID in filterIDs:
@@ -88,39 +88,39 @@ def processRow(appName, snuggetFile, cur, overwriteAll, row):
       if oldSnugget is not None and oldSnugget not in oldSnuggets:
         oldSnuggets.append(oldSnugget)
     overwriteAll = askUserAboutOverwriting(row, None, oldSnuggets, snuggetFile, overwriteAll)
- 
+
   for filterID in filterIDs:
     removeOldSnugget(appName, sectionID, subsectionID, filterColumn, filterID, cur)
     addTextSnugget(appName, row, sectionID, subsectionID, filterColumn, filterID, cur)
-  
+
   return overwriteAll
 
 
 
 
 def addTextSnugget(appName, row, sectionID, subsectionID, filterColumn, filterID, cur):
-#   "heading" -> disasterinfosite_textsnugget.heading (null as '')
 #   "intensity" -> disasterinfosite_textsnugget.percentage (numeric, null as null)
 #   "image" -> disasterinfosite_textsnugget.image
 #   "text" -> disasterinfosite_textsnugget.content
   if row["intensity"] == '':
     row["intensity"] = None
+  groupID = getGroupID(appName, row["shapefile"], cur)
   cur.execute(
-    'INSERT INTO ' + appName + '_snugget (section_id, sub_section_id, "' + filterColumn + '") VALUES (%s, %s, %s);', 
-    (str(sectionID), str(subsectionID), str(filterID))
+    'INSERT INTO ' + appName + '_snugget (section_id, sub_section_id, group_id, "' + filterColumn + '") VALUES (%s, %s, %s, %s);',
+    (str(sectionID), str(subsectionID), str(groupID), str(filterID))
   )
   snuggetID = getSnuggetID(appName, sectionID, subsectionID, filterColumn, filterID, cur);
   cur.execute(
-    'INSERT INTO ' + appName + '_textsnugget (snugget_ptr_id, content, heading, image, percentage) VALUES (%s, %s, %s, %s, %s);',
-    (snuggetID, row["text"], row["heading"], row["image"], row["intensity"])
+    'INSERT INTO ' + appName + '_textsnugget (snugget_ptr_id, content, image, percentage) VALUES (%s, %s, %s, %s);',
+    (snuggetID, row["text"], row["image"], row["intensity"])
   )
-
+  # For extra credit, set the group's display_name to the heading value.
 
 
 def readColumnsFrom(appName, table, cur):
   cols = []
   cur.execute(
-    "SELECT column_name FROM information_schema.columns WHERE table_name = %s;", 
+    "SELECT column_name FROM information_schema.columns WHERE table_name = %s;",
     [appName + "_" + table.lower()]
   )
   for row in cur.fetchall():
@@ -136,18 +136,27 @@ def getSectionID(appName, sectionName, cur, subsection=False):
     tableName = appName + "_snuggetsubsection"
   else:
     tableName = appName + "_snuggetsection"
-  
+
   cur.execute("SELECT MIN(id) FROM " + tableName + " WHERE name = %s;", [sectionName])
   sectionID = cur.fetchone()[0]
   if sectionID is not None:
     return sectionID
   else: # if no sectionID was found then we need to create the section
-    cur.execute("INSERT INTO " + tableName + "(name) VALUES(%s);", [sectionName])
+    cur.execute("INSERT INTO " + tableName + "(name, order_of_appearance) VALUES(%s, %s);", (sectionName, 0))
     cur.execute("SELECT id FROM " + tableName + " WHERE name = %s;", [sectionName])
     sectionID = cur.fetchone()[0]
     return sectionID
 
 
+def getGroupID(appName, shapefile, cur):
+  group_table = appName + "_ShapefileGroup"
+  shapefile_table = appName + "_" + shapefile
+  cur.execute("SELECT " + group_table + ".id FROM " + group_table + ", " + shapefile_table + " WHERE " + group_table + ".id=" + shapefile_table + ".group_id")
+  ref = cur.fetchone()
+  if ref is not None:
+    return str(ref[0])
+  else:
+    print("Could not find a group for the shapefile", shapefile)
 
 
 def findFilterID(appName, shapefile, key, cur):
@@ -226,7 +235,7 @@ def askUserAboutOverwriting(row, oldSnugget, oldSnuggets, snuggetFile, overwrite
       print("In shapefile ", repr(row["shapefile"]), " there are existing snuggets for section" , repr(row["section"]), ", subsection ", repr(row["subsection"]), " with the following text content:", sep="")
       for snugget in oldSnuggets:
         print(snugget)
-    else: 
+    else:
       # if no existing snuggets were found, then we neither need to ask the user this time nor change overwriteAll in the calling function
       return overwriteAlreadySet
 
