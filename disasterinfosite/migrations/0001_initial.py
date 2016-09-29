@@ -161,4 +161,20 @@ class Migration(migrations.Migration):
             ],
             bases=('disasterinfosite.snugget',),
         ),
+        migrations.CreateModel(
+            name='PastEventsPhoto',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('group', models.ForeignKey(to='disasterinfosite.ShapefileGroup', null=True, on_delete=django.db.models.deletion.PROTECT)),
+                ('image', models.ImageField(upload_to='photos')),
+            ],
+        ),
+         migrations.CreateModel(
+            name='DataOverviewImage',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
+                ('link_text', models.CharField(max_length=100, default='')),
+                ('image', models.ImageField(storage=OverwriteStorage(), upload_to='data')),
+            ],
+        ),
     ]

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from collections import OrderedDict
-from .models import Snugget, Location, SiteSettings, SupplyKit, ImportantLink, ShapefileGroup
+from .models import Snugget, Location, SiteSettings, SupplyKit, ImportantLink, ShapefileGroup, PastEventsPhoto, DataOverviewImage
 from .fire_dial import make_icon
 
 def app_view(request):
@@ -10,6 +10,7 @@ def app_view(request):
     data_bounds = Location.get_data_bounds()
     supply_kit = SupplyKit.get_solo()
     supply_kit.meals = 3 * supply_kit.days
+    quick_data_overview = DataOverviewImage.objects.all()
     template = "no_content_found.html"
 
     # if user submitted lat/lng, find our snuggets and send them to our template
@@ -40,9 +41,16 @@ def app_view(request):
                         for section, sub_section_dict in sections.items():
                             sections[section] = OrderedDict(sorted(sub_section_dict.items(), key=lambda t: t[0].order))
 
+                        photos = []
+                        for p in PastEventsPhoto.objects.filter(group=values[0].group):
+                            photos.append(str(p))
+
                         data[key] = {
                             'heading': heading,
                             'sections': OrderedDict(sorted(sections.items(), key=lambda t: t[0].order )),
+                            'likely_scenario_title': values[0].group.likely_scenario_title,
+                            'likely_scenario_text': values[0].group.likely_scenario_text,
+                            'photos': photos
                         }
 
         return render(request, template, {
@@ -51,7 +59,8 @@ def app_view(request):
             'supply_kit': supply_kit,
             'important_links': important_links,
             'data_bounds': data_bounds,
-            'data': OrderedDict(sorted(data.items(), key=lambda t: ShapefileGroup.objects.get(name=t[0]).order_of_appearance ))
+            'data': OrderedDict(sorted(data.items(), key=lambda t: ShapefileGroup.objects.get(name=t[0]).order_of_appearance )),
+            'quick_data_overview': quick_data_overview
         })
 
 
@@ -60,5 +69,6 @@ def app_view(request):
         return render(request, 'index.html', {
             'location': location,
             'settings': settings,
-            'data_bounds': data_bounds
+            'data_bounds': data_bounds,
+            'quick_data_overview': quick_data_overview
             })

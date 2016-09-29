@@ -42,13 +42,25 @@
         {% endif %}
           {% for section, sub_sections in hazard.sections.items %}
             <div class="snugget-text">
-              <h4 class="section-title">{{ section }}</h4>
-              {% for sub_section, snuggets in sub_sections.items %}
-                <h5>{{ sub_section }}</h5>
-                {% for snugget in snuggets %}
-                  {% show_snugget snugget %}
+              <div class="section-icon section-icon--dynamic section-icon--{{ section }}">
+                <h2 class="caps section-title">{{ section }}</h2>
+              </div>
+              <div class="section-content">
+                {% for sub_section, snuggets in sub_sections.items %}
+                  <h3>{{ sub_section }}</h3>
+                  {% for snugget in snuggets %}
+                    {% show_snugget snugget %}
+                  {% endfor %}
                 {% endfor %}
-              {% endfor %}
+                {% if section.name == "Past Events" and hazard.photos %}
+                  <h3>Photos of Past Events</h3>
+                  <div class="past-photos">
+                    {% for photo in hazard.photos %}
+                     <img alt="A historical image of {{ hazard.heading }} in {{ location.areaname }}" class="slideshow-image" src="{{ photo }}"/>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
             </div>
           {% endfor %}
         </div>
