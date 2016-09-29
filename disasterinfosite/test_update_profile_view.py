@@ -5,6 +5,8 @@ from .models import UserProfile
 from django.http import HttpResponse
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.contrib.auth.models import User
+import unittest
+from unittest.mock import patch
 
 request_url = '/accounts/update_profile/'
 class FakeUser():
@@ -50,7 +52,8 @@ class UpdateProfileViewTestCase(TestCase):
     request.user = FakeUser()
     self.assertEqual(403, update_profile(request).status_code)
 
-  def testProfileSaveFails(self):
+  @patch.object(UserProfile, "save", side_effect=ValueError())
+  def testProfileSaveFails(self, mock_profile):
     """ It returns a 500 when the profile fails to save """
     request_body = {
       "invalid_field": "foo"

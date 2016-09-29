@@ -5,6 +5,8 @@ from .models import UserProfile
 from django.http import HttpResponse
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.contrib.auth.models import User
+import unittest
+from unittest.mock import patch
 
 request_url = '/accounts/create_user/'
 
@@ -51,8 +53,9 @@ class CreateUserViewTestCase(TestCase):
     request = self.makeRequest(request_body)
     self.assertEqual(400, create_user(request).status_code)
 
-  def testProfileSaveFails(self):
-    """ It returns a 500 when saving the newly creatd profile fails """
+  @patch.object(UserProfile, "save", side_effect=ValueError())
+  def testProfileSaveFails(self, mock_profile):
+    """ It returns a 500 when saving the newly created profile fails """
     request_body = {
       "username":"test_profile_save",
       "email":"test",
