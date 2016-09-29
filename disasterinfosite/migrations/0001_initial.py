@@ -7,6 +7,8 @@ import embed_video.fields
 import django.db.models.deletion
 import django.contrib.gis.db.models.fields
 
+from disasterinfosite.models import OverwriteStorage
+
 class Migration(migrations.Migration):
     operations = [
             migrations.CreateModel(

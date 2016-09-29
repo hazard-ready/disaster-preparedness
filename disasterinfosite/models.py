@@ -5,6 +5,7 @@ from django.contrib.gis.db.models import Extent
 from embed_video.fields import EmbedVideoField
 from model_utils.managers import InheritanceManager
 from solo.models import SingletonModel
+from django.core.files.storage import FileSystemStorage
 
 SNUG_TEXT = 0
 SNUG_AUDIO = 1
