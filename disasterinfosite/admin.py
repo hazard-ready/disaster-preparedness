@@ -1,6 +1,8 @@
 from django.contrib.gis import admin
 from embed_video.admin import AdminVideoMixin
 from solo.admin import SingletonModelAdmin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import User
 ######################################################
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
@@ -8,7 +10,9 @@ from solo.admin import SingletonModelAdmin
 from .models import EmbedSnugget, TextSnugget, SnuggetSection, SnuggetSubSection, Location, SiteSettings, SupplyKit, ImportantLink
 # END OF GENERATED CODE BLOCK
 ######################################################
-from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage
+from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile
+from .actions import export_as_csv_action
+
 admin.site.register(SnuggetSection, admin.ModelAdmin)
 admin.site.register(SnuggetSubSection, admin.ModelAdmin)
 admin.site.register(ShapefileGroup, admin.ModelAdmin)
@@ -58,6 +62,20 @@ class EmbedAdmin(AdminVideoMixin, SnuggetAdmin):
 
 admin.site.register(TextSnugget, TextAdmin)
 admin.site.register(EmbedSnugget, EmbedAdmin)
+
+class UserProfileInline(admin.StackedInline):
+    model = UserProfile
+    can_delete = False
+    verbose_name_plural = 'Users'
+
+# Define a new User admin
+class UserAdmin(BaseUserAdmin):
+    inlines = (UserProfileInline, )
+    actions = [export_as_csv_action("CSV Export", fields=('username','address1','address2','city','state','zip_code'))]
+
+# Re-register UserAdmin
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
 
 
 class GeoNoEditAdmin(admin.GeoModelAdmin):
