@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.db import migrations, models
 import embed_video.fields
 import django.db.models.deletion
 import django.contrib.gis.db.models.fields
+
+from disasterinfosite.models import OverwriteStorage
 
 class Migration(migrations.Migration):
     operations = [
@@ -176,5 +179,20 @@ class Migration(migrations.Migration):
                 ('link_text', models.CharField(max_length=100, default='')),
                 ('image', models.ImageField(storage=OverwriteStorage(), upload_to='data')),
             ],
+        ),
+         migrations.CreateModel(
+            name='UserProfile',
+            fields=[
+                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
+                ('address1', models.CharField(max_length=200, blank=True)),
+                ('address2', models.CharField(max_length=200, blank=True)),
+                ('city', models.CharField(max_length=200, blank=True)),
+                ('state', models.CharField(max_length=50, blank=True)),
+                ('zip_code', models.CharField(max_length=50, blank=True)),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+            ],
+            options={
+                'verbose_name': 'User Profile',
+            },
         ),
     ]
