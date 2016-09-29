@@ -96,7 +96,7 @@ $( document ).ready(function() {
       submitLocation(lat, lng);
     };
     var geoError = function(error) {
-      console.log('Error occurred. Error code: ' + error.code);
+      console.log('Error finding your location: ' + error.message);
       enableForm();
     };
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
