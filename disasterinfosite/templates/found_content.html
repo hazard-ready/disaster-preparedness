@@ -8,7 +8,7 @@
       <h2 class="project-title caps">{{ settings.site_title }}</h2>
       <h3 class="project-subtitle">{{ settings.site_description }}</h3>
     </div>
-    <div class="information-instructions"><p>Look below the map to see information for your location, or enter another location.</p></div>
+    <div class="information-instructions" role="complementary"><p>Look below the map to see information for your location, or enter another location.</p></div>
   </div>
 {% endblock header %}
 
@@ -22,9 +22,9 @@
 {% endblock map %}
 
 {% block main-content %}
-  <div class="row disaster-container">
+  <div class="row disaster-container" role="main">
     <div class="small-12 column">
-      <ul class="tabs disaster-tabs" data-tab>
+      <ul class="tabs disaster-tabs" data-tab role="group">
         {% for group, hazard in data.items %}
           {% if forloop.first %}
             <li class="tab-title active"><a href="#{{group}}">{{hazard.heading}}</a></li>
