@@ -41,7 +41,7 @@ class SiteSettings(SingletonModel):
         help_text="Put a contact email for the maintainer of this site here."
     )
     site_url = models.URLField(
-        default="http://www.example.com",
+        default="https://www.example.com",
         help_text="Put the URL to this site here."
     )
     site_title = models.CharField(

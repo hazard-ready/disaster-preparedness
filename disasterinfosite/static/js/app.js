@@ -25,8 +25,8 @@ $( document ).ready(function() {
   }
   map.scrollWheelZoom.disable();
 
-  var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+  var osmUrl='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  var osmAttrib='Map data © <a href="//openstreetmap.org">OpenStreetMap</a> contributors';
   var layer = new L.TileLayer(osmUrl, {attribution: osmAttrib}).addTo(map);
   layer.setOpacity(0.6);
 
