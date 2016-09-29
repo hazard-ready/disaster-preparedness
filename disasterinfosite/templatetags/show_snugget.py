@@ -15,8 +15,8 @@ class SnuggetNode(template.Node):
         template object in render_context to avoid reparsing and
         loading when used in a for loop.
 
-        A lot of this is token from django.template.base's InclusionNode.
-        This behavior should be changed if we upgrade to Django 1.8.
+        A lot of this is taken from django.template.base's InclusionNode, for Django 1.8.6.
+        Upgrading Django should mean updating this to match.
         """
         try:
             snugget = self.snugget.resolve(context)
@@ -25,24 +25,17 @@ class SnuggetNode(template.Node):
         except (template.base.VariableDoesNotExist):
             return ''
 
-        from django.template.loader import get_template, select_template
         from django.utils.itercompat import is_iterable
         if isinstance(file_name, template.Template):
             t = file_name
+        elif isinstance(getattr(file_name, 'template', None), template.Template):
+            t = file_name.template
         elif not isinstance(file_name, six.string_types) and is_iterable(file_name):
-            t = select_template(file_name)
+            t = context.template.engine.select_template(file_name)
         else:
-            t = get_template(file_name)
+            t = context.template.engine.get_template(file_name)
+        context.render_context[self] = t
         return t.render(context)
-
-    def get_resolved_arguments(self, context):
-        """
-        This function is also snipped from django.template.base.
-        """
-        resolved_args = [var.resolve(context) for var in self.args]
-        resolved_args = [context] + resolved_args
-        resolved_kwargs = {k: v.resolve(context) for k, v in self.kwargs.items()}
-        return resolved_args, resolved_kwargs
 
     @classmethod
     def handle_token(cls, parser, token):
