@@ -161,4 +161,12 @@ class Migration(migrations.Migration):
             ],
             bases=('disasterinfosite.snugget',),
         ),
+        migrations.CreateModel(
+            name='PastEventsPhoto',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
+                ('group', models.ForeignKey(to='disasterinfosite.ShapefileGroup', null=True, on_delete=django.db.models.deletion.PROTECT)),
+                ('image', models.ImageField(upload_to='photos')),
+            ],
+        ),
     ]
