@@ -160,6 +160,7 @@ $( document ).ready(function() {
   $('.disaster-tabs').on('toggled', function () {
     slideContainer.slick('unslick');
     slideContainer = loadGallery();
+  });
 
 
 // Signup and login functionality
