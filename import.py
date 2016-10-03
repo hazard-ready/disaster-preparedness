@@ -230,11 +230,17 @@ def detectGeometryType(sf, stem):
   except stopIteration:
     print("No valid geometries found in", stem, "- please check the shapefile")
     exit()
-  if shapeType == 5:
+  if shapeType == 5 or shapeType == 15:
     return "MultiPolygon"
-  elif shapeType == 3:
+  elif shapeType == 3 or shapeType == 13:
     print("WARNING:", stem, "has a linear geometry, and this application currently only handles polygons properly")
     return "MultiLineString"
+  elif shapeType == 1 or shapeType == 8 or shapeType == 11 or shapeType == 18:
+    print("WARNING:", stem, "has a point geometry, and this application currently only handles polygons properly")
+    return "MultiPoint"
+  elif shapeType > 20:
+  	print("Support for Multipart geometries is not implemented yet")
+  	exit()
   else:
     print("Geometry field type ", shapeType, "unrecognised")
 # the list of valid geometry field type codes is at
