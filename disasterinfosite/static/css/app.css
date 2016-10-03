@@ -4,7 +4,7 @@ GLOBAL STYLES
 
 html {
   width:auto !important;
-	height:auto !important;
+  height:auto !important;
 }
 
 body {
@@ -12,14 +12,6 @@ body {
   width:auto !important;
   font-family: Georgia, Times, 'Times New Roman', serif;
   color: #444;
-}
-
-h3 {
-  font-weight: bold;
-}
-
-h5 {
-  font-weight: bold;
 }
 
 /*****
@@ -31,6 +23,34 @@ TYPOGRAPHY STYLES
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: bold;
+}
+
+h1 {
+  font-size: 2.3125rem;
+}
+
+h2 {
+  font-size: 1.6875rem;
+  line-height: 1.75rem;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.4375rem;
+  font-weight: bold;
+}
+
+h4 {
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+h5 {
+  font-size: 1.2rem;
+}
+
+label {
+  color: #ffffff;
 }
 
 /*****
@@ -48,9 +68,20 @@ HEADER STYLES
    color: #444;
 }
 
+#title .button--top {
+  position: absolute;
+  right: 5px;
+  font-size: 1em;
+}
+
 .title-header {
   padding: 5px;
-  background-color: #ccccdd;
+  background-color: #9999aa;
+}
+
+.title-header h2 {
+  color: #fff;
+  text-align: center;
 }
 
 .top-header {
@@ -61,16 +92,42 @@ HEADER STYLES
   text-align: center;
 }
 
+.project-title {
+  padding-top: 1rem;
+}
+
 /*****
 INFORMATION AND INSTRUCTIONS STYLES
 *****/
 .information-instructions {
-  padding: 5px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.information-container {
+  background-color: #888888;
+  color: #FFF;
+  padding: 15px;
+}
+
+.information-container a {
+  color: #ffffff;
+  font-weight: bold;
 }
 
 /*****
 MAP AND SEARCH STYLES
 ******/
+
+.location-form {
+  background-color: #888888;
+  padding-bottom: 10px;
+  padding-left: 100px; /* make it line up with the text in the header, not the image */
+}
+
+.location-instructions {
+  display: block;
+}
 
 #location-text {
   color: #444444;
@@ -99,7 +156,7 @@ MAP AND SEARCH STYLES
   border-radius: 0 3px 3px 0;
 }
 
-.auto-location-submit {
+.auto-location-submit, .button--top {
   /*background-image: url(../img/icon-target.png);
   background-repeat: no-repeat;*/
   border-radius: 3px;
@@ -112,6 +169,10 @@ MAP AND SEARCH STYLES
 
 #map {
   height: 400px;
+}
+
+.map-container {
+  padding-top: 1rem
 }
 
 /* overriding ugly Leaflet defaults */
@@ -167,7 +228,22 @@ LOGIN / SIGNUP FORM
   display: none;
 }
 
+/****
+GENERIC FORM STYLES
+*****/
+.button {
+  border-color: #fd8d3c;
+  background-color: #fd8d3c;
+}
 
+.button:hover, .button:focus {
+  background-color: #f03b20;
+}
+
+input:invalid {
+  border-color: #f03b20;
+  border-width: 2px;
+}
 
 /****
 DISASTER TABS
@@ -181,7 +257,7 @@ DISASTER TABS
 }
 
 .disaster-tabs-content {
-  background-color: #ccccdd;
+  background-color: #9999aa;
 }
 
 .disaster-container {
@@ -200,53 +276,87 @@ DISASTER TABS
 }
 
 .tabs-content > .content.active {
-  display:inline-block;
-  width: 100%;
+  display: inline-block;
+  float: right;
+  margin-top: 10px;
+  width: 98%;
 }
 
 .tabs dd.active a, .tabs .tab-title.active a {
-  background-color: #ccccdd;
+  background-color: #9999aa;
 }
 
 .disaster-tabs {
-  background-color: #91AB9B;
+  background-color: #888888;
   padding: 5px;
+}
+
+.likely-scenario {
+  background-color: #888888;
+  color: #FFF;
+  padding: 10px;
+  margin-top: -15px;
+}
+
+.likely-scenario p {
+    font-size: 1.2em;
+    margin-bottom: 0;
 }
 
 /*****
 SECTIONS
 *****/
 
-.section-icon {
-  margin-top: 0.2rem;
-  width: 60px;
-  height: 60px;
-  background: transparent url(../img/icons-sections.png) no-repeat 0 0;
-  background-size: 60px auto;
+.section-content {
+  padding-left: 20px;
 }
-.section-icon.kit         { background-position: 0 -60px; }
-.section-icon.community   { background-position: 0 -120px; }
-.section-icon.leaders     { background-position: 0 -180px; }
-.section-icon.home        { background-position: 0 -240px; }
-.section-icon.deformation { background-position: 0 -300px; }
-.section-icon.routes      { background-position: 0 -360px; }
-.section-icon.shaking     { background-position: 0 -420px; }
+
+.section-icon--link {
+  background: transparent url(../img/link.svg) no-repeat 0 0;
+}
+
+.section-icon--supply-kit {
+  background: transparent url(../img/supplykit.svg) no-repeat 0 0;
+}
+
+.section-icon--community {
+  background: transparent url(../img/community.svg) no-repeat 0 0;
+}
+
+.section-icon--What {
+  background: transparent url(../img/question.svg) no-repeat 0 0;
+}
+
+.section-icon--Past {
+  background: transparent url(../img/clock.svg) no-repeat 0 0;
+}
+
+.section-icon--How {
+  background: transparent url(../img/prepare.svg) no-repeat 0 0;
+}
+
+.section-icon {
+  display: inline-block;
+  margin-top: 0.2rem;
+  width: 80px;
+  height: 80px;
+  background-size: 80px auto;
+}
+
+.section-icon--dynamic {
+  width: 100%;
+}
 
 .section-title {
-  font-size: 24px;
-  line-height: 1.2em;
+  font-size: 1.75rem;
+  line-height: 3em;
+  margin-left: 90px;
   text-transform: uppercase;
-  margin: 15px 0;
 }
 
 /*****
 SNUGGET CONTENT
 *****/
-
-.snugget-text {
-  display:inline-block;
-  margin: 5px;
-}
 
 .intensity-meter {
     float:left;
@@ -259,7 +369,9 @@ SNUGGET CONTENT
 }
 
 .intensity {
+  display: inline-block;
   margin-bottom:20px;
+  width: 100%;
 }
 
 .intensity-meter-segment {
@@ -273,18 +385,6 @@ SNUGGET CONTENT
 .high-color { fill: #feb24c;}
 .very-high-color { fill: #fd8d3c;}
 .extreme-color { fill: #f03b20;}
-
-.supply-kit {
-  font-size: 16px;
-  line-height: 1.2em;
-}
-.supply-kit-icon {
-  width: 43px;
-  height: 45px;
-  background: transparent url(../img/icons-supply-kit.png) no-repeat 0 0;
-  background-size: 43px auto;
-  overflow: hidden;
-}
 
 /*****
 PHOTOS OF PAST EVENTS
@@ -336,13 +436,25 @@ PHOTOS OF PAST EVENTS
 /*****
 SUPPLY KIT
 *****/
+
+.supply-kit {
+  font-size: 16px;
+  line-height: 1.2em;
+}
+.supply-kit-icon {
+  width: 43px;
+  height: 45px;
+  background: transparent url(../img/icons-supply-kit.png) no-repeat 0 0;
+  background-size: 43px auto;
+  overflow: hidden;
+}
 .supply-kit-icon.food { background-position: 0 -45px; }
 .supply-kit-icon.water { background-position: 0 -90px; }
 .supply-kit .big-num {
   font-size: 50px;
   line-height: .9em;
   margin: 0 15px;
-  color: #5e001d;
+  color: #fd8d3c;
 }
 .supply-kit .text-label {
   padding-top: .2em;
@@ -360,39 +472,65 @@ GEEK BOX
 *****/
 
 #geek-box {
-  background-color: #ccccdd;
-  color: #717273;
+  background-color: #9999aa;
+  color: #fff;
 }
 
 #geek-box-container {
-  background-color: #ccccdd;
+  background-color: #9999aa;
 }
 
 #geek-box a {
   color: #004444;
 }
 
-#geek-box h6 {
-  color: #444444;
+#geek-box h5 {
+  color: #fff;
+}
+
+.who-made-this-logo {
+  max-width: 30%;
+  max-height: 5rem;
+  margin: 0.5rem;
 }
 
 
 /* adjustments for smaller screens */
 @media only screen and (max-width: 40rem) {
+  .button {
+    font-size: 0.75em;
+  }
+
+  #title .button--top {
+    font-size: 0.75em;
+  }
 
   #location-submit {
     background-size: 23px 23px;
   }
 
-  .project-title {
-    font-size: 50px;
-    line-height: 1.2em;
-    text-align: center;
+
+  #location-text {
+    margin-bottom: 0.5rem;
   }
+
+  .title-image {
+    max-height: 50px;
+  }
+
+  .project-title {
+    font-size: 2rem;
+    line-height: 1.2em;
+  }
+
   .project-subtitle {
     font-size: 20px;
     line-height: 1.2em;
-    text-align: center;
+  }
+
+  .title-image {
+    display: block;
+    margin: 0 auto;
   }
   .location-label {
     font-size: 22px;
@@ -405,10 +543,67 @@ GEEK BOX
 
   .auto-location-submit {
     margin-left: 1em;
+    margin-bottom: 0;
   }
 
   #title a {
      font-size: 1.25em;
+  }
+
+  h2 {
+    line-height: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  .tabs-content > .content.active {
+    margin-top: 0;
+  }
+
+  .caps {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .likely-scenario p {
+    font-size: 1rem;
+  }
+
+  .intensity-meter {
+    float:left;
+    margin: 0 10px 0 0;
+    width:100px;
+  }
+
+  .intensity-content {
+    margin: 10px 0 0 0;
+  }
+
+  .section-content {
+    padding: 0;
+  }
+
+  .tabs dd > a, .tabs .tab-title > a {
+    padding: 0.5rem 1rem
+  }
+
+  .disaster-tabs {
+    background-color: #91AB9B;
+    padding: 5px;
+  }
+
+  .location-form {
+    padding-left: 0px;
+  }
+
+  .form-icon-button {
+    text-align: center;
   }
 
   .user-interaction__buttons {
@@ -418,65 +613,71 @@ GEEK BOX
   .user-interaction__buttons .button:not(:last-child) {
       margin-right: 1rem;
   }
-
 }
 
 /* adjustments for the smallest screens */
 @media only screen and (max-width: 26rem) {
+  .button {
+    margin: 0;
+    padding: 9px 1em;
+  }
+
   #title .button--top {
     width: 90px;
   }
 
-  #location-text {
-    color: #444444;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 1.3em;
-    border-color: #e1e1e1;
-    border-width: 1px;
+  .user-interaction__buttons .button:not(:last-child) {
+      margin-right: 0.5rem;
   }
 
-  .organization-information {
-    margin-top: 20px;
+  #location-text {
+    font-size: 16px;
+  }
+
+  .title-image {
+    max-height: 50px;
   }
 
   .project-title {
-    font-size: 30px;
+    font-size: 1.5rem;
     line-height: 1.2em;
-    text-align: center;
   }
+
   .project-subtitle {
     font-size: 16px;
     line-height: 1.2em;
-    text-align: center;
   }
+
   .section-icon {
-    width: 40px;
-    height: 40px;
-    background-size: 40px auto;
+    width: 50px;
+    height: 50px;
+    background-size: 50px auto;
   }
 
-  .tab-title {
-    float: right !important;
-    width: 95%;
+  .section-icon--dynamic {
+    width: 100%;
   }
 
-  .section-icon.kit         { background-position: 0 -40px; }
-  .section-icon.community   { background-position: 0 -80px; }
-  .section-icon.leaders     { background-position: 0 -120px; }
-  .section-icon.home        { background-position: 0 -160px; }
-  .section-icon.deformation { background-position: 0 -200px; }
-  .section-icon.routes      { background-position: 0 -240px; }
-  .section-icon.shaking     { background-position: 0 -280px; }
-
-  .disaster-tabs {
-    background-color: #ccccdd;
-    padding: 5px;
+  .section-title {
+    font-size: 1.2rem;
+    margin-left: 55px;
   }
 
-  .user-interaction__buttons .button:not(:last-child) {
-      margin-right: 0.5rem;
+  .past-photos {
+    width: 272px;
+    height: 200px;
+  }
+
+  .slideshow-image {
+    width: 270px;
+  }
+
+  .tabs dd, .tabs .tab-title {
+    width: 100%;
+  }
+
+  .tabs dd > a, .tabs .tab-title > a {
+    padding: 0.3rem 0.5rem
   }
 
   .user-interactions-help {
@@ -484,4 +685,7 @@ GEEK BOX
     font-size: 0.75em
   }
 
+  .who-made-this-logo {
+    margin: 0 auto;
+  }
 }
