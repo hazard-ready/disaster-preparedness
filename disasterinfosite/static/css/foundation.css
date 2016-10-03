@@ -1799,9 +1799,9 @@ meta.foundation-mq-topbar {
     .top-bar.expanded .title-area {
       background: #333333; }
     .top-bar.expanded .toggle-topbar a {
-      color: #888888; }
+      color: #444444; }
       .top-bar.expanded .toggle-topbar a span::after {
-        box-shadow: 0 0 0 1px #888888, 0 7px 0 1px #888888, 0 14px 0 1px #888888; }
+        box-shadow: 0 0 0 1px #444444, 0 7px 0 1px #444444, 0 14px 0 1px #444444; }
 
 .top-bar-section {
   left: 0;
