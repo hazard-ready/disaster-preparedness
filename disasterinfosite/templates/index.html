@@ -14,24 +14,23 @@
   <link type="text/css" rel="stylesheet" href="{% static 'css/foundation.css' %}">
   <link type="text/css" rel="stylesheet" href="{% static 'css/app.css' %}">
 
-  <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-
-  <!-- Load Google Maps from CDN-->
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-
-    <!-- Load Slick from CDN -->
-  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
-  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
-
   <script src="{% static 'js/vendor/modernizr.js' %}"></script>
   <script src="{% static 'js/vendor/jquery.js' %}"></script>
   <script src="{% static 'js/foundation.min.js' %}"></script>
-  <script type="text/javascript">
-    var mapBounds = {{ data_bounds | js }};
-  </script>
-  <script src="{% static 'js/app.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/leaflet.css' %}" />
+  <script src="{% static 'js/leaflet/leaflet.js' %}"></script>
+
+  <!-- Load Google Maps from CDN-->
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBAHGWsE1UQKYha7_E-tN01yVg_St2KWQw"></script>
+
+  <!-- Load Slick from CDN -->
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+
+<script type="text/javascript">
+  var mapBounds = {{ data_bounds | js }};
+</script>
+<script src="{% static 'js/app.js' %}"></script>
 
 </head>
 <body>
