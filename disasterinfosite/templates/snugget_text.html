@@ -9,7 +9,7 @@
         {% endif %}
       </div>
       <div class="intensity-content">
-        {{ snugget.content }}
+        {{ snugget.content | safe }}
       </div>
     </div>
     {% else %}
