@@ -230,9 +230,9 @@ def detectGeometryType(sf, stem):
   except stopIteration:
     print("No valid geometries found in", stem, "- please check the shapefile")
     exit()
-  if shapeType == 5:
+  if shapeType == 5 or shapeType == 15:
     return "MultiPolygon"
-  elif shapeType == 3:
+  elif shapeType == 3 or shapeType == 13:
     print("WARNING:", stem, "has a linear geometry, and this application currently only handles polygons properly")
     return "MultiLineString"
   else:
