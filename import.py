@@ -253,6 +253,10 @@ def detectGeometryType(sf, stem):
 
 def findEncoding(sf, inputDir, stem):
   encodingFile = os.path.join(inputDir, stem+".cpg")
+# if .cpg is not found, try .CPG in case we're on a case sensitive file system
+  if not os.path.exists(encodingFile):
+  	encodingFile = os.path.join(inputDir, stem+".CPG")
+
   if os.path.exists(encodingFile):
     with open(encodingFile, 'r') as f:
       encoding = f.read()
@@ -260,7 +264,7 @@ def findEncoding(sf, inputDir, stem):
 # TODO: implement the chardet method from https://gist.github.com/jatorre/939830 as another option
   else:
     print("Unable to automatically detect the character encoding of", stem)
-    print("What encoding should we use? (If in doubt, choose UTF-8)")
+    print("What encoding should we use? (If unknown, try UTF-8)")
     encoding = input(">> ")
   return encoding
 
