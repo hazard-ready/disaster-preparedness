@@ -40,7 +40,7 @@ def main():
 
   first = True
   for f in os.listdir(dataDir):
-    if f[-4:] == ".shp":
+    if f[-4:].lower() == ".shp":
       stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening shapefile:", stem)
       #TODO: if there's already a reprojected shapefile, use the field in that instead of prompting the user.
