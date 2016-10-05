@@ -1,8 +1,8 @@
 {% load staticfiles %}
-<div role="content-info" id="geek-box-container">
+<div role="contentinfo" id="geek-box-container">
   <div id="geek-box" class="row vert-pad-medium">
       <div class="small-12 medium-6 columns">
-        <h5 class="caps">How does it work?</h5>
+        <h3 class="caps">How does it work?</h3>
         <p>{{ settings.site_title }} is designed to help educate and prepare people for disasters that occur in their area. Disasters don’t strike locations equally so we found it important to give location
         specific information in order to properly prepare. {{ settings.site_title }} organizes current information and packages it in a way that makes it accessible for any {{ location.area_name }}
         resident.</p>
@@ -26,7 +26,7 @@
         </div>
     {% endif %}
     <div class="small-12 medium-6 columns">
-        <h5 class="caps">Who made this?</h5>
+        <h3 class="caps">Who made this?</h3>
         <p>{{ settings.who_made_this | safe}}</p>
     </div>
   </div>

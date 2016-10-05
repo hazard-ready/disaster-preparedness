@@ -2,19 +2,17 @@
 {% load staticfiles %}
 {% load show_snugget %}
 
-{% block header %}
-  <div class="row top-header">
-    <div class="title-header">
-      <h2 class="project-title caps">{{ settings.site_title }}</h2>
-      <h3 class="project-subtitle">{{ settings.site_description }}</h3>
+{% block info-instructions %}
+  <div class="information-container">
+    <div class="information-instructions" role="complementary">
+      <p>Look below the map to see information for your location, or enter another location.</p>
     </div>
-    <div class="information-instructions" role="complementary"><p>Look below the map to see information for your location, or enter another location.</p></div>
   </div>
-{% endblock header %}
+{% endblock info-instructions %}
 
 
 {% block map %}
-<div class="row">
+<div class="row" role="application">
   <div class="small-12 column">
     <div id="map" style="height: 300px;"></div>
   </div>
@@ -69,7 +67,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" role="complementary" aria-label="information">
     <div class="small-10 medium-5 column">
       <h4>Supply Kit</h4>
       {% include "supply-kit.html" %}
@@ -84,7 +82,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" role="complementary" aria-label="community-leaders">
       <div class="small-10 medium-5 column end">
       <h4>Community Leaders</h4>
       <p>{{ location.community_leaders | safe }}</p>

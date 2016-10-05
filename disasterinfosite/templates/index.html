@@ -35,7 +35,7 @@
 </head>
 <body>
   <div class="row top-header">
-    <div id="title" class="title-header">
+    <div id="title" class="title-header" role="banner">
       <a href="#user-interaction-container" class="button radius caps button--top">Sign Up / Log In</a>
       <h1 class="project-title caps">
         <a href="{{ settings.site_url }}">{{ settings.site_title }}</a>
@@ -54,7 +54,7 @@
   </div>
 
 {% block search %}
-      <div class="location-form" role="form">
+      <div class="location-form" role="form" aria-label="location-search">
         <div class="row">
            <div class="small-12 medium-8 medium-push-2 columns">
                <div class="row collapse">
@@ -81,19 +81,19 @@
 {% endblock search %}
 
 {% block map %}
-      <div class="row map-container">
+      <div class="row map-container" role="application">
         <div class="small-12 medium-7 hide-for-small column">
           <div id="map" style="height: 400px;"></div>
         </div>
       <div class="small-12 medium-5 column">
         <h2 class="caps">What are my risks?</h2>
-        <h4 class>What to Expect</h4>
+        <h3 class>What to Expect</h3>
         <p>{{ settings.site_title }} gives you an idea of which natural disasters you might experience in the future based on a location in {{ location.area_name }}.</p>
 
-        <h4>In Recent History</h4>
+        <h3>In Recent History</h3>
         <p>Find out which disasters have struck {{ location.area_name }} in the past, what impact they had, and where they happened.</p>
 
-        <h4>How to Prepare</h4>
+        <h3>How to Prepare</h3>
         <p>You have the power to make a difference. Find out how you can protect your loved ones and home before the next disaster hits.</p>
       </div>
       </div>
