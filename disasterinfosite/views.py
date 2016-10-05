@@ -93,7 +93,7 @@ def app_view(request):
     profile = None
     if request.user.is_authenticated():
         username = request.user.username
-        profile = UserProfile.objects.get(user=request.user)
+        profile = UserProfile.objects.get_or_create(user=request.user)
 
     template = "no_content_found.html"
 
