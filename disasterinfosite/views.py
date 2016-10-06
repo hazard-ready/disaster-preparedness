@@ -127,7 +127,7 @@ def app_view(request):
 
                         photos = []
                         for p in PastEventsPhoto.objects.filter(group=values[0].group):
-                            photos.append(str(p))
+                            photos.append(p)
 
                         data[key] = {
                             'heading': heading,
