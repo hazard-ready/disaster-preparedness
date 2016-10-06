@@ -54,7 +54,7 @@
                   <h3>Photos of Past Events</h3>
                   <div class="past-photos">
                     {% for photo in hazard.photos %}
-                     <img alt="A historical image of {{ hazard.heading }} in {{ location.areaname }}" class="slideshow-image" src="{{ photo }}"/>
+                     <img alt="{{ photo.caption }}" class="slideshow-image" src="{{ photo }}"/>
                     {% endfor %}
                   </div>
                 {% endif %}
