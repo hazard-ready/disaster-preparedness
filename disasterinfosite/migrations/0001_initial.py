@@ -170,6 +170,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
                 ('group', models.ForeignKey(to='disasterinfosite.ShapefileGroup', null=True, on_delete=django.db.models.deletion.PROTECT)),
                 ('image', models.ImageField(upload_to='photos')),
+                ('caption', models.TextField(default="", max_length=200))
             ],
         ),
          migrations.CreateModel(
