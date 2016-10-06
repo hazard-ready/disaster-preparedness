@@ -74,7 +74,11 @@ $( document ).ready(function() {
     location_query_text = "";
   $("#location-text").val(location_query_text);
 
-  // // hitting enter key in the textfield will trigger submit
+  // Set up autocomplete
+  var input = document.getElementById('location-text');
+  var autocomplete = new google.maps.places.Autocomplete(input);
+
+  // hitting enter key in the textfield will trigger submit
   $("#location-text").keydown(function(event) {
     if (event.keyCode == 13) {
       $('#location-submit').trigger('click');
