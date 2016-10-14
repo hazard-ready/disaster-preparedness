@@ -308,7 +308,8 @@ def modelsGeoFilterGen(stem, keyField):
   text += "        " + stem + "_rating = " + "qs_" + stem + ".values_list('" + keyField.lower() + "', flat=True)\n"
   text += "        for rating in " + stem + "_rating:\n"
   text += "            individualSnugget = Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact=rating).select_subclasses()\n"
-  text += "            groupsDict[individualSnugget[0].group.name].extend(individualSnugget)\n\n"
+  text += "            if individualSnugget:\n"
+  text += "                groupsDict[individualSnugget[0].group.name].extend(individualSnugget)\n\n"
   return text
 
 
