@@ -274,10 +274,8 @@ DISASTER TABS
 }
 
 .tabs-content > .content.active {
-  display: inline-block;
-  float: right;
   margin-top: 10px;
-  width: 98%;
+  padding: 1rem;
 }
 
 .tabs dd.active a, .tabs .tab-title.active a {
