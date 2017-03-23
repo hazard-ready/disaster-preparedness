@@ -25,7 +25,7 @@ $( document ).ready(function() {
   }
   map.scrollWheelZoom.disable();
 
-  var osmUrl='//{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png';
+  var osmUrl='//{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=3a70462b44dd431586870baee15607e4';
   var osmAttrib='Map data © <a href="//openstreetmap.org">OpenStreetMap</a> contributors';
   var layer = new L.TileLayer(osmUrl, {attribution: osmAttrib}).addTo(map);
   layer.setOpacity(0.6);
