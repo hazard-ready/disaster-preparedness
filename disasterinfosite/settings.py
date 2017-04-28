@@ -54,7 +54,7 @@ ROOT_URLCONF = 'disasterinfosite.urls'
 WSGI_APPLICATION = 'disasterinfosite.wsgi.application'
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.7/topics/i18n/
+# https://docs.djangoproject.com/en/1.10/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
