@@ -16,7 +16,7 @@ SNUGGET_TYPES = (
                  )
 class UserProfile(models.Model):
     """ A model representing a user's information that isn't their username, password, or email address """
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     address1 = models.CharField(max_length=200, blank=True)
     address2 = models.CharField(max_length=200, blank=True)
     city = models.CharField(max_length=200, blank=True)
