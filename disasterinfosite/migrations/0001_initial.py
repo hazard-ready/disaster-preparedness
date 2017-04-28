@@ -149,7 +149,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TextSnugget',
             fields=[
-                ('snugget_ptr', models.OneToOneField(auto_created=True, to='disasterinfosite.Snugget', serialize=False, primary_key=True, parent_link=True)),
+                ('snugget_ptr', models.OneToOneField(auto_created=True, to='disasterinfosite.Snugget', serialize=False, primary_key=True, parent_link=True, on_delete=models.CASCADE)),
                 ('content', models.TextField()),
                 ('image', models.TextField(default="")),
                 ('percentage', models.FloatField(null=True)),
@@ -159,7 +159,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='EmbedSnugget',
             fields=[
-                ('snugget_ptr', models.OneToOneField(auto_created=True, to='disasterinfosite.Snugget', serialize=False, primary_key=True, parent_link=True)),
+                ('snugget_ptr', models.OneToOneField(auto_created=True, to='disasterinfosite.Snugget', serialize=False, primary_key=True, parent_link=True, on_delete=models.CASCADE)),
                 ('embed', embed_video.fields.EmbedVideoField()),
             ],
             bases=('disasterinfosite.snugget',),
@@ -190,7 +190,7 @@ class Migration(migrations.Migration):
                 ('city', models.CharField(max_length=200, blank=True)),
                 ('state', models.CharField(max_length=50, blank=True)),
                 ('zip_code', models.CharField(max_length=50, blank=True)),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'User Profile',

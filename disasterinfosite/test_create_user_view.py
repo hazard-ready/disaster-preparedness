@@ -100,7 +100,7 @@ class CreateUserViewTestCase(TestCase):
     }
     create_user(self.makeRequest(request_body))
     user = User.objects.get(username=request_body['username'])
-    self.assertTrue(user.is_authenticated())
+    self.assertTrue(user.is_authenticated)
 
   def test201OnSuccess(self):
     """ If a user is successfully created, it returns a 201. """
