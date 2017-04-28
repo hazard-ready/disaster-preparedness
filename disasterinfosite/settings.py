@@ -55,7 +55,7 @@ WSGI_APPLICATION = 'disasterinfosite.wsgi.application'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
-LOCALE_PATHS = os.path.join(BASE_DIR, 'locale')
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 LANGUAGE_CODE = 'en-us'
 USE_L10N = True
 
