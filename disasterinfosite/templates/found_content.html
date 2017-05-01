@@ -1,11 +1,12 @@
 {% extends "index.html" %}
+{% load i18n %}
 {% load staticfiles %}
 {% load show_snugget %}
 
 {% block info-instructions %}
   <div class="information-container">
     <div class="information-instructions" role="complementary">
-      <p>Look below the map to see information for your location, or enter another location.</p>
+      <p>{% trans "Look below the map to see information for your location, or enter another location." %}</p>
     </div>
   </div>
 {% endblock info-instructions %}
@@ -50,8 +51,9 @@
                     {% show_snugget snugget %}
                   {% endfor %}
                 {% endfor %}
-                {% if section.name == "Past Events" and hazard.photos %}
-                  <h3>Photos of Past Events</h3>
+                {% trans "Past Events" as past_events %}
+                {% if section.name == past_events and hazard.photos %}
+                  <h3>{% trans "Photos of Past Events" %}</h3>
                   <div class="past-photos">
                     {% for photo in hazard.photos %}
                      <img alt="{{ photo.caption }}" class="slideshow-image" src="{{ photo.image.url }}"/>
@@ -69,12 +71,12 @@
 
   <div class="row" role="complementary" aria-label="information">
     <div class="small-10 medium-5 column">
-      <h4>Supply Kit</h4>
+      <h4>{% trans "Supply Kit" %}</h4>
       {% include "supply-kit.html" %}
     </div>
 
     <div class="small-10 medium-5 column end">
-      <h4>Important Links</h4>
+      <h4>{% trans "Important Links" %}</h4>
       {% for link in important_links %}
       <h5>{{ link.title }}</h5>
       <p>{{ link.link | safe }}
