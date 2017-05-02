@@ -15,6 +15,13 @@ from .actions import export_as_csv_action
 
 admin.site.register(SnuggetSection, admin.ModelAdmin)
 admin.site.register(SnuggetSubSection, admin.ModelAdmin)
+
+# To use translatable models and see them in DjangoAdmin, use the following 3 lines instead.
+# admin.site.register(ShapefileGroup, TranslationAdmin)
+# admin.site.register(PastEventsPhoto, TranslationAdmin)
+# admin.site.register(DataOverviewImage, TranslationAdmin)
+
+# Use the next three lines if you don't want to translate these models into other languages in Django Admin.
 admin.site.register(ShapefileGroup, admin.ModelAdmin)
 admin.site.register(PastEventsPhoto, admin.ModelAdmin)
 admin.site.register(DataOverviewImage, admin.ModelAdmin)
@@ -81,6 +88,21 @@ admin.site.register(User, UserAdmin)
 class GeoNoEditAdmin(admin.GeoModelAdmin):
     modifiable = False
 
+# Uncomment the next lines if you want to translate fields in DjangoAdmin to different languages.
+# admin.site.register(ImportantLink, TranslationAdmin)
+# class SiteSettingsAdmin(SingletonModelAdmin, TranslationAdmin):
+#     pass
+# admin.site.register(SiteSettings, SiteSettingsAdmin)
+
+# class LocationAdmin(SingletonModelAdmin, TranslationAdmin):
+#     pass
+# admin.site.register(Location, LocationAdmin)
+
+# class SupplyKitAdmin(SingletonModelAdmin, TranslationAdmin):
+#     pass
+# admin.site.register(SupplyKit, SupplyKitAdmin)
+
+# Keep this block as-is if you don't want to translate these models into other languages in DjangoAdmin.
 admin.site.register(ImportantLink, admin.ModelAdmin)
 admin.site.register(SiteSettings, SingletonModelAdmin)
 admin.site.register(Location, SingletonModelAdmin)

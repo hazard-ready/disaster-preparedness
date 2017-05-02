@@ -26,6 +26,7 @@ else:
 
 # Application definition
 INSTALLED_APPS = (
+   # If you want to translate Django models, uncomment this. 'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,6 +59,12 @@ WSGI_APPLICATION = 'disasterinfosite.wsgi.application'
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 LANGUAGE_CODE = 'en-us'
 USE_L10N = True
+# Uncomment to translate Django models.
+# gettext = lambda s: s
+# LANGUAGES = (
+#     ('en-us', gettext('English')),
+#     ('es', gettext('Spanish'))
+# )
 
 USE_I18N = True
 TIME_ZONE = 'UTC'
