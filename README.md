@@ -239,4 +239,7 @@ Upload photos to show in a photo gallery in the search results, under Past Event
 +###### Data Overview Images
 In the box at the bottom of every page, there's a section called 'Quick Data Overview'. That's where these will show up, as links that open in a new tab or window. The link_text field is what the link says, like 'Earthquakes: Distance from a Fault', and you can upload the appropriate image here.
 
-
+# Supporting multiple languages
+To support a multi-language site, you need to provide message files for the Django views, by the usual means of `makemessages` and `compilemessages`.
+In addition, there are many bits of text that are configurable through Django Admin. To translate those, uncomment the relevant lines in settings.py, admin.py and translation.py. Then run `makemigrations` and `migrate`. You should then have fields for multiple languages exposed in Django Admin.
+For more information, see the [Django-ModelTranslation docs](http://django-modeltranslation.readthedocs.io/en/latest/index.html)

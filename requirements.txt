@@ -10,3 +10,4 @@ requests==2.13.0
 static3==0.7.0
 django-solo==1.1.2
 Pillow==4.1.0
+django-modeltranslation==0.12.1
