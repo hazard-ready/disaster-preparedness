@@ -14,7 +14,7 @@ urlpatterns = [
    url(r'^accounts/create_user/$', views.create_user),
    url(r'^accounts/update_profile/$', views.update_profile)
 ]
-
+# Recommend removing the prefix_default_language argument if you translate/localize this site.
 urlpatterns += i18n_patterns(url(r'^$', views.app_view, name='index'), prefix_default_language=False)
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -32,7 +32,7 @@ $( document ).ready(function() {
 
   $.ajax({
     type: "POST",
-    url: "static/img/boundary.geojson",
+    url: "static/img/boundary.geojson", // Use ../static if you translate/localize, for the URL language prefix.
     dataType: "json",
     success: function(boundaryShape) {
       var boundaryStyle = {
@@ -51,6 +51,7 @@ $( document ).ready(function() {
   document.getElementById('map').style.cursor='default';
   if (query_lat && query_lng) {
     var icon = new L.Icon.Default;
+    // Use ../static if you translate/localize, for the URL language prefix.
     icon.options.iconUrl = "static/img/marker-icon.png";
     var marker = L.marker([query_lat, query_lng], {
       icon: icon,
