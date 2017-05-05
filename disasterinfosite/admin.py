@@ -12,16 +12,18 @@ from .models import EmbedSnugget, TextSnugget, SnuggetSection, SnuggetSubSection
 ######################################################
 from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile
 from .actions import export_as_csv_action
+# To turn translation on from modeltranslation.admin import TranslationAdmin
 
-admin.site.register(SnuggetSection, admin.ModelAdmin)
-admin.site.register(SnuggetSubSection, admin.ModelAdmin)
-
-# To use translatable models and see them in DjangoAdmin, use the following 3 lines instead.
+# To use translatable models and see them in DjangoAdmin, use the following 5 lines instead.
+#admin.site.register(SnuggetSection, TranslationAdmin)
+#admin.site.register(SnuggetSubSection, TranslationAdmin)
 # admin.site.register(ShapefileGroup, TranslationAdmin)
 # admin.site.register(PastEventsPhoto, TranslationAdmin)
 # admin.site.register(DataOverviewImage, TranslationAdmin)
 
 # Use the next three lines if you don't want to translate these models into other languages in Django Admin.
+admin.site.register(SnuggetSection, admin.ModelAdmin)
+admin.site.register(SnuggetSubSection, admin.ModelAdmin)
 admin.site.register(ShapefileGroup, admin.ModelAdmin)
 admin.site.register(PastEventsPhoto, admin.ModelAdmin)
 admin.site.register(DataOverviewImage, admin.ModelAdmin)
@@ -48,7 +50,8 @@ class SnuggetAdmin(admin.ModelAdmin):
         return "Undefined"
 
 
-class TextAdmin(SnuggetAdmin):
+# if you want to translate text snuggets: class TextAdmin(SnuggetAdmin, TranslationAdmin):
+class TextAdmin(SnuggetAdmin)
     fieldsets = SnuggetAdmin.fieldsets + ((None, {
         'fields': ('content',),
         }),
