@@ -12,7 +12,8 @@ urlpatterns = [
    url(r'^accounts/login/$',  login),
    url(r'^accounts/logout/$', logout),
    url(r'^accounts/create_user/$', views.create_user),
-   url(r'^accounts/update_profile/$', views.update_profile)
+   url(r'^accounts/update_profile/$', views.update_profile),
+   url(r'^i18n/', include('django.conf.urls.i18n'))
 ]
 # Recommend removing the prefix_default_language argument if you translate/localize this site.
 urlpatterns += i18n_patterns(url(r'^$', views.app_view, name='index'), prefix_default_language=False)
