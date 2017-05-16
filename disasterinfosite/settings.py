@@ -57,12 +57,12 @@ WSGI_APPLICATION = 'disasterinfosite.wsgi.application'
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 USE_L10N = True
 # Uncomment to translate Django models.
 # gettext = lambda s: s
 # LANGUAGES = (
-#     ('en-us', gettext('English')),
+#     ('en', gettext('English')),
 #     ('es', gettext('Spanish'))
 # )
 

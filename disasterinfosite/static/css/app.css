@@ -53,6 +53,17 @@ label {
   color: #ffffff;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
 /*****
 HEADER STYLES
 *****/
@@ -228,21 +239,40 @@ LOGIN / SIGNUP FORM
   display: none;
 }
 
+/*****
+LANGUAGE PICKER
+*****/
+#language__form {
+  width: auto;
+  position: absolute;
+  left: 5px;
+}
+
+.select--language {
+  padding: 0.5em;
+}
+
 /****
 GENERIC FORM STYLES
 *****/
-.button {
+.button, .select {
   border-color: #fd8d3c;
   background-color: #fd8d3c;
 }
 
-.button:hover, .button:focus {
+.button:hover, .button:focus,
+.select:hover, .select:focus {
   background-color: #f03b20;
 }
 
 input:invalid {
   border-color: #f03b20;
   border-width: 2px;
+}
+
+.select {
+  height: 38px;
+  width: auto;
 }
 
 /****
@@ -493,8 +523,8 @@ GEEK BOX
 
 /* adjustments for smaller screens */
 @media only screen and (max-width: 40rem) {
-  .button {
-    font-size: 0.75em;
+  .button, .select {
+    font-size: 12px;
   }
 
   #title .button--top {
@@ -636,7 +666,7 @@ GEEK BOX
 
   .project-title {
     font-size: 1.5rem;
-    line-height: 1.2em;
+    line-height: 1.5em;
   }
 
   .project-subtitle {

@@ -39,6 +39,7 @@
 <body>
   <div class="row top-header">
     <div id="title" class="title-header" role="banner">
+      {% include "language_selector.html" %}
       <a href="#user-interaction-container" class="button radius caps button--top">{% trans "Sign Up / Log In" %}</a>
       <h1 class="project-title caps">
         <a href="{{ settings.site_url }}">{{ settings.site_title }}</a>
