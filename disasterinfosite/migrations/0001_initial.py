@@ -106,7 +106,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
                 ('name', models.CharField(max_length=50)),
-                ('display_name', models.CharField(max_length=50)),
+                ('display_name', models.CharField(max_length=50, default="")),
                 ('order_of_appearance', models.IntegerField(help_text='The order, from left to right, in which you would like this group to appear, when applicable.', default=0)),
                 ('likely_scenario_title', models.CharField(max_length=80, blank=True)),
                 ('likely_scenario_text', models.TextField(blank=True)),
@@ -125,7 +125,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('name', models.CharField(max_length=50)),
-                ('display_name', models.CharField(blank=True, help_text='The name to show for this section', max_length=50)),
+                ('display_name', models.CharField(default="", help_text='The name to show for this section', max_length=50)),
                 ('order_of_appearance', models.IntegerField(default=0, help_text="The order in which you'd like this to appear in the tab. 0 is at the top."))
             ],
         ),
@@ -134,7 +134,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('name', models.CharField(max_length=50)),
-                ('display_name', models.CharField(blank=True, help_text='The name to show for this section', max_length=50)),
+                ('display_name', models.CharField(default="", help_text='The name to show for this section', max_length=50)),
                 ('order_of_appearance', models.IntegerField(default=0, help_text="The order in which you'd like this to appear in the section. 0 is at the top. These can be in different sections or mutually exclusive, hence the non-unique values."))
             ],
         ),

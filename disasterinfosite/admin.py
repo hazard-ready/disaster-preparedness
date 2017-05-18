@@ -51,7 +51,7 @@ class SnuggetAdmin(admin.ModelAdmin):
 
 
 # if you want to translate text snuggets: class TextAdmin(SnuggetAdmin, TranslationAdmin):
-class TextAdmin(SnuggetAdmin)
+class TextAdmin(SnuggetAdmin):
     fieldsets = SnuggetAdmin.fieldsets + ((None, {
         'fields': ('content',),
         }),
