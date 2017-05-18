@@ -42,17 +42,16 @@
           {% for section, sub_sections in hazard.sections.items %}
             <div class="snugget-text">
               <div class="section-icon section-icon--dynamic section-icon--{{ section }}">
-                <h2 class="caps section-title">{{ section }}</h2>
+                <h2 class="caps section-title">{{ section.display_name }}</h2>
               </div>
               <div class="section-content">
                 {% for sub_section, snuggets in sub_sections.items %}
-                  <h3>{{ sub_section }}</h3>
+                  <h3>{{ sub_section.display_name }}</h3>
                   {% for snugget in snuggets %}
                     {% show_snugget snugget %}
                   {% endfor %}
                 {% endfor %}
-                {% trans "Past Events" as past_events %}
-                {% if section.name == past_events and hazard.photos %}
+                {% if section.name == "Past Events" and hazard.photos %}
                   <h3>{% trans "Photos of Past Events" %}</h3>
                   <div class="past-photos">
                     {% for photo in hazard.photos %}
