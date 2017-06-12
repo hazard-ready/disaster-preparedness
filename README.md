@@ -153,7 +153,7 @@ If you have raster data, first convert it to a shapefile.  See [Converting raste
 
 ### Fully automated pipeline
 
-If the structure of your text content is simple enough, you can import shapefiles and snuggets automatically without having to do much manual work. We recommend using this pathway if possible, because it makes moving the site to a new server significantly easier. To do this, you will need a `snuggets.csv` file with the same columns as the example one we've included in `data.zip`.  The columns can be in any order, but the headings must be exactly as typed here:
+If the structure of your text content is simple enough, you can import shapefiles and snuggets automatically without having to do much manual work. We recommend using this pathway if possible, because it makes moving the site to a new server significantly easier. To do this, you will need a `snuggets.xlsx` file with the same columns as the example one we've included in `data.zip`.  The columns can be in any order, but the headings must be exactly as typed here:
 
 * `section` : A section name that will be displayed on the page (must not be empty)
 * `subsection` : A subsection name (must not be empty)
@@ -168,11 +168,11 @@ You can have any number of sections and subsections, but every row must be a uni
 
 Blank rows or additional columns won't cause problems. Any row that is missing any of the required fields will be skipped and a warning will be printed.
 
-Once `snuggets.csv` is ready, simply put it and the relevant shapefiles in `disasterinfosite/data` (and remove any other files or subdirectories from there), and follow the instructions in [Load Some Data](#load-some-data) above.
+Once `snuggets.xlsx` is ready, simply put it and the relevant shapefiles in `disasterinfosite/data` (and remove any other files or subdirectories from there), and follow the instructions in [Load Some Data](#load-some-data) above.
 
 #### Updating existing data
 
-If you make changes to `snuggets.csv` you should only need to re-run `python snugget_load.py` and restart your web server.
+If you make changes to `snuggets.xlsx` you should only need to re-run `python snugget_load.py` and restart your web server.
 
 If you make changes to the shapefiles, or change which field from the shapefiles you want to use as the ID, then before running `python import.py` you will also need to remove the `disasterinfosite/data/reprojected` and `word/data/simplified` directories that the importer had created. It uses these to avoid having to repeat the time-consuming reprojection and simplification of the shapefiles every time it is run, but that means changes to the shapefiles themselves won't be picked up unless they are removed.
 
@@ -189,7 +189,7 @@ You may want to use multiple fields from a shapefile to fill in blanks from a te
 
 #### If you can edit the shapefile
 
-Using QGIS or ArcGIS, add two columns to the shapefile: one with a lookup value composed of all the variables you're using (e.g. `[FIRENAME]_[YEAR]_[AREA]`), and one with the complete text. You can create both of these using calculdated fields in either program. Then copy-paste the attribute table into Excel or an equivalent, and use the complete texts to populate the `text` column of `snuggets.csv` and the lookup values for the `lookup_value` column. With this, you can use the automated pipeline to do the rest.
+Using QGIS or ArcGIS, add two columns to the shapefile: one with a lookup value composed of all the variables you're using (e.g. `[FIRENAME]_[YEAR]_[AREA]`), and one with the complete text. You can create both of these using calculdated fields in either program. Then copy-paste the attribute table into Excel or an equivalent, and use the complete texts to populate the `text` column of `snuggets.xlsx` and the lookup values for the `lookup_value` column. With this, you can use the automated pipeline to do the rest.
 
 #### If you can't edit the shapefile, or are more comfortable editing code
 
