@@ -1,19 +1,22 @@
 {% extends "index.html" %}
 {% load staticfiles %}
+{% load i18n %}
 
  {% block info-instructions %}
   <div class="information-container">
     <div class="information-instructions" role="complementary">
-      <p class="location-instructions">Give your location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and how to prepare.</p>
+        <p class="location-instructions">
+          {% trans "Give a location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
+        </p>
     </div>
     </div>
   </div>
 {% endblock info-instructions %}
 
 {% block map %}
-  <div class="row">
+  <div class="row" role="application">
     <div class="small-12 column">
-      <div id="map" style="height: 300px;"></div>
+      <div id="map"></div>
     </div>
   </div>
 {% endblock map %}
@@ -22,10 +25,16 @@
 {% block main-content %}
     <div role="main" class="row vert-pad-medium">
         <div class="medium-8 column medium-push-1">
-          <h2 class="caps">No information available.</h2>
+          <h2 class="caps">{% trans "No information available." %}</h2>
           <div>
-            <p>It looks like your location is outside of {{ location.area_name }}.</p>
-            <p>While we value and promote resilience everywhere, the data that powers this site isn't available for other places yet.</p>
+            <p>
+              {% blocktrans %}
+                It looks like your location is outside of {{ location.area_name }}.
+              {% endblocktrans %}
+            </p>
+            <p>
+              {% trans "While we value and promote resilience everywhere, the data that powers this site isn't available for other places yet." %}
+            </p>
         </div>
       </div>
     </div>

@@ -89,6 +89,12 @@ def app_view(request):
     supply_kit = SupplyKit.get_solo()
     supply_kit.meals = 3 * supply_kit.days
     quick_data_overview = DataOverviewImage.objects.all()
+    username = None
+    profile = None
+    if request.user.is_authenticated():
+        username = request.user.username
+        profile = UserProfile.objects.get_or_create(user=request.user)
+
     template = "no_content_found.html"
 
     # if user submitted lat/lng, find our snuggets and send them to our template
@@ -105,7 +111,7 @@ def app_view(request):
                     sections = {}
                     if values:
                         template = 'found_content.html'
-                        heading = values[0].heading
+                        heading = values[0].group.display_name
                         for text_snugget in values:
                             if not text_snugget.image:
                                 text_snugget.dynamic_image = make_icon(text_snugget.percentage)
@@ -117,15 +123,15 @@ def app_view(request):
                                 sections[text_snugget.section][text_snugget.sub_section] = [text_snugget]
 
                         for section, sub_section_dict in sections.items():
-                            sections[section] = OrderedDict(sorted(sub_section_dict.items(), key=lambda t: t[0].order))
+                            sections[section] = OrderedDict(sorted(sub_section_dict.items(), key=lambda t: t[0].order_of_appearance))
 
                         photos = []
                         for p in PastEventsPhoto.objects.filter(group=values[0].group):
-                            photos.append(str(p))
+                            photos.append(p)
 
                         data[key] = {
                             'heading': heading,
-                            'sections': OrderedDict(sorted(sections.items(), key=lambda t: t[0].order )),
+                            'sections': OrderedDict(sorted(sections.items(), key=lambda t: t[0].order_of_appearance )),
                             'likely_scenario_title': values[0].group.likely_scenario_title,
                             'likely_scenario_text': values[0].group.likely_scenario_text,
                             'photos': photos

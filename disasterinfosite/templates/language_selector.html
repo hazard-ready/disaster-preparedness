@@ -1,0 +1,17 @@
+{% load i18n %}
+
+{% get_language_info_list for LANGUAGES as languages %}
+{% if languages|length > 1 %}
+  <form action="{% url "set_language" %}" method="post" id="language__form">
+  {% csrf_token %}
+    <select id="language__select" name="language" class="select radius select--language caps sans-serif" onchange="this.form.submit()">
+      {% for language in languages %}
+      <option class="select select--language" value="{{ language.code }}"
+          {% if language.code == LANGUAGE_CODE %}selected="selected"{% endif %}>
+          {{ language.name_local|title }}
+      </option>
+      {% endfor %}
+    </select>
+    <label class="sr-only" for="language__select">{% trans "Language" %}</label>
+  </form>
+{% endif %}

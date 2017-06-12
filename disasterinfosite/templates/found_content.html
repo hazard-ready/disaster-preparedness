@@ -1,22 +1,21 @@
 {% extends "index.html" %}
+{% load i18n %}
 {% load staticfiles %}
 {% load show_snugget %}
 
-{% block header %}
-  <div class="row top-header">
-    <div class="title-header">
-      <h2 class="project-title caps">{{ settings.site_title }}</h2>
-      <h3 class="project-subtitle">{{ settings.site_description }}</h3>
+{% block info-instructions %}
+  <div class="information-container">
+    <div class="information-instructions" role="complementary">
+      <p>{% trans "Look below the map to see information for your location, or enter another location." %}</p>
     </div>
-    <div class="information-instructions" role="complementary"><p>Look below the map to see information for your location, or enter another location.</p></div>
   </div>
-{% endblock header %}
+{% endblock info-instructions %}
 
 
 {% block map %}
-<div class="row">
+<div class="row" role="application">
   <div class="small-12 column">
-    <div id="map" style="height: 300px;"></div>
+    <div id="map"></div>
   </div>
 </div>
 {% endblock map %}
@@ -43,20 +42,20 @@
           {% for section, sub_sections in hazard.sections.items %}
             <div class="snugget-text">
               <div class="section-icon section-icon--dynamic section-icon--{{ section }}">
-                <h2 class="caps section-title">{{ section }}</h2>
+                <h2 class="caps section-title">{{ section.display_name }}</h2>
               </div>
               <div class="section-content">
                 {% for sub_section, snuggets in sub_sections.items %}
-                  <h3>{{ sub_section }}</h3>
+                  <h3>{{ sub_section.display_name }}</h3>
                   {% for snugget in snuggets %}
                     {% show_snugget snugget %}
                   {% endfor %}
                 {% endfor %}
                 {% if section.name == "Past Events" and hazard.photos %}
-                  <h3>Photos of Past Events</h3>
+                  <h3>{% trans "Photos of Past Events" %}</h3>
                   <div class="past-photos">
                     {% for photo in hazard.photos %}
-                     <img alt="A historical image of {{ hazard.heading }} in {{ location.areaname }}" class="slideshow-image" src="{{ photo }}"/>
+                     <img alt="{{ photo.caption }}" class="slideshow-image" src="{{ photo.image.url }}"/>
                     {% endfor %}
                   </div>
                 {% endif %}
@@ -69,14 +68,14 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" role="complementary" aria-label="information">
     <div class="small-10 medium-5 column">
-      <h4>Supply Kit</h4>
+      <h4>{% trans "Supply Kit" %}</h4>
       {% include "supply-kit.html" %}
     </div>
 
     <div class="small-10 medium-5 column end">
-      <h4>Important Links</h4>
+      <h4>{% trans "Important Links" %}</h4>
       {% for link in important_links %}
       <h5>{{ link.title }}</h5>
       <p>{{ link.link | safe }}
@@ -84,7 +83,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" role="complementary" aria-label="community-leaders">
       <div class="small-10 medium-5 column end">
       <h4>Community Leaders</h4>
       <p>{{ location.community_leaders | safe }}</p>

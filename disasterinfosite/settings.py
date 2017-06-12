@@ -26,6 +26,7 @@ else:
 
 # Application definition
 INSTALLED_APPS = (
+   # If you want to translate Django models, uncomment this. 'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +41,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -53,25 +55,47 @@ ROOT_URLCONF = 'disasterinfosite.urls'
 WSGI_APPLICATION = 'disasterinfosite.wsgi.application'
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.7/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+# https://docs.djangoproject.com/en/1.10/topics/i18n/
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
+LANGUAGE_CODE = 'en'
+USE_L10N = True
+# Uncomment to translate Django models.
+# gettext = lambda s: s
+# LANGUAGES = (
+#     ('en', gettext('English')),
+#     ('es', gettext('Spanish'))
+# )
 
 USE_I18N = True
-
-USE_L10N = True
-
+TIME_ZONE = 'UTC'
 USE_TZ = True
 
-# Enable template caching, per http://blog.ionelmc.ro/2012/01/19/tweaks-for-making-django-admin-faster/
-TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            # insert your TEMPLATE_DIRS here
+        ],
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'loaders': [
+            # Template caching is on by default in 1.11, so take this out on upgrade.
+                ('django.template.loaders.cached.Loader', (
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',)
+                )
+            ]
+        },
+    },
+]
 
 
 ### HEROKU CONFIGURATIONS ###
@@ -92,7 +116,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Static asset configuration
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
+# https://docs.djangoproject.com/en/1.10/howto/static-files/
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 if DEBUG:

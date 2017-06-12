@@ -1,12 +1,15 @@
 {% load staticfiles %}
 {% load js %}
+{% load i18n %}
+
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta property="og:url" content="{{ settings.site_url }}"/>
   <meta property="og:title" content="{{ settings.site_description }}">
-  <meta property="og:description" content="{{ settings.intro_text }} Enter your location for a personalized report on your risks and how to prepare.">
+  {% trans "Enter your location for a personalized report on your risks and how to prepare." as meta_description %}
+  <meta property="og:description" content="{{ settings.intro_text }} {{ meta_description }}">
 
   <title>{{ settings.site_title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,30 +17,30 @@
   <link type="text/css" rel="stylesheet" href="{% static 'css/foundation.css' %}">
   <link type="text/css" rel="stylesheet" href="{% static 'css/app.css' %}">
 
-  <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-
-  <!-- Load Google Maps from CDN-->
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-
-    <!-- Load Slick from CDN -->
-  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
-  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
-
   <script src="{% static 'js/vendor/modernizr.js' %}"></script>
   <script src="{% static 'js/vendor/jquery.js' %}"></script>
   <script src="{% static 'js/foundation.min.js' %}"></script>
-  <script type="text/javascript">
-    var mapBounds = {{ data_bounds | js }};
-  </script>
-  <script src="{% static 'js/app.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/leaflet.css' %}" />
+  <script src="{% static 'js/leaflet/leaflet.js' %}"></script>
+
+  <!-- Load Google Maps from CDN-->
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBAHGWsE1UQKYha7_E-tN01yVg_St2KWQw&libraries=places"></script>
+
+  <!-- Load Slick from CDN -->
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+
+<script type="text/javascript">
+  var mapBounds = {{ data_bounds | js }};
+</script>
+<script src="{% static 'js/app.js' %}"></script>
 
 </head>
 <body>
   <div class="row top-header">
-    <div id="title" class="title-header">
-      <a href="#user-interaction-container" class="button radius caps button--top">Sign Up / Log In</a>
+    <div id="title" class="title-header" role="banner">
+      {% include "language_selector.html" %}
+      <a href="#user-interaction-container" class="button radius caps button--top">{% trans "Sign Up / Log In" %}</a>
       <h1 class="project-title caps">
         <a href="{{ settings.site_url }}">{{ settings.site_title }}</a>
       </h1>
@@ -48,14 +51,16 @@
       <div class="information-instructions" role="main">
         <p class="organization-information">{{ settings.about_text | safe }}</p>
         <p>{{ settings.intro_text | safe }}</p>
-        <p class="location-instructions">Give a location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare.</p>
+        <p class="location-instructions">
+          {% trans "Give a location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
+        </p>
       </div>
       </div>
     {% endblock info-instructions %}
   </div>
 
 {% block search %}
-      <div class="location-form" role="form">
+      <div class="location-form" role="form" aria-label="location-search">
         <div class="row">
            <div class="small-12 medium-8 medium-push-2 columns">
                <div class="row collapse">
@@ -68,12 +73,13 @@
                    <a id="location-submit" class="button postfix"></a>
                  </div>
                </div>
+              {% trans "Find Me" as find_me %}
               <div class="row hidden-for-medium-up">
                 <div class="small-6 small-centered columns form-icon-button">
-                   <a class="auto-location-submit button radius caps">Find Me</a>
+                   <a class="auto-location-submit button radius caps">{{ find_me }}</a>
                 </div>
                 <div class="small-12 hide-for-small medium-3 columns form-icon-button">
-                  <a class="auto-location-submit button radius caps">Find Me</a>
+                  <a class="auto-location-submit button radius caps">{{ find_me }}</a>
                </div>
               </div>
            </div>
@@ -82,22 +88,32 @@
 {% endblock search %}
 
 {% block map %}
-      <div class="row map-container">
+      <div class="row map-container" role="application">
         <div class="small-12 medium-7 hide-for-small column">
-          <div id="map" style="height: 400px;"></div>
+          <div id="map"></div>
         </div>
       <div class="small-12 medium-5 column">
-        <h2 class="caps">What are my risks?</h2>
-        <h4 class>What to Expect</h4>
-        <p>{{ settings.site_title }} gives you an idea of which natural disasters you might experience in the future based on a location in {{ location.area_name }}.</p>
+        <h2 class="caps">{% trans "What are my risks?" %}</h2>
+        <h3 class>{% trans "What to Expect" %}</h3>
+        <p>
+          {% blocktrans %}
+            {{ settings.site_title }} gives you an idea of which natural disasters you might experience in the future based on a location in {{ location.area_name }}.
+          {% endblocktrans %}
+        </p>
 
-        <h4>In Recent History</h4>
-        <p>Find out which disasters have struck {{ location.area_name }} in the past, what impact they had, and where they happened.</p>
+        <h3>{% trans "How to Prepare" %}</h3>
+        <p>
+          {% trans "You have the power to make a difference. Find out how you can protect your loved ones and home before the next disaster hits." %}
+        </p>
 
-        <h4>How to Prepare</h4>
-        <p>You have the power to make a difference. Find out how you can protect your loved ones and home before the next disaster hits.</p>
+        <h3>{% trans "In Recent History" %}</h3>
+        <p>
+          {% blocktrans %}
+            Find out which disasters have struck {{ location.area_name }} in the past, what impact they had, and where they happened.
+          {% endblocktrans %}
+        </p>
       </div>
-      </div>
+    </div>
 {% endblock map %}
 
 {% block main-content %}

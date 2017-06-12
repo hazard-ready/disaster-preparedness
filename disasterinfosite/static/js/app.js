@@ -18,21 +18,40 @@ $( document ).ready(function() {
   // set up the map
   var map = L.map('map');
   if (query_lat && query_lng) {
-    zoom = 15;
+    zoom = 14;
     map.setView([query_lat, query_lng], zoom);
   } else { // use the data bounds if we don't have a position in the query string
     map.fitBounds(mapBounds);
   }
   map.scrollWheelZoom.disable();
 
-  var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+  var osmUrl='//{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=3a70462b44dd431586870baee15607e4';
+  var osmAttrib='Map data © <a href="//openstreetmap.org">OpenStreetMap</a> contributors';
   var layer = new L.TileLayer(osmUrl, {attribution: osmAttrib}).addTo(map);
   layer.setOpacity(0.6);
+
+  $.ajax({
+    type: "POST",
+    url: "static/img/boundary.geojson", // Use ../static if you translate/localize, for the URL language prefix.
+    dataType: "json",
+    success: function(boundaryShape) {
+      var boundaryStyle = {
+        "color": "rgb(253, 141, 60)",
+        "weight": 4,
+        "opacity": 1,
+        "fillColor": "#ffffff",
+        "fillOpacity": 0.7
+      };
+      var boundaryLayer = L.geoJson(boundaryShape, {
+        style: boundaryStyle
+      }).addTo(map);
+    }
+  });
 
   document.getElementById('map').style.cursor='default';
   if (query_lat && query_lng) {
     var icon = new L.Icon.Default;
+    // Use ../static if you translate/localize, for the URL language prefix.
     icon.options.iconUrl = "static/img/marker-icon.png";
     var marker = L.marker([query_lat, query_lng], {
       icon: icon,
@@ -56,7 +75,11 @@ $( document ).ready(function() {
     location_query_text = "";
   $("#location-text").val(location_query_text);
 
-  // // hitting enter key in the textfield will trigger submit
+  // Set up autocomplete
+  var input = document.getElementById('location-text');
+  var autocomplete = new google.maps.places.Autocomplete(input);
+
+  // hitting enter key in the textfield will trigger submit
   $("#location-text").keydown(function(event) {
     if (event.keyCode == 13) {
       $('#location-submit').trigger('click');
@@ -142,6 +165,7 @@ $( document ).ready(function() {
   $('.disaster-tabs').on('toggled', function () {
     slideContainer.slick('unslick');
     slideContainer = loadGallery();
+  });
 
 
 // Signup and login functionality
