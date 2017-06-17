@@ -126,7 +126,7 @@ Save them to your `.bash_profile` or equivalent.
     3. You'll need to set up a `/static/` alias pointing to `disasterinfosite/static`
     4. Depending on your server configuration, you *may* also need to set up a redirect rule to add trailing slashes to URLs, to get the static files (CSS, images etc) included.
     5. You may also need to alter the `STATIC_URL` constant in `settings.py` based on your server setup.
-3. Set up the environment values from above (`DJANGO_SECRET_KEY` and `DATABASE_URL`) for all users by putting their declarations in `/etc/environment/` and rebooting the machine.
+3. Set up the environment values from above (`DJANGO_SECRET_KEY` and `DATABASE_URL`) for all users by putting their declarations in `/etc/apache2/envvars` and restarting Apache.
 4. Don't forget to run python manage.py collectstatic to get your static files where we expect them to be!
 5. There should be directories called 'photos' and 'data' in disasterinfosite/staticfiles/img. This is where images go when you upload them via Django Admin, under 'Photos of Past Events' and 'Data Overview Images'. In order for that upload to work, you need to create them if they aren't present, and change the owner (chown) those directories to whatever user Apache is running as (www-data, perhaps).
 
