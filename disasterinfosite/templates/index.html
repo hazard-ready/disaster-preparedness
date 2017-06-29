@@ -123,7 +123,10 @@
 
 {% include "geek_box.html" %}
 
-<div class="loading hide"></div>
+<div class="loading hide">
+  <h1 class="loading-text caps">Getting results for your location...</h1>
+  <img class="loading-spinner" src="{% static 'img/thinking.gif' %}">
+</div>
 
 </body>
 </html>
