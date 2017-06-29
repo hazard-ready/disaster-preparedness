@@ -303,6 +303,11 @@ DISASTER TABS
   padding-top: 20px;
 }
 
+.disaster-container__title {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .tab-title {
   font-size: 16px;
   font-weight: bold;
