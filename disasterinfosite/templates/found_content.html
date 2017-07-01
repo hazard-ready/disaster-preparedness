@@ -22,6 +22,9 @@
 
 {% block main-content %}
   <div class="row disaster-container" role="main">
+    <h2 class="caps disaster-container__title">
+      {% trans Results for this location %}
+    </h2>
     <div class="small-12 column">
       <ul class="tabs disaster-tabs" data-tab role="group">
         {% for group, hazard in data.items %}
