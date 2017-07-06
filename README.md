@@ -102,6 +102,12 @@ to
 7. If this is your first time through, or you emptied the database before loading new data: `python manage.py createsuperuser` and follow the instructions to add a Django admin user
 8. If you don't already have web hosting set up, you can test your work on localhost:8000 with `python manage.py runserver`
 
+
+# This instance of Hazard Ready uses Webpack to bundle its static files. For that reason, you need these additional steps to set it up:
+1. Make sure that you have [Node and NPM installed](https://www.npmjs.com/get-npm)
+1. In the same directory that contains ```package.json```, run ```npm install```
+1. Run ```npm webpack```
+
 #### Environmental Variable Permanence
 On Linux/Mac, as soon as you close your shell you lose those nice complicated database urls.
 Save them to your `.bash_profile` or equivalent.
