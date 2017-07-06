@@ -1,3 +1,11 @@
+require('../css/normalize.css');
+require('../css/foundation.min.css');
+require('../css/app.css');
+require('../css/leaflet.css');
+
+require('slick-carousel');
+var $ = require('jquery');
+
 $( document ).ready(function() {
   $(document).foundation();
 
@@ -52,7 +60,8 @@ $( document ).ready(function() {
   if (query_lat && query_lng) {
     var icon = new L.Icon.Default;
     // Use ../static if you translate/localize, for the URL language prefix.
-    icon.options.iconUrl = "static/img/marker-icon.png";
+    icon.options.iconUrl = "../static/img/marker-icon.png";
+    icon.options.shadowUrl = "../static/img/marker-shadow.png";
     var marker = L.marker([query_lat, query_lng], {
       icon: icon,
       clickable: false,

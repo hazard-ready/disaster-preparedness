@@ -78,3 +78,6 @@ staticfiles
 
 .DS_Store
 myenv/
+
+# Node Modules
+node_modules/
