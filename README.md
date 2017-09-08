@@ -125,7 +125,7 @@ to
 # This instance of Hazard Ready uses Webpack to bundle its static files. For that reason, you need these additional steps to set it up:
 1. Make sure that you have [Node and NPM installed](https://www.npmjs.com/get-npm)
 1. In the same directory that contains ```package.json```, run ```npm install```
-1. Run ```npm webpack```
+1. Run ```npm run webpack```
 
 #### Environmental Variable Permanence
 On Linux/Mac, as soon as you close your shell you lose those nice complicated database urls.
