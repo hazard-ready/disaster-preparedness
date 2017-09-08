@@ -102,6 +102,12 @@ to
 7. If this is your first time through, or you emptied the database before loading new data: `python manage.py createsuperuser` and follow the instructions to add a Django admin user
 8. If you don't already have web hosting set up, you can test your work on localhost:8000 with `python manage.py runserver`
 
+
+# This instance of Hazard Ready uses Webpack to bundle its static files. For that reason, you need these additional steps to set it up:
+1. Make sure that you have [Node and NPM installed](https://www.npmjs.com/get-npm)
+1. In the same directory that contains ```package.json```, run ```npm install```
+1. Run ```npm webpack```
+
 #### Environmental Variable Permanence
 On Linux/Mac, as soon as you close your shell you lose those nice complicated database urls.
 Save them to your `.bash_profile` or equivalent.
@@ -126,7 +132,7 @@ Save them to your `.bash_profile` or equivalent.
     3. You'll need to set up a `/static/` alias pointing to `disasterinfosite/static`
     4. Depending on your server configuration, you *may* also need to set up a redirect rule to add trailing slashes to URLs, to get the static files (CSS, images etc) included.
     5. You may also need to alter the `STATIC_URL` constant in `settings.py` based on your server setup.
-3. Set up the environment values from above (`DJANGO_SECRET_KEY` and `DATABASE_URL`) for all users by putting their declarations in `/etc/environment/` and rebooting the machine.
+3. Set up the environment values from above (`DJANGO_SECRET_KEY` and `DATABASE_URL`) for all users by putting their declarations in `/etc/apache2/envvars` and restarting Apache.
 4. Don't forget to run python manage.py collectstatic to get your static files where we expect them to be!
 5. There should be directories called 'photos' and 'data' in disasterinfosite/staticfiles/img. This is where images go when you upload them via Django Admin, under 'Photos of Past Events' and 'Data Overview Images'. In order for that upload to work, you need to create them if they aren't present, and change the owner (chown) those directories to whatever user Apache is running as (www-data, perhaps).
 
