@@ -76,6 +76,25 @@ This assumes `python` is the command configured to run the correct python versio
 6. `source venv/bin/activate` or `. venv/bin/activate` if you haven't already activated the virtualenv this session.
 7. Run `python manage.py migrate` to initialize the database's structure.
 
+At the `python manage.py migrate` step, you may run into an issue due to  an incompatibility between recent versions of GEOS and the version of GeoDjango that this project uses. If you get a long Python error the end of which looks like the excerpt below, then use the next steps to work around it.  Otherwise, jump ahead to [Add API Keys](#add-api-keys).
+
+The error looks like:
+
+```
+    raise GEOSException('Could not parse version info string "%s"' % ver)
+django.contrib.gis.geos.error.GEOSException: Could not parse version info string "3.6.2-CAPI-1.10.2 4d2925d6"
+```
+
+It is caused by Django versions older than 1.11 not having anticipated changes the GEOS project would make to the format of its version strings, so it comes up if you have a recent version of GEOS on your system. Our long term solution will be to upgrade the Django version we use, but this has some painful dependencies, so for now there are two possible workarounds:
+
+Option A: install an older version of GEOS, as suggested in [this article](https://www.alextomkins.com/2017/08/fixing-gdal-geos-django-macos/).  Note that this may interfere with other things on your system which need GEOS or GDAL, such as QGIS.  However, if you don't have any other dependencies to worry about, this may be the safer option because you'll be using versions of GEOS and Django that have been tested together.
+
+Option B: patch the version of Django running in `venv`. This won't affect anything running outside this project's virtual environment, even if you have other projects on the same machine that use Django.  To do this:
+
+8. Find `libgeos.py` inside the `venv` folder. Here is an example path for it: `venv/lib/python3.6/site-packages/django/contrib/gis/geos/libgeos.py`
+9. Copy the small addition to the regex found in [this diff](https://github.com/django/django/pull/8841/files#diff-e0475de5c597e1c67bb40752a38f2276).
+10. Try `python manage.py migrate` again.
+
 ### Add API Keys
 
 `disasterinfosite/templates/index.html` loads the Google Maps JavaScript API with no API key.  This is fine for initial testing, but you should get a key before deployment.  Go to https://developers.google.com/maps/documentation/javascript/get-api-key to do so, and then simply edit the line that currently says:
