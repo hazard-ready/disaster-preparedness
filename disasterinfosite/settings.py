@@ -36,16 +36,16 @@ INSTALLED_APPS = (
     'django.contrib.gis',
     'embed_video',
     'disasterinfosite',
-    'solo'
+    'solo',
+    'webpack_loader'
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -73,25 +73,16 @@ USE_TZ = True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            # insert your TEMPLATE_DIRS here
-        ],
+        'DIRS': [],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.media',
-                'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-            ],
-            'loaders': [
-            # Template caching is on by default in 1.11, so take this out on upgrade.
-                ('django.template.loaders.cached.Loader', (
-                    'django.template.loaders.filesystem.Loader',
-                    'django.template.loaders.app_directories.Loader',)
-                )
             ]
         },
     },
@@ -119,23 +110,28 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'build/', # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': ['.+\.map']
+    }
+}
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 if DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    # Use this setting if the app is being served at the domain root (e.g. hazardready.org/ )
+    STATIC_URL = '/static/'
 else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Use this setting if the app is being served at the domain root (e.g. hazardready.org/ )
-STATIC_URL = '/static/'
-
-# If the app is being served in a subdirectory of the domain (e.g. foo.com/SUBDIR/ ) then use a variant of:
-# STATIC_URL = '/SUBDIR/static/'
-# So for our current test server, eldang.eldan.co.uk/zr/ , we need:
-# STATIC_URL = '/zr/static/'
-
-if not DEBUG:
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-    )
+    # If the app is being served in a subdirectory of the domain (e.g. foo.com/SUBDIR/ ) then use a variant of:
+    # STATIC_URL = '/SUBDIR/static/'
+    # So for our current test server, eldang.eldan.co.uk/zr/ , we need:
+    # STATIC_URL = '/zr/static/'
+    STATIC_URL = '/disaster-preparedness/static/'
 
 # Specially for GeoDjango on Heroku
 GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
@@ -144,9 +140,6 @@ GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
 ### ^^^^^^^^^^^^^^^^^^^^^^^^^ ###
 ### END HEROKU CONFIGURATIONS ###
 
-if DEBUG:
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'img')
-else:
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles', 'img')
 
-MEDIA_URL = 'static/img/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'img')
+MEDIA_URL = '/media/img/'
