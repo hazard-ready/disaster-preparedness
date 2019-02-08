@@ -3,7 +3,7 @@ var webpack = require('webpack')
 var BundleTracker = require('webpack-bundle-tracker')
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-var vendorPath = path.join(__dirname, "./disasterinfosite/static/js/vendor/");
+var vendorPath = path.join(__dirname, "static/js/vendor/");
 
 module.exports = {
   context: __dirname,
@@ -11,16 +11,16 @@ module.exports = {
     modules: [
       vendorPath,
       path.join(__dirname, 'node_modules'),
-      path.join(__dirname, "./disasterinfosite/static/js/")
+      path.join(__dirname, "static/js/")
     ],
   },
   entry: {
     vendor: ["foundation.min", "modernizr", "leaflet", "jquery", "slick-carousel"],
-    app: './disasterinfosite/static/js/app'
+    app: './static/js/app'
   },
 
   output: {
-      path: path.resolve('./disasterinfosite/static/build/'),
+      path: path.resolve('static/build/'),
       filename: "[name].js",
   },
 
@@ -28,8 +28,7 @@ module.exports = {
     new BundleTracker({filename: './webpack-stats.json'}),
     new webpack.ProvidePlugin({
       $: "jquery",
-      jQuery: "jquery",
-      L: "leaflet"
+      jQuery: "jquery"
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "vendor",
@@ -50,14 +49,24 @@ module.exports = {
     loaders: [
     {
       test: /\.css(\?v=\d+\.\d+\.\d+)?$/,
-      loader: ExtractTextPlugin.extract({fallback: "style-loader", use: "css-loader"})
+      loader: ExtractTextPlugin.extract({
+        fallback: "style-loader",
+        use: [{
+          loader: "css-loader",
+          query: { minimize: true, sourceMap: true}
+        }]
+      })
     },
     {
-      test: /\.(png|gif|jpe?g|svg)(\?v=\d+\.\d+\.\d+)?$/i,
-      loader: "url-loader?name=[name].[ext],limit=1000"
+      test: /\.(png|gif|jpe?g|svg|ttf|eot|ico)(\?v=\d+\.\d+\.\d+)?$/i,
+      loader: "file-loader?name=[name].[ext],limit=1000"
     },{
       test: /\.html(\?v=\d+\.\d+\.\d+)?$/i,
       loader: 'html-loader'
-    }]
-  }
+    },
+    {
+      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: "url-loader?limit=10000&minetype=application/font-woff"
+    }
+  ]}
 }

@@ -81,3 +81,5 @@ myenv/
 
 # Node Modules
 node_modules/
+
+webpack-stats.json
