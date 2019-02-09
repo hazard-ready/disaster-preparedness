@@ -10,8 +10,12 @@ dial = """<svg
    width="105px"
    height="65px"
    viewBox="0 0 354.00001 179.16412"
+   aria-labelledby="title-{2}"
+   aria-describedby="desc-{2}"
+   role="img"
    version="1.1">
-   <title>A fire dial showing {3} percent intensity</title>
+   <title id="title-{2}">Intensity</title>
+   <desc id="desc={2}">A fire dial showing {3} percent intensity</desc>
   <defs>
 
 <!-- the arrowhead -->
@@ -27,8 +31,7 @@ dial = """<svg
          transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
     </marker>
   </defs>
-  <metadata
-     id="metadata4821">
+  <metadata>
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -39,9 +42,7 @@ dial = """<svg
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     id="layer1"
-     transform="translate(-105.07686,-245.57977)">
+  <g transform="translate(-105.07686,-245.57977)">
 
 <!-- leftmost segment -->
     <path

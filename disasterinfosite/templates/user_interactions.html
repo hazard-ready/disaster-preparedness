@@ -6,25 +6,23 @@
 {% trans "Update My Info" as update_my_info %}
 {% trans "Cancel" as cancel %}
 
-<div role="form" id="user-interaction-container" aria-label="signup-login">
+<div role="form" id="user-interaction-container" tabindex="-1" aria-label="signup-login">
   {% if username and profile %}
     <div id="user-button-container--logged-in" class="row vert-pad-medium">
       <div class="small-12 medium-6 columns">
         <p><strong>{% trans "Welcome back!" %}</strong></p>
         <p>
-          {% blocktrans %}
-            If your username isn't {{ username }}, you might want to log out.
-          {% endblocktrans %}
+          {% blocktrans %}If your username isn't {{ username }}, you might want to log out.{% endblocktrans %}
         </p>
       </div>
       <div class="small-12 medium-6 columns user-interaction__buttons">
-        <a href="#user-login-container" class="button radius caps button--logout">{{ log_out }}</a>
-        <a href="#user-info-container" class="button radius caps button--update">{{ update_my_info }}</a>
+        <a href="#user-login-container" class="button radius caps button--logout" role="button">{{ log_out }}</a>
+        <a href="#user-info-container" class="button radius caps button--update" role="button">{{ update_my_info }}</a>
       </div>
     </div>
-    <div id="user-button-container" class="row vert-pad-medium hide">
+    <div id="user-button-container" tabindex="-1" class="row vert-pad-medium hide">
   {% else %}
-    <div id="user-button-container" class="row vert-pad-medium">
+    <div id="user-button-container" tabindex="-1" class="row vert-pad-medium">
   {% endif %}
       <div class="small-12 medium-6 columns">
         <p><strong>{% trans "Why should you sign up?" %}</strong></p>
@@ -33,11 +31,11 @@
         </p>
       </div>
       <div class="small-12 medium-6 columns user-interaction__buttons">
-        <a href="#user-login-container" class="button radius caps button--login">{{ log_in }}</a>
-        <a href="#user-signup-container" class="button radius caps button--signup">{{ sign_up }}</a>
+        <a href="#user-login-container" class="button radius caps button--login" role="button">{{ log_in }}</a>
+        <a href="#user-signup-container" class="button radius caps button--signup" role="button">{{ sign_up }}</a>
       </div>
     </div>
-  <div id="user-login-container" class="row vert-pad-medium">
+  <div id="user-login-container"  tabindex="-1" class="row vert-pad-medium">
     {% trans "Required." as required %}
     <form id="user-login__form">
       <div class="small-12 medium-6 columns">
@@ -49,19 +47,17 @@
         </label>
       </div>
       <div class="small-12 medium-6 columns user-interaction__buttons">
-        <a href="#user-info-container" class="button radius caps" id="user-login__submit">{{ log_in }}</a>
-        <a href-"#user-button-container" class="button radius caps button--cancel">{{ cancel }}</a>
+        <a href="#user-info-container" class="button radius caps" id="user-login__submit" role="button">{{ log_in }}</a>
+        <a href-"#user-button-container" class="button radius caps button--cancel" role="button">{{ cancel }}</a>
       </div>
     </form>
     <div class="user-interactions-help small-12 columns">
       <p>
-        {% blocktrans %}
-          Need some help (like a password reset)? <a href="mailto:help@hazardgready.org">Email us.</a>
-        {% endblocktrans %}
+        {% blocktrans %}Need some help (like a password reset)? <a href="mailto:help@hazardready.org">Email us.</a>{% endblocktrans %}
       </p>
     </div>
   </div>
-  <div id="user-signup-container" class="row vert-pad-medium">
+  <div id="user-signup-container"  tabindex="-1" class="row vert-pad-medium">
     <form id="user-signup__form">
       <div class="small-12 medium-6 columns">
         <label>{% trans "Email address (this will be your username)" %}
@@ -90,7 +86,7 @@
       </div>
       <div class="small-6 medium-3 columns">
         <label>{% trans "State" %}
-          <input type="text" id="user-signup__state" />
+          <input type="text" id="user-signup__state" placeholder="WA" />
         </label>
       </div>
       <div class="small-6 medium-3 columns">
@@ -99,29 +95,29 @@
         </label>
       </div>
       <div class="small-12 columns user-interaction__buttons">
-        <a href="#user-signup-result-container" class="button radius caps" id="user-signup__submit">{{ sign_up }}</a>
-        <a href-"#user-button-container" class="button radius caps button--cancel">{{ cancel }}</a>
+        <a href="#user-signup-result-container" class="button radius caps" id="user-signup__submit" role="button">{{ sign_up }}</a>
+        <a href="#user-button-container" class="button radius caps button--cancel" role="button">{{ cancel }}</a>
       </div>
     </form>
     <div class="user-interactions-help small-12 columns">
-      <p>{% blocktrans %}Need some help? <a href="mailto:help@hazardgready.org">Email us.</a>{% endblocktrans %}</p>
+      <p>{% blocktrans %}Need some help? <a href="mailto:help@hazardready.org">Email us.</a>{% endblocktrans %}</p>
     </div>
   </div>
-  <div id="user-signup-result-container" class="row vert-pad-medium">
+  <div id="user-signup-result-container" tabindex="-1" class="row vert-pad-medium">
    <div class="small-12 columns">
     <p>
       {% trans "Thanks for signing up! We'll get ahold of you with relevant news and information. You can come back anytime to update your address." %}
     </p>
     </div>
   </div>
-  <div id="user-info-container" class="row vert-pad-medium">
+  <div id="user-info-container" tabindex="-1" class="row vert-pad-medium">
      {% if username %}
       <div class="small-12 medium-6 columns">
         <p><strong>{% blocktrans %}Welcome back, {{ username }}!{% endblocktrans %}</strong></p>
       </div>
       <div class="small-12 medium-6 columns user-interaction__buttons">
-        <a href="#user-login-container" class="button radius caps button--logout">{{ log_out }}</a>
-        <a href="#user-info-container" class="button radius caps button--update">{{ update_my_info }}</a>
+        <a href="#user-login-container" class="button radius caps button--logout" role="button">{{ log_out }}</a>
+        <a href="#user-info-container" class="button radius caps button--update" role="button">{{ update_my_info }}</a>
       </div>
      {% else %}
       <div class="small-12 medium-6 columns">
@@ -129,17 +125,17 @@
       </div>
      {% endif %}
   </div>
-  <div id="user-info-container--invalid" class="row vert-pad-medium">
+  <div id="user-info-container--invalid"  tabindex="-1" class="row vert-pad-medium">
     <div class="small-12 medium-6 columns">
       <p>{% trans "Whoops, it looks like that username or password didn't work." %}</p>
     </div>
     <div class="small-12 medium-6 columns user-interaction__buttons">
-      <a href="#user-login-container" class="button radius caps button--login" id="">{{ log_in }}</a>
-      <a href="#user-signup-container" class="button radius caps button--signup">{{ sign_up }}</a>
+      <a href="#user-login-container" class="button radius caps button--login" role="button">{{ log_in }}</a>
+      <a href="#user-signup-container" class="button radius caps button--signup" role="button">{{ sign_up }}</a>
     </div>
   </div>
    {% if username %}
-     <div id="user-profile-container" class="row vert-pad-medium">
+     <div id="user-profile-container" tabindex="-1" class="row vert-pad-medium">
       <form id="user-profile__form">
         <div class="small-12 medium-6 columns">
           <label>{% trans "Street Address" %}
@@ -167,31 +163,31 @@
           </label>
         </div>
         <div class="small-12 columns user-interaction__buttons">
-          <a href="#user-signup-result-container" class="button radius caps" id="user-profile__submit">{% trans "Update" %}</a>
-          <a href="#user-button-container" class="button radius caps button--cancel-update">{{ cancel }}</a>
+          <a href="#user-signup-result-container" class="button radius caps" id="user-profile__submit" role="button">{% trans "Update" %}</a>
+          <a href="#user-button-container" class="button radius caps button--cancel-update" role="button">{{ cancel }}</a>
         </div>
       </form>
     </div>
-    <div id="user-profile-result-container" class="row vert-pad-medium">
+    <div id="user-profile-result-container"  tabindex="-1" class="row vert-pad-medium">
       <div class="small-12 columns">
       <p>{% trans "Thanks for keeping us up to date!" %}</p>
       </div>
     </div>
   {% endif %}
-  <div id="failure-container" class="row vert-pad medium">
+  <div id="failure-container"  tabindex="-1" class="row vert-pad medium">
     <div class="small-12 medium-6 columns">
       <p>{% trans "Whoops, we're not sure what happened there. Maybe you should try again." %}</p>
     </div>
     {% if username %}
       <div class="small-12 medium-6 columns user-interaction__buttons">
         {% csrf_token %}
-        <a href="#user-login-container" class="button radius caps button--logout">{{ log_out }}</a>
-        <a href="#user-info-container" class="button radius caps button--update">{{ update_my_info }}</a>
+        <a href="#user-login-container" class="button radius caps button--logout" role="button">{{ log_out }}</a>
+        <a href="#user-info-container" class="button radius caps button--update" role="button">{{ update_my_info }}</a>
       </div>
     {% else %}
       <div class="small-12 medium-6 columns user-interaction__buttons">
-        <a href="#user-login-container" class="button radius caps button--login">{{ log_in }}</a>
-        <a href="#user-signup-container" class="button radius caps button--signup">{{ sign_up }}</a>
+        <a href="#user-login-container" class="button radius caps button--login" role="button">{{ log_in }}</a>
+        <a href="#user-signup-container" class="button radius caps button--signup" role="button">{{ sign_up }}</a>
       </div>
     {% endif %}
   </div>
