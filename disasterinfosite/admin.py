@@ -15,8 +15,8 @@ from .actions import export_as_csv_action
 # To turn translation on from modeltranslation.admin import TranslationAdmin
 
 # To use translatable models and see them in DjangoAdmin, use the following 5 lines instead.
-#admin.site.register(SnuggetSection, TranslationAdmin)
-#admin.site.register(SnuggetSubSection, TranslationAdmin)
+# admin.site.register(SnuggetSection, TranslationAdmin)
+# admin.site.register(SnuggetSubSection, TranslationAdmin)
 # admin.site.register(ShapefileGroup, TranslationAdmin)
 # admin.site.register(PastEventsPhoto, TranslationAdmin)
 # admin.site.register(DataOverviewImage, TranslationAdmin)

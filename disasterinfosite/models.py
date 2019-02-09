@@ -144,7 +144,7 @@ class ImportantLink(models.Model):
     def __str__(self):
         return self.title +': ' + self.link
 
-class ShapeManager(models.GeoManager):
+class ShapeManager(models.Manager):
     def has_point(self, pnt):
         return self.filter(geom__contains=pnt)
 

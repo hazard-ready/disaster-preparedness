@@ -62,7 +62,7 @@ def login_view(request):
         return HttpResponse(status=403)
 
 def update_profile(request):
-    if request.method == 'POST' and request.user.is_authenticated():
+    if request.method == 'POST' and request.user.is_authenticated:
         username = request.user.username
         profile = UserProfile.objects.get(user=request.user)
         profile.address1 = request.POST.get('address1', '')
@@ -91,7 +91,7 @@ def app_view(request):
     quick_data_overview = DataOverviewImage.objects.all()
     username = None
     profile = None
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         username = request.user.username
         profile = UserProfile.objects.get_or_create(user=request.user)
 

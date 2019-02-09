@@ -227,7 +227,7 @@ def askUserForShapefileGroup(stem, existingShapefileGroups):
 def detectGeometryType(sf, stem):
   try:
     shapeType = next(shape for shape in sf.shapes() if shape.shapeType != 0).shapeType
-  except stopIteration:
+  except StopIteration:
     print("No valid geometries found in", stem, "- please check the shapefile")
     exit()
   if shapeType == 5 or shapeType == 15:
@@ -291,11 +291,11 @@ def findFieldType(sf, fieldName):
 def modelClassGen(stem, sf, keyField, srs, shapeType, shapefileGroup):
   text  = "class " + stem + "(models.Model):\n"
   text += "    def getGroup():\n"
-  text += "        return ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')[0]\n\n"
+  text += "        return ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')[0].id\n\n"
   text += "    " + keyField.lower() + " = models." + findFieldType(sf, keyField) + "\n"
   text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
   text += "    objects = ShapeManager()\n\n"
-  text += "    group = models.ForeignKey(ShapefileGroup, default=getGroup)\n"
+  text += "    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)\n"
   text += "    def __str__(self):\n"
   text += "        return str(self." + keyField.lower() + ")\n\n"
 
