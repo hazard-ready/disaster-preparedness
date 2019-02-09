@@ -227,7 +227,7 @@ def askUserForShapefileGroup(stem, existingShapefileGroups):
 def detectGeometryType(sf, stem):
   try:
     shapeType = next(shape for shape in sf.shapes() if shape.shapeType != 0).shapeType
-  except stopIteration:
+  except StopIteration:
     print("No valid geometries found in", stem, "- please check the shapefile")
     exit()
   if shapeType == 5 or shapeType == 15:
