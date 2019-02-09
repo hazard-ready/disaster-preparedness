@@ -10,8 +10,7 @@ from unittest.mock import patch
 
 request_url = '/accounts/update_profile/'
 class FakeUser():
-  def is_authenticated(self):
-    return False
+  is_authenticated = False
 
 class UpdateProfileViewTestCase(TestCase):
   def makeRequest(self, body):
