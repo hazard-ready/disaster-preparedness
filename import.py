@@ -291,11 +291,11 @@ def findFieldType(sf, fieldName):
 def modelClassGen(stem, sf, keyField, srs, shapeType, shapefileGroup):
   text  = "class " + stem + "(models.Model):\n"
   text += "    def getGroup():\n"
-  text += "        return ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')[0]\n\n"
+  text += "        return ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')[0].id\n\n"
   text += "    " + keyField.lower() + " = models." + findFieldType(sf, keyField) + "\n"
   text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
   text += "    objects = ShapeManager()\n\n"
-  text += "    group = models.ForeignKey(ShapefileGroup, default=getGroup)\n"
+  text += "    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)\n"
   text += "    def __str__(self):\n"
   text += "        return str(self." + keyField.lower() + ")\n\n"
 
