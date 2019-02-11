@@ -1,11 +1,11 @@
-require('../css/normalize.css');
-require('../css/foundation.min.css');
+require('normalize.css/normalize.css');
 require("slick-carousel/slick/slick.css");
 require("slick-carousel/slick/slick-theme.css");
 require('leaflet/dist/leaflet.css');
 require('../css/app.css');
 
 var boundaryShape = require('./boundary.json');
+
 require('../img/favicon.ico');
 require('../img/marker-icon.png');
 require('../img/thinking.gif');
@@ -13,10 +13,9 @@ require('../img/thinking.gif');
 require('slick-carousel');
 
 // Get a Mapquest key for this!
-// var MAPQUEST_KEY='O9xONxvpJOn6EXSMxHao40h2PXxizN3P';
+var MAPQUEST_KEY = '';
 
 $( document ).ready(function() {
-  $(document).foundation();
 
   // convenience function to extract url parameters
   function getURLParameter(name) {
