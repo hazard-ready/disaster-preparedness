@@ -1,6 +1,34 @@
-/****
-GLOBAL STYLES
-*****/
+/* Colors */
+$black: #000;
+$black-tint: rgba(255, 255, 255, 0.5);
+$soft-black: #2c2c2c;
+$dark-grey: #444;
+$medium-grey: #999
+$pale-grey: #e1e1e1;
+$soft-white: #f2f2f2;
+$white: #fff;
+
+$dark-main-color: #444;
+$light-main-color: #9999aa;
+
+$cool-contrast: #004444;
+$dark-contrast: #f03b20;
+$light-contrast: #fd8d3c;
+
+$low-intensity: #ffffb2;
+$moderate-intensity: #fed976;
+$high-intensity: #feb24c;
+$very-high-intensity: #fd8d3c;
+$extreme-intensity: #f03b20;
+
+$error-red: #5e001d;
+
+/* Typography */
+
+$serif: Georgia, Times, 'Times New Roman', serif;
+$sans-serif:  "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+/* Main elements */
 
 html {
   width:auto !important;
@@ -10,14 +38,20 @@ html {
 body {
   height:auto !important;
   width:auto !important;
-  font-family: Georgia, Times, 'Times New Roman', serif;
-  color: #444;
+  font-family: $serif;
+  color: $dark-grey;
+}
+
+/* Utility styles */
+
+.hide {
+  display: none;
 }
 
 /*****
 TYPOGRAPHY STYLES
 ******/
-.sans-serif {  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+.sans-serif {  font-family: $sans-serif; }
 .vert-pad-medium { padding: 2em 0; }
 .caps {
   text-transform: uppercase;
@@ -50,7 +84,7 @@ h5 {
 }
 
 label {
-  color: #ffffff;
+  color: $white;
 }
 
 .sr-only {
@@ -69,14 +103,13 @@ HEADER STYLES
 *****/
 
 #title a {
-   /*font-family: Georgia, Times, 'Times New Roman', serif;*/
    font-size: 1.25em;
    font-weight: bold;
-   color: #444;
-}
+   color: $dark-main-color
 
-#title a:hover {
-   color: #444;
+   &:hover {
+    color: $dark-main-color;
+   }
 }
 
 #title .button--top {
@@ -87,11 +120,11 @@ HEADER STYLES
 
 .title-header {
   padding: 5px;
-  background-color: #9999aa;
+  background-color: $light-main-color;
 }
 
 .title-header h2 {
-  color: #fff;
+  color: $white;
   text-align: center;
 }
 
@@ -116,13 +149,13 @@ INFORMATION AND INSTRUCTIONS STYLES
 }
 
 .information-container {
-  background-color: #444444;
-  color: #FFF;
+  background-color: $dark-main-color;
+  color: $white;
   padding: 15px;
 }
 
 .information-container a {
-  color: #ffffff;
+  color: $white;
   font-weight: bold;
 }
 
@@ -131,7 +164,7 @@ MAP AND SEARCH STYLES
 ******/
 
 .location-form {
-  background-color: #444444;
+  background-color: $dark-main-color;
   padding-bottom: 10px;
   padding-left: 100px; /* make it line up with the text in the header, not the image */
 }
@@ -141,41 +174,38 @@ MAP AND SEARCH STYLES
 }
 
 #location-text {
-  color: #444444;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  color: $dark-main-color;
+  font-family: $sans-serif;
   font-weight: bold;
   font-size: 20px;
   line-height: 1.3em;
-  border-color: #e1e1e1;
+  border-color: $pale-grey;
   border-width: 1px;
 }
 #location-text:disabled {
-  border-color: #999;
-  color: #999;
+  border-color: $medium-grey;
+  color: $medium-grey;
 }
-::-webkit-input-placeholder { color: #444444; }
-:-moz-placeholder { color: #444444; }
-::-moz-placeholder { color: #444444; }
-:-ms-input-placeholder { color: #444444; }
+::-webkit-input-placeholder { color: $dark-main-color; }
+:-moz-placeholder { color: $dark-main-color; }
+::-moz-placeholder { color: $dark-main-color; }
+:-ms-input-placeholder { color: $dark-main-color; }
 
 #location-submit {
   background-image: url(../img/icon-search.png);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 22px 22px;
-  /*width: 44px;*/
   border-radius: 0 3px 3px 0;
 }
 
 .auto-location-submit, .button--top {
-  /*background-image: url(../img/icon-target.png);
-  background-repeat: no-repeat;*/
   border-radius: 3px;
   padding: 9px 1em;
 }
 
 .geocode-error-message {
-  color: #5e001d;
+  color: $error-red;
 }
 
 #map {
@@ -204,7 +234,7 @@ MAP AND SEARCH STYLES
   width: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: $black-tint;
   text-align: center;
 }
 
@@ -213,7 +243,7 @@ MAP AND SEARCH STYLES
 }
 
 .loading-text {
-  color: #fff;
+  color: $white;
   margin: 200px 0 50px;
 }
 
@@ -222,7 +252,7 @@ LOGIN / SIGNUP FORM
 *****/
 
 #user-interaction-container {
-  background-color: #f2f2f2;
+  background-color: $soft-white;
 }
 
 .user-interaction__buttons {
@@ -234,7 +264,7 @@ LOGIN / SIGNUP FORM
 }
 
 #user-interaction-container label {
-  color: #444;
+  color: $dark-main-color;
 }
 
 #user-info-container,
@@ -265,17 +295,17 @@ LANGUAGE PICKER
 GENERIC FORM STYLES
 *****/
 .button, .select {
-  border-color: #fd8d3c;
-  background-color: #fd8d3c;
+  border-color: $light-contrast;
+  background-color: $light-contrast;
 }
 
 .button:hover, .button:focus,
 .select:hover, .select:focus {
-  background-color: #f03b20;
+  background-color: $dark-contrast;
 }
 
 input:invalid {
-  border-color: #f03b20;
+  border-color: $dark-contrast;
   border-width: 2px;
 }
 
@@ -289,14 +319,14 @@ DISASTER TABS
 ****/
 
 .disaster-content {
-  background-color: #ffffff;
+  background-color: $white;
   margin: 5px;
   max-width: 99%;
   padding: 5px;
 }
 
 .disaster-tabs-content {
-  background-color: #9999aa;
+  background-color: $light-main-color;
 }
 
 .disaster-container {
@@ -323,17 +353,17 @@ DISASTER TABS
 }
 
 .tabs dd.active a, .tabs .tab-title.active a {
-  background-color: #9999aa;
+  background-color: $light-main-color;
 }
 
 .disaster-tabs {
-  background-color: #9999aa;
+  background-color: $light-main-color;
   padding: 5px;
 }
 
 .likely-scenario {
-  background-color: #444444;
-  color: #FFF;
+  background-color: $dark-main-color;
+  color: $white;
   padding: 10px;
   margin-top: -15px;
 }
@@ -415,16 +445,16 @@ SNUGGET CONTENT
 }
 
 .intensity-meter-segment {
-  stroke: #2c2c2c;
+  stroke: $soft-black;
   stroke-width: 1;
   stroke-miterlimit: 4;
 }
 
-.low-color { fill: #ffffb2;}
-.moderate-color { fill: #fed976;}
-.high-color { fill: #feb24c;}
-.very-high-color { fill: #fd8d3c;}
-.extreme-color { fill: #f03b20;}
+.low-color { fill: $low-intensity; }
+.moderate-color { fill: $moderate-intensity; }
+.high-color { fill: $high-intensity; }
+.very-high-color { fill: $very-high-intensity; }
+.extreme-color { fill: $extreme-intensity; }
 
 /*****
 PHOTOS OF PAST EVENTS
@@ -448,8 +478,8 @@ PHOTOS OF PAST EVENTS
   position: absolute;
   top: 40%;
   cursor: pointer;
-  color: #FFFFFF;
-  background: #000000;
+  color: $white;
+  background: $black;
   opacity: .75;
   z-index: 9999;
   font-size: 2rem;
@@ -469,7 +499,7 @@ PHOTOS OF PAST EVENTS
 .slick-next:hover,
 .slick-next:focus
 {
-  background: #000000;
+  background: $black;
   outline: none;
 }
 
@@ -494,7 +524,7 @@ SUPPLY KIT
   font-size: 50px;
   line-height: .9em;
   margin: 0 15px;
-  color: #fd8d3c;
+  color: $light-contrast;
 }
 .supply-kit .text-label {
   padding-top: .2em;
@@ -512,20 +542,20 @@ GEEK BOX
 *****/
 
 #geek-box {
-  background-color: #9999aa;
-  color: #fff;
+  background-color: $light-main-color;
+  color: $white;
 }
 
 #geek-box-container {
-  background-color: #9999aa;
+  background-color: $light-main-color;
 }
 
 #geek-box a {
-  color: #004444;
+  color: $cool-contrast;
 }
 
 #geek-box h3 {
-  color: #fff;
+  color: $white;
 }
 
 .who-made-this-logo {
@@ -634,7 +664,6 @@ GEEK BOX
   }
 
   .disaster-tabs {
-    background-color: #91AB9B;
     padding: 5px;
   }
 

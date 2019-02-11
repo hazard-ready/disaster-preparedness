@@ -2,7 +2,7 @@ require('normalize.css/normalize.css');
 require("slick-carousel/slick/slick.css");
 require("slick-carousel/slick/slick-theme.css");
 require('leaflet/dist/leaflet.css');
-require('../css/app.css');
+require('../style/app.scss');
 
 var boundaryShape = require('./boundary.json');
 

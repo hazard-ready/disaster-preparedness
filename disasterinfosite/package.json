@@ -21,10 +21,12 @@
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^0.11.2",
+    "node-sass": "^4.11.0",
     "normalize.css": "^8.0.1",
+    "sass-loader": "^7.1.0",
     "style-loader": "^0.18.2",
     "url-loader": "^1.1.2",
-    "webpack": "^3.0.0",
+    "webpack": "^3.12.0",
     "webpack-bundle-tracker": "^0.4.2-beta"
   },
   "dependencies": {
