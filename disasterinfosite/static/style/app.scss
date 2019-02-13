@@ -3,7 +3,7 @@ $black: #000;
 $black-tint: rgba(255, 255, 255, 0.5);
 $soft-black: #2c2c2c;
 $dark-grey: #444;
-$medium-grey: #999
+$medium-grey: #999;
 $pale-grey: #e1e1e1;
 $soft-white: #f2f2f2;
 $white: #fff;
@@ -25,38 +25,42 @@ $error-red: #5e001d;
 
 /* Typography */
 
-$serif: Georgia, Times, 'Times New Roman', serif;
-$sans-serif:  "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$serif: Georgia, Times, "Times New Roman", serif;
+$sans-serif: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+  Helvetica, Arial, "Lucida Grande", sans-serif;
+
+/* Z-order */
+$z-index-high: 1001;
+
+/* Breakpoints! */
+@mixin breakpoint($point) {
+  @if $point == medium {
+    @media only screen and (min-width: 26rem) and (max-width: 40rem) {
+      @content;
+    }
+  } @else if $point == medium-and-up {
+    @media only screen and (min-width: 26rem) {
+      @content;
+    }
+  } @else if $point == large {
+    @media only screen and (min-width: 40rem) {
+      @content;
+    }
+  }
+}
 
 /* Main elements */
 
 html {
-  width:auto !important;
-  height:auto !important;
+  width: auto !important;
+  height: auto !important;
 }
 
 body {
-  height:auto !important;
-  width:auto !important;
+  height: auto !important;
+  width: auto !important;
   font-family: $serif;
   color: $dark-grey;
-}
-
-/* Utility styles */
-
-.hide {
-  display: none;
-}
-
-/*****
-TYPOGRAPHY STYLES
-******/
-.sans-serif {  font-family: $sans-serif; }
-.vert-pad-medium { padding: 2em 0; }
-.caps {
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-weight: bold;
 }
 
 h1 {
@@ -64,14 +68,22 @@ h1 {
 }
 
 h2 {
+  line-height: 1.5rem;
   font-size: 1.6875rem;
-  line-height: 1.75rem;
   font-weight: bold;
+
+  @include breakpoint(large) {
+    line-height: 1.75rem;
+  }
 }
 
 h3 {
-  font-size: 1.4375rem;
+  font-size: 1.2rem;
   font-weight: bold;
+
+  @include breakpoint(large) {
+    font-size: 1.4375rem;
+  }
 }
 
 h4 {
@@ -80,11 +92,36 @@ h4 {
 }
 
 h5 {
-  font-size: 1.2rem;
+  font-size: 1rem;
+  @include breakpoint(large) {
+    font-size: 1.2rem;
+  }
 }
 
 label {
   color: $white;
+}
+
+/* Utility styles */
+
+.hide {
+  display: none;
+}
+
+.hide-for-small {
+  display: none;
+
+  @include breakpoint(medium-and-up) {
+    display: inline;
+  }
+}
+
+.hide-for-medium-up {
+  display: inline;
+
+  @include breakpoint(medium-and-up) {
+    display: none;
+  }
 }
 
 .sr-only {
@@ -94,38 +131,69 @@ label {
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   border: 0;
 }
 
-/*****
-HEADER STYLES
-*****/
-
-#title a {
-   font-size: 1.25em;
-   font-weight: bold;
-   color: $dark-main-color
-
-   &:hover {
-    color: $dark-main-color;
-   }
+.sans-serif {
+  font-family: $sans-serif;
+}
+.vert-pad-medium {
+  padding: 2em 0;
+}
+.caps {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: bold;
 }
 
-#title .button--top {
-  position: absolute;
-  right: 5px;
-  font-size: 1em;
+/* Header */
+
+#title a {
+  font-size: 1.25em;
+  font-weight: bold;
+  color: $dark-main-color;
+
+  &:hover {
+    color: $dark-main-color;
+  }
+
+  .button--top {
+    position: absolute;
+    right: 5px;
+    font-size: 0.75em;
+    width: 90px;
+
+    @include breakpoint(medium-and-up) {
+      width: auto;
+    }
+
+    @include breakpoint(large) {
+      font-size: 1em;
+    }
+  }
+}
+
+.title-image {
+  display: block;
+  max-height: 50px;
+  margin: 0 auto;
+
+  @include breakpoint(large) {
+    display: inline;
+    margin: auto;
+    max-height: unset;
+  }
 }
 
 .title-header {
   padding: 5px;
   background-color: $light-main-color;
-}
 
-.title-header h2 {
-  color: $white;
-  text-align: center;
+  h2 {
+    color: $white;
+    text-align: center;
+  }
 }
 
 .top-header {
@@ -137,12 +205,28 @@ HEADER STYLES
 }
 
 .project-title {
+  font-size: 1.5rem;
+  line-height: 1.5em;
   padding-top: 1rem;
+
+  @include breakpoint(medium-and-up) {
+    font-size: 2rem;
+    line-height: 1.2em;
+  }
 }
 
-/*****
-INFORMATION AND INSTRUCTIONS STYLES
-*****/
+.project-subtitle {
+  font-size: 16px;
+  line-height: 1.2em;
+
+  @include breakpoint(medium-and-up) {
+    font-size: 20px;
+    line-height: 1.2em;
+  }
+}
+
+/* Information and Instructions */
+
 .information-instructions {
   max-width: 1000px;
   margin: 0 auto;
@@ -152,21 +236,34 @@ INFORMATION AND INSTRUCTIONS STYLES
   background-color: $dark-main-color;
   color: $white;
   padding: 15px;
+  a {
+    color: $white;
+    font-weight: bold;
+  }
 }
 
-.information-container a {
-  color: $white;
-  font-weight: bold;
-}
-
-/*****
-MAP AND SEARCH STYLES
-******/
+/* Map and Search */
 
 .location-form {
   background-color: $dark-main-color;
   padding-bottom: 10px;
-  padding-left: 100px; /* make it line up with the text in the header, not the image */
+
+  @include breakpoint(large) {
+    padding-left: 100px; /* make it line up with the text in the header, not the image */
+  }
+}
+
+.form-icon-button {
+  text-align: center;
+
+  @include breakpoint(large) {
+    text-align: left;
+  }
+}
+
+.location-label {
+  font-size: 22px;
+  line-height: 1.2em;
 }
 
 .location-instructions {
@@ -177,31 +274,56 @@ MAP AND SEARCH STYLES
   color: $dark-main-color;
   font-family: $sans-serif;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 1.3em;
   border-color: $pale-grey;
   border-width: 1px;
+
+  &:disabled {
+    border-color: $medium-grey;
+    color: $medium-grey;
+  }
+
+  ::-webkit-input-placeholder {
+    color: $dark-main-color;
+  }
+  :-moz-placeholder {
+    color: $dark-main-color;
+  }
+  ::-moz-placeholder {
+    color: $dark-main-color;
+  }
+  :-ms-input-placeholder {
+    color: $dark-main-color;
+  }
+
+  @include breakpoint(medium-and-up) {
+    font-size: 20px;
+    margin-bottom: 0.5rem;
+  }
 }
-#location-text:disabled {
-  border-color: $medium-grey;
-  color: $medium-grey;
-}
-::-webkit-input-placeholder { color: $dark-main-color; }
-:-moz-placeholder { color: $dark-main-color; }
-::-moz-placeholder { color: $dark-main-color; }
-:-ms-input-placeholder { color: $dark-main-color; }
 
 #location-submit {
   background-image: url(../img/icon-search.png);
   background-position: center center;
   background-repeat: no-repeat;
-  background-size: 22px 22px;
+  background-size: 23px 23px;
   border-radius: 0 3px 3px 0;
 }
 
-.auto-location-submit, .button--top {
+.auto-location-submit,
+.button--top {
   border-radius: 3px;
   padding: 9px 1em;
+}
+
+.auto-location-submit {
+  margin-left: 1em;
+  margin-bottom: 0;
+
+  @include breakpoint(medium-and-up) {
+    margin: auto;
+  }
 }
 
 .geocode-error-message {
@@ -209,27 +331,30 @@ MAP AND SEARCH STYLES
 }
 
 #map {
-  height: 400px;
+  height: 180px;
+  @include breakpoint(medium-and-up) {
+    height: 400px;
+  }
 }
 
 .map-container {
-  padding-top: 1rem
+  padding-top: 1rem;
 }
 
-/* overriding ugly Leaflet defaults */
+/* overriding Leaflet defaults */
 /* Change cursor when mousing over the area masked because it's outside the covered area */
 .leaflet-clickable {
-  cursor: not-allowed !important;
+  cursor: not-allowed;
 }
 /* Change cursor when over the area users can click in */
 .leaflet-container {
-  cursor: default !important;
+  cursor: default;
 }
 
 /* loading spinner during geolocation */
 .loading {
   position: fixed;
-  z-index: 1001;
+  z-index: $z-index-high;
   height: 100%;
   width: 100%;
   top: 0;
@@ -244,23 +369,81 @@ MAP AND SEARCH STYLES
 
 .loading-text {
   color: $white;
-  margin: 200px 0 50px;
+  margin: 10px 0;
+
+  @include breakpoint(medium) {
+    margin: 30px 0 10px;
+  }
+
+  @include breakpoint(large) {
+    margin: 200px 0 50px;
+  }
 }
 
-/*****
-LOGIN / SIGNUP FORM
-*****/
+/* Forms */
+
+.button {
+  margin: 0;
+  padding: 9px 1em;
+
+  @include breakpoint(medium-and-up) {
+  }
+}
+
+.button,
+.select {
+  border-color: $light-contrast;
+  background-color: $light-contrast;
+  font-size: 12px;
+
+  &:hover,
+  &:focus {
+    background-color: $dark-contrast;
+  }
+
+  @include breakpoint(large) {
+    font-size: 1rem;
+  }
+}
+
+input:invalid {
+  border-color: $dark-contrast;
+  border-width: 2px;
+}
+
+.select {
+  height: 38px;
+  width: auto;
+}
+
+/* login and sign in */
 
 #user-interaction-container {
   background-color: $soft-white;
 }
 
 .user-interaction__buttons {
-  text-align: right;
+  text-align: center;
+
+  @include breakpoint(medium-and-up) {
+    text-align: right;
+  }
+
+  .button:not(:last-child) {
+    margin-right: 1rem;
+    @include breakpoint(medium-and-up) {
+      margin-right: 2rem;
+    }
+
+    @include breakpoint(large) {
+      margin-right: 0.5rem;
+    }
+  }
 }
 
-.user-interaction__buttons .button:not(:last-child) {
-  margin-right: 2rem;
+.user-interactions-help {
+  padding-top: 1rem;
+  font-size: 0.75em;
 }
 
 #user-interaction-container label {
@@ -278,9 +461,8 @@ LOGIN / SIGNUP FORM
   display: none;
 }
 
-/*****
-LANGUAGE PICKER
-*****/
+/* Language Picker */
+
 #language__form {
   width: auto;
   position: absolute;
@@ -291,32 +473,7 @@ LANGUAGE PICKER
   padding: 0.5em;
 }
 
-/****
-GENERIC FORM STYLES
-*****/
-.button, .select {
-  border-color: $light-contrast;
-  background-color: $light-contrast;
-}
-
-.button:hover, .button:focus,
-.select:hover, .select:focus {
-  background-color: $dark-contrast;
-}
-
-input:invalid {
-  border-color: $dark-contrast;
-  border-width: 2px;
-}
-
-.select {
-  height: 38px;
-  width: auto;
-}
-
-/****
-DISASTER TABS
-****/
+/* Disaster tabs */
 
 .disaster-content {
   background-color: $white;
@@ -343,19 +500,6 @@ DISASTER TABS
   font-weight: bold;
 }
 
-.tabs-content > .content {
-  width: auto;
-}
-
-.tabs-content > .content.active {
-  margin-top: 10px;
-  padding: 1rem;
-}
-
-.tabs dd.active a, .tabs .tab-title.active a {
-  background-color: $light-main-color;
-}
-
 .disaster-tabs {
   background-color: $light-main-color;
   padding: 5px;
@@ -366,19 +510,23 @@ DISASTER TABS
   color: $white;
   padding: 10px;
   margin-top: -15px;
-}
-
-.likely-scenario p {
-    font-size: 1.2em;
+  p {
+    font-size: 1rem;
     margin-bottom: 0;
+
+    @include breakpoint(medium-and-up) {
+      font-size: 1.2em;
+    }
+  }
 }
 
-/*****
-SECTIONS
-*****/
+/* Sections */
 
 .section-content {
-  padding-left: 20px;
+  padding: 0;
+  @include breakpoint(large) {
+    padding-left: 20px;
+  }
 }
 
 .section-icon--link {
@@ -406,11 +554,18 @@ SECTIONS
 }
 
 .section-icon {
+  background-size: 50px auto;
+
   display: inline-block;
   margin-top: 0.2rem;
-  width: 80px;
-  height: 80px;
-  background-size: 80px auto;
+  width: 50px;
+  height: 50px;
+
+  @include breakpoint(medium-and-up) {
+    width: 80px;
+    height: 80px;
+    background-size: 80px auto;
+  }
 }
 
 .section-icon--dynamic {
@@ -418,20 +573,27 @@ SECTIONS
 }
 
 .section-title {
-  font-size: 1.75rem;
+  font-size: 1.2rem;
+  margin-left: 55px;
   line-height: 3em;
-  margin-left: 90px;
   text-transform: uppercase;
+
+  @include breakpoint(medium-and-up) {
+    font-size: 1.75rem;
+    margin-left: 90px;
+  }
 }
 
-/*****
-SNUGGET CONTENT
-*****/
+/* Snugget content */
 
 .intensity-meter {
-    float:left;
-    margin: 0 15px;
-    width:100px;
+  float: left;
+  margin: 0 15px;
+  width: 100px;
+
+  @include breakpoint(medium-and-up) {
+    margin: 0 10px 0 0;
+  }
 }
 
 .intensity-content {
@@ -440,7 +602,7 @@ SNUGGET CONTENT
 
 .intensity {
   display: inline-block;
-  margin-bottom:20px;
+  margin-bottom: 20px;
   width: 100%;
 }
 
@@ -450,319 +612,127 @@ SNUGGET CONTENT
   stroke-miterlimit: 4;
 }
 
-.low-color { fill: $low-intensity; }
-.moderate-color { fill: $moderate-intensity; }
-.high-color { fill: $high-intensity; }
-.very-high-color { fill: $very-high-intensity; }
-.extreme-color { fill: $extreme-intensity; }
+.low-color {
+  fill: $low-intensity;
+}
+.moderate-color {
+  fill: $moderate-intensity;
+}
+.high-color {
+  fill: $high-intensity;
+}
+.very-high-color {
+  fill: $very-high-intensity;
+}
+.extreme-color {
+  fill: $extreme-intensity;
+}
 
-/*****
-PHOTOS OF PAST EVENTS
-*****/
+/* Historical photos */
 
 .past-photos {
-  width: 416px;
-  height: 288px;
+  width: 272px;
+  height: 200px;
   padding: 10px;
   margin: 0 auto;
+
+  @include breakpoint(medium-and-up) {
+    width: 416px;
+    height: 288px;
+  }
 }
 
 .slideshow-image {
-  width: 400px;
+  width: 270px;
+  @include breakpoint(medium-and-up) {
+    width: 400px;
+  }
 }
 
 /* Arrows for photo slider */
-.slick-prev,
-.slick-next
-{
-  position: absolute;
-  top: 40%;
-  cursor: pointer;
-  color: $white;
-  background: $black;
-  opacity: .75;
-  z-index: 9999;
-  font-size: 2rem;
-  padding: 1rem;
-}
-
 .slick-prev {
-  left: 0px;
-}
-.slick-next
-{
-  right: 0px;
+  left: 15px;
+  width: 36px;
+  z-index: 9;
 }
 
-.slick-prev:hover,
-.slick-prev:focus,
-.slick-next:hover,
-.slick-next:focus
-{
-  background: $black;
-  outline: none;
+.slick-next {
+  right: 15px;
+  width: 36px;
+  z-index: 9;
 }
 
-/*****
-SUPPLY KIT
-*****/
+.slick-prev::before,
+.slick-next::before {
+  color: #ccc;
+  font-size: 36px;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+/* Supply kit */
 
 .supply-kit {
   font-size: 16px;
   line-height: 1.2em;
+
+  div {
+    margin: 30px 0;
+  }
+
+  span {
+    font-size: 0.75em;
+    line-height: 1em;
+  }
 }
+
 .supply-kit-icon {
   width: 43px;
   height: 45px;
   background: transparent url(../img/icons-supply-kit.png) no-repeat 0 0;
   background-size: 43px auto;
   overflow: hidden;
-}
-.supply-kit-icon.food { background-position: 0 -45px; }
-.supply-kit-icon.water { background-position: 0 -90px; }
-.supply-kit .big-num {
-  font-size: 50px;
-  line-height: .9em;
-  margin: 0 15px;
-  color: $light-contrast;
-}
-.supply-kit .text-label {
-  padding-top: .2em;
-}
-.supply-kit > div {
-  margin: 30px 0;
-}
-.supply-kit span {
-  font-size: .75em;
-  line-height: 1em;
+
+  &.food,
+  &.water {
+    background-position: 0 -90px;
+  }
+
+  &.big-num {
+    font-size: 50px;
+    line-height: 0.9em;
+    margin: 0 15px;
+    color: $light-contrast;
+  }
 }
 
-/*****
-GEEK BOX
-*****/
+/* Geek box */
 
 #geek-box {
   background-color: $light-main-color;
   color: $white;
-}
 
-#geek-box-container {
-  background-color: $light-main-color;
-}
-
-#geek-box a {
-  color: $cool-contrast;
-}
-
-#geek-box h3 {
-  color: $white;
-}
-
-.who-made-this-logo {
-  max-width: 30%;
-  max-height: 5rem;
-  margin: 0.5rem;
-}
-
-
-/* adjustments for smaller screens */
-@media only screen and (max-width: 40rem) {
-  .button, .select {
-    font-size: 12px;
-  }
-
-  #title .button--top {
-    font-size: 0.75em;
-  }
-
-  #location-submit {
-    background-size: 23px 23px;
-  }
-
-
-  #location-text {
-    margin-bottom: 0.5rem;
-  }
-
-  .title-image {
-    max-height: 50px;
-  }
-
-  .project-title {
-    font-size: 2rem;
-    line-height: 1.2em;
-  }
-
-  .project-subtitle {
-    font-size: 20px;
-    line-height: 1.2em;
-  }
-
-  .title-image {
-    display: block;
-    margin: 0 auto;
-  }
-  .location-label {
-    font-size: 22px;
-    line-height: 1.2em;
-  }
-
-  #map {
-    height: 180px;
-  }
-
-  .auto-location-submit {
-    margin-left: 1em;
-    margin-bottom: 0;
-  }
-
-  #title a {
-     font-size: 1.25em;
-  }
-
-  h2 {
-    line-height: 1.5rem;
+  a {
+    color: $cool-contrast;
   }
 
   h3 {
-    font-size: 1.2rem;
-  }
-
-  h5 {
-    font-size: 1rem;
-  }
-
-  .tabs-content > .content.active {
-    margin-top: 0;
-  }
-
-  .caps {
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-
-  .likely-scenario p {
-    font-size: 1rem;
-  }
-
-  .intensity-meter {
-    float:left;
-    margin: 0 10px 0 0;
-    width:100px;
-  }
-
-  .intensity-content {
-    margin: 10px 0 0 0;
-  }
-
-  .section-content {
-    padding: 0;
-  }
-
-  .tabs dd > a, .tabs .tab-title > a {
-    padding: 0.5rem 1rem
-  }
-
-  .disaster-tabs {
-    padding: 5px;
-  }
-
-  .location-form {
-    padding-left: 0px;
-  }
-
-  .form-icon-button {
-    text-align: center;
-  }
-
-  .user-interaction__buttons {
-    text-align: center;
-  }
-
-  .user-interaction__buttons .button:not(:last-child) {
-      margin-right: 1rem;
-  }
-
-  .loading-text {
-    margin: 30px 0 10px;
-  }
-}
-
-/* adjustments for the smallest screens */
-@media only screen and (max-width: 26rem) {
-  .button {
-    margin: 0;
-    padding: 9px 1em;
-  }
-
-  #title .button--top {
-    width: 90px;
-  }
-
-  .user-interaction__buttons .button:not(:last-child) {
-      margin-right: 0.5rem;
-  }
-
-  #location-text {
-    font-size: 16px;
-  }
-
-  .title-image {
-    max-height: 50px;
-  }
-
-  .project-title {
-    font-size: 1.5rem;
-    line-height: 1.5em;
-  }
-
-  .project-subtitle {
-    font-size: 16px;
-    line-height: 1.2em;
-  }
-
-  .section-icon {
-    width: 50px;
-    height: 50px;
-    background-size: 50px auto;
-  }
-
-  .section-icon--dynamic {
-    width: 100%;
-  }
-
-  .section-title {
-    font-size: 1.2rem;
-    margin-left: 55px;
-  }
-
-  .past-photos {
-    width: 272px;
-    height: 200px;
-  }
-
-  .slideshow-image {
-    width: 270px;
-  }
-
-  .tabs dd, .tabs .tab-title {
-    width: 100%;
-  }
-
-  .tabs dd > a, .tabs .tab-title > a {
-    padding: 0.3rem 0.5rem
-  }
-
-  .user-interactions-help {
-    padding-top: 1rem;
-    font-size: 0.75em
+    color: $white;
   }
 
   .who-made-this-logo {
     margin: 0 auto;
-  }
+    max-width: 30%;
+    max-height: 5rem;
 
-  .loading-text {
-    margin: 10px 0;
+    @include breakpoint(medium-and-up) {
+      margin: 0.5rem;
+    }
   }
+}
+
+#geek-box-container {
+  background-color: $light-main-color;
 }

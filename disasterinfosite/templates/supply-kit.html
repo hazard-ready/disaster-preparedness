@@ -1,23 +1,23 @@
 {% load i18n %}
 
-      <p>{% trans "Experts suggest you have the following:" %}</p>
-      <div class="supply-kit sans-serif">
-        <div class="clearfix">
-          <div class="supply-kit-icon left"></div>
-          <div class="big-num left">{{ supply_kit.days }}</div>
-          <div class="text-label left">{% trans "Days of supplies" %}</br><span>{% trans "per person" %}</span></div>
-        </div>
-        <div class="clearfix">
-          <div class="supply-kit-icon water left"></div>
-          <div class="big-num left">{{ supply_kit.days }}</div>
-          <div class="text-label left">{% trans "Gallons of water" %}</br><span>{% trans "per person" %}</span></div>
-        </div>
-        <div class="clearfix">
-          <div class="supply-kit-icon food left"></div>
-          <div class="big-num left">{{ supply_kit.meals }}</div>
-          <div class="text-label left">{% trans "Meals" %}</br><span>{% trans "per person" %}</span></div>
-        </div>
-      </div>
-      {% if supply_kit.text %}
-        <p>{{ supply_kit.text | safe }}</p>
-      {% endif %}
+<p>{% trans "Experts suggest you have the following:" %}</p>
+<div class="supply-kit sans-serif">
+  <div>
+    <div class="supply-kit-icon"></div>
+    <div class="big-num">{{ supply_kit.days }}</div>
+    <div class="text-label">{% trans "Days of supplies" %}</br><span>{% trans "per person" %}</span></div>
+  </div>
+  <div>
+    <div class="supply-kit-icon water"></div>
+    <div class="big-num">{{ supply_kit.days }}</div>
+    <div class="text-label">{% trans "Gallons of water" %}</br><span>{% trans "per person" %}</span></div>
+  </div>
+  <div>
+    <div class="supply-kit-icon food"></div>
+    <div class="big-num">{{ supply_kit.meals }}</div>
+    <div class="text-label">{% trans "Meals" %}</br><span>{% trans "per person" %}</span></div>
+  </div>
+</div>
+{% if supply_kit.text %}
+  <p>{{ supply_kit.text | safe }}</p>
+{% endif %}

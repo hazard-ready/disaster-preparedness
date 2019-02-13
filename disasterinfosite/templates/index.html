@@ -10,15 +10,17 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-  <link rel="shortcut icon" href="{% webpack_static 'build/favicon.ico' %}"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:url" content="{{ settings.site_url }}"/>
   <meta property="og:title" content="{{ settings.site_description }}">
   {% trans "Enter your location for a personalized report on your risks and how to prepare." as meta_description %}
   <meta property="og:description" content="{{ settings.intro_text }} {{ meta_description }}">
 
   <title>{{ settings.site_title }}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   {% render_bundle 'app' 'css' %}
+
+  <link rel="shortcut icon" href="{% webpack_static 'build/favicon.ico' %}"/>
 
   <!-- Load fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -36,7 +38,7 @@
   <div class="row top-header">
     <div id="title" class="title-header" role="banner">
       {% include "language_selector.html" %}
-      <a href="#user-interaction-container" class="button radius caps button--top">{% trans "Sign Up / Log In" %}</a>
+      <a href="#user-interaction-container" class="button caps button--top">{% trans "Sign Up / Log In" %}</a>
       <h1 class="project-title caps">
         <a href="{{ settings.site_url }}">{{ settings.site_title }}</a>
       </h1>
@@ -44,72 +46,55 @@
     </div>
     {% block info-instructions %}
       <div class="information-container">
-      <div class="information-instructions" role="main">
-        <p class="organization-information">{{ settings.about_text | safe }}</p>
-        <p>{{ settings.intro_text | safe }}</p>
-        <p class="location-instructions">
-          {% trans "Give a location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
-        </p>
-      </div>
+        <div class="information-instructions" role="main">
+          <p class="organization-information">{{ settings.about_text | safe }}</p>
+          <p>{{ settings.intro_text | safe }}</p>
+          <p class="location-instructions">
+            {% trans "Give a location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
+          </p>
+        </div>
       </div>
     {% endblock info-instructions %}
   </div>
 
 {% block search %}
-      <div class="location-form" role="form" aria-label="location-search">
-        <div class="row">
-           <div class="small-12 medium-8 medium-push-2 columns">
-               <div class="row collapse">
-                  <label for="location-text">Location</label>
-                 <div class="small-10 columns">
-                   <input name="location-text" id="location-text" type="text" placeholder="Your address, your city" />
-                   <div class="geocode-error-message"></div>
-                 </div>
-                 <div class="small-2 end columns">
-                   <a id="location-submit" class="button postfix"></a>
-                 </div>
-               </div>
-              {% trans "Find Me" as find_me %}
-              <div class="row hidden-for-medium-up">
-                <div class="small-6 small-centered columns form-icon-button">
-                   <a class="auto-location-submit button radius caps">{{ find_me }}</a>
-                </div>
-                <div class="small-12 hide-for-small medium-3 columns form-icon-button">
-                  <a class="auto-location-submit button radius caps">{{ find_me }}</a>
-               </div>
-              </div>
-           </div>
-        </div>
-      </div>
+  <div class="location-form" role="form" aria-label="location-search">
+    <label for="location-text">Location</label>
+    <input name="location-text" id="location-text" type="text" placeholder="Your address, your city" />
+    <div class="geocode-error-message"></div>
+    <a id="location-submit" class="button"></a>
+{% trans "Find Me" as find_me %}
+    <div class="form-icon-button">
+      <a class="auto-location-submit button caps">{{ find_me }}</a>
+    </div>
+  </div>
 {% endblock search %}
 
 {% block map %}
-      <div class="row map-container" role="application">
-        <div class="small-12 medium-7 hide-for-small column">
-          <div id="map"></div>
-        </div>
-      <div class="small-12 medium-5 column">
-        <h2 class="caps">{% trans "What are my risks?" %}</h2>
-        <h3 class>{% trans "What to Expect" %}</h3>
-        <p>
-          {% blocktrans %}
-            {{ settings.site_title }} gives you an idea of which natural disasters you might experience in the future based on a location in {{ location.area_name }}.
-          {% endblocktrans %}
-        </p>
-
-        <h3>{% trans "How to Prepare" %}</h3>
-        <p>
-          {% trans "You have the power to make a difference. Find out how you can protect your loved ones and home before the next disaster hits." %}
-        </p>
-
-        <h3>{% trans "In Recent History" %}</h3>
-        <p>
-          {% blocktrans %}
-            Find out which disasters have struck {{ location.area_name }} in the past, what impact they had, and where they happened.
-          {% endblocktrans %}
-        </p>
-      </div>
+  <div class="map-container" role="application">
+    <div class="hide-for-small">
+      <div id="map"></div>
     </div>
+    <h2 class="caps">{% trans "What are my risks?" %}</h2>
+    <h3 class>{% trans "What to Expect" %}</h3>
+    <p>
+      {% blocktrans %}
+        {{ settings.site_title }} gives you an idea of which natural disasters you might experience in the future based on a location in {{ location.area_name }}.
+      {% endblocktrans %}
+    </p>
+
+    <h3>{% trans "How to Prepare" %}</h3>
+    <p>
+      {% trans "You have the power to make a difference. Find out how you can protect your loved ones and home before the next disaster hits." %}
+    </p>
+
+    <h3>{% trans "In Recent History" %}</h3>
+    <p>
+      {% blocktrans %}
+        Find out which disasters have struck {{ location.area_name }} in the past, what impact they had, and where they happened.
+      {% endblocktrans %}
+    </p>
+  </div>
 {% endblock map %}
 
 {% block main-content %}

@@ -11,7 +11,7 @@
   <input name="next" type="hidden" value="{{ path }}" />
   {% endif %}
   {% endwith %}
-    <select id="language__select" name="language" class="select radius select--language caps sans-serif" onchange="this.form.submit()">
+    <select id="language__select" name="language" class="select select--language caps sans-serif" onchange="this.form.submit()">
       {% for language in languages %}
       <option class="select select--language" value="{{ language.code }}"
           {% if language.code == LANGUAGE_CODE %}selected="selected"{% endif %}>
