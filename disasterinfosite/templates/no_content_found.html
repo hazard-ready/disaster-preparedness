@@ -8,31 +8,24 @@
           {% trans "Give a location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
         </p>
     </div>
-    </div>
   </div>
 {% endblock info-instructions %}
 
 {% block map %}
-  <div class="row" role="application">
-    <div class="small-12 column">
-      <div id="map"></div>
-    </div>
+  <div role="application">
+    <div id="map"></div>
   </div>
 {% endblock map %}
 
 
 {% block main-content %}
-    <div role="main" class="row vert-pad-medium">
-        <div class="medium-8 column medium-push-1">
-          <h2 class="caps">{% trans "No information available." %}</h2>
-          <div>
-            <p>
-              {% blocktrans with area_name=location.area_name %}It looks like your location is outside of {{ area_name }}.{% endblocktrans %}
-            </p>
-            <p>
-              {% trans "While we value and promote resilience everywhere, the data that powers this site isn't available for other places yet." %}
-            </p>
-        </div>
-      </div>
-    </div>
+  <div role="main">
+    <h2 class="caps">{% trans "No information available." %}</h2>
+    <p>
+      {% blocktrans with area_name=location.area_name %}It looks like your location is outside of {{ area_name }}.{% endblocktrans %}
+    </p>
+    <p>
+      {% trans "While we value and promote resilience everywhere, the data that powers this site isn't available for other places yet." %}
+    </p>
+  </div>
 {% endblock main-content %}

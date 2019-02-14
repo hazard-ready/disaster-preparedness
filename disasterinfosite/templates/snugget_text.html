@@ -1,19 +1,19 @@
 {% block snugget-content %}
   {% if snugget.image or snugget.dynamic_image %}
     <div class="intensity row">
-      <div class="intensity-meter small-12 medium-2 columns">
+      <div class="intensity-meter">
         {% if snugget.image %}
           {{ snugget.image | safe }}
         {% elif snugget.dynamic_image %}
           {{ snugget.dynamic_image | safe }}
         {% endif %}
       </div>
-      <div class="intensity-content snugget-content small-12 medium-10 columns">
+      <div class="intensity-content snugget-content">
         {{ snugget.content | safe }}
       </div>
     </div>
     {% else %}
-    <div class="snugget-content row">
+    <div class="snugget-content">
       {{ snugget.content | safe }}
     </div>
   {% endif %}

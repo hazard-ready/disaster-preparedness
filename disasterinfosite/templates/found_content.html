@@ -12,82 +12,74 @@
 
 
 {% block map %}
-<div class="row" role="application">
-  <div class="small-12 column">
-    <div id="map"></div>
-  </div>
+<div role="application">
+  <div id="map"></div>
 </div>
 {% endblock map %}
 
 {% block main-content %}
-  <div class="row disaster-container" role="main">
+  <div class="disaster-container" role="main">
     <h2 class="caps disaster-container__title">
       {% trans "Results for this location" %}
     </h2>
-    <div class="small-12 column">
-      <ul class="tabs disaster-tabs" data-tab role="group">
-        {% for group, hazard in data.items %}
-          {% if forloop.first %}
-            <li class="tab-title active"><a href="#{{group}}">{{hazard.heading}}</a></li>
-          {% else %}
-            <li class="tab-title"><a href="#{{group}}">{{hazard.heading}}</a></li>
-          {% endif %}
-        {% endfor %}
-      </ul>
-      <div class="tabs-content disaster-tabs-content">
+    <ul class="disaster-tabs" data-tab role="group">
       {% for group, hazard in data.items %}
         {% if forloop.first %}
-          <div class="content active disaster-content" id="{{group}}">
+          <li class="tab-title active"><a href="#{{group}}">{{hazard.heading}}</a></li>
         {% else %}
-          <div class="content disaster-content" id="{{group}}">
+          <li class="tab-title"><a href="#{{group}}">{{hazard.heading}}</a></li>
         {% endif %}
-          {% for section, sub_sections in hazard.sections.items %}
-            <div class="snugget-text vert-pad-medium">
-              <div class="section-title-wrapper">
-                <div class="section-icon section-icon--{{ section }}">
-                  <h2 class="caps section-title">{{ section.display_name }}</h2>
-                </div>
-              </div>
-              <div class="section-content">
-                {% for sub_section, snuggets in sub_sections.items %}
-                  <h3 class="snugget-subsection">{{ sub_section.display_name }}</h3>
-                  {% for snugget in snuggets %}
-                    {% show_snugget snugget %}
-                  {% endfor %}
-                {% endfor %}
-                {% if section.name == "In Recent History" and hazard.photos %}
-                  <h3 class="snugget-subsection">{% trans "Historical Images" %}</h3>
-                  <div class="past-photos">
-                    {% for photo in hazard.photos %}
-                    <div class="past-photo__container">
-                       <img alt="" title="" class="slideshow-image" src="{{ photo.image.url }}"/>
-                       <div class="past-photo__caption">{{ photo.caption }}</div>
-                     </div>
-                    {% endfor %}
-                  </div>
-                {% endif %}
+      {% endfor %}
+    </ul>
+    <div class="disaster-tabs-content">
+    {% for group, hazard in data.items %}
+      {% if forloop.first %}
+        <div class="active disaster-content" id="{{group}}">
+      {% else %}
+        <div class="disaster-content" id="{{group}}">
+      {% endif %}
+        {% for section, sub_sections in hazard.sections.items %}
+          <div class="snugget-text">
+            <div class="section-title-wrapper">
+              <div class="section-icon section-icon--{{ section }}">
+                <h2 class="caps section-title">{{ section.display_name }}</h2>
               </div>
             </div>
-          {% endfor %}
-        </div>
-      {% endfor %}
+            <div class="section-content">
+              {% for sub_section, snuggets in sub_sections.items %}
+                <h3 class="snugget-subsection">{{ sub_section.display_name }}</h3>
+                {% for snugget in snuggets %}
+                  {% show_snugget snugget %}
+                {% endfor %}
+              {% endfor %}
+              {% if section.name == "In Recent History" and hazard.photos %}
+                <h3 class="snugget-subsection">{% trans "Historical Images" %}</h3>
+                <div class="past-photos">
+                  {% for photo in hazard.photos %}
+                  <div class="past-photo__container">
+                     <img alt="" title="" class="slideshow-image" src="{{ photo.image.url }}"/>
+                     <div class="past-photo__caption">{{ photo.caption }}</div>
+                   </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
       </div>
+    {% endfor %}
     </div>
   </div>
 
-  <div class="row" role="complementary" aria-label="information">
-    <div class="small-10 medium-5 column">
-      <h4>{% trans "Supply Kit" %}</h4>
-      {% include "supply-kit.html" %}
-    </div>
+  <div role="complementary" aria-label="information">
+    <h4>{% trans "Supply Kit" %}</h4>
+    {% include "supply-kit.html" %}
 
-    <div class="small-10 medium-5 column end">
-      <h4>{% trans "Important Links" %}</h4>
-      {% for link in important_links %}
-      <h5>{{ link.title }}</h5>
-      <p>{{ link.link | safe }}
-      {% endfor %}
-    </div>
+    <h4>{% trans "Important Links" %}</h4>
+    {% for link in important_links %}
+    <h5>{{ link.title }}</h5>
+    <p>{{ link.link | safe }}
+    {% endfor %}
   </div>
 
 {% endblock main-content %}
