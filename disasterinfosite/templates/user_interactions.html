@@ -13,38 +13,24 @@
       <p>
         {% blocktrans %}If your username isn't {{ username }}, you might want to log out.{% endblocktrans %}
       </p>
-      <div class="user-interaction__buttons">
-        <a href="#user-login-container" class="button caps button--logout" role="button">{{ log_out }}</a>
-        <a href="#user-info-container" class="button caps button--update" role="button">{{ update_my_info }}</a>
-      </div>
+      {% include "user_interaction_buttons.html" %}
     </div>
-    <div id="user-button-container" tabindex="-1" class="hide">
   {% else %}
-    <div id="user-button-container" tabindex="-1">
+    {% include "user_why_sign_up.html" %}
   {% endif %}
-      <p><strong>{% trans "Why should you sign up?" %}</strong></p>
-      <p>
-        {% trans "Sign up for free to access customized hazard preparedness information. By providing your address, you will get updates about seasonal hazards and ongoing incidents specific to your location. We want you to be better prepared so you can keep your family, friends, and neighbors safe when a disaster strikes! Personal information will be protected and secure." %}
-      </p>
-      <div class="user-interaction__buttons">
-        <a href="#user-login-container" class="button caps button--login" role="button">{{ log_in }}</a>
-        <a href="#user-signup-container" class="button caps button--signup" role="button">{{ sign_up }}</a>
-      </div>
-    </div>
-    <div id="user-login-container"  tabindex="-1">
+
+    <div id="user-login-container" tabindex="-1">
     {% trans "Required." as required %}
       <form id="user-login__form">
-        <div class="small-12 medium-6 columns">
-          <label>{% trans "Username (your email address)" %}
-            <input type="text" id="user-login__username" required placeholder="{{ required }}"/>
-          </label>
-          <label>{% trans "Password" %}
-            <input type="password" id="user-login__password" required placeholder="{{ required }}" />
-          </label>
-        </div>
+        <label>{% trans "Username (your email address)" %}
+          <input type="text" id="user-login__username" required placeholder="{{ required }}"/>
+        </label>
+        <label>{% trans "Password" %}
+          <input type="password" id="user-login__password" required placeholder="{{ required }}" />
+        </label>
         <div class="user-interaction__buttons">
-          <a href="#user-info-container" class="button caps" id="user-login__submit" role="button">{{ log_in }}</a>
-          <a href-"#user-button-container" class="button caps button--cancel" role="button">{{ cancel }}</a>
+          <button class="button caps" id="user-login__submit">{{ log_in }}</button>
+          <button class="button caps button--cancel">{{ cancel }}</button>
         </div>
       </form>
       <div class="user-interactions-help">
@@ -77,8 +63,8 @@
           <input type="text" id="user-signup__zip" />
         </label>
         <div class="user-interaction__buttons">
-          <a href="#user-signup-result-container" class="button caps" id="user-signup__submit" role="button">{{ sign_up }}</a>
-          <a href="#user-button-container" class="button caps button--cancel" role="button">{{ cancel }}</a>
+          <button class="button caps" id="user-signup__submit">{{ sign_up }}</button>
+          <button class="button caps button--cancel">{{ cancel }}</button>
         </div>
       </form>
       <div class="user-interactions-help">
@@ -93,22 +79,16 @@
     <div id="user-info-container" tabindex="-1">
      {% if username %}
         <p>{% blocktrans %}Welcome back, {{ username }}!{% endblocktrans %}</p>
-        <div class="user-interaction__buttons">
-          <a href="#user-login-container" class="button caps button--logout" role="button">{{ log_out }}</a>
-          <a href="#user-info-container" class="button caps button--update" role="button">{{ update_my_info }}</a>
-        </div>
+        {% include "user_interaction_buttons.html" %}
      {% else %}
        <p>{% trans "We're logging you in. Just a moment..." %}</p>
      {% endif %}
     </div>
     <div id="user-info-container--invalid"  tabindex="-1">
       <p>{% trans "Whoops, it looks like that username or password didn't work." %}</p>
-      <div class="user-interaction__buttons">
-        <a href="#user-login-container" class="button caps button--login" role="button">{{ log_in }}</a>
-        <a href="#user-signup-container" class="button caps button--signup" role="button">{{ sign_up }}</a>
-      </div>
+      {% include "user_interaction_buttons.html" %}
     </div>
-   {% if username %}
+   {% if username and profile %}
      <div id="user-profile-container" tabindex="-1">
       <form id="user-profile__form">
         <label>{% trans "Street Address" %}
@@ -127,28 +107,17 @@
           <input type="text" id="user-profile__zip" value="{{ profile.zip_code }}" />
         </label>
         <div class="user-interaction__buttons">
-          <a href="#user-signup-result-container" class="button caps" id="user-profile__submit" role="button">{% trans "Update" %}</a>
-          <a href="#user-button-container" class="button caps button--cancel-update" role="button">{{ cancel }}</a>
+          <button class="button caps" id="user-profile__submit">{% trans "Update" %}</button>
+          <button class="button caps button--cancel-update">{{ cancel }}</button>
         </div>
       </form>
     </div>
-    <div id="user-profile-result-container"  tabindex="-1">
+    <div id="user-profile-result-container" tabindex="-1">
       <p>{% trans "Thanks for keeping us up to date!" %}</p>
     </div>
   {% endif %}
-  <div id="failure-container"  tabindex="-1">
+  <div id="failure-container" tabindex="-1">
     <p>{% trans "Whoops, we're not sure what happened there. Maybe you should try again." %}</p>
-  {% if username %}
-    <div class="user-interaction__buttons">
-      {% csrf_token %}
-      <a href="#user-login-container" class="button caps button--logout" role="button">{{ log_out }}</a>
-      <a href="#user-info-container" class="button caps button--update" role="button">{{ update_my_info }}</a>
-    </div>
-  {% else %}
-    <div class="user-interaction__buttons">
-      <a href="#user-login-container" class="button caps button--login" role="button">{{ log_in }}</a>
-      <a href="#user-signup-container" class="button caps button--signup" role="button">{{ sign_up }}</a>
-    </div>
-  {% endif %}
+    {% include "user_interaction_buttons.html" %}
   </div>
 </div>
