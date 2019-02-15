@@ -33,21 +33,16 @@ $(document).ready(function() {
   });
 
   $(".button--logout").click(function() {
-    sendAjaxAuthRequest(
-      "accounts/logout/",
-      { next: "/" },
-      function() {
+    sendAjaxAuthRequest("accounts/logout/")
+      .then(function() {
+        location.reload();
+      })
+      .catch(function(error) {
+        console.log(error);
         $("#user-info-container").hide();
         $("#user-button-container--logged-in").hide();
         $("#failure-container").show();
-      },
-      function() {
-        $("#user-info-container").hide();
-        $("#user-button-container--logged-in").hide();
-        $("#failure-container").hide();
-        $("#user-button-container").show();
-      }
-    );
+      });
   });
 
   function setValueOnFocus(el, value) {
@@ -79,7 +74,7 @@ $(document).ready(function() {
   setValueOnFocus($("#user-signup__state"), "MT");
   setValueOnFocus($("#user-signup__zip"), "598");
 
-  var sendAjaxAuthRequest = function(url, data, error, success) {
+  var sendAjaxAuthRequest = function(url, data) {
     var getCookie = function(name) {
       var cookieValue = null;
       if (document.cookie && document.cookie !== "") {
@@ -96,18 +91,15 @@ $(document).ready(function() {
       return cookieValue;
     };
     var csrftoken = getCookie("csrftoken");
-    $.ajaxSetup({
+
+    return $.ajax({
       crossDomain: false,
       beforeSend: function(xhr) {
         xhr.setRequestHeader("X-CSRFToken", csrftoken);
-      }
-    });
-    $.ajax({
+      },
       type: "POST",
       url: url,
-      data: data,
-      error: error,
-      success: success
+      data: data
     });
   };
 
@@ -160,24 +152,24 @@ $(document).ready(function() {
     var username = $("#user-login__username").val();
     var password = $("#user-login__password").val();
 
-    sendAjaxAuthRequest(
-      "accounts/login/",
-      {
-        username: username,
-        password: password,
-        next: document.location.pathname
-      },
-      function() {
-        $("#user-login-container").hide();
-        $("#user-info-container--invalid").show();
-      },
-      function() {
+    console.log(username, password);
+    sendAjaxAuthRequest("accounts/login/", {
+      username: username,
+      password: password
+      //      next: document.location.pathname
+    })
+      .then(function() {
+        console.log("yay");
         document.location.hash = "user-interaction-container";
-        document.location.reload(true);
+        // document.location.reload(true);
         $("#user-login-container").hide();
         $("#user-info-container").show();
-      }
-    );
+      })
+      .catch(function(error) {
+        console.log(error);
+        $("#user-login-container").hide();
+        $("#user-info-container--invalid").show();
+      });
   });
 
   $("#user-profile__submit").click(function() {
