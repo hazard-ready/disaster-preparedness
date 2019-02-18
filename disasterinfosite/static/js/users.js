@@ -1,4 +1,53 @@
-// Signup and login functionality
+function sendAjaxAuthRequest(url, data) {
+  var getCookie = function(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      var cookies = document.cookie.split(";");
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = $.trim(cookies[i]);
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) == name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  };
+  var csrftoken = getCookie("csrftoken");
+
+  return $.ajax({
+    crossDomain: false,
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    },
+    type: "POST",
+    url: url,
+    data: data
+  });
+}
+
+function setValueOnFocus(el, value) {
+  el.focus(function() {
+    if (el.val() === "") {
+      el.val(value);
+    }
+  });
+}
+
+function requiredFocus(el) {
+  el.focus(function() {
+    el.removeAttr("placeholder");
+  });
+}
+
+function requiredBlur(el, text) {
+  el.blur(function() {
+    if (el.val() === "") {
+      el.attr("placeholder", text);
+    }
+  });
+}
 
 $(document).ready(function() {
   $(".button--signup").click(function() {
@@ -32,40 +81,18 @@ $(document).ready(function() {
     $("#user-profile-container").show();
   });
 
-  $(".button--logout").click(function() {
+  $(".button--logout").click(function(event) {
+    event.preventDefault();
     sendAjaxAuthRequest("accounts/logout/")
       .then(function() {
-        location.reload();
+        location.reload(true);
       })
       .catch(function(error) {
-        console.log(error);
         $("#user-info-container").hide();
         $("#user-button-container--logged-in").hide();
         $("#failure-container").show();
       });
   });
-
-  function setValueOnFocus(el, value) {
-    el.focus(function() {
-      if (el.val() === "") {
-        el.val(value);
-      }
-    });
-  }
-
-  function requiredFocus(el) {
-    el.focus(function() {
-      el.removeAttr("placeholder");
-    });
-  }
-
-  function requiredBlur(el, text) {
-    el.blur(function() {
-      if (el.val() === "") {
-        el.attr("placeholder", text);
-      }
-    });
-  }
 
   requiredFocus($("#user-signup__username"));
   requiredFocus($("#user-signup__password"));
@@ -74,36 +101,9 @@ $(document).ready(function() {
   setValueOnFocus($("#user-signup__state"), "MT");
   setValueOnFocus($("#user-signup__zip"), "598");
 
-  var sendAjaxAuthRequest = function(url, data) {
-    var getCookie = function(name) {
-      var cookieValue = null;
-      if (document.cookie && document.cookie !== "") {
-        var cookies = document.cookie.split(";");
-        for (var i = 0; i < cookies.length; i++) {
-          var cookie = $.trim(cookies[i]);
-          // Does this cookie string begin with the name we want?
-          if (cookie.substring(0, name.length + 1) == name + "=") {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
-      }
-      return cookieValue;
-    };
-    var csrftoken = getCookie("csrftoken");
+  $(".user-signup__submit").click(function(event) {
+    event.preventDefault();
 
-    return $.ajax({
-      crossDomain: false,
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader("X-CSRFToken", csrftoken);
-      },
-      type: "POST",
-      url: url,
-      data: data
-    });
-  };
-
-  $("#user-signup__submit").click(function() {
     var inputs = $("#user-signup__form").find("input:visible");
     for (var i = 0; i < inputs.length; i++) {
       if (!inputs[i].checkValidity()) {
@@ -142,57 +142,48 @@ $(document).ready(function() {
     );
   });
 
-  $("#user-login__submit").click(function() {
+  $(".user-login__submit").click(function(event) {
+    event.preventDefault();
     var inputs = $("#user-login__form").find("input:visible");
     for (var i = 0; i < inputs.length; i++) {
       if (!inputs[i].checkValidity()) {
         return false;
       }
     }
-    var username = $("#user-login__username").val();
-    var password = $("#user-login__password").val();
 
-    console.log(username, password);
     sendAjaxAuthRequest("accounts/login/", {
-      username: username,
-      password: password
-      //      next: document.location.pathname
+      username: $("#user-login__username").val(),
+      password: $("#user-login__password").val()
     })
       .then(function() {
-        console.log("yay");
-        document.location.hash = "user-interaction-container";
-        // document.location.reload(true);
+        location.hash = "user-interaction-container";
+        location.reload(true);
         $("#user-login-container").hide();
         $("#user-info-container").show();
       })
       .catch(function(error) {
-        console.log(error);
         $("#user-login-container").hide();
         $("#user-info-container--invalid").show();
       });
   });
 
-  $("#user-profile__submit").click(function() {
+  $(".user-profile__submit").click(function(event) {
+    event.preventDefault();
     var inputs = $("#user-profile__form").find("input:visible");
     for (var i = 0; i < inputs.length; i++) {
       if (!inputs[i].checkValidity()) {
         return false;
       }
     }
-    var address1 = $("#user-profile__address1").val();
-    var address2 = $("#user-profile__address2").val();
-    var city = $("#user-profile__city").val();
-    var state = $("#user-profile__state").val();
-    var zip = $("#user-profile__zip").val();
 
     sendAjaxAuthRequest(
       "accounts/update_profile/",
       {
-        address1: address1,
-        address2: address2,
-        city: city,
-        state: state,
-        zip_code: zip,
+        address1: $("#user-profile__address1").val(),
+        address2: $("#user-profile__address2").val(),
+        city: $("#user-profile__city").val(),
+        state: $("#user-profile__state").val(),
+        zip_code: $("#user-profile__zip").val(),
         next: document.location.pathname
       },
       function(err) {

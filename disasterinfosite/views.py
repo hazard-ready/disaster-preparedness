@@ -53,7 +53,6 @@ def create_user(request):
 def login_view(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
-    logging.debug(username, password)
     user = authenticate(username=username, password=password)
     if user is not None and user.is_active:
         # Correct password, and the user is marked "active"

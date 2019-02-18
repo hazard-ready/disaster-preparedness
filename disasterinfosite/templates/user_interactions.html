@@ -29,7 +29,7 @@
           <input type="password" id="user-login__password" required placeholder="{{ required }}" />
         </label>
         <div class="user-interaction__buttons">
-          <button class="button caps" id="user-login__submit">{{ log_in }}</button>
+          <button class="button caps user-login__submit">{{ log_in }}</button>
           <button class="button caps button--cancel">{{ cancel }}</button>
         </div>
       </form>
@@ -63,7 +63,7 @@
           <input type="text" id="user-signup__zip" />
         </label>
         <div class="user-interaction__buttons">
-          <button class="button caps" id="user-signup__submit">{{ sign_up }}</button>
+          <button class="button caps user-signup__submit">{{ sign_up }}</button>
           <button class="button caps button--cancel">{{ cancel }}</button>
         </div>
       </form>
@@ -107,7 +107,7 @@
           <input type="text" id="user-profile__zip" value="{{ profile.zip_code }}" />
         </label>
         <div class="user-interaction__buttons">
-          <button class="button caps" id="user-profile__submit">{% trans "Update" %}</button>
+          <button class="button caps user-profile__submit">{% trans "Update" %}</button>
           <button class="button caps button--cancel-update">{{ cancel }}</button>
         </div>
       </form>
