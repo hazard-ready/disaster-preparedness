@@ -2,11 +2,13 @@ from django.shortcuts import render
 from collections import OrderedDict
 from .models import Snugget, Location, SiteSettings, SupplyKit, ImportantLink, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile
 from .fire_dial import make_icon
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.utils import IntegrityError
 from django.views.decorators.csrf import ensure_csrf_cookie
+
+import logging
 
 def create_user(request):
     if request.method == 'POST':
@@ -60,6 +62,10 @@ def login_view(request):
     else:
         # Show an error page
         return HttpResponse(status=403)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponse(status=201)
 
 def update_profile(request):
     if request.method == 'POST' and request.user.is_authenticated:

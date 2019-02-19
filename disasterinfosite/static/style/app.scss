@@ -411,6 +411,13 @@ input:invalid {
   border-width: 2px;
 }
 
+form:invalid {
+  .button--submit {
+    border-color: $medium-grey;
+    background-color: $medium-grey;
+  }
+}
+
 .select {
   height: 38px;
   width: auto;

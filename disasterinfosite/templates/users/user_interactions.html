@@ -1,0 +1,42 @@
+{% load i18n %}
+
+{% trans "Log In" as log_in %}
+{% trans "Sign Up" as sign_up %}
+{% trans "Cancel" as cancel %}
+
+<div role="form" id="user-interaction-container" tabindex="-1" aria-label="signup-login">
+  {% if username and profile %}
+    <div id="user-button-container--logged-in">
+      <p><strong>{% trans "Welcome back!" %}</strong></p>
+      <p>
+        {% blocktrans %}If your username isn't {{ username }}, you might want to log out.{% endblocktrans %}
+      </p>
+      {% include "users/user_interaction_buttons.html" %}
+    </div>
+  {% else %}
+    {% include "users/user_why_sign_up.html" %}
+  {% endif %}
+
+  {% include "users/user_login.html" %}
+
+  {% include "users/user_signup.html" %}
+    <div id="user-info-container" tabindex="-1">
+     {% if username %}
+        <p>{% blocktrans %}Welcome back, {{ username }}!{% endblocktrans %}</p>
+        {% include "users/user_interaction_buttons.html" %}
+     {% else %}
+       <p>{% trans "We're logging you in. Just a moment..." %}</p>
+     {% endif %}
+    </div>
+    <div id="user-info-container--invalid"  tabindex="-1">
+      <p>{% trans "Whoops, it looks like that username or password didn't work." %}</p>
+      {% include "users/user_interaction_buttons.html" %}
+    </div>
+  {% if username and profile %}
+    {% include "users/user_profile.html" %}
+  {% endif %}
+  <div id="failure-container" tabindex="-1">
+    <p>{% trans "Whoops, we're not sure what happened there. Maybe you should try again." %}</p>
+    {% include "users/user_interaction_buttons.html" %}
+  </div>
+</div>
