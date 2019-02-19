@@ -27,6 +27,17 @@ function sendAjaxAuthRequest(url, data) {
   });
 }
 
+function formInputsAreValid($formSelector) {
+  var inputs = $formSelector.find("input:visible");
+  for (var i = 0; i < inputs.length; i++) {
+    if (!inputs[i].checkValidity()) {
+      console.log(inputs[i], "invalid");
+      return false;
+    }
+  }
+  return true;
+}
+
 function setValueOnFocus(el, value) {
   el.focus(function() {
     if (el.val() === "") {
@@ -81,6 +92,15 @@ $(document).ready(function() {
     $("#user-profile-container").show();
   });
 
+  requiredFocus($("#user-signup__username"));
+  requiredFocus($("#user-signup__password"));
+  requiredBlur($("#user-signup__username"), "Valid email address required.");
+  requiredBlur($("#user-signup__password"), "Required");
+
+  // You can use these if the area this app covers makes them useful
+  setValueOnFocus($("#user-signup__state"), "MT");
+  setValueOnFocus($("#user-signup__zip"), "598");
+
   $(".button--logout").click(function(event) {
     event.preventDefault();
     sendAjaxAuthRequest("accounts/logout/")
@@ -94,61 +114,38 @@ $(document).ready(function() {
       });
   });
 
-  requiredFocus($("#user-signup__username"));
-  requiredFocus($("#user-signup__password"));
-  requiredBlur($("#user-signup__username"), "Valid email address required.");
-  requiredBlur($("#user-signup__password"), "Required");
-  setValueOnFocus($("#user-signup__state"), "MT");
-  setValueOnFocus($("#user-signup__zip"), "598");
-
   $(".user-signup__submit").click(function(event) {
     event.preventDefault();
 
-    var inputs = $("#user-signup__form").find("input:visible");
-    for (var i = 0; i < inputs.length; i++) {
-      if (!inputs[i].checkValidity()) {
-        return false;
-      }
+    if (!formInputsAreValid($("#user-signup__form"))) {
+      return false;
     }
 
-    var username = $("#user-signup__username").val();
-    var password = $("#user-signup__password").val();
-    var address1 = $("#user-signup__address1").val();
-    var address2 = $("#user-signup__address2").val();
-    var city = $("#user-signup__city").val();
-    var state = $("#user-signup__state").val();
-    var zip = $("#user-signup__zip").val();
-
-    sendAjaxAuthRequest(
-      "accounts/create_user/",
-      {
-        username: username,
-        password: password,
-        address1: address1,
-        address2: address2,
-        city: city,
-        state: state,
-        zip_code: zip,
-        next: document.location.pathname
-      },
-      function(err) {
-        $("#user-signup-container").hide();
-        $("#failure-container").show();
-      },
-      function() {
-        $("#user-signup-container").hide();
+    sendAjaxAuthRequest("accounts/create_user/", {
+      username: $("#user-signup__username").val(),
+      password: $("#user-signup__password").val(),
+      address1: $("#user-signup__address1").val(),
+      address2: $("#user-signup__address2").val(),
+      city: $("#user-signup__city").val(),
+      state: $("#user-signup__state").val(),
+      zip_code: $("#user-signup__zip").val(),
+      next: document.location.pathname
+    })
+      .then(function() {
         $("#user-signup-result-container").show();
-      }
-    );
+      })
+      .catch(function(err) {
+        $("#failure-container").show();
+      })
+      .always(function() {
+        $("#user-signup-container").hide();
+      });
   });
 
   $(".user-login__submit").click(function(event) {
     event.preventDefault();
-    var inputs = $("#user-login__form").find("input:visible");
-    for (var i = 0; i < inputs.length; i++) {
-      if (!inputs[i].checkValidity()) {
-        return false;
-      }
+    if (!formInputsAreValid($("#user-login__form"))) {
+      return false;
     }
 
     sendAjaxAuthRequest("accounts/login/", {
@@ -158,8 +155,6 @@ $(document).ready(function() {
       .then(function() {
         location.hash = "user-interaction-container";
         location.reload(true);
-        $("#user-login-container").hide();
-        $("#user-info-container").show();
       })
       .catch(function(error) {
         $("#user-login-container").hide();
@@ -169,31 +164,26 @@ $(document).ready(function() {
 
   $(".user-profile__submit").click(function(event) {
     event.preventDefault();
-    var inputs = $("#user-profile__form").find("input:visible");
-    for (var i = 0; i < inputs.length; i++) {
-      if (!inputs[i].checkValidity()) {
-        return false;
-      }
+    if (!formInputsAreValid($("#user-profile__form"))) {
+      return false;
     }
 
-    sendAjaxAuthRequest(
-      "accounts/update_profile/",
-      {
-        address1: $("#user-profile__address1").val(),
-        address2: $("#user-profile__address2").val(),
-        city: $("#user-profile__city").val(),
-        state: $("#user-profile__state").val(),
-        zip_code: $("#user-profile__zip").val(),
-        next: document.location.pathname
-      },
-      function(err) {
-        $("#user-profile-container").hide();
-        $("#failure-container").show();
-      },
-      function() {
-        $("#user-profile-container").hide();
+    sendAjaxAuthRequest("accounts/update_profile/", {
+      address1: $("#user-profile__address1").val(),
+      address2: $("#user-profile__address2").val(),
+      city: $("#user-profile__city").val(),
+      state: $("#user-profile__state").val(),
+      zip_code: $("#user-profile__zip").val(),
+      next: document.location.pathname
+    })
+      .then(function() {
         $("#user-profile-result-container").show();
-      }
-    );
+      })
+      .catch(function(err) {
+        $("#failure-container").show();
+      })
+      .always(function() {
+        $("#user-profile-container").hide();
+      });
   });
 });
