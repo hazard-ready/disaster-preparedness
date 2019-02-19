@@ -61,31 +61,36 @@ function requiredBlur(el, text) {
 }
 
 $(document).ready(function() {
-  $(".button--signup").click(function() {
+  $(".button--signup").click(function(event) {
+    event.preventDefault();
     $("#user-button-container").hide();
     $("#failure-container").hide();
     $("#user-signup-container").show();
   });
 
-  $(".button--login").click(function() {
+  $(".button--login").click(function(event) {
+    event.preventDefault();
     $("#user-button-container").hide();
     $("#user-info-container--invalid").hide();
     $("#failure-container").hide();
     $("#user-login-container").show();
   });
 
-  $(".button--cancel").click(function() {
+  $(".button--cancel").click(function(event) {
+    event.preventDefault();
     $("#user-signup-container").hide();
     $("#user-login-container").hide();
     $("#user-button-container").show();
   });
 
-  $(".button--cancel-update").click(function() {
+  $(".button--cancel-update").click(function(event) {
+    event.preventDefault();
     $("#user-profile-container").hide();
     $("#user-info-container").show();
   });
 
-  $(".button--update").click(function() {
+  $(".button--update").click(function(event) {
+    event.preventDefault();
     $("#user-info-container").hide();
     $("#user-button-container--logged-in").hide();
     $("#failure-container").hide();
