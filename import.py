@@ -190,14 +190,18 @@ def simplifyShapefile(original, outputDir, tolerance):
 
 
 def askUserForFieldNames(sf, stem):
-  fieldNames = [x[0] for x in sf.fields[1:]]
-  print("Found the following fields in the attribute table:")
-  print(str(fieldNames).strip("[]").replace("'",""))
-  print("Which would you like to use to look up snuggets by?")
   keyField = False
-  while keyField not in fieldNames:
-    keyField = input(">> ")
-  print("Generating code for", stem, "using", keyField, "to look up snuggets.")
+  fieldNames = [x[0] for x in sf.fields[1:]]
+  if 'lookup_val' in fieldNames:
+    print("Found lookup_val as a field in the attribute table; using that.")
+    keyField = 'lookup_val'
+  else:
+    print("Found the following fields in the attribute table:")
+    print(str(fieldNames).strip("[]").replace("'",""))
+    print("Which would you like to use to look up snuggets by?")
+    while keyField not in fieldNames:
+      keyField = input(">> ")
+    print("Generating code for", stem, "using", keyField, "to look up snuggets.")
   return keyField
 
 
