@@ -165,7 +165,7 @@ def processShapefile(f, stem, inputDir, outputDir, srs, keyField):
       "-dialect", "sqlite", "-sql", sqlCmd,
       "-t_srs", srs
     ]
-    subprocess.call(ogrCmd)
+    subprocess.run(ogrCmd, check=True)
   return reprojected
 
 
@@ -183,25 +183,34 @@ def simplifyShapefile(original, outputDir, tolerance):
       original,
       "-simplify", tolerance
     ]
-    subprocess.call(ogrCmd)
+    subprocess.run(ogrCmd, check=True)
     print(original, "simplified.")
   return simplified
 
 
 
 def askUserForFieldNames(sf, stem):
-  keyField = False
   fieldNames = [x[0] for x in sf.fields[1:]]
-  if 'lookup_val' in fieldNames:
-    print("Found lookup_val as a field in the attribute table; using that.")
-    keyField = 'lookup_val'
-  else:
-    print("Found the following fields in the attribute table:")
-    print(str(fieldNames).strip("[]").replace("'",""))
-    print("Which would you like to use to look up snuggets by?")
-    while keyField not in fieldNames:
-      keyField = input(">> ")
-    print("Generating code for", stem, "using", keyField, "to look up snuggets.")
+
+  # If there is only one fieldname, use that for snugget lookup
+  if len(fieldNames) == 1:
+    print(fieldNames[0], "is the only field in the attribute table; using that.")
+    return fieldNames[0]
+
+  # If we have one of these common field names that we use for snugget lookup, automatically use it
+  defaultFieldNames = ['lookup_val', 'Lookup_val']
+  for name in defaultFieldNames:
+    if name in fieldNames:
+      print("Found", name, "as a field in the attribute table; using that.")
+      return name
+
+  keyField = False
+  print("Found the following fields in the attribute table:")
+  print(str(fieldNames).strip("[]").replace("'",""))
+  print("Which would you like to use to look up snuggets by?")
+  while keyField not in fieldNames:
+    keyField = input(">> ")
+  print("Generating code for", stem, "using", keyField, "to look up snuggets.")
   return keyField
 
 
