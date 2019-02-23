@@ -26,3 +26,5 @@ def run(verbose=True):
 # END OF GENERATED CODE BLOCK
 ######################################################
 
+    print('Data load finished.')
+
