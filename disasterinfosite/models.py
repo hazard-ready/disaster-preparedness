@@ -10,12 +10,15 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
 SNUG_TEXT = 0
-SNUG_AUDIO = 1
-SNUG_VID = 2
+SNUG_VIDEO = 1
+SNUG_SLIDESHOW = 2
 
 SNUGGET_TYPES = (
                  ('SNUG_TEXT', 'TextSnugget'),
-                 )
+                 ('SNUG_VIDEO', 'EmbedSnugget'),
+                 ('SNUG_SLIDESHOW', 'SlideshowSnugget')
+                )
+
 class UserProfile(models.Model):
     """ A model representing a user's information that isn't their username, password, or email address """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -231,19 +234,16 @@ class SnuggetSection(models.Model):
     def __str__(self):
         return self.name
 
-
-class SnuggetSubSection(models.Model):
-    name = models.CharField(max_length=50)
-    display_name = models.CharField(max_length=50, help_text="The name to show for this section", default="")
-    order_of_appearance = models.IntegerField(
-        default=0,
-        help_text="The order in which you'd like this to appear in the section. 0 is at the top. These can be in different sections or mutually exclusive, hence the non-unique values."
-    )
+class SnuggetPopOut(models.Model):
+    # image = #what
+    # link = #what
+    # alt_text = #what
+    # html = #what
 
     def __str__(self):
-        return self.name
+        return self.html
 
-@receiver(pre_save, sender=SnuggetSection)
+
 @receiver(pre_save, sender=SnuggetSection)
 @receiver(pre_save, sender=ShapefileGroup)
 def default_display_name(sender, instance, *args, **kwargs):
@@ -262,8 +262,8 @@ class Snugget(models.Model):
 ######################################################
 
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
-    sub_section = models.ForeignKey(SnuggetSubSection, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
     group = models.ForeignKey(ShapefileGroup, on_delete=models.PROTECT, null=True)
+    pop_out = models.ForeignKey(SnuggetPopOut, on_delete=models.PROTECT, blank=True, null=True)
 
     def getRelatedTemplate(self):
         return "snugget.html"
@@ -312,8 +312,18 @@ class EmbedSnugget(Snugget):
     def __str__(self):
         return "Embed Snugget: " + str(self.embed)
 
+
+class SlideshowSnugget(Snugget):
+    # todo: what goes in here? Anything else?
+    def getRelatedTemplate(self):
+        return "snugget_slideshow.html"
+
+    def __str__(self):
+        return "Slideshow Snugget: "
+
+
 class PastEventsPhoto(models.Model):
-    group = models.ForeignKey(ShapefileGroup, on_delete=models.PROTECT, null=True)
+    group = models.ForeignKey(SlideshowSnugget, on_delete=models.PROTECT)
     image = models.ImageField(upload_to="photos")
     caption = models.TextField(default="", max_length=200)
 

@@ -77,6 +77,7 @@ def main():
       loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
       loadMappings += "}\n\n"
       loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + simplified + "'))\n"
+      loadImports += "    print('Loading data for " + stem + "')\n"
       loadImports += "    from .models import " + stem + "\n"
       loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
       loadImports += "    lm_" + stem + ".save(strict=True, verbose=verbose)\n\n"
@@ -96,11 +97,11 @@ def main():
   adminModelImports += "\n"
 
   # assembling the complete lists for the start of class SnuggetAdmin in admin.py
-  adminLists  = "    list_display = ('shortname', 'section', 'sub_section', " + adminFilterRefs + ")\n"
-  adminLists += "    list_filter = ('section', 'sub_section', " + adminFilterRefs + ")\n\n"
+  adminLists  = "    list_display = ('shortname', 'section', " + adminFilterRefs + ")\n"
+  adminLists += "    list_filter = ('section', " + adminFilterRefs + ")\n\n"
   adminLists += "    fieldsets = (\n"
   adminLists += "        (None, {\n"
-  adminLists += "            'fields': ('section', 'sub_section')\n"
+  adminLists += "            'fields': ('section',)\n"
   adminLists += "        }),\n"
   adminLists += "        ('Filters', {\n"
   adminLists += "            'description': 'Choose a filter value this snugget will show up for.  It is recommended you only select a value for one filter and leave the rest empty.',\n"
@@ -304,7 +305,7 @@ def findFieldType(sf, fieldName):
 def modelClassGen(stem, sf, keyField, srs, shapeType, shapefileGroup):
   text  = "class " + stem + "(models.Model):\n"
   text += "    def getGroup():\n"
-  text += "        return ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')[0].id\n\n"
+  text += "        return ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')[0]\n\n"
   text += "    " + keyField.lower() + " = models." + findFieldType(sf, keyField) + "\n"
   text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
   text += "    objects = ShapeManager()\n\n"
