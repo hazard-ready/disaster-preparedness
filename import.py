@@ -77,6 +77,7 @@ def main():
       loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
       loadMappings += "}\n\n"
       loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + simplified + "'))\n"
+      loadImports += "    print('Loading data for " + stem + "')\n"
       loadImports += "    from .models import " + stem + "\n"
       loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
       loadImports += "    lm_" + stem + ".save(strict=True, verbose=verbose)\n\n"
@@ -165,7 +166,7 @@ def processShapefile(f, stem, inputDir, outputDir, srs, keyField):
       "-dialect", "sqlite", "-sql", sqlCmd,
       "-t_srs", srs
     ]
-    subprocess.call(ogrCmd)
+    subprocess.run(ogrCmd, check=True)
   return reprojected
 
 
@@ -183,7 +184,7 @@ def simplifyShapefile(original, outputDir, tolerance):
       original,
       "-simplify", tolerance
     ]
-    subprocess.call(ogrCmd)
+    subprocess.run(ogrCmd, check=True)
     print(original, "simplified.")
   return simplified
 
@@ -191,10 +192,23 @@ def simplifyShapefile(original, outputDir, tolerance):
 
 def askUserForFieldNames(sf, stem):
   fieldNames = [x[0] for x in sf.fields[1:]]
+
+  # If there is only one fieldname, use that for snugget lookup
+  if len(fieldNames) == 1:
+    print(fieldNames[0], "is the only field in the attribute table; using that.")
+    return fieldNames[0]
+
+  # If we have one of these common field names that we use for snugget lookup, automatically use it
+  defaultFieldNames = ['lookup_val', 'Lookup_val']
+  for name in defaultFieldNames:
+    if name in fieldNames:
+      print("Found", name, "as a field in the attribute table; using that.")
+      return name
+
+  keyField = False
   print("Found the following fields in the attribute table:")
   print(str(fieldNames).strip("[]").replace("'",""))
   print("Which would you like to use to look up snuggets by?")
-  keyField = False
   while keyField not in fieldNames:
     keyField = input(">> ")
   print("Generating code for", stem, "using", keyField, "to look up snuggets.")
