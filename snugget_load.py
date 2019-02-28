@@ -1,6 +1,5 @@
 import os
 import csv
-import psycopg2
 
 from django.contrib.contenttypes.models import ContentType
 from disasterinfosite.models import *
@@ -17,29 +16,15 @@ optionalFields = ['heading', 'intensity', 'image', 'lookup_value', 'txt_location
 
 def run():
   overwriteAll = False
-  try:
-    dbURL = os.environ['DATABASE_URL']
-  except:
-    print("Error: DATABASE_URL environment variable is not set. See README.md for how to set it.")
-    exit()
 
-# dbURL should be in the form protocol://user:password@host:port/databasename
-  dbParts = [x.split('/') for x in dbURL.split('@')]
-  dbHost = dbParts[1][0].split(":")[0]
-  dbPort = dbParts[1][0].split(":")[1]
-  dbUser = dbParts[0][2].split(":")[0]
-  dbPass = dbParts[0][2].split(":")[1]
-  dbName = dbParts[1][1]
+  with open(snuggetFile) as csvFile:
+    newSnuggets = csv.DictReader(csvFile)
+    rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
+    for row in newSnuggets:
+      rowCount += 1
+      if allRequiredFieldsPresent(row, rowCount):
+        overwriteAll = processRow(row, overwriteAll)
 
-  with psycopg2.connect(host=dbHost, port=dbPort, user=dbUser, password=dbPass, database=dbName) as conn:
-    with conn.cursor() as cur:
-      with open(snuggetFile) as csvFile:
-        newSnuggets = csv.DictReader(csvFile)
-        rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
-        for row in newSnuggets:
-          rowCount += 1
-          if allRequiredFieldsPresent(row, rowCount):
-            overwriteAll = processRow(cur, row, overwriteAll)
   print("Snugget load complete. Processed", rowCount, "rows in", snuggetFile)
 
 
@@ -64,9 +49,7 @@ def allRequiredFieldsPresent(row, rowCount):
     return False
 
 
-
-
-def processRow(cur, row, overwriteAll):
+def processRow(row, overwriteAll):
   filterColumn = row["shapefile"] + "_filter"
   section, created = SnuggetSection.objects.get_or_create(name=row["section"])
 
@@ -83,7 +66,7 @@ def processRow(cur, row, overwriteAll):
     addTextSnugget(row, section, filterColumn, filterID)
     return overwriteAll
   else:
-    filterIDs = findAllFilterIDs(row["shapefile"], cur)
+    filterIDs = findAllFilterIDs(row)
     oldSnuggets = []
     for filterID in filterIDs:
       if filterID is None:
@@ -111,11 +94,12 @@ def getShapefileClass(row):
     print("If the shapefile exists, you may still need to run the migration and loading steps - see the 'Load some data' section of the readme file.")
     return None
 
+
 def getShapefileFilter(shapefile, filterVal):
   # The lookup value / filter field is the one from the shapefile that is not one of these.
   field = next(f for f in shapefile._meta.get_fields() if f.name not in ['id', 'geom', 'group'])
   kwargs = {field.name: filterVal}
-  if shapefile.objects.filter(**kwargs).exists()
+  if shapefile.objects.filter(**kwargs).exists():
     return shapefile.objects.get(**kwargs)
   else:
     print("Could not find a filter field for", shapefile)
@@ -143,12 +127,11 @@ def addTextSnugget(row, section, filterColumn, filterVal):
   snugget = TextSnugget.objects.create(**kwargs)
 
 
-def findAllFilterIDs(shapefile, cur):
-  ids = []
-  cur.execute("SELECT id FROM " + appName + "_" + shapefile + ";")
-  for row in cur.fetchall():
-    ids.extend(row)
-  return ids
+def findAllFilterIDs(row):
+  shapefile = getShapefileClass(row)
+  # The lookup value / filter field is the one from the shapefile that is not one of these.
+  field = next(f for f in shapefile._meta.get_fields() if f.name not in ['id', 'geom', 'group'])
+  return shapefile.objects.values_list(field.name, flat=True)
 
 
 def checkForSnugget(row, section, filterColumn, filterVal):
@@ -172,7 +155,6 @@ def askUserAboutOverwriting(row, oldSnugget, oldSnuggets, snuggetFile, overwrite
   if overwriteAll: # if it's already set, then don't do anything else
     return True
   else:
-    print(oldSnuggets)
     if oldSnugget is not None:
       print("In shapefile ", repr(row["shapefile"]), " there is already a snugget defined for section " , repr(row["section"]), ", intensity ", repr(row["lookup_value"]), " with the following text content:", sep="")
       print(oldSnugget)
@@ -198,8 +180,3 @@ def askUserAboutOverwriting(row, oldSnugget, oldSnuggets, snuggetFile, overwrite
       return True
     elif response == "R":
       return False
-
-
-
-if __name__ == "__main__":
-  main()
