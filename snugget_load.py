@@ -75,7 +75,7 @@ def processRow(row, overwriteAll):
         print("Because no filter for lookup_value", row["lookup_value"], "was found in", row["shapefile"])
         return overwriteAll
       else:
-        oldSnugget = checkForSnugget(row, sectionID, filterColumn, filterID)
+        oldSnugget = checkForSnugget(row, section, filterColumn, filterID)
         if oldSnugget is not None and oldSnugget not in oldSnuggets:
           oldSnuggets.append(oldSnugget)
       overwriteAll = askUserAboutOverwriting(row, None, oldSnuggets, snuggetFile, overwriteAll)
@@ -138,7 +138,7 @@ def checkForSnugget(row, section, filterColumn, filterVal):
   shapefile = getShapefileClass(row)
   kwargs = {'section': section.id, filterColumn: getShapefileFilter(shapefile, filterVal)}
   if Snugget.objects.filter(**kwargs).exists():
-    return Snugget.objects.get(**kwargs)
+    return Snugget.objects.select_subclasses().get(**kwargs)
   else:
     return None
 
