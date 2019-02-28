@@ -1,16 +1,22 @@
 import os
 import csv
-
 import psycopg2
 
-def main():
-  appName = "disasterinfosite"
-  appDir = "disasterinfosite"
-  dataDir = os.path.join(appDir, "data")
-  snuggetFile = os.path.join(dataDir, "snuggets.csv")
-  overwriteAll = False
-  optionalFields = ['intensity', 'image', 'lookup_value', ''] # all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
+from django.contrib.contenttypes.models import ContentType
+from disasterinfosite.models import *
 
+currentPath = os.path.dirname(__file__)
+appName = "disasterinfosite"
+appDir = os.path.join(currentPath, "disasterinfosite")
+dataDir = os.path.join(appDir, "data")
+snuggetFile = os.path.join(dataDir, "snuggets.csv")
+
+requiredFields = ['shapefile', 'section', 'subsection']
+# all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
+optionalFields = ['heading', 'intensity', 'image', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'intensity_txt', 'text', '']
+
+def run():
+  overwriteAll = False
   try:
     dbURL = os.environ['DATABASE_URL']
   except:
@@ -32,15 +38,12 @@ def main():
         rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
         for row in newSnuggets:
           rowCount += 1
-          if allRequiredFieldsPresent(row, optionalFields, rowCount):
-            overwriteAll = processRow(appName, snuggetFile, cur, overwriteAll, row)
+          if allRequiredFieldsPresent(row, rowCount):
+            overwriteAll = processRow(cur, row, overwriteAll)
   print("Snugget load complete. Processed", rowCount, "rows in", snuggetFile)
 
 
-
-
-
-def allRequiredFieldsPresent(row, optionalFields, rowCount):
+def allRequiredFieldsPresent(row, rowCount):
   if any(a != '' for a in row.values()): # if the entire row is not empty
     blanks = []
     for key in row.keys():
@@ -63,121 +66,84 @@ def allRequiredFieldsPresent(row, optionalFields, rowCount):
 
 
 
-def processRow(appName, snuggetFile, cur, overwriteAll, row):
-  filterColumn = row["shapefile"] + "_filter_id"
-  sectionID = getSectionID(appName, row["section"], cur, subsection=False)
-  subsectionID = getSectionID(appName, row["subsection"], cur, subsection=True)
+def processRow(cur, row, overwriteAll):
+  filterColumn = row["shapefile"] + "_filter"
+  section, created = SnuggetSection.objects.get_or_create(name=row["section"])
+
+  if created:
+    print("Created a new snugget section: ", row["section"])
 
   # check if a snugget for this data already exists
   # if we have a lookup value then deal with this value specifically:
   if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
-    filterIDs = [findFilterID(appName, row["shapefile"], row["lookup_value"], cur)]
-    if filterIDs[0] is None:
-      print("Skipping row:")
-      print(row)
-      print("Because no filter for lookup_value", row["lookup_value"], "was found in", row["shapefile"])
-      return overwriteAll
-    else:
-      oldSnugget = checkForSnugget(appName, sectionID, subsectionID, filterColumn, filterIDs[0], cur)
-      overwriteAll = askUserAboutOverwriting(row, oldSnugget, [], snuggetFile, overwriteAll)
+    filterID = row["lookup_value"]
+    oldSnugget = checkForSnugget(row, section, filterColumn, filterID)
+    overwriteAll = askUserAboutOverwriting(row, oldSnugget, [], snuggetFile, overwriteAll)
+    removeOldSnugget(row, section, filterColumn, filterID)
+    addTextSnugget(row, section, filterColumn, filterID)
+    return overwriteAll
   else:
-    filterIDs = findAllFilterIDs(appName, row["shapefile"], cur)
+    filterIDs = findAllFilterIDs(row["shapefile"], cur)
     oldSnuggets = []
     for filterID in filterIDs:
-      oldSnugget = checkForSnugget(appName, sectionID, subsectionID, filterColumn, filterID, cur)
-      if oldSnugget is not None and oldSnugget not in oldSnuggets:
-        oldSnuggets.append(oldSnugget)
-    overwriteAll = askUserAboutOverwriting(row, None, oldSnuggets, snuggetFile, overwriteAll)
+      if filterID is None:
+        print("Skipping row:")
+        print(row)
+        print("Because no filter for lookup_value", row["lookup_value"], "was found in", row["shapefile"])
+        return overwriteAll
+      else:
+        oldSnugget = checkForSnugget(row, sectionID, filterColumn, filterID)
+        if oldSnugget is not None and oldSnugget not in oldSnuggets:
+          oldSnuggets.append(oldSnugget)
+      overwriteAll = askUserAboutOverwriting(row, None, oldSnuggets, snuggetFile, overwriteAll)
+      removeOldSnugget(row, section, filterColumn, filterID)
+      addTextSnugget(row, section, filterColumn, filterID)
 
-  for filterID in filterIDs:
-    removeOldSnugget(appName, sectionID, subsectionID, filterColumn, filterID, cur)
-    addTextSnugget(appName, row, sectionID, subsectionID, filterColumn, filterID, cur)
+    return overwriteAll
 
-  return overwriteAll
-
-
-
-
-def addTextSnugget(appName, row, sectionID, subsectionID, filterColumn, filterID, cur):
-#   "intensity" -> disasterinfosite_textsnugget.percentage (numeric, null as null)
-#   "image" -> disasterinfosite_textsnugget.image
-#   "text" -> disasterinfosite_textsnugget.content
-  if row["intensity"] == '':
-    row["intensity"] = None
-  groupID = getGroupID(appName, row["shapefile"], cur)
-  cur.execute(
-    'INSERT INTO ' + appName + '_snugget (section_id, sub_section_id, group_id, "' + filterColumn + '") VALUES (%s, %s, %s, %s);',
-    (str(sectionID), str(subsectionID), str(groupID), str(filterID))
-  )
-  snuggetID = getSnuggetID(appName, sectionID, subsectionID, filterColumn, filterID, cur);
-  cur.execute(
-    'INSERT INTO ' + appName + '_textsnugget (snugget_ptr_id, content, image, percentage) VALUES (%s, %s, %s, %s);',
-    (snuggetID, row["text"], row["image"], row["intensity"])
-  )
-  # For extra credit, set the group's display_name to the heading value.
-
-
-def readColumnsFrom(appName, table, cur):
-  cols = []
-  cur.execute(
-    "SELECT column_name FROM information_schema.columns WHERE table_name = %s;",
-    [appName + "_" + table.lower()]
-  )
-  for row in cur.fetchall():
-    cols.append(row[0])
-  return cols
-
-
-
-
-
-def getSectionID(appName, sectionName, cur, subsection=False):
-  if subsection:
-    tableName = appName + "_snuggetsubsection"
-  else:
-    tableName = appName + "_snuggetsection"
-
-  cur.execute("SELECT MIN(id) FROM " + tableName + " WHERE name = %s;", [sectionName])
-  sectionID = cur.fetchone()[0]
-  if sectionID is not None:
-    return sectionID
-  else: # if no sectionID was found then we need to create the section
-    cur.execute("INSERT INTO " + tableName + "(name, order_of_appearance) VALUES(%s, %s);", (sectionName, 0))
-    cur.execute("SELECT id FROM " + tableName + " WHERE name = %s;", [sectionName])
-    sectionID = cur.fetchone()[0]
-    return sectionID
-
-
-def getGroupID(appName, shapefile, cur):
-  group_table = appName + "_ShapefileGroup"
-  shapefile_table = appName + "_" + shapefile
-  cur.execute("SELECT " + group_table + ".id FROM " + group_table + ", " + shapefile_table + " WHERE " + group_table + ".id=" + shapefile_table + ".group_id")
-  ref = cur.fetchone()
-  if ref is not None:
-    return str(ref[0])
-  else:
-    print("Could not find a group for the shapefile", shapefile)
-
-
-def findFilterID(appName, shapefile, key, cur):
-  cols = readColumnsFrom(appName, shapefile, cur)
-  if len(cols) > 0:
-    keyColumn = cols[1]
-    cur.execute("SELECT id FROM " + appName + "_" + shapefile + " WHERE " + keyColumn + "::text = %s;", [key])
-    ref = cur.fetchone()
-    if ref is not None:
-      return str(ref[0])
-    else: # if cur.fetchone() returns None it means that no matching id was found
-      return None
-  else: # if readColumnsFrom() returns an empty list it means that nothing was found in the database for the shapefile name we read from snuggetFile
-    print("No shapefile with the name", shapefile, "appears to have been loaded.")
+def getShapefileClass(row):
+  modelName = row["shapefile"].lower()
+  if ContentType.objects.filter(app_label=appName, model=modelName).exists():
+    shapefile = ContentType.objects.get(app_label=appName, model=modelName).model_class()
+    return shapefile
+  else:  # this means that nothing was found in the database for the shapefile name we read from snuggetFile
+    print("No shapefile with the name", row["shapefile"], "appears to have been loaded.")
     print("If the shapefile exists, you may still need to run the migration and loading steps - see the 'Load some data' section of the readme file.")
     return None
 
+def getShapefileFilter(shapefile, filterVal):
+  # The lookup value / filter field is the one from the shapefile that is not one of these.
+  field = next(f for f in shapefile._meta.get_fields() if f.name not in ['id', 'geom', 'group'])
+  kwargs = {field.name: filterVal}
+  if shapefile.objects.filter(**kwargs).exists()
+    return shapefile.objects.get(**kwargs)
+  else:
+    print("Could not find a filter field for", shapefile)
+    return None
 
 
+def addTextSnugget(row, section, filterColumn, filterVal):
+#   "intensity" -> disasterinfosite_textsnugget.percentage (numeric, null as null)
+#   "text" -> disasterinfosite_textsnugget.content
+#   "heading" -> disasterinfosite_textsnugget.display_name
+  if row["intensity"] == '':
+    row["intensity"] = None
+  shapefile = getShapefileClass(row)
+  group = shapefile.getGroup()
+  shapefileFilter = getShapefileFilter(shapefile, filterVal)
 
-def findAllFilterIDs(appName, shapefile, cur):
+  kwargs = {
+  'section': section,
+  'group': group,
+  filterColumn: shapefileFilter,
+  'content': row["text"],
+  'percentage': row["intensity"],
+  }
+  print('creating snugget with:', kwargs)
+  snugget = TextSnugget.objects.create(**kwargs)
+
+
+def findAllFilterIDs(shapefile, cur):
   ids = []
   cur.execute("SELECT id FROM " + appName + "_" + shapefile + ";")
   for row in cur.fetchall():
@@ -185,59 +151,38 @@ def findAllFilterIDs(appName, shapefile, cur):
   return ids
 
 
-
-
-def getSnuggetID(appName, sectionID, subsectionID, filterColumn, filterID, cur):
-  cur.execute(
-    'SELECT MAX(id) FROM ' + appName + '_snugget WHERE section_id = %s AND sub_section_id = %s AND "' + filterColumn + '" = %s;',
-    (sectionID, subsectionID, filterID)
-  )
-  snuggetID = cur.fetchone()[0]
-  if snuggetID is not None:
-    return str(snuggetID)
+def checkForSnugget(row, section, filterColumn, filterVal):
+  shapefile = getShapefileClass(row)
+  kwargs = {'section': section.id, filterColumn: getShapefileFilter(shapefile, filterVal)}
+  if Snugget.objects.filter(**kwargs).exists():
+    return Snugget.objects.get(**kwargs)
   else:
     return None
 
 
-
-
-def checkForSnugget(appName, sectionID, subsectionID, filterColumn, filterID, cur):
-  try:
-    snuggetID = getSnuggetID(appName, sectionID, subsectionID, filterColumn, filterID, cur)
-    cur.execute("SELECT content FROM " + appName + "_textsnugget WHERE snugget_ptr_id = %s;", [snuggetID])
-    return cur.fetchone()[0]
-  except: # if nothing came back from the DB, just return None rather than failing
-    return None
-
-
-
-def removeOldSnugget(appName, sectionID, subsectionID, filterColumn, filterID, cur):
-  snuggetID = getSnuggetID(appName, sectionID, subsectionID, filterColumn, filterID, cur)
-  if snuggetID is not None:
-    cur.execute("DELETE FROM " + appName + "_textsnugget WHERE snugget_ptr_id = %s;", [snuggetID])
-    cur.execute("DELETE FROM " + appName + "_snugget WHERE id = %s;", [snuggetID])
-    print("Replacing snugget", snuggetID)
-
-
-
+def removeOldSnugget(row, section, filterColumn, filterVal):
+  shapefile = getShapefileClass(row)
+  kwargs = {'section': section.id, filterColumn: getShapefileFilter(shapefile, filterVal)}
+  Snugget.objects.filter(**kwargs).delete()
 
 
 # Check with the user about overwriting existing snuggets, giving them the options to:
 # either quit and check what's going on, or say "yes to all" and not get prompted again.
-def askUserAboutOverwriting(row, oldSnugget, oldSnuggets, snuggetFile, overwriteAlreadySet):
-  if overwriteAlreadySet: # if it's already set, then don't do anything else
+def askUserAboutOverwriting(row, oldSnugget, oldSnuggets, snuggetFile, overwriteAll):
+  if overwriteAll: # if it's already set, then don't do anything else
     return True
   else:
+    print(oldSnuggets)
     if oldSnugget is not None:
-      print("In shapefile ", repr(row["shapefile"]), " there is already a snugget defined for section " , repr(row["section"]), ", subsection ", repr(row["subsection"]), ", intensity ", repr(row["lookup_value"]), " with the following text content:", sep="")
+      print("In shapefile ", repr(row["shapefile"]), " there is already a snugget defined for section " , repr(row["section"]), ", intensity ", repr(row["lookup_value"]), " with the following text content:", sep="")
       print(oldSnugget)
     elif oldSnuggets != []:
-      print("In shapefile ", repr(row["shapefile"]), " there are existing snuggets for section" , repr(row["section"]), ", subsection ", repr(row["subsection"]), " with the following text content:", sep="")
+      print("In shapefile ", repr(row["shapefile"]), " there are existing snuggets for section" , repr(row["section"]), " with the following text content:", sep="")
       for snugget in oldSnuggets:
         print(snugget)
     else:
-      # if no existing snuggets were found, then we neither need to ask the user this time nor change overwriteAll in the calling function
-      return overwriteAlreadySet
+      # if no existing snuggets were found, then we neither need to ask the user this time nor change overwriteAll
+      return overwriteAll
 
     print("Please enter one of the following letters to choose how to proceed:")
     print("R: Replace the existing snugget[s] with the new value loaded from", snuggetFile, " and ask again for the next one.")
@@ -253,10 +198,6 @@ def askUserAboutOverwriting(row, oldSnugget, oldSnuggets, snuggetFile, overwrite
       return True
     elif response == "R":
       return False
-
-
-
-
 
 
 
