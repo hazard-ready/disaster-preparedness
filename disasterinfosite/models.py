@@ -235,13 +235,13 @@ class SnuggetSection(models.Model):
         return self.name
 
 class SnuggetPopOut(models.Model):
-    # image = #what
-    # link = #what
-    # alt_text = #what
-    # html = #what
+    text = models.TextField(default="")
+    image = models.ImageField(upload_to="popout_images")
+    link = models.TextField(default="", max_length=255)
+    alt_text = models.TextField(default="", max_length=255)
 
     def __str__(self):
-        return self.html
+        return self.text[:100]
 
 
 @receiver(pre_save, sender=SnuggetSection)
@@ -263,7 +263,7 @@ class Snugget(models.Model):
 
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
     group = models.ForeignKey(ShapefileGroup, on_delete=models.PROTECT, null=True)
-    pop_out = models.ForeignKey(SnuggetPopOut, on_delete=models.PROTECT, blank=True, null=True)
+    pop_out = models.OneToOneField(SnuggetPopOut, on_delete=models.PROTECT, blank=True, null=True)
 
     def getRelatedTemplate(self):
         return "snugget.html"
@@ -326,7 +326,7 @@ class SlideshowSnugget(Snugget):
 
 
 class PastEventsPhoto(models.Model):
-    group = models.ForeignKey(SlideshowSnugget, on_delete=models.PROTECT)
+    group = models.ForeignKey(SlideshowSnugget, on_delete=models.PROTECT, default=None)
     image = models.ImageField(upload_to="photos")
     caption = models.TextField(default="", max_length=200)
 

@@ -129,13 +129,14 @@ class Migration(migrations.Migration):
                 ('order_of_appearance', models.IntegerField(default=0, help_text="The order in which you'd like this to appear in the tab. 0 is at the top."))
             ],
         ),
-        migrations.CreateModel(
-            name='SnuggetSubSection',
+         migrations.CreateModel(
+            name='SnuggetPopOut',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('name', models.CharField(max_length=50)),
-                ('display_name', models.CharField(default="", help_text='The name to show for this section', max_length=50)),
-                ('order_of_appearance', models.IntegerField(default=0, help_text="The order in which you'd like this to appear in the section. 0 is at the top. These can be in different sections or mutually exclusive, hence the non-unique values."))
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('alt_text',models.TextField(default='', max_length=255)),
+                ('image', models.ImageField(upload_to='popout_images')),
+                ('link', models.TextField(default='', max_length=255)),
+                ('text', models.TextField(default='')),
             ],
         ),
         migrations.CreateModel(
@@ -143,9 +144,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('section', models.ForeignKey(to='disasterinfosite.SnuggetSection', on_delete=models.PROTECT, related_name='+')),
-                ('sub_section', models.ForeignKey(to='disasterinfosite.SnuggetSubSection', on_delete=models.PROTECT, related_name='+', blank=True, null=True)),
-                ('group', models.ForeignKey(to='disasterinfosite.ShapefileGroup', null=True, on_delete=models.PROTECT))
-
+                ('group', models.ForeignKey(to='disasterinfosite.ShapefileGroup', null=True, on_delete=models.PROTECT)),
+                ('pop_out', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='disasterinfosite.SnuggetPopOut')),
             ],
         ),
         migrations.CreateModel(
@@ -170,7 +170,7 @@ class Migration(migrations.Migration):
             name='PastEventsPhoto',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
-                ('group', models.ForeignKey(to='disasterinfosite.ShapefileGroup', null=True, on_delete=models.PROTECT)),
+                ('group', models.ForeignKey(default=None, on_delete=django.db.models.deletion.PROTECT, to='disasterinfosite.SlideshowSnugget')),
                 ('image', models.ImageField(upload_to='photos')),
                 ('caption', models.TextField(default="", max_length=200))
             ],
@@ -197,5 +197,17 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'User Profile',
             },
+        ),
+        migrations.CreateModel(
+            name='SlideshowSnugget',
+            fields=[
+                ('snugget_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='disasterinfosite.Snugget')),
+            ],
+            bases=('disasterinfosite.snugget',),
+        ),
+        migrations.AlterField(
+            model_name='snuggettype',
+            name='model_name',
+            field=models.CharField(choices=[('SNUG_TEXT', 'TextSnugget'), ('SNUG_VIDEO', 'EmbedSnugget'), ('SNUG_SLIDESHOW', 'SlideshowSnugget')], max_length=255),
         ),
     ]

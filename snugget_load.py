@@ -1,6 +1,7 @@
 import os
 import csv
 
+from django.core.files import File
 from django.contrib.contenttypes.models import ContentType
 from disasterinfosite.models import *
 
@@ -121,6 +122,22 @@ def getShapefileFilter(shapefile, filterVal):
     return None
 
 
+def addPopOutIfExists(row):
+  if (row["pop_out_image"] != '' or row["pop_out_txt"] != '' or row["pop_alt_txt"] != '' or row["pop_out_link"] != ''):
+    print('Creating pop-out section with values', row["pop_out_image"], row["pop_out_txt"], row["pop_alt_txt"], row["pop_out_link"] )
+    popout = SnuggetPopOut.objects.create(text=row["pop_out_txt"], alt_text=row["pop_alt_txt"], link=row["pop_out_link"])
+    if row["pop_out_image"] != '':
+      imageFile = os.path.join(dataDir, 'images/pop_out', row["pop_out_image"])
+      with open(imageFile, 'rb') as f:
+        data = File(f)
+        popout.image.save(row["pop_out_image"], data, True)
+
+    return popout
+  else:
+    return None
+
+
+
 def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
 #   "intensity" -> disasterinfosite_textsnugget.percentage (numeric, null as null)
 #   "text" -> disasterinfosite_textsnugget.content
@@ -139,6 +156,8 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
   }
   print('creating snugget with:', kwargs)
   snugget = TextSnugget.objects.create(**kwargs)
+  snugget.pop_out = addPopOutIfExists(row)
+  snugget.save()
 
 
 def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
