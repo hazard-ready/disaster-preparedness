@@ -304,6 +304,7 @@ class TextSnugget(Snugget):
 
 
 class EmbedSnugget(Snugget):
+    name = SNUGGET_TYPES[SNUG_VIDEO]
     embed = EmbedVideoField()
 
     def getRelatedTemplate(self):
@@ -314,6 +315,8 @@ class EmbedSnugget(Snugget):
 
 
 class SlideshowSnugget(Snugget):
+    name = SNUGGET_TYPES[SNUG_SLIDESHOW]
+
     # todo: what goes in here? Anything else?
     def getRelatedTemplate(self):
         return "snugget_slideshow.html"
