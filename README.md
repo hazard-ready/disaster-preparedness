@@ -127,8 +127,10 @@ to
 1. `python manage.py shell`
    1. [inside the shell that this opens] `from disasterinfosite import load`
    2. `load.run()`
-   3. `exit()` [to go back to the normal command line]
-1. `python snugget_load.py` to import text that will be displayed in the site. See [Adding New Data](#adding-new-data) below for an explanation of "snuggets" and the format of this file.
+   3. `import snugget_load`
+   4. `snugget_load.run()`
+   5. `exit()` [to go back to the normal command line]
+      The parts that have `snugget_load` are to import text that will be displayed in the site. See [Adding New Data](#adding-new-data) below for an explanation of "snuggets" and the format of this file.
 1. If this is your first time through, or you emptied the database before loading new data: `python manage.py createsuperuser` and follow the instructions to add a Django admin user
 1. If you don't already have web hosting set up, you can test your work on localhost:8000 with `python manage.py runserver`
 
