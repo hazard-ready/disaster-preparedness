@@ -50,6 +50,7 @@ def allRequiredFieldsPresent(row, rowCount):
 
 
 def processRow(row, overwriteAll):
+  shapefile = getShapefileClass(row)
   filterColumn = row["shapefile"] + "_filter"
   section, created = SnuggetSection.objects.get_or_create(name=row["section"])
 
@@ -59,30 +60,39 @@ def processRow(row, overwriteAll):
   # check if a snugget for this data already exists
   # if we have a lookup value then deal with this value specifically:
   if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
-    filterID = row["lookup_value"]
-    oldSnugget = checkForSnugget(row, section, filterColumn, filterID)
-    overwriteAll = askUserAboutOverwriting(row, oldSnugget, [], snuggetFile, overwriteAll)
-    removeOldSnugget(row, section, filterColumn, filterID)
-    addTextSnugget(row, section, filterColumn, filterID)
+    filterVal = row["lookup_value"]
+    oldSnugget = checkForSnugget(shapefile, section, filterColumn, filterVal)
+    overwriteAll = askUserAboutOverwriting(row, oldSnugget, overwriteAll)
+    processSnugget(row, shapefile, section, filterColumn, filterVal)
     return overwriteAll
   else:
-    filterIDs = findAllFilterIDs(row)
+    filterVals = findAllFilterVals(shapefile)
     oldSnuggets = []
-    for filterID in filterIDs:
-      if filterID is None:
+    for filterVal in filterVals:
+      if filterVal is None:
         print("Skipping row:")
         print(row)
         print("Because no filter for lookup_value", row["lookup_value"], "was found in", row["shapefile"])
         return overwriteAll
       else:
-        oldSnugget = checkForSnugget(row, section, filterColumn, filterID)
+        oldSnugget = checkForSnugget(shapefile, section, filterColumn, filterVal)
         if oldSnugget is not None and oldSnugget not in oldSnuggets:
           oldSnuggets.append(oldSnugget)
-      overwriteAll = askUserAboutOverwriting(row, None, oldSnuggets, snuggetFile, overwriteAll)
-      removeOldSnugget(row, section, filterColumn, filterID)
-      addTextSnugget(row, section, filterColumn, filterID)
+      overwriteAll = askUserAboutOverwriting(row, oldSnuggets, overwriteAll)
+      processSnugget(row, shapefile, section, filterColumn, filterVal)
 
     return overwriteAll
+
+
+def processSnugget(row, shapefile, section, filterColumn, filterVal):
+  removeOldSnugget(shapefile, section, filterColumn, filterVal)
+  if row["text"] is not '':
+    addTextSnugget(row, shapefile, section, filterColumn, filterVal)
+  elif row["video"] is not '':
+    addVideoSnugget(row, shapefile, section, filterColumn, filterVal)
+  elif row["slideshow_images"] is not '':
+    addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal)
+
 
 def getShapefileClass(row):
   modelName = row["shapefile"].lower()
@@ -95,10 +105,15 @@ def getShapefileClass(row):
     return None
 
 
-def getShapefileFilter(shapefile, filterVal):
+def getFilterFieldName(shapefile):
   # The lookup value / filter field is the one from the shapefile that is not one of these.
   field = next(f for f in shapefile._meta.get_fields() if f.name not in ['id', 'geom', 'group'])
-  kwargs = {field.name: filterVal}
+  return field.name
+
+
+def getShapefileFilter(shapefile, filterVal):
+  fieldName = getFilterFieldName(shapefile)
+  kwargs = {fieldName: filterVal}
   if shapefile.objects.filter(**kwargs).exists():
     return shapefile.objects.get(**kwargs)
   else:
@@ -106,13 +121,12 @@ def getShapefileFilter(shapefile, filterVal):
     return None
 
 
-def addTextSnugget(row, section, filterColumn, filterVal):
+def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
 #   "intensity" -> disasterinfosite_textsnugget.percentage (numeric, null as null)
 #   "text" -> disasterinfosite_textsnugget.content
 #   "heading" -> disasterinfosite_textsnugget.display_name
   if row["intensity"] == '':
     row["intensity"] = None
-  shapefile = getShapefileClass(row)
   group = shapefile.getGroup()
   shapefileFilter = getShapefileFilter(shapefile, filterVal)
 
@@ -127,40 +141,44 @@ def addTextSnugget(row, section, filterColumn, filterVal):
   snugget = TextSnugget.objects.create(**kwargs)
 
 
-def findAllFilterIDs(row):
-  shapefile = getShapefileClass(row)
-  # The lookup value / filter field is the one from the shapefile that is not one of these.
-  field = next(f for f in shapefile._meta.get_fields() if f.name not in ['id', 'geom', 'group'])
-  return shapefile.objects.values_list(field.name, flat=True)
+def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
+  pass
 
 
-def checkForSnugget(row, section, filterColumn, filterVal):
-  shapefile = getShapefileClass(row)
-  kwargs = {'section': section.id, filterColumn: getShapefileFilter(shapefile, filterVal)}
+def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
+  pass
+
+
+def findAllFilterVals(shapefile):
+  fieldName = getFilterFieldName(shapefile)
+  return shapefile.objects.values_list(fieldName, flat=True)
+
+
+def checkForSnugget(shapefile, section, filterColumn, filterVal):
+  kwargs = {'section': section, filterColumn: getShapefileFilter(shapefile, filterVal)}
   if Snugget.objects.filter(**kwargs).exists():
     return Snugget.objects.select_subclasses().get(**kwargs)
   else:
     return None
 
 
-def removeOldSnugget(row, section, filterColumn, filterVal):
-  shapefile = getShapefileClass(row)
-  kwargs = {'section': section.id, filterColumn: getShapefileFilter(shapefile, filterVal)}
+def removeOldSnugget(shapefile, section, filterColumn, filterVal):
+  kwargs = {'section': section, filterColumn: getShapefileFilter(shapefile, filterVal)}
   Snugget.objects.filter(**kwargs).delete()
 
 
 # Check with the user about overwriting existing snuggets, giving them the options to:
 # either quit and check what's going on, or say "yes to all" and not get prompted again.
-def askUserAboutOverwriting(row, oldSnugget, oldSnuggets, snuggetFile, overwriteAll):
+def askUserAboutOverwriting(row, old, overwriteAll):
   if overwriteAll: # if it's already set, then don't do anything else
     return True
   else:
-    if oldSnugget is not None:
+    if old is not None and not isinstance(old, list):
       print("In shapefile ", repr(row["shapefile"]), " there is already a snugget defined for section " , repr(row["section"]), ", intensity ", repr(row["lookup_value"]), " with the following text content:", sep="")
-      print(oldSnugget)
-    elif oldSnuggets != []:
+      print(old)
+    elif isinstance(old, list):
       print("In shapefile ", repr(row["shapefile"]), " there are existing snuggets for section" , repr(row["section"]), " with the following text content:", sep="")
-      for snugget in oldSnuggets:
+      for snugget in old:
         print(snugget)
     else:
       # if no existing snuggets were found, then we neither need to ask the user this time nor change overwriteAll
