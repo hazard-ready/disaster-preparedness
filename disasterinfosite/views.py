@@ -122,25 +122,13 @@ def app_view(request):
                             if not text_snugget.image:
                                 text_snugget.dynamic_image = make_icon(text_snugget.percentage)
                             if not text_snugget.section in sections:
-                                sections[text_snugget.section] = {}
-                            if text_snugget.sub_section in sections[text_snugget.section]:
-                                sections[text_snugget.section][text_snugget.sub_section].append(text_snugget)
-                            else:
-                                sections[text_snugget.section][text_snugget.sub_section] = [text_snugget]
-
-                        for section, sub_section_dict in sections.items():
-                            sections[section] = OrderedDict(sorted(sub_section_dict.items(), key=lambda t: t[0].order_of_appearance))
-
-                        photos = []
-                        for p in PastEventsPhoto.objects.filter(group=values[0].group):
-                            photos.append(p)
+                                sections[text_snugget.section] = [text_snugget]
 
                         data[key] = {
                             'heading': heading,
                             'sections': OrderedDict(sorted(sections.items(), key=lambda t: t[0].order_of_appearance )),
                             'likely_scenario_title': values[0].group.likely_scenario_title,
-                            'likely_scenario_text': values[0].group.likely_scenario_text,
-                            'photos': photos
+                            'likely_scenario_text': values[0].group.likely_scenario_text
                         }
 
         return render(request, template, {
