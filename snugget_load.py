@@ -155,14 +155,30 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
   'content': row["text"],
   'percentage': row["intensity"],
   }
-  print('creating text snugget with:', kwargs)
   snugget = TextSnugget.objects.create(**kwargs)
   snugget.pop_out = addPopOutIfExists(row)
   snugget.save()
+  print('Created snugget:', snugget)
+
 
 
 def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
-  pass
+  if row["intensity"] == '':
+    row["intensity"] = None
+  group = shapefile.getGroup()
+  shapefileFilter = getShapefileFilter(shapefile, filterVal)
+
+  kwargs = {
+  'section': section,
+  'group': group,
+  filterColumn: shapefileFilter,
+  'text': row["text"],
+  'video': row["video"]
+  }
+  snugget = EmbedSnugget.objects.create(**kwargs)
+  snugget.save()
+  print('Created embed snugget:', snugget)
+
 
 
 def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
@@ -177,11 +193,11 @@ def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
   filterColumn: shapefileFilter,
   'text': row["text"],
   }
-  print('creating slideshow snugget with:', kwargs)
   snugget = SlideshowSnugget.objects.create(**kwargs)
   snugget.pop_out = addPopOutIfExists(row)
   addSlideshow(os.path.join(dataDir, 'images/', row["image_slideshow_folder"]), snugget)
   snugget.save()
+  print('Created slideshow snugget:', snugget)
 
 
 def addSlideshow(folder, snugget):
@@ -198,9 +214,9 @@ def addSlideshow(folder, snugget):
         with open(imageFile, 'rb') as f:
           data = File(f)
           photo.image.save(row["image"], data, True)
-      print("Created", photo)
+      print("...... Created", photo)
 
-  print("Image slideshow created from", folder)
+  print("... Image slideshow created from", folder)
 
 
 def findAllFilterVals(shapefile):

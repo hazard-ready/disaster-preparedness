@@ -162,7 +162,8 @@ class Migration(migrations.Migration):
             name='EmbedSnugget',
             fields=[
                 ('snugget_ptr', models.OneToOneField(auto_created=True, to='disasterinfosite.Snugget', serialize=False, primary_key=True, parent_link=True, on_delete=models.CASCADE)),
-                ('embed', embed_video.fields.EmbedVideoField()),
+                ('video', embed_video.fields.EmbedVideoField()),
+                ('text', models.TextField(default=''))
             ],
             bases=('disasterinfosite.snugget',),
         ),
