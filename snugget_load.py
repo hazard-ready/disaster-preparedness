@@ -13,7 +13,7 @@ snuggetFile = os.path.join(dataDir, "snuggets.csv")
 
 requiredFields = ['shapefile', 'section', 'subsection']
 # all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
-optionalFields = ['heading', 'intensity', 'image', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', '']
+optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', '']
 
 def run():
   overwriteAll = False
@@ -153,7 +153,7 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
   'group': group,
   filterColumn: shapefileFilter,
   'content': row["text"],
-  'percentage': row["intensity"],
+  'percentage': row["intensity"]
   }
   snugget = TextSnugget.objects.create(**kwargs)
   snugget.pop_out = addPopOutIfExists(row)
@@ -173,7 +173,8 @@ def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
   'group': group,
   filterColumn: shapefileFilter,
   'text': row["text"],
-  'video': row["video"]
+  'video': row["video"],
+  'percentage': row["intensity"]
   }
   snugget = EmbedSnugget.objects.create(**kwargs)
   snugget.save()
@@ -192,6 +193,7 @@ def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
   'group': group,
   filterColumn: shapefileFilter,
   'text': row["text"],
+  'percentage': row["intensity"]
   }
   snugget = SlideshowSnugget.objects.create(**kwargs)
   snugget.pop_out = addPopOutIfExists(row)

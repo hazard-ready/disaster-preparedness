@@ -119,8 +119,7 @@ def app_view(request):
                         template = 'found_content.html'
                         heading = values[0].group.display_name
                         for text_snugget in values:
-                            if not text_snugget.image:
-                                text_snugget.dynamic_image = make_icon(text_snugget.percentage)
+                            text_snugget.dynamic_image = make_icon(text_snugget.percentage)
                             if not text_snugget.section in sections:
                                 sections[text_snugget.section] = [text_snugget]
 
