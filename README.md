@@ -193,22 +193,40 @@ If you have raster data, first convert it to a shapefile. See [Converting raster
 
 ### Fully automated pipeline
 
-If the structure of your text content is simple enough, you can import shapefiles and snuggets automatically without having to do much manual work. We recommend using this pathway if possible, because it makes moving the site to a new server significantly easier. To do this, you will need a `snuggets.xlsx` file with the same columns as the example one we've included in `data.zip`. The columns can be in any order, but the headings must be exactly as typed here:
+If the structure of your text content is simple enough, you can import shapefiles and snuggets automatically without having to do much manual work. We recommend using this pathway if possible, because it makes moving the site to a new server significantly easier. To do this, you will need a `snuggets.csv` file with the same columns as the example one we've included in `data.zip`. The columns can be in any order, but the headings must be exactly as typed here:
 
+- `heading` : A human-readable heading that describes the content of this shapefile, to be displayed on the page. This will correspond to the shapefile group.
 - `section` : A section name that will be displayed on the page (must not be empty)
-- `subsection` : A subsection name (must not be empty)
 - `shapefile` : The file name for the shapefile this row corresponds to, without the extenstion. For example: `EQ_GroundShaking_MostLike` for text that relates to the content of `EQ_GroundShaking_MostLike.shp`. (must not be empty; must correspond exactly to the available shapefiles)
-- `heading` : A human-readable heading that describes the content of this shapefile, to be displayed on the page.
+
+-`txt_location` : The order in which this text will appear within its section.
+
+-`pop_out_image` : An auxiliary sidebar image to display with this snugget, as an aside.
+
+-`pop_out_link` : A link to go with this snugget, as an auxiliary aside.
+
+-`pop_alt_txt` : The alt text for `pop_out_image`
+
+-`pop_out_txt` : Text to go in the auxiliary sidebar for this snugget.
+
 - `lookup_value` : The value of the unique identifier in the shapefile (e.g. an intensity value or a hazard classification). This field can be empty; if it is then the rest of this row will be applied to every available value.
 - `intensity` : Relative severity scaled from 0-100, to display graphically on the page. If this is empty, or if a value is provided for `image`, it will simply not be displayed.
-- `image` : The file name for an image, stored in `disasterinfosite/static/img`, that illustrates the severity. If this is empty it won't be displayed. If there is a value here (including '0' or NULL), it overrides the value of `intensity`.
+
+-`intensity_txt` : Explanatory text for the intensity value.
+
 - `text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria. If you put a url in the snugget text, like `http://www.github.com`, we'll automatically make it into a link for you.
 
-You can have any number of sections and subsections, but every row must be a unique combination of `shapefile`, `section`, `subsection` and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used. Note that this allows you to create a default value for a given section, subsection and shapefile, by having a row with `lookup_value` blank (so it applies to all values present in the shapefile), followed by rows with specified `lookup_value`s which will overwrite the default for that value only.
+-`image_slideshow_folder` : If this is present, the snugget loader will look for a folder inside an `images` folder at the same level as `snuggets.csv` (example: if `snuggets.csv` is in `data\images` and you set this value to `earthquake_photos`, the loader will look for images in `data\images\earthquake_photos`). The loader expects to find two things in that folder: images, and a file called `slideshow.csv`.
+
+`slideshow.csv` should have two columns: `image` and `caption`. `image` is the filename of the image, and `caption` is whatever you would like the caption for that image to be.
+
+-`video` is the url of a YouTube video that you would like to embed in this snugget.
+
+You can have any number of sections, but every row must be a unique combination of `shapefile`, `section`, and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used. Note that this allows you to create a default value for a given section, subsection and shapefile, by having a row with `lookup_value` blank (so it applies to all values present in the shapefile), followed by rows with specified `lookup_value`s which will overwrite the default for that value only.
 
 Blank rows or additional columns won't cause problems. Any row that is missing any of the required fields will be skipped and a warning will be printed.
 
-Once `snuggets.xlsx` is ready, simply put it and the relevant shapefiles in `disasterinfosite/data` (and remove any other files or subdirectories from there), and follow the instructions in [Load Some Data](#load-some-data) above.
+Once `snuggets.csv` is ready, simply put it and the relevant shapefiles in `disasterinfosite/data` (and remove any other files or subdirectories from there), and follow the instructions in [Load Some Data](#load-some-data) above.
 
 #### Updating existing data
 

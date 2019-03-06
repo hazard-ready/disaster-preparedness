@@ -170,7 +170,7 @@ class Migration(migrations.Migration):
             name='PastEventsPhoto',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
-                ('group', models.ForeignKey(default=None, on_delete=django.db.models.deletion.PROTECT, to='disasterinfosite.SlideshowSnugget')),
+                ('group', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='disasterinfosite.SlideshowSnugget')),
                 ('image', models.ImageField(upload_to='photos')),
                 ('caption', models.TextField(default="", max_length=200))
             ],
@@ -202,6 +202,7 @@ class Migration(migrations.Migration):
             name='SlideshowSnugget',
             fields=[
                 ('snugget_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='disasterinfosite.Snugget')),
+                ('text', models.TextField(default=''))
             ],
             bases=('disasterinfosite.snugget',),
         ),
