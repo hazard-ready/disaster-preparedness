@@ -13,7 +13,7 @@ snuggetFile = os.path.join(dataDir, "snuggets.csv")
 
 requiredFields = ['shapefile', 'section', 'subsection']
 # all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
-optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', '']
+optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'pop_out_video', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', '']
 
 def run():
   overwriteAll = False
@@ -124,9 +124,9 @@ def getShapefileFilter(shapefile, filterVal):
 
 
 def addPopOutIfExists(row):
-  if (row["pop_out_image"] != '' or row["pop_out_txt"] != '' or row["pop_alt_txt"] != '' or row["pop_out_link"] != ''):
-    print('Creating pop-out section with values ', row["pop_out_image"], row["pop_out_txt"], row["pop_alt_txt"], row["pop_out_link"] )
-    popout = SnuggetPopOut.objects.create(text=row["pop_out_txt"], alt_text=row["pop_alt_txt"], link=row["pop_out_link"])
+  if (row["pop_out_image"] != '' or row["pop_out_txt"] != '' or row["pop_alt_txt"] != '' or row["pop_out_link"] != '' or row["pop_out_video"] != ''):
+    print('Creating pop-out section with values ', row["pop_out_image"], row["pop_out_txt"], row["pop_alt_txt"], row["pop_out_link"], row['pop_out_video'] )
+    popout = SnuggetPopOut.objects.create(text=row["pop_out_txt"], alt_text=row["pop_alt_txt"], link=row["pop_out_link"], video=row["pop_out_video"])
     if row["pop_out_image"] != '':
       imageFile = os.path.join(dataDir, 'images/pop_out', row["pop_out_image"])
       with open(imageFile, 'rb') as f:

@@ -137,12 +137,14 @@ class Migration(migrations.Migration):
                 ('image', models.ImageField(upload_to='popout_images')),
                 ('link', models.TextField(default='', max_length=255)),
                 ('text', models.TextField(default='')),
+                ('video', embed_video.fields.EmbedVideoField(default=''))
             ],
         ),
         migrations.CreateModel(
             name='Snugget',
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('percentage', models.FloatField(null=True)),
                 ('section', models.ForeignKey(to='disasterinfosite.SnuggetSection', on_delete=models.PROTECT, related_name='+')),
                 ('group', models.ForeignKey(to='disasterinfosite.ShapefileGroup', null=True, on_delete=models.PROTECT)),
                 ('pop_out', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='disasterinfosite.SnuggetPopOut')),
@@ -153,8 +155,6 @@ class Migration(migrations.Migration):
             fields=[
                 ('snugget_ptr', models.OneToOneField(auto_created=True, to='disasterinfosite.Snugget', serialize=False, primary_key=True, parent_link=True, on_delete=models.CASCADE)),
                 ('content', models.TextField()),
-                ('image', models.TextField(default="")),
-                ('percentage', models.FloatField(null=True)),
             ],
             bases=('disasterinfosite.snugget',),
         ),
@@ -164,7 +164,14 @@ class Migration(migrations.Migration):
                 ('snugget_ptr', models.OneToOneField(auto_created=True, to='disasterinfosite.Snugget', serialize=False, primary_key=True, parent_link=True, on_delete=models.CASCADE)),
                 ('video', embed_video.fields.EmbedVideoField()),
                 ('text', models.TextField(default='')),
-                ('percentage', models.FloatField(null=True)),
+            ],
+            bases=('disasterinfosite.snugget',),
+        ),
+        migrations.CreateModel(
+            name='SlideshowSnugget',
+            fields=[
+                ('snugget_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='disasterinfosite.Snugget')),
+                ('text', models.TextField(default='')),
             ],
             bases=('disasterinfosite.snugget',),
         ),
@@ -199,15 +206,6 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'User Profile',
             },
-        ),
-        migrations.CreateModel(
-            name='SlideshowSnugget',
-            fields=[
-                ('snugget_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='disasterinfosite.Snugget')),
-                ('text', models.TextField(default='')),
-                ('percentage', models.FloatField(null=True)),
-            ],
-            bases=('disasterinfosite.snugget',),
         ),
         migrations.AlterField(
             model_name='snuggettype',
