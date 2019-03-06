@@ -316,22 +316,22 @@ class EmbedSnugget(Snugget):
 
 class SlideshowSnugget(Snugget):
     name = SNUGGET_TYPES[SNUG_SLIDESHOW]
+    text = models.TextField(default="")
 
-    # todo: what goes in here? Anything else?
     def getRelatedTemplate(self):
         return "snugget_slideshow.html"
 
     def __str__(self):
-        return "Slideshow Snugget: "
+        return "Slideshow Snugget: " + str(self.text)
 
 
 class PastEventsPhoto(models.Model):
-    group = models.ForeignKey(SlideshowSnugget, on_delete=models.PROTECT, default=None)
+    group = models.ForeignKey(SlideshowSnugget, on_delete=models.CASCADE, default=None)
     image = models.ImageField(upload_to="photos")
     caption = models.TextField(default="", max_length=200)
 
     def __str__(self):
-        return self.image.url
+        return str(self.image.url) + ' Caption: ' + str(self.caption)
 
 class OverwriteStorage(FileSystemStorage):
     def get_available_name(self, name):

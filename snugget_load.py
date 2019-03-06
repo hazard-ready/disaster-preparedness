@@ -13,7 +13,7 @@ snuggetFile = os.path.join(dataDir, "snuggets.csv")
 
 requiredFields = ['shapefile', 'section', 'subsection']
 # all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
-optionalFields = ['heading', 'intensity', 'image', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'intensity_txt', 'text', '']
+optionalFields = ['heading', 'intensity', 'image', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', 'video_still' '']
 
 def run():
   overwriteAll = False
@@ -87,12 +87,13 @@ def processRow(row, overwriteAll):
 
 def processSnugget(row, shapefile, section, filterColumn, filterVal):
   removeOldSnugget(shapefile, section, filterColumn, filterVal)
-  if row["text"] is not '':
-    addTextSnugget(row, shapefile, section, filterColumn, filterVal)
+  if row["image_slideshow_folder"] is not '':
+    addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal)
   elif row["video"] is not '':
     addVideoSnugget(row, shapefile, section, filterColumn, filterVal)
-  elif row["slideshow_images"] is not '':
-    addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal)
+  else:
+    addTextSnugget(row, shapefile, section, filterColumn, filterVal)
+
 
 
 def getShapefileClass(row):
@@ -124,7 +125,7 @@ def getShapefileFilter(shapefile, filterVal):
 
 def addPopOutIfExists(row):
   if (row["pop_out_image"] != '' or row["pop_out_txt"] != '' or row["pop_alt_txt"] != '' or row["pop_out_link"] != ''):
-    print('Creating pop-out section with values', row["pop_out_image"], row["pop_out_txt"], row["pop_alt_txt"], row["pop_out_link"] )
+    print('Creating pop-out section with values ', row["pop_out_image"], row["pop_out_txt"], row["pop_alt_txt"], row["pop_out_link"] )
     popout = SnuggetPopOut.objects.create(text=row["pop_out_txt"], alt_text=row["pop_alt_txt"], link=row["pop_out_link"])
     if row["pop_out_image"] != '':
       imageFile = os.path.join(dataDir, 'images/pop_out', row["pop_out_image"])
@@ -154,7 +155,7 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
   'content': row["text"],
   'percentage': row["intensity"],
   }
-  print('creating snugget with:', kwargs)
+  print('creating text snugget with:', kwargs)
   snugget = TextSnugget.objects.create(**kwargs)
   snugget.pop_out = addPopOutIfExists(row)
   snugget.save()
@@ -165,7 +166,41 @@ def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
 
 
 def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
-  pass
+  if row["intensity"] == '':
+    row["intensity"] = None
+  group = shapefile.getGroup()
+  shapefileFilter = getShapefileFilter(shapefile, filterVal)
+
+  kwargs = {
+  'section': section,
+  'group': group,
+  filterColumn: shapefileFilter,
+  'text': row["text"],
+  }
+  print('creating slideshow snugget with:', kwargs)
+  snugget = SlideshowSnugget.objects.create(**kwargs)
+  snugget.pop_out = addPopOutIfExists(row)
+  addSlideshow(os.path.join(dataDir, 'images/', row["image_slideshow_folder"]), snugget)
+  snugget.save()
+
+
+def addSlideshow(folder, snugget):
+  slideshowFile = os.path.join(folder, "slideshow.csv")
+
+  with open(slideshowFile) as csvFile:
+    slides = csv.DictReader(csvFile)
+    rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
+    for row in slides:
+      rowCount += 1
+      photo = PastEventsPhoto.objects.create(group=snugget, caption=row["caption"])
+      if row["image"] != '':
+        imageFile = os.path.join(folder, row["image"])
+        with open(imageFile, 'rb') as f:
+          data = File(f)
+          photo.image.save(row["image"], data, True)
+      print("Created", photo)
+
+  print("Image slideshow created from", folder)
 
 
 def findAllFilterVals(shapefile):
