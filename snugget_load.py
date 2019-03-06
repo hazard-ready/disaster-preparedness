@@ -13,7 +13,7 @@ snuggetFile = os.path.join(dataDir, "snuggets.csv")
 
 requiredFields = ['shapefile', 'section', 'subsection']
 # all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
-optionalFields = ['heading', 'intensity', 'image', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', '']
+optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', '']
 
 def run():
   overwriteAll = False
@@ -153,16 +153,33 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
   'group': group,
   filterColumn: shapefileFilter,
   'content': row["text"],
-  'percentage': row["intensity"],
+  'percentage': row["intensity"]
   }
-  print('creating text snugget with:', kwargs)
   snugget = TextSnugget.objects.create(**kwargs)
   snugget.pop_out = addPopOutIfExists(row)
   snugget.save()
+  print('Created snugget:', snugget)
+
 
 
 def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
-  pass
+  if row["intensity"] == '':
+    row["intensity"] = None
+  group = shapefile.getGroup()
+  shapefileFilter = getShapefileFilter(shapefile, filterVal)
+
+  kwargs = {
+  'section': section,
+  'group': group,
+  filterColumn: shapefileFilter,
+  'text': row["text"],
+  'video': row["video"],
+  'percentage': row["intensity"]
+  }
+  snugget = EmbedSnugget.objects.create(**kwargs)
+  snugget.save()
+  print('Created embed snugget:', snugget)
+
 
 
 def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
@@ -176,12 +193,13 @@ def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
   'group': group,
   filterColumn: shapefileFilter,
   'text': row["text"],
+  'percentage': row["intensity"]
   }
-  print('creating slideshow snugget with:', kwargs)
   snugget = SlideshowSnugget.objects.create(**kwargs)
   snugget.pop_out = addPopOutIfExists(row)
   addSlideshow(os.path.join(dataDir, 'images/', row["image_slideshow_folder"]), snugget)
   snugget.save()
+  print('Created slideshow snugget:', snugget)
 
 
 def addSlideshow(folder, snugget):
@@ -198,9 +216,9 @@ def addSlideshow(folder, snugget):
         with open(imageFile, 'rb') as f:
           data = File(f)
           photo.image.save(row["image"], data, True)
-      print("Created", photo)
+      print("...... Created", photo)
 
-  print("Image slideshow created from", folder)
+  print("... Image slideshow created from", folder)
 
 
 def findAllFilterVals(shapefile):

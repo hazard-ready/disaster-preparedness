@@ -305,18 +305,23 @@ class TextSnugget(Snugget):
 
 class EmbedSnugget(Snugget):
     name = SNUGGET_TYPES[SNUG_VIDEO]
-    embed = EmbedVideoField()
+    text = models.TextField(default="")
+    video = EmbedVideoField()
+    percentage = models.FloatField(null=True)
+
 
     def getRelatedTemplate(self):
         return "snugget_embed.html"
 
     def __str__(self):
-        return "Embed Snugget: " + str(self.embed)
+        return "Embed Snugget: " + str(self.video)
 
 
 class SlideshowSnugget(Snugget):
     name = SNUGGET_TYPES[SNUG_SLIDESHOW]
     text = models.TextField(default="")
+    percentage = models.FloatField(null=True)
+
 
     def getRelatedTemplate(self):
         return "snugget_slideshow.html"

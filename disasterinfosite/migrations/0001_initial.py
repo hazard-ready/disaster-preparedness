@@ -162,7 +162,9 @@ class Migration(migrations.Migration):
             name='EmbedSnugget',
             fields=[
                 ('snugget_ptr', models.OneToOneField(auto_created=True, to='disasterinfosite.Snugget', serialize=False, primary_key=True, parent_link=True, on_delete=models.CASCADE)),
-                ('embed', embed_video.fields.EmbedVideoField()),
+                ('video', embed_video.fields.EmbedVideoField()),
+                ('text', models.TextField(default='')),
+                ('percentage', models.FloatField(null=True)),
             ],
             bases=('disasterinfosite.snugget',),
         ),
@@ -202,7 +204,8 @@ class Migration(migrations.Migration):
             name='SlideshowSnugget',
             fields=[
                 ('snugget_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='disasterinfosite.Snugget')),
-                ('text', models.TextField(default=''))
+                ('text', models.TextField(default='')),
+                ('percentage', models.FloatField(null=True)),
             ],
             bases=('disasterinfosite.snugget',),
         ),
