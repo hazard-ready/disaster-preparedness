@@ -25,12 +25,11 @@ Use whichever base command is appropriate for your environment.
 
 Set up a virtual environment so that you can freely install python modules without worrying about overwriting globally installed versions. It's easy!
 
-1. `pip install virtualenv` (for python3, `pip3 install virtualenv`)
-2. Move to the project directory (e.g. `/Applications/MAMP/htdocs/disaster-preparedness`).
-3. `virtualenv --python=python3 venv --no-site-packages`
-4. Wait for things to happen.
-5. `source venv/bin/activate` (type `deactivate` to leave). Remember to reactivate the virtual environment every time you open a terminal window and start running Python commands. Note that on some machines, you'll need to use `. venv/bin/activate` instead.
-6. `pip install -r requirements.txt` or `pip3 install -r requirements.txt` to automatically install the Python dependencies listed in [requirements.txt](./requirements.txt). You may see "Failed building wheel for ..." errors for some of the modules. If so, try repeating the command. If the second run shows "Requirement already satisfied" for every module then you can safely ignore the previous error.
+1. Move to the project directory (e.g. `/Applications/MAMP/htdocs/disaster-preparedness`).
+2. `python3 -m venv venv` to create a new virtual environment.
+3. Wait for things to happen.
+4. `source venv/bin/activate` (type `deactivate` to leave). Remember to reactivate the virtual environment every time you open a terminal window and start running Python commands. Note that on some machines, you'll need to use `. venv/bin/activate` instead.
+5. `pip install -r requirements.txt` or `pip3 install -r requirements.txt` to automatically install the Python dependencies listed in [requirements.txt](./requirements.txt). You may see "Failed building wheel for ..." errors for some of the modules. If so, try repeating the command. If the second run shows "Requirement already satisfied" for every module then you can safely ignore the previous error.
 
 # "disasterinfosite" App
 
