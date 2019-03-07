@@ -84,3 +84,6 @@ myenv/
 node_modules/
 
 webpack-stats.json
+
+# Excel temp files
+~$*.xlsx
