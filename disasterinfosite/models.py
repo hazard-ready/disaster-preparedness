@@ -239,6 +239,7 @@ class SnuggetPopOut(models.Model):
     image = models.ImageField(upload_to="popout_images")
     link = models.TextField(default="", max_length=255)
     alt_text = models.TextField(default="", max_length=255)
+    video = EmbedVideoField(default="")
 
     def __str__(self):
         return self.text[:100]
@@ -264,6 +265,7 @@ class Snugget(models.Model):
     section = models.ForeignKey(SnuggetSection, related_name='+', on_delete=models.PROTECT)
     group = models.ForeignKey(ShapefileGroup, on_delete=models.PROTECT, null=True)
     pop_out = models.OneToOneField(SnuggetPopOut, on_delete=models.PROTECT, blank=True, null=True)
+    percentage = models.FloatField(null=True)
 
     def getRelatedTemplate(self):
         return "snugget.html"
@@ -293,8 +295,6 @@ class Snugget(models.Model):
 class TextSnugget(Snugget):
     name = SNUGGET_TYPES[SNUG_TEXT]
     content = models.TextField()
-    image = models.TextField(default="")
-    percentage = models.FloatField(null=True)
 
     def getRelatedTemplate(self):
         return "snugget_text.html"
@@ -307,8 +307,6 @@ class EmbedSnugget(Snugget):
     name = SNUGGET_TYPES[SNUG_VIDEO]
     text = models.TextField(default="")
     video = EmbedVideoField()
-    percentage = models.FloatField(null=True)
-
 
     def getRelatedTemplate(self):
         return "snugget_embed.html"
@@ -320,8 +318,6 @@ class EmbedSnugget(Snugget):
 class SlideshowSnugget(Snugget):
     name = SNUGGET_TYPES[SNUG_SLIDESHOW]
     text = models.TextField(default="")
-    percentage = models.FloatField(null=True)
-
 
     def getRelatedTemplate(self):
         return "snugget_slideshow.html"
