@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminModelImports
-from .models import EmbedSnugget, TextSnugget, SnuggetSection, SnuggetSubSection, Location, SiteSettings, SupplyKit, ImportantLink
+from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings, SupplyKit, ImportantLink
 # END OF GENERATED CODE BLOCK
 ######################################################
 from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile
