@@ -87,4 +87,6 @@ webpack-stats.json
 
 # Excel temp files
 ~$*.xlsx
+
+# Auto-assembled media file
 disasterinfosite/media/*
