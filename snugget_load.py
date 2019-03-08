@@ -10,22 +10,23 @@ currentPath = os.path.dirname(__file__)
 appName = "disasterinfosite"
 appDir = os.path.join(currentPath, "disasterinfosite")
 dataDir = os.path.join(appDir, "data")
-snuggetFile = os.path.join(dataDir, "snuggets.csv")
+# When converting from CSV to .xlsx, Excel defaults to using the former CSV filename (minus extension) as the name for the one worksheet. So the easiest thing is to follow that convention unless we ever have a reason to change it.
+snuggetWorksheet = "snuggets"
+snuggetFile = os.path.join(dataDir, snuggetWorksheet + ".xlsx")
 
 requiredFields = ['shapefile', 'section', 'subsection']
-# all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
-optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'pop_out_video', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', '']
+# all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV. And the None is because the Excel reader will turn blank columns into that.
+optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'pop_out_video', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', '', None]
 
 def run():
   overwriteAll = False
 
-  with open(snuggetFile) as csvFile:
-    newSnuggets = csv.DictReader(csvFile)
-    rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
-    for row in newSnuggets:
-      rowCount += 1
-      if allRequiredFieldsPresent(row, rowCount):
-        overwriteAll = processRow(row, overwriteAll)
+  newSnuggets = XLSXDictReader(snuggetFile, snuggetWorksheet)
+  rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
+  for row in newSnuggets:
+    rowCount += 1
+    if allRequiredFieldsPresent(row, rowCount):
+      overwriteAll = processRow(row, overwriteAll)
 
   print("Snugget load complete. Processed", rowCount, "rows in", snuggetFile)
 
