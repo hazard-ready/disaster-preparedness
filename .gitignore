@@ -8,7 +8,7 @@
 secure_settings.py
 
 # Data directory full of binary or large data sets we don't need in a code repository.
- disasterinfosite/data/
+disasterinfosite/data/
 
 # Temp directories made by the importer
 disasterinfosite/data/reprojected/
@@ -88,5 +88,5 @@ webpack-stats.json
 # Excel temp files
 ~$*.xlsx
 
-# Auto-assembled media file
+# Auto-assembled media folder
 disasterinfosite/media/*
