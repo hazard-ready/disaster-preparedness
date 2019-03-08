@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminModelImports
-from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings, SupplyKit, ImportantLink, RDPOLiquefact_Clark, RDPO_counties, RDPOLiquefaction_OR, RDPOCascadiaM9_3_Clark, RDPO_region, RDPOCascadiaM9_OR
+from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings, SupplyKit, ImportantLink
 # END OF GENERATED CODE BLOCK
 ######################################################
 from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile
@@ -33,17 +33,14 @@ class SnuggetAdmin(admin.ModelAdmin):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminLists
-    list_display = ('shortname', 'section', 'RDPOLiquefact_Clark_filter', 'RDPO_counties_filter', 'RDPOLiquefaction_OR_filter', 'RDPOCascadiaM9_3_Clark_filter', 'RDPO_region_filter', 'RDPOCascadiaM9_OR_filter')
-    list_filter = ('section', 'RDPOLiquefact_Clark_filter', 'RDPO_counties_filter', 'RDPOLiquefaction_OR_filter', 'RDPOCascadiaM9_3_Clark_filter', 'RDPO_region_filter', 'RDPOCascadiaM9_OR_filter')
-
     fieldsets = (
         (None, {
-            'fields': ('section',)
+            'fields': ('section', 'sub_section'),
         }),
         ('Filters', {
-            'description': 'Choose a filter value this snugget will show up for.  It is recommended you only select a value for one filter and leave the rest empty.',
-            'fields': (('RDPOLiquefact_Clark_filter', 'RDPO_counties_filter', 'RDPOLiquefaction_OR_filter', 'RDPOCascadiaM9_3_Clark_filter', 'RDPO_region_filter', 'RDPOCascadiaM9_OR_filter'))
-        })
+            'description': 'Choose a filter value this snugget will show up for.',
+            'fields': ((),)
+            }),
     )
 # END OF GENERATED CODE BLOCK
 ######################################################
@@ -117,11 +114,5 @@ admin.site.register(SupplyKit, SingletonModelAdmin)
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminSiteRegistrations
-admin.site.register(RDPOLiquefact_Clark, GeoNoEditAdmin)
-admin.site.register(RDPO_counties, GeoNoEditAdmin)
-admin.site.register(RDPOLiquefaction_OR, GeoNoEditAdmin)
-admin.site.register(RDPOCascadiaM9_3_Clark, GeoNoEditAdmin)
-admin.site.register(RDPO_region, GeoNoEditAdmin)
-admin.site.register(RDPOCascadiaM9_OR, GeoNoEditAdmin)
 # END OF GENERATED CODE BLOCK
 ######################################################
