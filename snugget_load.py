@@ -70,6 +70,11 @@ def processRow(row, overwriteAll):
   shapefile = getShapefileClass(row)
   filterColumn = row["shapefile"] + "_filter"
   section, created = SnuggetSection.objects.get_or_create(name=row["section"])
+  if row["intensity"] == '':
+    row["intensity"] = None
+
+  if row["txt_location"] == '':
+    row["txt_location"] = 0
 
   if created:
     print("Created a new snugget section: ", row["section"])
@@ -78,7 +83,7 @@ def processRow(row, overwriteAll):
   # if we have a lookup value then deal with this value specifically:
   if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
     filterVal = row["lookup_value"]
-    oldSnugget = checkForSnugget(shapefile, section, filterColumn, filterVal)
+    oldSnugget = checkForSnugget(shapefile, section, row["txt_location"], filterColumn, filterVal)
     overwriteAll = askUserAboutOverwriting(row, oldSnugget, overwriteAll)
     processSnugget(row, shapefile, section, filterColumn, filterVal)
     return overwriteAll
@@ -92,7 +97,7 @@ def processRow(row, overwriteAll):
         print("Because no filter for lookup_value", row["lookup_value"], "was found in", row["shapefile"])
         return overwriteAll
       else:
-        oldSnugget = checkForSnugget(shapefile, section, filterColumn, filterVal)
+        oldSnugget = checkForSnugget(shapefile, section, row["txt_location"], filterColumn, filterVal)
         if oldSnugget is not None and oldSnugget not in oldSnuggets:
           oldSnuggets.append(oldSnugget)
       overwriteAll = askUserAboutOverwriting(row, oldSnuggets, overwriteAll)
@@ -156,20 +161,16 @@ def addPopOutIfExists(row):
 
 
 def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
-#   "intensity" -> disasterinfosite_textsnugget.percentage (numeric, null as null)
-#   "text" -> disasterinfosite_textsnugget.content
-#   "heading" -> disasterinfosite_textsnugget.display_name
-  if row["intensity"] == '':
-    row["intensity"] = None
   group = shapefile.getGroup()
   shapefileFilter = getShapefileFilter(shapefile, filterVal)
 
   kwargs = {
-  'section': section,
-  'group': group,
-  filterColumn: shapefileFilter,
-  'content': row["text"],
-  'percentage': row["intensity"]
+    'section': section,
+    'group': group,
+    filterColumn: shapefileFilter,
+    'content': row["text"],
+    'percentage': row["intensity"],
+    'order': row['txt_location']
   }
   snugget = TextSnugget.objects.create(**kwargs)
   snugget.pop_out = addPopOutIfExists(row)
@@ -179,18 +180,17 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
 
 
 def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
-  if row["intensity"] == '':
-    row["intensity"] = None
   group = shapefile.getGroup()
   shapefileFilter = getShapefileFilter(shapefile, filterVal)
 
   kwargs = {
-  'section': section,
-  'group': group,
-  filterColumn: shapefileFilter,
-  'text': row["text"],
-  'video': row["video"],
-  'percentage': row["intensity"]
+    'section': section,
+    'group': group,
+    filterColumn: shapefileFilter,
+    'text': row["text"],
+    'video': row["video"],
+    'percentage': row["intensity"],
+    'order': row['txt_location']
   }
   snugget = EmbedSnugget.objects.create(**kwargs)
   snugget.save()
@@ -199,17 +199,16 @@ def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
 
 
 def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
-  if row["intensity"] == '':
-    row["intensity"] = None
   group = shapefile.getGroup()
   shapefileFilter = getShapefileFilter(shapefile, filterVal)
 
   kwargs = {
-  'section': section,
-  'group': group,
-  filterColumn: shapefileFilter,
-  'text': row["text"],
-  'percentage': row["intensity"]
+    'section': section,
+    'group': group,
+    filterColumn: shapefileFilter,
+    'text': row["text"],
+    'percentage': row["intensity"],
+    'order': row['txt_location']
   }
   snugget = SlideshowSnugget.objects.create(**kwargs)
   snugget.pop_out = addPopOutIfExists(row)
@@ -241,8 +240,8 @@ def findAllFilterVals(shapefile):
   return shapefile.objects.values_list(fieldName, flat=True)
 
 
-def checkForSnugget(shapefile, section, filterColumn, filterVal):
-  kwargs = {'section': section, filterColumn: getShapefileFilter(shapefile, filterVal)}
+def checkForSnugget(shapefile, section, order, filterColumn, filterVal):
+  kwargs = {'section': section, 'order': order, filterColumn: getShapefileFilter(shapefile, filterVal)}
   if Snugget.objects.filter(**kwargs).exists():
     return Snugget.objects.select_subclasses().get(**kwargs)
   else:
@@ -261,10 +260,10 @@ def askUserAboutOverwriting(row, old, overwriteAll):
     return True
   else:
     if old is not None and not isinstance(old, list):
-      print("In shapefile ", repr(row["shapefile"]), " there is already a snugget defined for section " , repr(row["section"]), ", intensity ", repr(row["lookup_value"]), " with the following text content:", sep="")
+      print("In shapefile ", repr(row["shapefile"]), " there is already a snugget defined for section " , repr(row["section"]), ", intensity ", repr(row["lookup_value"]), ", txt_location ", repr(row["txt_location"]), " with the following text content:", sep="")
       print(old)
-    elif isinstance(old, list):
-      print("In shapefile ", repr(row["shapefile"]), " there are existing snuggets for section" , repr(row["section"]), " with the following text content:", sep="")
+    elif old and isinstance(old, list):
+      print("In shapefile ", repr(row["shapefile"]), " there are existing snuggets for section" , repr(row["section"]), ", txt_location", repr(row["txt_location"]), " with the following text content:", sep="")
       for snugget in old:
         print(snugget)
     else:
