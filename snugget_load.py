@@ -275,30 +275,27 @@ def askUserAboutOverwriting(row, old, overwriteAll):
 
 
 # drop-in replacement for built-in csv.DictReader() function with .xlsx files
-# from https://gist.github.com/mdellavo/853413
-# then heavily adapted because the original didn't actually work
-def XLSXDictReader(f):
-  book  = openpyxl.reader.excel.load_workbook(f)
-  sheet = book.get_active_sheet()
-  langs = []
+# originally from https://gist.github.com/mdellavo/853413
+# then heavily adapted first to make it work, then to simplify
+def XLSXDictReader(fileName, sheetName):
+  book  = openpyxl.reader.excel.load_workbook(fileName)
+  if sheetName not in book.sheetnames:
+    print(sheetName, "not found in", fileName)
+    exit()
+  else:
+    sheet = book[sheetName]
 
-  rows = 1
-  for row in sheet.iter_rows():
-    rows = rows + 1
-  cols = 1
-  for col in sheet.iter_cols():
-    cols = cols + 1
+    rows = 1
+    for row in sheet.iter_rows():
+      rows = rows + 1
+    cols = 1
+    for col in sheet.iter_cols():
+      cols = cols + 1
 
-  headers = dict( (i, sheet.cell(row=1, column=i).value) for i in range(1, cols) )
-  for header in headers.values():
-    if header.startswith('text-'):
-      langs.append(header.split('-')[1])
-  print("Found snugget texts in the following language[s]:", langs, "\n")
+    def item(i, j):
+      if sheet.cell(row=i, column=j).value == None:
+        return (sheet.cell(row=1, column=j).value, '')
+      else:
+        return (sheet.cell(row=1, column=j).value, str(sheet.cell(row=i, column=j).value).strip())
 
-  def item(i, j):
-    if sheet.cell(row=i, column=j).value == None:
-      return (sheet.cell(row=1, column=j).value, '')
-    else:
-      return (sheet.cell(row=1, column=j).value, str(sheet.cell(row=i, column=j).value))
-
-  return (dict(item(i,j) for j in range(1, cols)) for i in range(2, rows))
+    return (dict(item(i,j) for j in range(1, cols)) for i in range(2, rows))
