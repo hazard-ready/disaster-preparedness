@@ -13,6 +13,8 @@ dataDir = os.path.join(appDir, "data")
 # When converting from CSV to .xlsx, Excel defaults to using the former CSV filename (minus extension) as the name for the one worksheet. So the easiest thing is to follow that convention unless we ever have a reason to change it.
 snuggetWorksheet = "snuggets"
 snuggetFile = os.path.join(dataDir, snuggetWorksheet + ".xlsx")
+slideshowWorksheet = "slideshow"
+slideshowFilename = slideshowWorksheet + ".csv" # there can be multiple of these files in different locations, so that's taken care of in addSlideshow()
 
 requiredFields = ['shapefile', 'section', 'subsection']
 # all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV. And the None is because the Excel reader will turn blank columns into that.
@@ -205,7 +207,7 @@ def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
 
 
 def addSlideshow(folder, snugget):
-  slideshowFile = os.path.join(folder, "slideshow.csv")
+  slideshowFile = os.path.join(folder, slideshowFilename)
 
   with open(slideshowFile) as csvFile:
     slides = csv.DictReader(csvFile)
