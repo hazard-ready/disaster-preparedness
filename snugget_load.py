@@ -294,21 +294,16 @@ def askUserAboutOverwriting(row, old, overwriteAll):
 
 # drop-in replacement for built-in csv.DictReader() function with .xlsx files
 # originally from https://gist.github.com/mdellavo/853413
-# then heavily adapted first to make it work, then to simplify
+# then heavily adapted first to make it work, then to simplify, and finally with suggestions from later commenters on that gist
 def XLSXDictReader(fileName, sheetName):
-  book  = openpyxl.reader.excel.load_workbook(fileName)
+  book = openpyxl.reader.excel.load_workbook(fileName)
   if sheetName not in book.sheetnames:
     print(sheetName, "not found in", fileName)
     exit()
   else:
     sheet = book[sheetName]
-
-    rows = 1
-    for row in sheet.iter_rows():
-      rows = rows + 1
-    cols = 1
-    for col in sheet.iter_cols():
-      cols = cols + 1
+    rows = sheet.max_row + 1
+    cols = sheet.max_column + 1
 
     def item(i, j):
       if sheet.cell(row=i, column=j).value == None:
