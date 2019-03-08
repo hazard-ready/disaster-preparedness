@@ -135,6 +135,10 @@ class SupplyKit(SingletonModel):
         help_text="More information about building your supply kit. Any web address in here gets turned into a link automatically."
     )
 
+    @property
+    def meals(self):
+        return 3 * self.days
+
 class ImportantLink(models.Model):
     """ A model representing a link with a title """
     title = models.CharField(
@@ -277,7 +281,7 @@ class Snugget(models.Model):
         groupsDict = {}
 
         for group in groups:
-            groupsDict[group.name] = []
+            groupsDict[group] = []
 
 ######################################################
 # GENERATED CODE GOES HERE
