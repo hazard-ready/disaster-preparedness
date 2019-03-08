@@ -179,7 +179,7 @@ class Migration(migrations.Migration):
             name='PastEventsPhoto',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False, verbose_name='ID', auto_created=True)),
-                ('group', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='disasterinfosite.SlideshowSnugget')),
+                ('snugget', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='disasterinfosite.SlideshowSnugget')),
                 ('image', models.ImageField(upload_to='photos')),
                 ('caption', models.TextField(default="", max_length=200))
             ],

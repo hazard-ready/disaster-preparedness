@@ -331,7 +331,7 @@ class SlideshowSnugget(Snugget):
 
 
 class PastEventsPhoto(models.Model):
-    group = models.ForeignKey(SlideshowSnugget, on_delete=models.CASCADE, default=None)
+    snugget = models.ForeignKey(SlideshowSnugget, on_delete=models.CASCADE, default=None)
     image = models.ImageField(upload_to="photos")
     caption = models.TextField(default="", max_length=200)
 
