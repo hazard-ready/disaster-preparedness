@@ -10,20 +10,17 @@ currentPath = os.path.dirname(__file__)
 appName = "disasterinfosite"
 appDir = os.path.join(currentPath, "disasterinfosite")
 dataDir = os.path.join(appDir, "data")
-# When converting from CSV to .xlsx, Excel defaults to using the former CSV filename (minus extension) as the name for the one worksheet. So the easiest thing is to follow that convention unless we ever have a reason to change it.
-snuggetWorksheet = "snuggets"
-snuggetFile = os.path.join(dataDir, snuggetWorksheet + ".xlsx")
-slideshowWorksheet = "slideshow"
-slideshowFilename = slideshowWorksheet + ".xlsx" # there can be multiple of these files in different locations, so the full path is assembled in addSlideshow()
+snuggetFile = os.path.join(dataDir, "snuggets.xlsx")
+slideshowFilename = "slideshow.xlsx" # there can be multiple of these files in different locations, so the full path is assembled in addSlideshow()
 
 requiredFields = ['shapefile', 'section', 'subsection']
-# all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV. And the None is because the Excel reader will turn blank columns into that.
-optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'pop_out_video', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', '', None]
+# all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
+optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'pop_out_video', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', '']
 
 def run():
   overwriteAll = False
 
-  newSnuggets = XLSXDictReader(snuggetFile, snuggetWorksheet)
+  newSnuggets = XLSXDictReader(snuggetFile)
   rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
   for row in newSnuggets:
     rowCount += 1
@@ -58,7 +55,7 @@ def allRequiredFieldsPresent(row, rowCount):
 def checkHTMLTagClosures(row, rowCount):
   tags_to_check = ["ol", "ul", "li", "a", "b"]
   mismatches = {}
-  for key in [x for x in row.keys() if x is not None]:
+  for key in row.keys():
     if key == 'text' or key.startswith('text-'):
       for tag in tags_to_check:
         tag_opening_no_attr = "<" + tag + ">"
@@ -225,7 +222,7 @@ def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
 def addSlideshow(folder, snugget):
   slideshowFile = os.path.join(folder, slideshowFilename)
 
-  slides = XLSXDictReader(slideshowFile, slideshowWorksheet)
+  slides = XLSXDictReader(slideshowFile)
   rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
   for row in slides:
     rowCount += 1
@@ -295,20 +292,30 @@ def askUserAboutOverwriting(row, old, overwriteAll):
 # drop-in replacement for built-in csv.DictReader() function with .xlsx files
 # originally from https://gist.github.com/mdellavo/853413
 # then heavily adapted first to make it work, then to simplify, and finally with suggestions from later commenters on that gist
-def XLSXDictReader(fileName, sheetName):
+def XLSXDictReader(fileName, sheetName=None):
   book = openpyxl.reader.excel.load_workbook(fileName)
-  if sheetName not in book.sheetnames:
+  # if there's no sheet name specified, try to get the active sheet.  This will work reliably for workbooks with only one sheet; unpredictably if there are multiple worksheets present.
+  if sheetName is None:
+    sheet = book.active
+  elif sheetName not in book.sheetnames:
     print(sheetName, "not found in", fileName)
     exit()
   else:
     sheet = book[sheetName]
-    rows = sheet.max_row + 1
-    cols = sheet.max_column + 1
 
-    def item(i, j):
-      if sheet.cell(row=i, column=j).value == None:
-        return (sheet.cell(row=1, column=j).value, '')
-      else:
-        return (sheet.cell(row=1, column=j).value, str(sheet.cell(row=i, column=j).value).strip())
+  rows = sheet.max_row + 1
+  cols = sheet.max_column + 1
 
-    return (dict(item(i,j) for j in range(1, cols)) for i in range(2, rows))
+  def cleanValue(s):
+    if s == None:
+      return ''
+    else:
+      return str(s).strip()
+
+  def item(i, j):
+    return (
+      cleanValue(sheet.cell(row=1, column=j).value),
+      cleanValue(sheet.cell(row=i, column=j).value)
+    )
+
+  return (dict(item(i,j) for j in range(1, cols)) for i in range(2, rows))
