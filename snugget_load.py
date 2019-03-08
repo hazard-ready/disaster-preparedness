@@ -1,5 +1,5 @@
+import openpyxl # library to read .xlsx format
 import os
-import csv
 
 from django.core.files import File
 from django.contrib.contenttypes.models import ContentType
@@ -9,7 +9,8 @@ currentPath = os.path.dirname(__file__)
 appName = "disasterinfosite"
 appDir = os.path.join(currentPath, "disasterinfosite")
 dataDir = os.path.join(appDir, "data")
-snuggetFile = os.path.join(dataDir, "snuggets.csv")
+snuggetFile = os.path.join(dataDir, "snuggets.xlsx")
+slideshowFilename = "slideshow.xlsx" # there can be multiple of these files in different locations, so the full path is assembled in addSlideshow()
 
 requiredFields = ['shapefile', 'section', 'subsection']
 # all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
@@ -18,13 +19,13 @@ optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_o
 def run():
   overwriteAll = False
 
-  with open(snuggetFile) as csvFile:
-    newSnuggets = csv.DictReader(csvFile)
-    rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
-    for row in newSnuggets:
-      rowCount += 1
-      if allRequiredFieldsPresent(row, rowCount):
-        overwriteAll = processRow(row, overwriteAll)
+  newSnuggets = XLSXDictReader(snuggetFile)
+  rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
+  for row in newSnuggets:
+    rowCount += 1
+    if allRequiredFieldsPresent(row, rowCount):
+      checkHTMLTagClosures(row, rowCount)
+      overwriteAll = processRow(row, overwriteAll)
 
   print("Snugget load complete. Processed", rowCount, "rows in", snuggetFile)
 
@@ -48,6 +49,21 @@ def allRequiredFieldsPresent(row, rowCount):
   else: # the entire row is blank
     print("Skipping empty row", rowCount)
     return False
+
+
+def checkHTMLTagClosures(row, rowCount):
+  tags_to_check = ["ol", "ul", "li", "a", "b"]
+  mismatches = {}
+  for key in row.keys():
+    if key == 'text' or key.startswith('text-'):
+      for tag in tags_to_check:
+        tag_opening_no_attr = "<" + tag + ">"
+        tag_opening_with_attr = "<" + tag + " "
+        tag_closing = "</" + tag + ">"
+        tag_openings = row[key].count(tag_opening_no_attr) + row[key].count(tag_opening_with_attr)
+        tag_closings = row[key].count(tag_closing)
+        if tag_openings > tag_closings:
+          print("WARNING: In row", str(rowCount), key, "has", str(tag_openings), "opening <" + tag + "> tag[s] but only", str(tag_closings), "closing tag[s].")
 
 
 def processRow(row, overwriteAll):
@@ -203,20 +219,19 @@ def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
 
 
 def addSlideshow(folder, snugget):
-  slideshowFile = os.path.join(folder, "slideshow.csv")
+  slideshowFile = os.path.join(folder, slideshowFilename)
 
-  with open(slideshowFile) as csvFile:
-    slides = csv.DictReader(csvFile)
-    rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
-    for row in slides:
-      rowCount += 1
-      photo = PastEventsPhoto.objects.create(group=snugget, caption=row["caption"])
-      if row["image"] != '':
-        imageFile = os.path.join(folder, row["image"])
-        with open(imageFile, 'rb') as f:
-          data = File(f)
-          photo.image.save(row["image"], data, True)
-      print("...... Created", photo)
+  slides = XLSXDictReader(slideshowFile)
+  rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
+  for row in slides:
+    rowCount += 1
+    photo = PastEventsPhoto.objects.create(group=snugget, caption=row["caption"])
+    if row["image"] != '':
+      imageFile = os.path.join(folder, row["image"])
+      with open(imageFile, 'rb') as f:
+        data = File(f)
+        photo.image.save(row["image"], data, True)
+    print("...... Created", photo)
 
   print("... Image slideshow created from", folder)
 
@@ -270,3 +285,36 @@ def askUserAboutOverwriting(row, old, overwriteAll):
       return True
     elif response == "R":
       return False
+
+
+
+# drop-in replacement for built-in csv.DictReader() function with .xlsx files
+# originally from https://gist.github.com/mdellavo/853413
+# then heavily adapted first to make it work, then to simplify, and finally with suggestions from later commenters on that gist
+def XLSXDictReader(fileName, sheetName=None):
+  book = openpyxl.reader.excel.load_workbook(fileName)
+  # if there's no sheet name specified, try to get the active sheet.  This will work reliably for workbooks with only one sheet; unpredictably if there are multiple worksheets present.
+  if sheetName is None:
+    sheet = book.active
+  elif sheetName not in book.sheetnames:
+    print(sheetName, "not found in", fileName)
+    exit()
+  else:
+    sheet = book[sheetName]
+
+  rows = sheet.max_row + 1
+  cols = sheet.max_column + 1
+
+  def cleanValue(s):
+    if s == None:
+      return ''
+    else:
+      return str(s).strip()
+
+  def item(i, j):
+    return (
+      cleanValue(sheet.cell(row=1, column=j).value),
+      cleanValue(sheet.cell(row=i, column=j).value)
+    )
+
+  return (dict(item(i,j) for j in range(1, cols)) for i in range(2, rows))
