@@ -14,7 +14,7 @@ dataDir = os.path.join(appDir, "data")
 snuggetWorksheet = "snuggets"
 snuggetFile = os.path.join(dataDir, snuggetWorksheet + ".xlsx")
 slideshowWorksheet = "slideshow"
-slideshowFilename = slideshowWorksheet + ".csv" # there can be multiple of these files in different locations, so that's taken care of in addSlideshow()
+slideshowFilename = slideshowWorksheet + ".xlsx" # there can be multiple of these files in different locations, so the full path is assembled in addSlideshow()
 
 requiredFields = ['shapefile', 'section', 'subsection']
 # all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV. And the None is because the Excel reader will turn blank columns into that.
@@ -209,18 +209,17 @@ def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
 def addSlideshow(folder, snugget):
   slideshowFile = os.path.join(folder, slideshowFilename)
 
-  with open(slideshowFile) as csvFile:
-    slides = csv.DictReader(csvFile)
-    rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
-    for row in slides:
-      rowCount += 1
-      photo = PastEventsPhoto.objects.create(group=snugget, caption=row["caption"])
-      if row["image"] != '':
-        imageFile = os.path.join(folder, row["image"])
-        with open(imageFile, 'rb') as f:
-          data = File(f)
-          photo.image.save(row["image"], data, True)
-      print("...... Created", photo)
+  slides = XLSXDictReader(slideshowFile, slideshowWorksheet)
+  rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
+  for row in slides:
+    rowCount += 1
+    photo = PastEventsPhoto.objects.create(group=snugget, caption=row["caption"])
+    if row["image"] != '':
+      imageFile = os.path.join(folder, row["image"])
+      with open(imageFile, 'rb') as f:
+        data = File(f)
+        photo.image.save(row["image"], data, True)
+    print("...... Created", photo)
 
   print("... Image slideshow created from", folder)
 
