@@ -87,3 +87,4 @@ webpack-stats.json
 
 # Excel temp files
 ~$*.xlsx
+disasterinfosite/media/*
