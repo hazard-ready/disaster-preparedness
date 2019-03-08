@@ -1,6 +1,5 @@
 import openpyxl # library to read .xlsx format
 import os
-import csv
 
 from django.core.files import File
 from django.contrib.contenttypes.models import ContentType
