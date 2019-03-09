@@ -1,11 +1,11 @@
-from django.shortcuts import render
 from collections import OrderedDict
-from .models import Snugget, Location, SiteSettings, SupplyKit, ImportantLink, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile
+from .models import Snugget, Location, SiteSettings, SupplyKit, ImportantLink, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, SlideshowSnugget
 from .fire_dial import make_icon
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseRedirect
 from django.db.utils import IntegrityError
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 import logging
@@ -88,25 +88,32 @@ def update_profile(request):
 
 @ensure_csrf_cookie
 def app_view(request):
-    location = Location.get_solo()
-    important_links = ImportantLink.objects.all()
-    settings = SiteSettings.get_solo()
-    data_bounds = Location.get_data_bounds()
-    supply_kit = SupplyKit.get_solo()
-    supply_kit.meals = 3 * supply_kit.days
-    quick_data_overview = DataOverviewImage.objects.all()
+
     username = None
     profile = None
+
     if request.user.is_authenticated:
         username = request.user.username
         profile = UserProfile.objects.get_or_create(user=request.user)
 
-    template = "no_content_found.html"
+
+    renderData = {
+        'location': Location.get_solo(),
+        'settings': SiteSettings.get_solo(),
+        'data_bounds': Location.get_data_bounds(),
+        'quick_data_overview': DataOverviewImage.objects.all(),
+        'username': username,
+        'profile': profile
+    }
+
+    template = "index.html"
 
     # if user submitted lat/lng, find our snuggets and send them to our template
     if 'lat' and 'lng' in request.GET:
         lat = request.GET['lat']
         lng = request.GET['lng']
+
+        template = "no_content_found.html"
 
         if len(lat) > 0:
             snugget_content = Snugget.findSnuggetsForPoint(lat=float(lat), lng=float(lng))
@@ -115,41 +122,28 @@ def app_view(request):
             if snugget_content is not None:
                 for key, values in snugget_content['groups'].items():
                     sections = {}
+                    heading = key.display_name
+
                     if values:
                         template = 'found_content.html'
-                        heading = values[0].group.display_name
-                        for text_snugget in values:
-                            text_snugget.dynamic_image = make_icon(text_snugget.percentage)
-                            if not text_snugget.section in sections:
-                                sections[text_snugget.section] = [text_snugget]
+
+                        for snugget in values:
+                            snugget.dynamic_image = make_icon(snugget.percentage)
+                            if snugget.__class__ == SlideshowSnugget:
+                                snugget.photos = PastEventsPhoto.objects.filter(snugget=snugget)
+
+                            if not snugget.section in sections:
+                                sections[snugget.section] = [snugget]
 
                         data[key] = {
                             'heading': heading,
                             'sections': OrderedDict(sorted(sections.items(), key=lambda t: t[0].order_of_appearance )),
-                            'likely_scenario_title': values[0].group.likely_scenario_title,
-                            'likely_scenario_text': values[0].group.likely_scenario_text
+                            'likely_scenario_title': key.likely_scenario_title,
+                            'likely_scenario_text': key.likely_scenario_text
                         }
 
-        return render(request, template, {
-            'location': location,
-            'settings': settings,
-            'supply_kit': supply_kit,
-            'important_links': important_links,
-            'data_bounds': data_bounds,
-            'data': OrderedDict(sorted(data.items(), key=lambda t: ShapefileGroup.objects.get(name=t[0]).order_of_appearance )),
-            'quick_data_overview': quick_data_overview,
-            'username': username,
-            'profile': profile
-        })
+        renderData['important_links'] = ImportantLink.objects.all()
+        renderData['supply_kit'] = SupplyKit.get_solo()
+        renderData['data'] = OrderedDict(sorted(data.items(), key=lambda t: ShapefileGroup.objects.get(name=t[0]).order_of_appearance ))
 
-
-    # if not, we'll still serve up the same template without data
-    else:
-        return render(request, 'index.html', {
-            'location': location,
-            'settings': settings,
-            'data_bounds': data_bounds,
-            'quick_data_overview': quick_data_overview,
-            'username': username,
-            'profile': profile
-        })
+    return render(request, template, renderData)

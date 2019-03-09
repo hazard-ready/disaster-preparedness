@@ -25,50 +25,30 @@
     <ul class="disaster-tabs" data-tab role="group">
       {% for group, hazard in data.items %}
         {% if forloop.first %}
-          <li class="tab-title active"><a href="#{{group}}">{{hazard.heading}}</a></li>
+          <li class="tab-title active"><a href="#{{group.name}}">{{hazard.heading}}</a></li>
         {% else %}
-          <li class="tab-title"><a href="#{{group}}">{{hazard.heading}}</a></li>
+          <li class="tab-title"><a href="#{{group.name}}">{{hazard.heading}}</a></li>
         {% endif %}
       {% endfor %}
     </ul>
     <div class="disaster-tabs-content">
     {% for group, hazard in data.items %}
       {% if forloop.first %}
-        <div class="active disaster-content" id="{{group}}">
+        <div class="active disaster-content" id="{{group.name}}">
       {% else %}
-        <div class="disaster-content" id="{{group}}">
+        <div class="disaster-content" id="{{group.name}}">
       {% endif %}
-        {% for section, sub_sections in hazard.sections.items %}
-          <div class="snugget-text">
-            <div class="section-title-wrapper">
-              <div class="section-icon section-icon--{{ section }}">
-                <h2 class="caps section-title">{{ section.display_name }}</h2>
-              </div>
-            </div>
-            <div class="section-content">
-              {% for sub_section, snuggets in sub_sections.items %}
-                <h3 class="snugget-subsection">{{ sub_section.display_name }}</h3>
-                {% for snugget in snuggets %}
-                  {% show_snugget snugget %}
-                {% endfor %}
-              {% endfor %}
-            </div>
+        {% for section, snuggets in hazard.sections.items %}
+          <h2 class="caps section-title">{{ section.name }}</h2>
+          <div class="section-content">
+            {% for snugget in snuggets %}
+              {% show_snugget snugget %}
+            {% endfor %}
           </div>
         {% endfor %}
       </div>
     {% endfor %}
     </div>
-  </div>
-
-  <div role="complementary" aria-label="information">
-    <h4>{% trans "Supply Kit" %}</h4>
-    {% include "supply-kit.html" %}
-
-    <h4>{% trans "Important Links" %}</h4>
-    {% for link in important_links %}
-    <h5>{{ link.title }}</h5>
-    <p>{{ link.link | safe }}
-    {% endfor %}
   </div>
 
 {% endblock main-content %}

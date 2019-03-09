@@ -1,5 +1,10 @@
+{% load i18n %}
+
 {% block snugget-content %}
   <h3 class="snugget-subsection">{% trans "Historical Images" %}</h3>
+  <div class="snugget-content">
+    {{ snugget.text | safe }}
+  </div>
   <div class="past-photos">
     {% for photo in snugget.photos %}
     <div class="past-photo__container">
