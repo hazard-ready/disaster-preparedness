@@ -270,6 +270,7 @@ class Snugget(models.Model):
     group = models.ForeignKey(ShapefileGroup, on_delete=models.PROTECT, null=True)
     pop_out = models.OneToOneField(SnuggetPopOut, on_delete=models.PROTECT, blank=True, null=True)
     percentage = models.FloatField(null=True)
+    order = models.IntegerField(default=0)
 
     def getRelatedTemplate(self):
         return "snugget.html"

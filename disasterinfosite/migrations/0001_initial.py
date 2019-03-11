@@ -148,6 +148,7 @@ class Migration(migrations.Migration):
                 ('section', models.ForeignKey(to='disasterinfosite.SnuggetSection', on_delete=models.PROTECT, related_name='+')),
                 ('group', models.ForeignKey(to='disasterinfosite.ShapefileGroup', null=True, on_delete=models.PROTECT)),
                 ('pop_out', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='disasterinfosite.SnuggetPopOut')),
+                ('order', models.IntegerField(default=0))
             ],
         ),
         migrations.CreateModel(
