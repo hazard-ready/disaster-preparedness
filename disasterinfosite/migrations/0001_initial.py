@@ -137,7 +137,7 @@ class Migration(migrations.Migration):
                 ('image', models.ImageField(upload_to='popout_images')),
                 ('link', models.TextField(default='', max_length=255)),
                 ('text', models.TextField(default='')),
-                ('video', embed_video.fields.EmbedVideoField(default=''))
+                ('video', embed_video.fields.EmbedVideoField(null=True))
             ],
         ),
         migrations.CreateModel(
