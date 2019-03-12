@@ -8,7 +8,9 @@ var boundaryShape = require("./boundary.json");
 
 require("../img/favicon.ico");
 require("../img/marker-icon.png");
+require("../img/marker-shadow.png");
 require("../img/thinking.gif");
+require("../img/logo.png");
 
 require("./users");
 require("slick-carousel");
