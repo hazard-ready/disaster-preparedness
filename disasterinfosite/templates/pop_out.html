@@ -1,0 +1,29 @@
+{% load embed_video_tags %}
+
+{% block popout-content %}
+<div class="snugget__popout">
+  {% if snugget.pop_out.link %}
+    <a href="{{snugget.pop_out.link}}" target="_blank">
+  {% endif %}
+
+  {% if snugget.pop_out.text %}
+    {{ snugget.pop_out.text | safe }}
+  {% endif %}
+
+  {% if snugget.pop_out.link %}
+    </a>
+  {% endif %}
+
+  {% if snugget.pop_out.image %}
+    <img alt="{{ snugget.pop_out.alt_text }}" src="{{ snugget.pop_out.image.url }}"/>
+  {% endif %}
+  {% if snugget.pop_out.video %}
+
+    {% video snugget.pop_out.video as v %}
+      {% video v "small" %}
+    {% endvideo %}
+
+  {% endif %}
+</div>
+{% endblock %}
+

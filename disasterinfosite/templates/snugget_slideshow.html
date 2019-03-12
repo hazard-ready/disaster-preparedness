@@ -1,7 +1,6 @@
 {% load i18n %}
 
 {% block snugget-content %}
-  <h3 class="snugget-subsection">{% trans "Historical Images" %}</h3>
   <div class="snugget-content">
     {{ snugget.text | safe }}
   </div>
@@ -13,4 +12,5 @@
      </div>
     {% endfor %}
   </div>
+  {% include "pop_out.html" %}
 {% endblock %}
