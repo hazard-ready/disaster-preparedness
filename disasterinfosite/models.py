@@ -239,11 +239,11 @@ class SnuggetSection(models.Model):
         return self.name
 
 class SnuggetPopOut(models.Model):
-    text = models.TextField(default="")
+    text = models.TextField(default='')
     image = models.ImageField(upload_to="popout_images")
-    link = models.TextField(default="", max_length=255)
-    alt_text = models.TextField(default="", max_length=255)
-    video = EmbedVideoField(default="")
+    link = models.TextField(default='', max_length=255)
+    alt_text = models.TextField(default='', max_length=255)
+    video = EmbedVideoField(null=True)
 
     def __str__(self):
         return self.text[:100]
