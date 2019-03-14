@@ -34,40 +34,42 @@
 
 </head>
 <body>
-  <div class="row top-header">
-    <div id="title" class="title-header" role="banner">
-      {% include "language_selector.html" %}
-      <a href="#user-interaction-container" class="button caps button--top">{% trans "Sign Up / Log In" %}</a>
-      <h1 class="project-title caps">
-        <a href="{{ settings.site_url }}">{{ settings.site_title }}</a>
-      </h1>
-      <h2 class="project-subtitle">{{ settings.site_description | safe }}</h2>
-    </div>
-    {% block info-instructions %}
-      <div class="information-container">
-        <div class="information-instructions" role="main">
-          <p class="organization-information">{{ settings.about_text | safe }}</p>
-          <p>{{ settings.intro_text | safe }}</p>
-          <p class="location-instructions">
-            {% trans "Give a location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
-          </p>
+  <header>
+    <div class="logo__container">
+      <a class="link--plain" href="{{ settings.site_url }}">
+        <img class="logo--header" src="{% webpack_static 'build/logo-no-text.png' %}" alt="">
+        <div class="logo__text">
+          <h5 class="project-title caps">{{ settings.site_title }}</h5>
+          <h3 class="h3--sans-serif">Hazard Ready</h3>
         </div>
-      </div>
-    {% endblock info-instructions %}
-  </div>
+      </a>
+      <a class="header__about--small hide-for-medium-up" href="about.html"><h5 class="header__about">About</h5></a>
+    </div>
 
-{% block search %}
-  <div class="location-form" role="form" aria-label="location-search">
-    <label for="location-text">Location</label>
-    <input name="location-text" id="location-text" type="text" placeholder="Your address, your city" />
-    <div class="geocode-error-message"></div>
-    <a id="location-submit" class="button"></a>
-{% trans "Find Me" as find_me %}
-    <div class="form-icon-button">
-      <a class="auto-location-submit button caps">{{ find_me }}</a>
+    {% block search %}
+    {% trans "Find Me" as find_me %}
+      <div class="location-form" role="form" aria-label="location-search">
+        <label class="sr-only" for="location-text">Location</label>
+        <input name="location-text" id="location-text" type="text" placeholder="Enter your home address to see your risk" />
+        <button id="auto-location" class="auto-location-submit caps">{{ find_me }}</button>
+        <button id="location-submit"><img src="{% webpack_static 'build/icon-search.png' %}" alt="search"></button>
+        <div class="geocode-error-message"></div>
+      </div>
+    {% endblock search %}
+    <a class="hide-for-small" href="about.html"><h5 class="header__about">About</h5></a>
+  </header>
+
+  {% block info-instructions %}
+  <div class="information-container">
+    <div class="information-instructions" role="main">
+      <p class="organization-information">{{ settings.about_text | safe }}</p>
+      <p>{{ settings.intro_text | safe }}</p>
+      <p class="location-instructions">
+        {% trans "Give a location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
+      </p>
     </div>
   </div>
-{% endblock search %}
+{% endblock info-instructions %}
 
 {% block map %}
   <div class="map-container" role="application">

@@ -11,6 +11,8 @@ require("../img/marker-icon.png");
 require("../img/marker-shadow.png");
 require("../img/thinking.gif");
 require("../img/logo.png");
+require("../img/logo-no-text.png");
+require("../img/icon-search.png");
 
 require("./users");
 require("slick-carousel");
@@ -100,7 +102,8 @@ $(document).ready(function() {
   placeSearch({
     key: MAPQUEST_KEY,
     container: input,
-    useDeviceLocation: true
+    useDeviceLocation: true,
+    style: false
   });
 
   // hitting enter key in the textfield will trigger submit
