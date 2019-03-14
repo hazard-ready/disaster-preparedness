@@ -169,21 +169,15 @@ h4 {
 /* Header */
 
 #title a {
-  font-size: 1.25em;
   font-weight: bold;
 
   .button--top {
     position: absolute;
     right: 5px;
-    font-size: 0.75em;
     width: 90px;
 
     @include breakpoint(medium-and-up) {
       width: auto;
-    }
-
-    @include breakpoint(large) {
-      font-size: 1em;
     }
   }
 }
@@ -217,24 +211,7 @@ h4 {
 }
 
 .project-title {
-  font-size: 1.5rem;
-  line-height: 1.5em;
   padding-top: 1rem;
-
-  @include breakpoint(medium-and-up) {
-    font-size: 2rem;
-    line-height: 1.2em;
-  }
-}
-
-.project-subtitle {
-  font-size: 16px;
-  line-height: 1.2em;
-
-  @include breakpoint(medium-and-up) {
-    font-size: 20px;
-    line-height: 1.2em;
-  }
 }
 
 /* Information and Instructions */
@@ -266,19 +243,11 @@ h4 {
   }
 }
 
-.location-label {
-  font-size: 22px;
-  line-height: 1.2em;
-}
-
 .location-instructions {
   display: block;
 }
 
 #location-text {
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 1.3em;
   border-width: 1px;
 
   &:disabled {
@@ -287,7 +256,6 @@ h4 {
   }
 
   @include breakpoint(medium-and-up) {
-    font-size: 20px;
     margin-bottom: 0.5rem;
   }
 }
@@ -379,15 +347,6 @@ h4 {
   }
 }
 
-.button,
-.select {
-  font-size: 12px;
-
-  @include breakpoint(large) {
-    font-size: 1rem;
-  }
-}
-
 input:invalid {
   border-width: 2px;
 }
@@ -431,7 +390,6 @@ form:invalid {
 
 .user-interactions-help {
   padding-top: 1rem;
-  font-size: 0.75em;
 }
 
 #user-info-container,
@@ -475,22 +433,12 @@ form:invalid {
   text-align: center;
 }
 
-.tab-title {
-  font-size: 16px;
-  font-weight: bold;
-}
-
 .likely-scenario {
   color: $white;
   padding: 10px;
   margin-top: -15px;
   p {
-    font-size: 1rem;
     margin-bottom: 0;
-
-    @include breakpoint(medium-and-up) {
-      font-size: 1.2em;
-    }
   }
 }
 
@@ -547,15 +495,7 @@ form:invalid {
 }
 
 .section-title {
-  font-size: 1.2rem;
   margin-left: 55px;
-  line-height: 3em;
-  text-transform: uppercase;
-
-  @include breakpoint(medium-and-up) {
-    font-size: 1.75rem;
-    margin-left: 90px;
-  }
 }
 
 /* Snugget content */
@@ -643,41 +583,6 @@ form:invalid {
 
   &:hover {
     color: #fff;
-  }
-}
-
-/* Supply kit */
-
-.supply-kit {
-  font-size: 16px;
-  line-height: 1.2em;
-
-  div {
-    margin: 30px 0;
-  }
-
-  span {
-    font-size: 0.75em;
-    line-height: 1em;
-  }
-}
-
-.supply-kit-icon {
-  width: 43px;
-  height: 45px;
-  background: transparent url(../img/icons-supply-kit.png) no-repeat 0 0;
-  background-size: 43px auto;
-  overflow: hidden;
-
-  &.food,
-  &.water {
-    background-position: 0 -90px;
-  }
-
-  &.big-num {
-    font-size: 50px;
-    line-height: 0.9em;
-    margin: 0 15px;
   }
 }
 
