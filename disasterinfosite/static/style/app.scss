@@ -1,19 +1,15 @@
 /* Colors */
 $black: #000;
 $black-tint: rgba(255, 255, 255, 0.5);
-$soft-black: #2c2c2c;
+$soft-black: #121212;
 $dark-grey: #444;
-$medium-grey: #999;
-$pale-grey: #e1e1e1;
-$soft-white: #f2f2f2;
+$medium-grey: #ccc;
+$soft-white: #f9f9f9;
 $white: #fff;
 
-$dark-main-color: #444;
-$light-main-color: #9999aa;
-
-$cool-contrast: #004444;
-$dark-contrast: #f03b20;
-$light-contrast: #fd8d3c;
+$dark-accent: #0037a7;
+$light-accent: #106edf;
+$bright-accent: #00a4b2;
 
 $low-intensity: #ffffb2;
 $moderate-intensity: #fed976;
@@ -21,13 +17,20 @@ $high-intensity: #feb24c;
 $very-high-intensity: #fd8d3c;
 $extreme-intensity: #f03b20;
 
-$error-red: #5e001d;
+$error-red: #f03b20;
 
 /* Typography */
 
-$serif: Georgia, Times, "Times New Roman", serif;
-$sans-serif: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
-  Helvetica, Arial, "Lucida Grande", sans-serif;
+$sans-serif: "Source Sans Pro", sans-serif;
+$serif: "Source Serif Pro", serif;
+
+$font-weight-regular: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$big-header-line-height: 1.2; /* maybe 1.3 if we feel saucy */
+$small-header-line-height: 1.3;
+$body-line-height: 1.4;
 
 /* Z-order */
 $z-index-high: 1001;
@@ -57,49 +60,81 @@ html {
 }
 
 body {
+  background-color: $soft-white;
+  color: $soft-black;
   height: auto !important;
   width: auto !important;
-  font-family: $serif;
-  color: $dark-grey;
+  font-family: $sans-serif;
+  font-weight: $font-weight-regular;
+  line-height: $body-line-height;
 }
 
 h1 {
-  font-size: 2.3125rem;
+  color: $soft-black;
+  font-family: $serif;
+  font-size: 28px;
+  line-height: $big-header-line-height;
+
+  @include breakpoint(large) {
+    font-size: 32px;
+  }
 }
 
 h2 {
-  line-height: 1.5rem;
-  font-size: 1.6875rem;
-  font-weight: bold;
+  color: $dark-accent;
+  font-family: $serif;
+  font-size: 24px;
+  font-weight: $font-weight-semibold;
+  line-height: $big-header-line-height;
 
   @include breakpoint(large) {
-    line-height: 1.75rem;
+    font-size: 28px;
   }
+}
+
+.h2--sans-serif {
+  font-family: $sans-serif;
+  font-weight: $font-weight-bold;
+  line-height: $small-header-line-height;
 }
 
 h3 {
-  font-size: 1.2rem;
-  font-weight: bold;
-
+  color: $soft-black;
+  font-family: $serif;
+  font-size: 21px;
+  font-weight: $font-weight-bold;
+  line-height: $small-header-line-height;
   @include breakpoint(large) {
-    font-size: 1.4375rem;
+    font-size: 24px;
   }
+}
+
+.h3--sans-serif {
+  font-family: $sans-serif;
+  font-weight: $font-weight-bold;
+  line-height: $small-header-line-height;
 }
 
 h4 {
-  font-size: 1.125rem;
-  font-weight: bold;
-}
-
-h5 {
-  font-size: 1rem;
+  color: $light-accent;
+  font-family: $serif;
+  font-size: 16px;
+  font-weight: $font-weight-bold;
+  line-height: $small-header-line-height;
   @include breakpoint(large) {
-    font-size: 1.2rem;
+    font-size: 18px;
   }
 }
 
-label {
-  color: $white;
+.h4--sans-serif {
+  color: $bright-accent;
+  font-family: $sans-serif;
+}
+
+.caption {
+  color: $dark-grey;
+  font-size: 12px;
+  line-height: $body-line-height;
 }
 
 /* Utility styles */
@@ -135,12 +170,10 @@ label {
   border: 0;
 }
 
-.sans-serif {
-  font-family: $sans-serif;
-}
 .vert-pad-medium {
   padding: 2em 0;
 }
+
 .caps {
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -150,26 +183,15 @@ label {
 /* Header */
 
 #title a {
-  font-size: 1.25em;
   font-weight: bold;
-  color: $dark-main-color;
-
-  &:hover {
-    color: $dark-main-color;
-  }
 
   .button--top {
     position: absolute;
     right: 5px;
-    font-size: 0.75em;
     width: 90px;
 
     @include breakpoint(medium-and-up) {
       width: auto;
-    }
-
-    @include breakpoint(large) {
-      font-size: 1em;
     }
   }
 }
@@ -188,10 +210,8 @@ label {
 
 .title-header {
   padding: 5px;
-  background-color: $light-main-color;
 
   h2 {
-    color: $white;
     text-align: center;
   }
 }
@@ -205,24 +225,7 @@ label {
 }
 
 .project-title {
-  font-size: 1.5rem;
-  line-height: 1.5em;
   padding-top: 1rem;
-
-  @include breakpoint(medium-and-up) {
-    font-size: 2rem;
-    line-height: 1.2em;
-  }
-}
-
-.project-subtitle {
-  font-size: 16px;
-  line-height: 1.2em;
-
-  @include breakpoint(medium-and-up) {
-    font-size: 20px;
-    line-height: 1.2em;
-  }
 }
 
 /* Information and Instructions */
@@ -233,19 +236,12 @@ label {
 }
 
 .information-container {
-  background-color: $dark-main-color;
-  color: $white;
   padding: 15px;
-  a {
-    color: $white;
-    font-weight: bold;
-  }
 }
 
 /* Map and Search */
 
 .location-form {
-  background-color: $dark-main-color;
   padding-bottom: 10px;
 
   @include breakpoint(large) {
@@ -261,22 +257,11 @@ label {
   }
 }
 
-.location-label {
-  font-size: 22px;
-  line-height: 1.2em;
-}
-
 .location-instructions {
   display: block;
 }
 
 #location-text {
-  color: $dark-main-color;
-  font-family: $sans-serif;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 1.3em;
-  border-color: $pale-grey;
   border-width: 1px;
 
   &:disabled {
@@ -284,21 +269,7 @@ label {
     color: $medium-grey;
   }
 
-  ::-webkit-input-placeholder {
-    color: $dark-main-color;
-  }
-  :-moz-placeholder {
-    color: $dark-main-color;
-  }
-  ::-moz-placeholder {
-    color: $dark-main-color;
-  }
-  :-ms-input-placeholder {
-    color: $dark-main-color;
-  }
-
   @include breakpoint(medium-and-up) {
-    font-size: 20px;
     margin-bottom: 0.5rem;
   }
 }
@@ -390,24 +361,7 @@ label {
   }
 }
 
-.button,
-.select {
-  border-color: $light-contrast;
-  background-color: $light-contrast;
-  font-size: 12px;
-
-  &:hover,
-  &:focus {
-    background-color: $dark-contrast;
-  }
-
-  @include breakpoint(large) {
-    font-size: 1rem;
-  }
-}
-
 input:invalid {
-  border-color: $dark-contrast;
   border-width: 2px;
 }
 
@@ -450,11 +404,6 @@ form:invalid {
 
 .user-interactions-help {
   padding-top: 1rem;
-  font-size: 0.75em;
-}
-
-#user-interaction-container label {
-  color: $dark-main-color;
 }
 
 #user-info-container,
@@ -489,10 +438,6 @@ form:invalid {
   padding: 5px;
 }
 
-.disaster-tabs-content {
-  background-color: $light-main-color;
-}
-
 .disaster-container {
   padding-top: 20px;
 }
@@ -502,28 +447,12 @@ form:invalid {
   text-align: center;
 }
 
-.tab-title {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.disaster-tabs {
-  background-color: $light-main-color;
-  padding: 5px;
-}
-
 .likely-scenario {
-  background-color: $dark-main-color;
   color: $white;
   padding: 10px;
   margin-top: -15px;
   p {
-    font-size: 1rem;
     margin-bottom: 0;
-
-    @include breakpoint(medium-and-up) {
-      font-size: 1.2em;
-    }
   }
 }
 
@@ -580,15 +509,7 @@ form:invalid {
 }
 
 .section-title {
-  font-size: 1.2rem;
   margin-left: 55px;
-  line-height: 3em;
-  text-transform: uppercase;
-
-  @include breakpoint(medium-and-up) {
-    font-size: 1.75rem;
-    margin-left: 90px;
-  }
 }
 
 /* Snugget content */
@@ -679,56 +600,9 @@ form:invalid {
   }
 }
 
-/* Supply kit */
-
-.supply-kit {
-  font-size: 16px;
-  line-height: 1.2em;
-
-  div {
-    margin: 30px 0;
-  }
-
-  span {
-    font-size: 0.75em;
-    line-height: 1em;
-  }
-}
-
-.supply-kit-icon {
-  width: 43px;
-  height: 45px;
-  background: transparent url(../img/icons-supply-kit.png) no-repeat 0 0;
-  background-size: 43px auto;
-  overflow: hidden;
-
-  &.food,
-  &.water {
-    background-position: 0 -90px;
-  }
-
-  &.big-num {
-    font-size: 50px;
-    line-height: 0.9em;
-    margin: 0 15px;
-    color: $light-contrast;
-  }
-}
-
 /* Geek box */
 
 #geek-box {
-  background-color: $light-main-color;
-  color: $white;
-
-  a {
-    color: $cool-contrast;
-  }
-
-  h3 {
-    color: $white;
-  }
-
   .who-made-this-logo {
     margin: 0 auto;
     max-width: 30%;
@@ -738,8 +612,4 @@ form:invalid {
       margin: 0.5rem;
     }
   }
-}
-
-#geek-box-container {
-  background-color: $light-main-color;
 }
