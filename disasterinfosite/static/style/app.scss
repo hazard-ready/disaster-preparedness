@@ -72,16 +72,24 @@ body {
 h1 {
   color: $soft-black;
   font-family: $serif;
-  font-size: 32px;
+  font-size: 28px;
   line-height: $big-header-line-height;
+
+  @include breakpoint(large) {
+    font-size: 32px;
+  }
 }
 
 h2 {
   color: $dark-accent;
   font-family: $serif;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: $font-weight-semibold;
   line-height: $big-header-line-height;
+
+  @include breakpoint(large) {
+    font-size: 28px;
+  }
 }
 
 .h2--sans-serif {
@@ -93,9 +101,12 @@ h2 {
 h3 {
   color: $soft-black;
   font-family: $serif;
-  font-size: 24px;
+  font-size: 21px;
   font-weight: $font-weight-bold;
   line-height: $small-header-line-height;
+  @include breakpoint(large) {
+    font-size: 24px;
+  }
 }
 
 .h3--sans-serif {
@@ -107,9 +118,12 @@ h3 {
 h4 {
   color: $light-accent;
   font-family: $serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: $font-weight-bold;
   line-height: $small-header-line-height;
+  @include breakpoint(large) {
+    font-size: 18px;
+  }
 }
 
 .h4--sans-serif {
@@ -589,10 +603,6 @@ form:invalid {
 /* Geek box */
 
 #geek-box {
-  h3 {
-    color: $white;
-  }
-
   .who-made-this-logo {
     margin: 0 auto;
     max-width: 30%;
