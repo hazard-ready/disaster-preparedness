@@ -17,8 +17,8 @@ require("../img/icon-search.png");
 require("./users");
 require("slick-carousel");
 
-// Get a Mapquest key for this!
-var MAPQUEST_KEY = "";
+// This is the base repository Mapquest key. Get your own Mapquest key for a new app!
+var MAPQUEST_KEY = "b3ZxSWOID7jOlLLGb8KvPxbF4DGBMEHy";
 
 $(document).ready(function() {
   // convenience function to extract url parameters
@@ -102,8 +102,7 @@ $(document).ready(function() {
   placeSearch({
     key: MAPQUEST_KEY,
     container: input,
-    useDeviceLocation: true,
-    style: false
+    useDeviceLocation: true
   });
 
   // hitting enter key in the textfield will trigger submit
