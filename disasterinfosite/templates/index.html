@@ -18,15 +18,16 @@
 
   <title>{{ settings.site_title }}</title>
 
+ <!-- Load fonts -->
+ <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i|Source+Serif+Pro:600,700" rel="stylesheet">
+
+ <!-- Load MapQuest Places search styles (for autocomplete) from CDN -->
+ <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css"/>
+
   {% render_bundle 'app' 'css' %}
 
   <link rel="shortcut icon" href="{% webpack_static 'build/favicon.ico' %}"/>
 
-  <!-- Load fonts -->
- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i|Source+Serif+Pro:600,700" rel="stylesheet">
-
-  <!-- Load MapQuest Places search styles (for autocomplete) from CDN -->
-  <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css"/>
 
   <script type="text/javascript">
     var mapBounds = {{ data_bounds | js }};
@@ -43,7 +44,7 @@
           <h3 class="h3--sans-serif">Hazard Ready</h3>
         </div>
       </a>
-      <a class="header__about--small link--plain hide-for-medium-up" href="about.html"><h5 class="header__about link--grey ">About</h5></a>
+      <a class="header__about--small link--plain hide-for-medium-up" href="#geek-box"><h5 class="header__about link--grey ">About</h5></a>
     </div>
 
     {% block search %}
@@ -56,7 +57,7 @@
         <div class="geocode-error-message"></div>
       </div>
     {% endblock search %}
-    <a class="hide-for-small link--plain" href="about.html"><h5 class="header__about link--grey">About</h5></a>
+    <a class="hide-for-small link--plain" href="#geek-box"><h5 class="header__about link--grey">About</h5></a>
   </header>
 
   {% block info-instructions %}

@@ -96,13 +96,16 @@ $(document).ready(function() {
   if (!query_lat || !query_lng) location_query_text = "";
   $("#location-text").val(location_query_text);
 
-  // Set up autocomplete
-  var input = document.getElementById("location-text");
-
-  placeSearch({
-    key: MAPQUEST_KEY,
-    container: input,
-    useDeviceLocation: true
+  // Set up autocomplete when someone clicks in the location-text field
+  $("#location-text").one("click", function() {
+    var input = document.getElementById("location-text");
+    $("#location-text").prop("placeholder", "");
+    placeSearch({
+      key: MAPQUEST_KEY,
+      container: input,
+      useDeviceLocation: true
+    });
+    $("#location-text").focus();
   });
 
   // hitting enter key in the textfield will trigger submit
