@@ -33,20 +33,22 @@ $small-header-line-height: 1.3;
 $body-line-height: 1.4;
 
 /* Z-order */
+$z-index-bottom: 0;
+$z-index-next: 1;
 $z-index-high: 1001;
 
 /* Breakpoints! */
 @mixin breakpoint($point) {
   @if $point == medium {
-    @media only screen and (min-width: 26rem) and (max-width: 40rem) {
+    @media only screen and (min-width: 640px) and (max-width: 900px) {
       @content;
     }
   } @else if $point == medium-and-up {
-    @media only screen and (min-width: 26rem) {
+    @media only screen and (min-width: 640px) {
       @content;
     }
   } @else if $point == large {
-    @media only screen and (min-width: 40rem) {
+    @media only screen and (min-width: 900px) {
       @content;
     }
   }
@@ -65,6 +67,7 @@ body {
   height: auto !important;
   width: auto !important;
   font-family: $sans-serif;
+  font-size: 16px;
   font-weight: $font-weight-regular;
   line-height: $body-line-height;
 }
@@ -137,6 +140,21 @@ h4 {
   line-height: $body-line-height;
 }
 
+.caps {
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: $font-weight-bold;
+}
+
+.link--plain {
+  text-decoration: none;
+}
+
+.link--grey {
+  text-decoration: none;
+  border-bottom: 2px solid $medium-grey;
+}
+
 /* Utility styles */
 
 .hide {
@@ -147,12 +165,12 @@ h4 {
   display: none;
 
   @include breakpoint(medium-and-up) {
-    display: inline;
+    display: inline-block;
   }
 }
 
 .hide-for-medium-up {
-  display: inline;
+  display: inline-block;
 
   @include breakpoint(medium-and-up) {
     display: none;
@@ -174,58 +192,159 @@ h4 {
   padding: 2em 0;
 }
 
-.caps {
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-weight: bold;
-}
-
 /* Header */
+header {
+  display: flex;
+  background-color: $white;
+  flex-direction: column;
+  padding: 2px;
 
-#title a {
-  font-weight: bold;
-
-  .button--top {
-    position: absolute;
-    right: 5px;
-    width: 90px;
-
-    @include breakpoint(medium-and-up) {
-      width: auto;
-    }
+  @include breakpoint(medium-and-up) {
+    flex-direction: row;
+    padding: 5px;
   }
-}
-
-.title-image {
-  display: block;
-  max-height: 50px;
-  margin: 0 auto;
 
   @include breakpoint(large) {
-    display: inline;
-    margin: auto;
-    max-height: unset;
+    padding: 5px 20px;
   }
 }
 
-.title-header {
-  padding: 5px;
+.logo__container {
+  overflow: auto;
+  position: relative;
 
-  h2 {
-    text-align: center;
+  h3 {
+    margin: 5px 0;
+  }
+
+  @include breakpoint(medium) {
+    margin-right: 5px;
+    min-width: 195px;
+  }
+
+  @include breakpoint(large) {
+    margin-right: 10px;
+    min-width: 228px;
   }
 }
 
-.top-header {
-  max-width: none;
+.logo--header {
+  display: inline-block;
+  max-height: 56px;
+
+  @include breakpoint(large) {
+    max-height: 65px;
+  }
 }
 
-.project-title .project-subtitle {
-  text-align: center;
+.logo__text {
+  display: inline-block;
+  vertical-align: top;
 }
 
 .project-title {
-  padding-top: 1rem;
+  color: $dark-grey;
+  font-family: $sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  margin: 10px 0px 0px;
+
+  @include breakpoint(large) {
+    font-size: 14px;
+  }
+}
+
+.header__about {
+  font-family: $sans-serif;
+  font-size: 16px;
+  line-height: $small-header-line-height;
+  color: $soft-black;
+  margin: 20px 0 0 5px;
+
+  @include breakpoint(large) {
+    font-size: 18px;
+    margin: 20px 0 0 10px;
+  }
+}
+
+.header__about--small {
+  position: absolute;
+  right: 10px;
+}
+
+/* Search */
+.location-form {
+  border-radius: 4px;
+  border: solid 1px $medium-grey;
+  display: flex;
+  flex-grow: 2;
+  margin: 0;
+
+  @include breakpoint(medium) {
+    margin: 14px 5px 14px auto;
+  }
+
+  @include breakpoint(large) {
+    margin: 14px 10px 14px auto;
+  }
+}
+
+#location-text,
+.mq-input {
+  border: none;
+  flex-basis: 218px;
+  flex-grow: 100;
+  line-height: 2;
+  height: auto;
+
+  margin: 2px;
+  z-index: $z-index-bottom;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+#location-submit,
+#auto-location {
+  background-color: $light-accent;
+  border: none;
+  color: $white;
+  flex-grow: 0;
+  transition: color 1s;
+
+  &:focus,
+  &:hover {
+    background-color: $dark-accent;
+  }
+
+  img {
+    height: 24px;
+  }
+}
+
+#auto-location {
+  border-right: solid 2px $white;
+  margin-left: auto;
+  max-width: 52px;
+  z-index: $z-index-next;
+
+  @include breakpoint(medium-and-up) {
+    max-width: unset;
+  }
+}
+
+#location-submit {
+  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.location-instructions {
+  display: block;
+}
+
+.geocode-error-message {
+  color: $error-red;
 }
 
 /* Information and Instructions */
@@ -239,67 +358,7 @@ h4 {
   padding: 15px;
 }
 
-/* Map and Search */
-
-.location-form {
-  padding-bottom: 10px;
-
-  @include breakpoint(large) {
-    padding-left: 100px; /* make it line up with the text in the header, not the image */
-  }
-}
-
-.form-icon-button {
-  text-align: center;
-
-  @include breakpoint(large) {
-    text-align: left;
-  }
-}
-
-.location-instructions {
-  display: block;
-}
-
-#location-text {
-  border-width: 1px;
-
-  &:disabled {
-    border-color: $medium-grey;
-    color: $medium-grey;
-  }
-
-  @include breakpoint(medium-and-up) {
-    margin-bottom: 0.5rem;
-  }
-}
-
-#location-submit {
-  background-image: url(../img/icon-search.png);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 23px 23px;
-  border-radius: 0 3px 3px 0;
-}
-
-.auto-location-submit,
-.button--top {
-  border-radius: 3px;
-  padding: 9px 1em;
-}
-
-.auto-location-submit {
-  margin-left: 1em;
-  margin-bottom: 0;
-
-  @include breakpoint(medium-and-up) {
-    margin: auto;
-  }
-}
-
-.geocode-error-message {
-  color: $error-red;
-}
+/* Map */
 
 #map {
   height: 180px;
