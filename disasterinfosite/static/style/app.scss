@@ -279,6 +279,7 @@ header {
   display: flex;
   flex-grow: 2;
   margin: 0;
+  position: relative;
 
   @include breakpoint(medium) {
     margin: 14px 5px 14px auto;
@@ -345,6 +346,9 @@ header {
 
 .geocode-error-message {
   color: $error-red;
+  position: absolute;
+  bottom: -38px;
+  left: 5px;
 }
 
 /* Information and Instructions */
