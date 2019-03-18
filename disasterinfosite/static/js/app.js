@@ -19,6 +19,18 @@ require("slick-carousel");
 
 // This is the base repository Mapquest key. Get your own Mapquest key for a new app!
 var MAPQUEST_KEY = "b3ZxSWOID7jOlLLGb8KvPxbF4DGBMEHy";
+var osmUrl =
+  "//{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=3a70462b44dd431586870baee15607e4";
+var osmAttrib =
+  'Map data © <a href="//openstreetmap.org">OpenStreetMap</a> contributors';
+
+var boundaryStyle = {
+  color: "rgb(253, 141, 60)",
+  weight: 4,
+  opacity: 1,
+  fillColor: "#ffffff",
+  fillOpacity: 0.7
+};
 
 $(document).ready(function() {
   // convenience function to extract url parameters
@@ -26,11 +38,7 @@ $(document).ready(function() {
     var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
       window.location.href
     );
-    if (results == null) {
-      return null;
-    } else {
-      return results[1] || 0;
-    }
+    return results === null ? null : results[1] || 0;
   }
 
   // grab the position, if possible
@@ -49,20 +57,9 @@ $(document).ready(function() {
     map.fitBounds(mapBounds);
   }
 
-  var osmUrl =
-    "//{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=3a70462b44dd431586870baee15607e4";
-  var osmAttrib =
-    'Map data © <a href="//openstreetmap.org">OpenStreetMap</a> contributors';
   var layer = L.tileLayer(osmUrl, { attribution: osmAttrib }).addTo(map);
   layer.setOpacity(0.6);
 
-  var boundaryStyle = {
-    color: "rgb(253, 141, 60)",
-    weight: 4,
-    opacity: 1,
-    fillColor: "#ffffff",
-    fillOpacity: 0.7
-  };
   var boundaryLayer = L.geoJson(boundaryShape, {
     style: boundaryStyle
   }).addTo(map);
@@ -84,9 +81,14 @@ $(document).ready(function() {
   // Make a click on the map submit the location
   map.on("click", function(e) {
     location_query_text = "";
-    $("#location-text").val(location_query_text); // clear query text
+    $locationInput.val(location_query_text); // clear query text
     submitLocation(e.latlng.lat, e.latlng.lng);
   });
+
+  // Set up input box
+  var $locationInput = $("#location-text");
+  var $locationSubmit = $("#location-submit");
+  var $autoLocationButton = $(".auto-location-submit");
 
   // grab and set any previously entered query text
   var loc = getURLParameter("loc");
@@ -94,32 +96,32 @@ $(document).ready(function() {
     ? decodeURIComponent(loc)
     : query_lat + "," + query_lng;
   if (!query_lat || !query_lng) location_query_text = "";
-  $("#location-text").val(location_query_text);
+  $locationInput.val(location_query_text);
 
-  // Set up autocomplete when someone clicks in the location-text field
-  $("#location-text").one("click", function() {
+  // Set up autocomplete when someone clicks in the input field
+  $locationInput.one("click", function() {
     var input = document.getElementById("location-text");
-    $("#location-text").prop("placeholder", "");
+    $locationInput.prop("placeholder", "");
     placeSearch({
       key: MAPQUEST_KEY,
       container: input,
       useDeviceLocation: true
     });
-    $("#location-text").focus();
+    $locationInput.focus();
   });
 
   // hitting enter key in the textfield will trigger submit
-  $("#location-text").keydown(function(event) {
+  $locationInput.keydown(function(event) {
     if (event.keyCode == 13) {
-      $("#location-submit").trigger("click");
+      $locationSubmit.trigger("click");
       return false;
     }
   });
 
   // submit location text
-  $("#location-submit").click(function() {
+  $locationSubmit.click(function() {
     // grab the query value, ignoring it if it's empty
-    location_query_text = $("#location-text").val();
+    location_query_text = $locationInput.val();
     if (location_query_text.length == 0) return;
     disableForm();
 
@@ -156,7 +158,7 @@ $(document).ready(function() {
   });
 
   // auto location
-  $(".auto-location-submit").click(function() {
+  $autoLocationButton.click(function() {
     location_query_text = "";
     disableForm();
     var geoOptions = { timeout: 8000 };
@@ -175,17 +177,17 @@ $(document).ready(function() {
 
   // during api calls, disable the form
   function disableForm() {
-    $("#location-text").prop("disabled", true);
-    $("#location-submit").addClass("disabled");
-    $(".auto-location-submit").addClass("disabled");
+    $locationInput.prop("disabled", true);
+    $locationSubmit.addClass("disabled");
+    $autoLocationButton.addClass("disabled");
     $(".loading").show();
   }
 
   // if a search fails or a restart, enable the form
   function enableForm() {
-    $("#location-text").prop("disabled", false);
-    $("#location-submit").removeClass("disabled");
-    $(".auto-location-submit").removeClass("disabled");
+    $locationInput.prop("disabled", false);
+    $locationSubmit.removeClass("disabled");
+    $autoLocationButton.removeClass("disabled");
     $(".loading").hide();
   }
 
