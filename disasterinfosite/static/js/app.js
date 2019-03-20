@@ -33,15 +33,86 @@ var boundaryStyle = {
   fillOpacity: 0.7
 };
 
-$(document).ready(function() {
-  // convenience function to extract url parameters
-  function getURLParameter(name) {
-    var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
-      window.location.href
-    );
-    return results === null ? null : results[1] || 0;
-  }
+var location_query_text = "";
+var input_lat;
+var input_lng;
 
+// convenience function to extract url parameters
+function getURLParameter(name) {
+  var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
+    window.location.href
+  );
+  return results === null ? null : results[1] || 0;
+}
+
+// Reload the current page, with the specified parameters (to show a location on the map and its information)
+function loadPageWithParameters(lat, lng, queryText) {
+  var query = "?lat=" + lat + "&lng=" + lng;
+  if (queryText) {
+    query += "&loc=" + queryText;
+  }
+  document.location = encodeURI(document.location.pathname + query);
+}
+
+function showGeocodeError() {
+  $(".geocode-error-message").html(
+    $("p").text("We had a problem finding that location.")
+  );
+}
+
+function submitLocation(lat, lng, queryText) {
+  if (!queryText) {
+    // if we don't have text for the location, reverse geocode to get it
+    $.ajax({
+      type: "GET",
+      url: "https://www.mapquestapi.com/geocoding/v1/reverse",
+      data: {
+        key: MAPQUEST_KEY,
+        location: lat + "," + lng,
+        outFormat: "json",
+        thumbMaps: false
+      }
+    })
+      .then(function(result) {
+        // We have at least one result and nothing went wrong
+        if (result.info.statuscode === 0 && result.results.length > 0) {
+          var address = result.results[0].locations[0];
+          queryText =
+            address.street +
+            ", " +
+            address.adminArea5 +
+            ", " +
+            address.adminArea3 +
+            " " +
+            address.postalCode;
+        } else {
+          console.log("Reverse geocoding error messages", result.info.messages);
+        }
+      })
+      .catch(function(error) {
+        console.log("reverse geocoding error", error);
+      })
+      .always(function() {
+        loadPageWithParameters(lat, lng, queryText);
+      });
+  } else {
+    loadPageWithParameters(lat, lng, queryText);
+  }
+}
+
+// Set up slick photo slideshow
+function loadGallery() {
+  var currentSlideElement = $(".disaster-content.active .past-photos");
+  currentSlideElement.slick({
+    slidesToShow: 1,
+    variableWidth: true,
+    prevArrow: '<button type="button" class="slick-prev"></button>',
+    nextArrow: '<button type="button" class="slick-next"></button>'
+  });
+  return currentSlideElement;
+}
+
+$(document).ready(function() {
   // grab the position, if possible
   var query_lat = getURLParameter("lat");
   var query_lng = getURLParameter("lng");
@@ -81,9 +152,8 @@ $(document).ready(function() {
 
   // Make a click on the map submit the location
   map.on("click", function(e) {
-    location_query_text = "";
-    $locationInput.val(location_query_text); // clear query text
-    submitLocation(e.latlng.lat, e.latlng.lng);
+    $locationInput.val(""); // clear query text
+    submitLocation(e.latlng.lat, e.latlng.lng, "");
   });
 
   // Set up input box
@@ -111,9 +181,10 @@ $(document).ready(function() {
     });
     $locationInput.focus();
 
-    // autocomplete.on("change", function(event) {
-    //   console.log(event.result);
-    // });
+    autocomplete.on("change", function(event) {
+      input_lat = event.result.latlng.lat;
+      input_lng = event.result.latlng.lng;
+    });
   });
 
   // hitting enter key in the textfield will trigger submit
@@ -131,7 +202,12 @@ $(document).ready(function() {
     if (location_query_text.length == 0) return;
     disableForm();
 
-    // Geocode our location text
+    if (input_lat && input_lng) {
+      submitLocation(input_lat, input_lng, location_query_text);
+      return;
+    }
+
+    // Geocode our location text if we don't have a lat/lng from the autocomplete (e.g someone just typed in there and hit 'enter')
     $.ajax({
       type: "GET",
       url: "https://www.mapquestapi.com/geocoding/v1/address",
@@ -141,44 +217,42 @@ $(document).ready(function() {
         outFormat: "json",
         thumbMaps: false,
         boundingBox: mapBounds
-      },
-      error: function(error) {
-        console.log("error", error);
-        $(".geocode-error-message").html(
-          $("p").text("We had a problem finding that location.")
-        );
-      },
-      success: function(result) {
+      }
+    })
+      .then(function(result) {
         if (result.info.statuscode === 0) {
           var lat = result.results[0].locations[0].latLng.lat;
           var lon = result.results[0].locations[0].latLng.lng;
-          submitLocation(lat, lon);
+          submitLocation(lat, lon, location_query_text);
         } else {
           console.log("Geocoding error messages", result.info.messages);
-          $(".geocode-error-message").html(
-            $("p").text("We had a problem finding that location.")
-          );
+          showGeocodeError();
         }
-      }
-    });
+      })
+      .catch(function(error) {
+        console.log("error", error);
+        showGeocodeError();
+      });
   });
 
-  // auto location
+  // auto location (the Find Me button)
   $autoLocationButton.click(function() {
-    location_query_text = "";
     disableForm();
-    var geoOptions = { timeout: 8000 };
-    var geoSuccess = function(position) {
-      var lat = position.coords.latitude;
-      var lng = position.coords.longitude;
-      // success! onwards to view the content
-      submitLocation(lat, lng);
-    };
-    var geoError = function(error) {
-      console.log("Error finding your location: " + error.message);
-      enableForm();
-    };
-    navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
+
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        // success! onwards to view the content
+        submitLocation(lat, lng);
+      },
+      function(error) {
+        console.log("Error finding your location: " + error.message);
+        showGeocodeError();
+        enableForm();
+      },
+      { timeout: 8000 }
+    );
   });
 
   // during api calls, disable the form
@@ -195,31 +269,6 @@ $(document).ready(function() {
     $locationSubmit.removeClass("disabled");
     $autoLocationButton.removeClass("disabled");
     $(".loading").hide();
-  }
-
-  function submitLocation(lat, lng) {
-    // reload the page with the lat,lng
-    document.location = encodeURI(
-      document.location.pathname +
-        "?lat=" +
-        lat +
-        "&lng=" +
-        lng +
-        "&loc=" +
-        location_query_text
-    );
-  }
-
-  // Set up slick photo slideshow
-  function loadGallery() {
-    var currentSlideElement = $(".disaster-content.active .past-photos");
-    currentSlideElement.slick({
-      slidesToShow: 1,
-      variableWidth: true,
-      prevArrow: '<button type="button" class="slick-prev"></button>',
-      nextArrow: '<button type="button" class="slick-next"></button>'
-    });
-    return currentSlideElement;
   }
 
   // Initialize the slide gallery on the open disaster tab
