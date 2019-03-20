@@ -340,10 +340,6 @@ header {
   border-top-right-radius: 4px;
 }
 
-.location-instructions {
-  display: block;
-}
-
 .geocode-error-message {
   color: $error-red;
   position: absolute;
@@ -351,28 +347,33 @@ header {
   left: 5px;
 }
 
-/* Information and Instructions */
-
-.information-instructions {
-  max-width: 1000px;
-  margin: 0 auto;
+/* Main page content */
+.content-container {
+  padding: 40px;
 }
 
-.information-container {
-  padding: 15px;
+/* Information and Instructions */
+
+.map-info-container {
+  display: flex;
+}
+
+.info__header {
+  font-weight: $font-weight-regular;
+}
+
+.info__start-over {
+  color: $dark-grey;
+  font-weight: $font-weight-regular;
 }
 
 /* Map */
 
 #map {
-  height: 180px;
-  @include breakpoint(medium-and-up) {
-    height: 400px;
-  }
-}
-
-.map-container {
-  padding-top: 1rem;
+  flex-grow: 2;
+  height: 400px;
+  min-width: 400px;
+  width: 60%;
 }
 
 /* overriding Leaflet defaults */

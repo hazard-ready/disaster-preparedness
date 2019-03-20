@@ -4,23 +4,17 @@
 
 {% block info-instructions %}
   <div class="information-container">
-    <div class="information-instructions" role="complementary">
-      <p>{% trans "Look below the map to see information for your location, or enter another location." %}</p>
-    </div>
+    <h1><span class="info__header">{% trans "What to expect for" %}</span> <span class="info__location"></span></h1>
+    <a class="link--grey info__start-over" href="{{ settings.site_url }}">
+      {% trans "Wrong address? Start over" %}
+    </a>
   </div>
 {% endblock info-instructions %}
-
-
-{% block map %}
-<div role="application">
-  <div id="map"></div>
-</div>
-{% endblock map %}
 
 {% block main-content %}
   <div class="disaster-container" role="main">
     <h2 class="caps disaster-container__title">
-      {% trans "Results for this location" %}
+
     </h2>
     <ul class="disaster-tabs" data-tab role="group">
       {% for group, hazard in data.items %}
