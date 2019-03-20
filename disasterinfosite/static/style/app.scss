@@ -349,6 +349,7 @@ header {
 
 /* Main page content */
 .content-container {
+  max-width: 1080px;
   padding: 40px;
 }
 
@@ -356,6 +357,12 @@ header {
 
 .map-info-container {
   display: flex;
+}
+
+.information-container {
+  flex-grow: 1;
+  margin-right: 20px;
+  margin-top: 30px;
 }
 
 .info__header {
@@ -368,12 +375,15 @@ header {
 }
 
 /* Map */
+.map-container {
+  flex-basis: 100%;
+  flex-grow: 2;
+  height: 300px;
+}
 
 #map {
-  flex-grow: 2;
-  height: 400px;
-  min-width: 400px;
-  width: 60%;
+  height: 100%;
+  width: 100%;
 }
 
 /* overriding Leaflet defaults */
