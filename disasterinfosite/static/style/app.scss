@@ -35,7 +35,8 @@ $body-line-height: 1.4;
 /* Z-order */
 $z-index-bottom: 0;
 $z-index-next: 1;
-$z-index-high: 1001;
+$z-index-high: 1001; /* higher than leaflet tiles and UI anyway */
+$z-index-top: 9999;
 
 /* Breakpoints! */
 @mixin breakpoint($point) {
@@ -153,6 +154,10 @@ h4 {
 .link--grey {
   text-decoration: none;
   border-bottom: 2px solid $medium-grey;
+
+  &:visited {
+    color: $dark-grey;
+  }
 }
 
 /* Utility styles */
@@ -306,6 +311,10 @@ header {
   }
 }
 
+.mq-dropdown-menu {
+  z-index: $z-index-high !important;
+}
+
 #location-submit,
 #auto-location {
   background-color: $light-accent;
@@ -340,10 +349,6 @@ header {
   border-top-right-radius: 4px;
 }
 
-.location-instructions {
-  display: block;
-}
-
 .geocode-error-message {
   color: $error-red;
   position: absolute;
@@ -351,28 +356,70 @@ header {
   left: 5px;
 }
 
-/* Information and Instructions */
+/* Main page content */
+.content-container {
+  padding: 0 10px 10px;
 
-.information-instructions {
-  max-width: 1000px;
-  margin: 0 auto;
-}
+  @include breakpoint(medium) {
+    padding: 30px;
+  }
 
-.information-container {
-  padding: 15px;
-}
-
-/* Map */
-
-#map {
-  height: 180px;
-  @include breakpoint(medium-and-up) {
-    height: 400px;
+  @include breakpoint(large) {
+    margin: 0 auto;
+    max-width: 1080px;
+    padding: 40px;
   }
 }
 
+/* Information and Instructions */
+
+.map-info-container {
+  display: flex;
+  flex-direction: column;
+
+  @include breakpoint(medium-and-up) {
+    flex-direction: row;
+  }
+}
+
+.information-container {
+  flex-grow: 1;
+  margin: 0 auto 20px;
+
+  @include breakpoint(medium) {
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+
+  @include breakpoint(large) {
+    margin-right: 20px;
+    margin-top: 30px;
+  }
+}
+
+.info__header {
+  font-weight: $font-weight-regular;
+}
+
+.info__start-over {
+  color: $dark-grey;
+  font-weight: $font-weight-regular;
+  text-align: center;
+  @include breakpoint(medium-and-up) {
+    text-align: left;
+  }
+}
+
+/* Map */
 .map-container {
-  padding-top: 1rem;
+  flex-grow: 2;
+  height: 300px;
+  min-width: 50%;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
 }
 
 /* overriding Leaflet defaults */
@@ -388,7 +435,7 @@ header {
 /* loading spinner during geolocation */
 .loading {
   position: fixed;
-  z-index: $z-index-high;
+  z-index: $z-index-top;
   height: 100%;
   width: 100%;
   top: 0;

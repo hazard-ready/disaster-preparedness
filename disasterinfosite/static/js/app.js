@@ -8,6 +8,7 @@ var boundaryShape = require("./boundary.json");
 
 require("../img/favicon.ico");
 require("../img/marker-icon.png");
+require("../img/marker-icon-2x.png");
 require("../img/marker-shadow.png");
 require("../img/thinking.gif");
 require("../img/logo.png");
@@ -97,17 +98,22 @@ $(document).ready(function() {
     : query_lat + "," + query_lng;
   if (!query_lat || !query_lng) location_query_text = "";
   $locationInput.val(location_query_text);
+  $(".info__location").text(location_query_text);
 
   // Set up autocomplete when someone clicks in the input field
   $locationInput.one("click", function() {
     var input = document.getElementById("location-text");
     $locationInput.prop("placeholder", "");
-    placeSearch({
+    var autocomplete = placeSearch({
       key: MAPQUEST_KEY,
       container: input,
       useDeviceLocation: true
     });
     $locationInput.focus();
+
+    // autocomplete.on("change", function(event) {
+    //   console.log(event.result);
+    // });
   });
 
   // hitting enter key in the textfield will trigger submit

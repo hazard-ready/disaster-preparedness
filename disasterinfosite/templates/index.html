@@ -44,7 +44,7 @@
           <h3 class="h3--sans-serif">Hazard Ready</h3>
         </div>
       </a>
-      <a class="header__about--small link--plain hide-for-medium-up" href="#geek-box"><h5 class="header__about link--grey ">About</h5></a>
+      <a class="header__about--small link--plain hide-for-medium-up" href="#geek-box"><h5 class="header__about link--grey">About</h5></a>
     </div>
 
     {% block search %}
@@ -60,24 +60,26 @@
     <a class="hide-for-small link--plain" href="#geek-box"><h5 class="header__about link--grey">About</h5></a>
   </header>
 
-  {% block info-instructions %}
-  <div class="information-container">
-    <div class="information-instructions" role="main">
-      <p class="organization-information">{{ settings.about_text | safe }}</p>
+  <div class="content-container">
+  <div class="map-info-container">
+    {% block info-instructions %}
+    <div class="information-container" role="main">
+      <h3>{{ settings.site_description }}</h3>
+      <p>{{ settings.about_text | safe }}</p>
       <p>{{ settings.intro_text | safe }}</p>
-      <p class="location-instructions">
-        {% trans "Give a location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
-      </p>
-    </div>
-  </div>
-{% endblock info-instructions %}
 
-{% block map %}
-  <div class="map-container" role="application">
-    <div class="hide-for-small">
+      {% trans "Give a location by typing in the box at the top of the page, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
+    </div>
+  {% endblock info-instructions %}
+
+    <div class="map-container" role="application">
       <div id="map"></div>
     </div>
-    <h2 class="caps">{% trans "What are my risks?" %}</h2>
+  </div>
+
+{% block main-content %}
+<div class="intro-content">
+   <h2 class="caps">{% trans "What are my risks?" %}</h2>
     <h3 class>{% trans "What to Expect" %}</h3>
     <p>
       {% blocktrans %}
@@ -97,12 +99,10 @@
       {% endblocktrans %}
     </p>
   </div>
-{% endblock map %}
-
-{% block main-content %}
 {% endblock main-content %}
 
 {% include "users/user_interactions.html" %}
+</div>
 
 {% include "geek_box.html" %}
 
