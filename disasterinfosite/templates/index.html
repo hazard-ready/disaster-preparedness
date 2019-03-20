@@ -67,9 +67,8 @@
       <h3>{{ settings.site_description }}</h3>
       <p>{{ settings.about_text | safe }}</p>
       <p>{{ settings.intro_text | safe }}</p>
-      <p>
-        {% trans "Give a location by typing in the box at the top of the page, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
-      </p>
+
+      {% trans "Give a location by typing in the box at the top of the page, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
     </div>
   {% endblock info-instructions %}
 
