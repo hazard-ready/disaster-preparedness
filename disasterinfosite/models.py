@@ -163,7 +163,7 @@ class ShapefileGroup(models.Model):
     display_name = models.CharField(max_length=50, default="")
     order_of_appearance = models.IntegerField(
         default=0,
-        help_text="The order, from left to right, in which you would like this group to appear, when applicable."
+        help_text="The order, from top to bottom, in which you would like this group to appear, when applicable."
     )
     likely_scenario_title = models.CharField(max_length=80, blank=True)
     likely_scenario_text = models.TextField(blank=True)
