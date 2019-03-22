@@ -113,9 +113,12 @@ def app_view(request):
         lat = request.GET['lat']
         lng = request.GET['lng']
 
+        if'loc' in request.GET:
+            renderData['location_name'] = request.GET['loc']
+
         template = "no_content_found.html"
 
-        if len(lat) > 0:
+        if lat and lng:
             snugget_content = Snugget.findSnuggetsForPoint(lat=float(lat), lng=float(lng))
 
             data = {}

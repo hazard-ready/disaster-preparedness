@@ -169,7 +169,6 @@ $(document).ready(function() {
     : query_lat + "," + query_lng;
   if (!query_lat || !query_lng) location_query_text = "";
   $locationInput.val(location_query_text);
-  $(".info__location").text(location_query_text);
 
   // Set up autocomplete when someone clicks in the input field
   $locationInput.one("click", function() {
