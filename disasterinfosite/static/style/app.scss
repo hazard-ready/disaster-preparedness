@@ -193,8 +193,8 @@ h4 {
   border: 0;
 }
 
-.vert-pad-medium {
-  padding: 2em 0;
+img {
+  max-width: 100%;
 }
 
 /* Header */
@@ -376,6 +376,7 @@ header {
 .map-info-container {
   display: flex;
   flex-direction: column;
+  padding-bottom: 30px;
 
   @include breakpoint(medium-and-up) {
     flex-direction: row;
@@ -541,85 +542,21 @@ form:invalid {
 
 /* Disaster tabs */
 
-.disaster-content {
-  background-color: $white;
-  margin: 5px;
-  max-width: 99%;
-  padding: 5px;
-}
-
 .disaster-container {
-  padding-top: 20px;
-}
+  background-color: $white;
+  padding: 5px 10px;
 
-.disaster-container__title {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.likely-scenario {
-  color: $white;
-  padding: 10px;
-  margin-top: -15px;
-  p {
-    margin-bottom: 0;
+  @include breakpoint(medium-and-up) {
+    padding: 10px 40px;
   }
+}
+
+.disaster-content {
 }
 
 /* Sections */
 
 .section-content {
-  padding: 0;
-  @include breakpoint(large) {
-    padding-left: 20px;
-  }
-}
-
-.section-icon--link {
-  background: transparent url(../img/link.svg) no-repeat 0 0;
-}
-
-.section-icon--supply-kit {
-  background: transparent url(../img/supplykit.svg) no-repeat 0 0;
-}
-
-.section-icon--community {
-  background: transparent url(../img/community.svg) no-repeat 0 0;
-}
-
-.section-icon--What {
-  background: transparent url(../img/question.svg) no-repeat 0 0;
-}
-
-.section-icon--Past {
-  background: transparent url(../img/clock.svg) no-repeat 0 0;
-}
-
-.section-icon--How {
-  background: transparent url(../img/prepare.svg) no-repeat 0 0;
-}
-
-.section-icon {
-  background-size: 50px auto;
-
-  display: inline-block;
-  margin-top: 0.2rem;
-  width: 50px;
-  height: 50px;
-
-  @include breakpoint(medium-and-up) {
-    width: 80px;
-    height: 80px;
-    background-size: 80px auto;
-  }
-}
-
-.section-icon--dynamic {
-  width: 100%;
-}
-
-.section-title {
-  margin-left: 55px;
 }
 
 /* Snugget content */
@@ -713,7 +650,7 @@ form:invalid {
 /* Geek box */
 
 #geek-box {
-  .who-made-this-logo {
+  .geek-box-logo {
     margin: 0 auto;
     max-width: 30%;
     max-height: 5rem;
