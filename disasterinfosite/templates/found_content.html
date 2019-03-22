@@ -16,7 +16,7 @@
 {% block main-content %}
   {% for group, hazard in data.items %}
     <div class="disaster-container" id="{{group.name}}">
-      <h2 class="link--grey">{{hazard.heading}}</h2>
+      <h2 class="link--grey">{{group.display_name}}</h2>
         <div class="disaster-content">
         {% for section, snuggets in hazard.sections.items %}
           <h4>{{ section.name }}</h4>

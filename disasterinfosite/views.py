@@ -123,30 +123,35 @@ def app_view(request):
 
             data = {}
             if snugget_content is not None:
-                for key, values in snugget_content['groups'].items():
+                for group, snuggets in snugget_content['groups'].items():
                     sections = {}
-                    heading = key.display_name
 
-                    if values:
+                    if snuggets:
                         template = 'found_content.html'
 
-                        for snugget in values:
+                        for snugget in snuggets:
                             snugget.dynamic_image = make_icon(snugget.percentage)
                             if snugget.__class__ == SlideshowSnugget:
                                 snugget.photos = PastEventsPhoto.objects.filter(snugget=snugget)
 
                             if not snugget.section in sections:
                                 sections[snugget.section] = [snugget]
+                            else:
+                                sections[snugget.section].append(snugget)
 
-                        data[key] = {
-                            'heading': heading,
+
+                        for section in sections:
+                            snuggets = sections[section]
+                            sections[section] = sorted(snuggets, key=lambda t: t.order)
+
+                        data[group] = {
                             'sections': OrderedDict(sorted(sections.items(), key=lambda t: t[0].order_of_appearance )),
-                            'likely_scenario_title': key.likely_scenario_title,
-                            'likely_scenario_text': key.likely_scenario_text
+                            'likely_scenario_title': group.likely_scenario_title,
+                            'likely_scenario_text': group.likely_scenario_text
                         }
 
-        renderData['important_links'] = ImportantLink.objects.all()
-        renderData['supply_kit'] = SupplyKit.get_solo()
-        renderData['data'] = OrderedDict(sorted(data.items(), key=lambda t: ShapefileGroup.objects.get(name=t[0]).order_of_appearance ))
+            renderData['important_links'] = ImportantLink.objects.all()
+            renderData['supply_kit'] = SupplyKit.get_solo()
+            renderData['data'] = OrderedDict(sorted(data.items(), key=lambda t: ShapefileGroup.objects.get(name=t[0]).order_of_appearance ))
 
     return render(request, template, renderData)

@@ -199,7 +199,7 @@ $(document).ready(function() {
   $locationSubmit.click(function() {
     // grab the query value, ignoring it if it's empty
     location_query_text = $locationInput.val();
-    if (location_query_text.length == 0) return;
+    if (location_query_text.trim().length == 0) return;
     disableForm();
 
     if (input_lat && input_lng) {
