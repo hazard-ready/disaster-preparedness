@@ -101,8 +101,9 @@ function submitLocation(lat, lng, queryText) {
 }
 
 // Set up slick photo slideshow
+// TODO: this may work differently once there are multiple slideshows on a page
 function loadGallery() {
-  var currentSlideElement = $(".disaster-content.active .past-photos");
+  var currentSlideElement = $(".section-content .past-photos");
   currentSlideElement.slick({
     slidesToShow: 1,
     variableWidth: true,
@@ -275,6 +276,7 @@ $(document).ready(function() {
   var slideContainer = loadGallery();
 
   // Open a new image gallery when a new tab is opened
+  // todo: This will need to be modified to work with opening and closing sections
   $(".disaster-tabs").on("toggled", function() {
     slideContainer.slick("unslick");
     slideContainer = loadGallery();

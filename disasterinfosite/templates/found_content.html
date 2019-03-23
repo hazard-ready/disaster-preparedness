@@ -14,37 +14,19 @@
 {% endblock info-instructions %}
 
 {% block main-content %}
-  <div class="disaster-container" role="main">
-    <h2 class="caps disaster-container__title">
-
-    </h2>
-    <ul class="disaster-tabs" data-tab role="group">
-      {% for group, hazard in data.items %}
-        {% if forloop.first %}
-          <li class="tab-title active"><a href="#{{group.name}}">{{hazard.heading}}</a></li>
-        {% else %}
-          <li class="tab-title"><a href="#{{group.name}}">{{hazard.heading}}</a></li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-    <div class="disaster-tabs-content">
-    {% for group, hazard in data.items %}
-      {% if forloop.first %}
-        <div class="active disaster-content" id="{{group.name}}">
-      {% else %}
-        <div class="disaster-content" id="{{group.name}}">
-      {% endif %}
+  {% for group, hazard in data.items %}
+    <div class="disaster-container" id="{{group.name}}">
+      <h2 class="link--grey">{{hazard.heading}}</h2>
+        <div class="disaster-content">
         {% for section, snuggets in hazard.sections.items %}
-          <h2 class="caps section-title">{{ section.name }}</h2>
-          <div class="section-content">
+          <h4>{{ section.name }}</h4>
+          <div class="section-content" id="{{group.name}}-{{section.name}}">
             {% for snugget in snuggets %}
               {% show_snugget snugget %}
             {% endfor %}
           </div>
         {% endfor %}
       </div>
-    {% endfor %}
     </div>
-  </div>
-
+  {% endfor %}
 {% endblock main-content %}

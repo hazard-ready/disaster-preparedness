@@ -107,7 +107,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
                 ('name', models.CharField(max_length=50)),
                 ('display_name', models.CharField(max_length=50, default="")),
-                ('order_of_appearance', models.IntegerField(help_text='The order, from left to right, in which you would like this group to appear, when applicable.', default=0)),
+                ('order_of_appearance', models.IntegerField(help_text='The order, from top to bottom, in which you would like this group to appear, when applicable.', default=0)),
                 ('likely_scenario_title', models.CharField(max_length=80, blank=True)),
                 ('likely_scenario_text', models.TextField(blank=True)),
             ],
