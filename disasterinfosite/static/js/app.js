@@ -169,7 +169,6 @@ $(document).ready(function() {
     : query_lat + "," + query_lng;
   if (!query_lat || !query_lng) location_query_text = "";
   $locationInput.val(location_query_text);
-  $(".info__location").text(location_query_text);
 
   // Set up autocomplete when someone clicks in the input field
   $locationInput.one("click", function() {
@@ -200,7 +199,7 @@ $(document).ready(function() {
   $locationSubmit.click(function() {
     // grab the query value, ignoring it if it's empty
     location_query_text = $locationInput.val();
-    if (location_query_text.length == 0) return;
+    if (location_query_text.trim().length == 0) return;
     disableForm();
 
     if (input_lat && input_lng) {
