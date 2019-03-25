@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
@@ -278,11 +279,8 @@ class Snugget(models.Model):
     @staticmethod
     def findSnuggetsForPoint(lat=0, lng=0, merge_deform = True):
         pnt = Point(lng, lat)
-        groups = ShapefileGroup.objects.all()
-        groupsDict = {}
-
-        for group in groups:
-            groupsDict[group] = []
+        groups = ShapefileGroup.objects.all().order_by('order_of_appearance')
+        groupsDict = OrderedDict({el:[] for el in groups})
 
 ######################################################
 # GENERATED CODE GOES HERE
@@ -290,7 +288,7 @@ class Snugget(models.Model):
 # modelsGeoFilters
 # END OF GENERATED CODE BLOCK
 ######################################################
-
+        return groupsDict
 
 
     def __str__(self):

@@ -89,9 +89,8 @@ def main():
   modelsLocationsList = modelsLocationsList.strip(",\n") + "\n"
 
   # assemble the whole return statement for the snugget class after going through the loop
-  modelsSnuggetReturns = "        return {'groups': groupsDict,\n"
-  modelsSnuggetReturns += modelsSnuggetRatings.strip(",\n") + "\n"
-  modelsSnuggetReturns += "                }\n"
+  modelsSnuggetReturns = "        return groupsDict\n"
+
 
   # make sure this gets its own line of code
   adminModelImports += "\n"
@@ -321,7 +320,7 @@ def modelsGeoFilterGen(stem, keyField):
   text  = "        qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
   text += "        " + stem + "_rating = " + "qs_" + stem + ".values_list('" + keyField.lower() + "', flat=True)\n"
   text += "        for rating in " + stem + "_rating:\n"
-  text += "            individualSnugget = Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact=rating).select_subclasses()\n"
+  text += "            individualSnugget = Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact=rating).order_by('order').select_subclasses()\n"
   text += "            if individualSnugget:\n"
   text += "                groupsDict[individualSnugget[0].group].extend(individualSnugget)\n\n"
   return text
