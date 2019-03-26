@@ -18,10 +18,10 @@
     <div class="disaster-container" id="{{group.name}}">
       <h2 class="link--grey">{{group.display_name}}</h2>
         <div class="disaster-content">
-        {% for section, snuggets in hazard.sections.items %}
+        {% for section, snuggets in hazard.items %}
           <h4>{{ section.name }}</h4>
           <div class="section-content" id="{{group.name}}-{{section.name}}">
-            {% for snugget in snuggets %}
+            {% for snugget in snuggets|dictsort:"order" %}
               {% show_snugget snugget %}
             {% endfor %}
           </div>
