@@ -100,19 +100,6 @@ function submitLocation(lat, lng, queryText) {
   }
 }
 
-// Set up slick photo slideshow
-// TODO: this may work differently once there are multiple slideshows on a page
-function loadGallery() {
-  var currentSlideElement = $(".section-content .past-photos");
-  currentSlideElement.slick({
-    slidesToShow: 1,
-    variableWidth: true,
-    prevArrow: '<button type="button" class="slick-prev"></button>',
-    nextArrow: '<button type="button" class="slick-next"></button>'
-  });
-  return currentSlideElement;
-}
-
 $(document).ready(function() {
   // grab the position, if possible
   var query_lat = getURLParameter("lat");
@@ -271,21 +258,30 @@ $(document).ready(function() {
     $(".loading").hide();
   }
 
-  // Set up expanding and collapsing sections
+  // Set up expanding and collapsing sections. Set up slideshow
+  // in applicable sections when they are expanded.
+  var collapseSectionClass = "section-content--collapse";
+
   $(".section-title--collapse").on("click", function(event) {
     var contentSectionId = $(event.target).data("section");
     if (contentSectionId) {
-      $("#" + contentSectionId).toggleClass("section-content--collapse");
+      var $contentSection = $("#" + contentSectionId);
+      var $currentSlideElement = $("#" + contentSectionId + " .past-photos");
+
+      if ($contentSection.hasClass(collapseSectionClass)) {
+        $contentSection.removeClass(collapseSectionClass);
+        if ($currentSlideElement) {
+          $currentSlideElement.slick({
+            slidesToShow: 1,
+            variableWidth: true
+          });
+        }
+      } else {
+        $contentSection.addClass(collapseSectionClass);
+        if ($currentSlideElement) {
+          $currentSlideElement.slick("unslick");
+        }
+      }
     }
-  });
-
-  // Initialize the slide gallery on the open disaster tab
-  var slideContainer = loadGallery();
-
-  // Open a new image gallery when a new tab is opened
-  // todo: This will need to be modified to work with opening and closing sections
-  $(".disaster-tabs").on("toggled", function() {
-    slideContainer.slick("unslick");
-    slideContainer = loadGallery();
   });
 });

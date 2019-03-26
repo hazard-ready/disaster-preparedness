@@ -566,7 +566,7 @@ form:invalid {
 .section-content {
   max-height: 9000px;
   overflow: auto;
-  transition: max-height 0.3s ease-in-out;
+  transition: max-height 0.3s ease-out;
 }
 
 .section-content--collapse {
