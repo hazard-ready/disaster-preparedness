@@ -559,8 +559,19 @@ form:invalid {
   color: $soft-black;
 }
 
+.section-title--collapse {
+  cursor: pointer;
+}
+
+.section-content {
+  max-height: 9000px;
+  overflow: auto;
+  transition: max-height 0.3s ease-in-out;
+}
+
 .section-content--collapse {
-  display: none;
+  max-height: 0;
+  overflow: hidden;
 }
 
 /* Snugget content */

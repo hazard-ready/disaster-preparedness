@@ -271,6 +271,14 @@ $(document).ready(function() {
     $(".loading").hide();
   }
 
+  // Set up expanding and collapsing sections
+  $(".section-title--collapse").on("click", function(event) {
+    var contentSectionId = $(event.target).data("section");
+    if (contentSectionId) {
+      $("#" + contentSectionId).toggleClass("section-content--collapse");
+    }
+  });
+
   // Initialize the slide gallery on the open disaster tab
   var slideContainer = loadGallery();
 
