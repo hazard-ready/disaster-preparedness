@@ -231,6 +231,7 @@ class SnuggetType(models.Model):
 class SnuggetSection(models.Model):
     name = models.CharField(max_length=50)
     display_name = models.CharField(max_length=50, help_text="The name to show for this section", default="")
+    expands = models.BooleanField(default=True, help_text="Whether this section is able to be clicked on and expanded")
     order_of_appearance = models.IntegerField(
         default=0,
         help_text="The order in which you'd like this to appear in the tab. 0 is at the top."
