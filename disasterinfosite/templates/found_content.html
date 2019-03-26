@@ -19,8 +19,13 @@
       <h2 class="link--grey">{{group.display_name}}</h2>
         <div class="disaster-content">
         {% for section, snuggets in hazard.items %}
-          <h4>{{ section.name }}</h4>
-          <div class="section-content" id="{{group.name}}-{{section.name}}">
+          {% if section.expands %}
+          <h4 class="section-title section-title--collapse link--grey">{{ section.name }}</h4>
+          <div class="section-content section-content--collapse" id="{{group.name}}-{{section.name|slugify}}">
+          {% else %}
+          <h4 class="section-title section-title--static">{{ section.name }}</h4>
+          <div class="section-content">
+          {% endif %}
             {% for snugget in snuggets|dictsort:"order" %}
               {% show_snugget snugget %}
             {% endfor %}

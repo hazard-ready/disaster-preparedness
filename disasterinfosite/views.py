@@ -138,7 +138,7 @@ def app_view(request):
                             else:
                                 data[group][snugget.section].append(snugget)
 
-
+                    # Sort the sections by order_of_appearance
                     data[group] = OrderedDict(sorted(data[group].items(), key=lambda t: t[0].order_of_appearance))
 
             renderData['data'] = data

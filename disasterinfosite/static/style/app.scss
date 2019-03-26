@@ -555,8 +555,12 @@ form:invalid {
 }
 
 /* Sections */
+.section-title--static {
+  color: $soft-black;
+}
 
-.section-content {
+.section-content--collapse {
+  display: none;
 }
 
 /* Snugget content */
