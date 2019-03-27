@@ -1,19 +1,11 @@
 {% block snugget-content %}
-  {% if snugget.dynamic_image %}
-    <div class="intensity row">
-      <div class="intensity-meter">
-        {% if snugget.dynamic_image %}
-          {{ snugget.dynamic_image | safe }}
-        {% endif %}
-      </div>
-      <div class="intensity-content snugget-content">
-        {{ snugget.content | safe }}
-      </div>
+  <div class="snugget__content">
+    {% if snugget.dynamic_image %}
+    <div class="intensity-meter">
+      {{ snugget.dynamic_image | safe }}
     </div>
-    {% else %}
-    <div class="snugget-content">
-      {{ snugget.content | safe }}
-    </div>
-  {% endif %}
+    {% endif %}
+    {{ snugget.content | safe }}
+  </div>
   {% include "pop_out.html" %}
 {% endblock %}

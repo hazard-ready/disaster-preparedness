@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% block snugget-content %}
-  <div class="snugget-content">
+  <div class="snugget__content">
     {{ snugget.text | safe }}
   </div>
   <div class="past-photos">
@@ -12,5 +12,5 @@
      </div>
     {% endfor %}
   </div>
-  {% include "pop_out.html" %}
+  <!-- Include popouts if you have slideshow snuggets that also have popouts. Right now we do not. -->
 {% endblock %}

@@ -575,7 +575,47 @@ form:invalid {
 }
 
 /* Snugget content */
+.snugget {
+  display: flex;
+  flex-direction: column;
 
+  @include breakpoint(medium-and-up) {
+    flex-direction: row;
+  }
+}
+
+.snugget__content {
+  flex-grow: 3;
+  width: auto;
+
+  @include breakpoint(medium) {
+    width: 50%;
+  }
+
+  @include breakpoint(large) {
+    width: 60%;
+  }
+}
+
+.snugget__popout {
+  flex-grow: 1;
+  overflow: hidden;
+  width: auto;
+
+  @include breakpoint(medium) {
+    width: 50%;
+  }
+
+  @include breakpoint(large) {
+    width: 40%;
+  }
+}
+
+.popout__video {
+  max-width: 100%;
+}
+
+/* Intensity meter */
 .intensity-meter {
   float: left;
   margin: 0 15px;

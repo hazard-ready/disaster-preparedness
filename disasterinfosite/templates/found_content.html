@@ -27,7 +27,9 @@
           <div class="section-content">
           {% endif %}
             {% for snugget in snuggets|dictsort:"order" %}
-              {% show_snugget snugget %}
+              <div class="snugget">
+                {% show_snugget snugget %}
+              </div>
             {% endfor %}
           </div>
         {% endfor %}
