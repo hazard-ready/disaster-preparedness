@@ -19,7 +19,7 @@
       <h2 class="link--grey">{{group.display_name}}</h2>
         <div class="disaster-content">
         {% for section, snuggets in hazard.items %}
-          {% if section.expands %}
+          {% if section.collapsible %}
           <h4 class="section-title section-title--collapse link--grey" data-section="{{group.name}}-{{section.name|slugify}}">{{ section.name }}</h4>
           <div class="section-content section-content--collapse" id="{{group.name}}-{{section.name|slugify}}">
           {% else %}

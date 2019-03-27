@@ -126,7 +126,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('name', models.CharField(max_length=50)),
                 ('display_name', models.CharField(default="", help_text='The name to show for this section', max_length=50)),
-                ('expands', models.BooleanField(default=True, help_text='Whether this section is able to be clicked on and expanded')),
+                ('collapsible', models.BooleanField(default=True, help_text='Whether this section of the data is collapsible')),
                 ('order_of_appearance', models.IntegerField(default=0, help_text="The order in which you'd like this to appear in the tab. 0 is at the top."))
             ],
         ),
