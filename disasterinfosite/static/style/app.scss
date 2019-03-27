@@ -555,8 +555,23 @@ form:invalid {
 }
 
 /* Sections */
+.section-title--static {
+  color: $soft-black;
+}
+
+.section-title--collapse {
+  cursor: pointer;
+}
 
 .section-content {
+  max-height: 9000px;
+  overflow: auto;
+  transition: max-height 0.3s ease-out;
+}
+
+.section-content--collapse {
+  max-height: 0;
+  overflow: hidden;
 }
 
 /* Snugget content */

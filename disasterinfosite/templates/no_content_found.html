@@ -1,30 +1,22 @@
 {% extends "index.html" %}
 {% load i18n %}
 
- {% block info-instructions %}
+{% block info-instructions %}
   <div class="information-container">
-    <div class="information-instructions" role="complementary">
-        <p class="location-instructions">
-          {% trans "Give a location by typing in the box below, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
-        </p>
+    <h1><span class="info__header">{% trans "No information available for" %}</span> <span class="info__location">{{ location_name }}</span></h1>
+    <div class="info__start-over">
+      <a class="link--grey" href="{{ settings.site_url }}">
+        {% trans "Wrong address? Start over" %}
+      </a>
     </div>
   </div>
 {% endblock info-instructions %}
 
-{% block map %}
-  <div role="application">
-    <div id="map"></div>
-  </div>
-{% endblock map %}
-
-
 {% block main-content %}
-  <div role="main">
-    <h2 class="caps">{% trans "No information available." %}</h2>
+  <div class="disaster-container">
+    <h2 class="link--grey">{% trans "No information available." %}</h2>
     <p>
       {% blocktrans with area_name=location.area_name %}It looks like your location is outside of {{ area_name }}.{% endblocktrans %}
-    </p>
-    <p>
       {% trans "While we value and promote resilience everywhere, the data that powers this site isn't available for other places yet." %}
     </p>
   </div>

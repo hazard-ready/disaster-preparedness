@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
@@ -230,6 +231,7 @@ class SnuggetType(models.Model):
 class SnuggetSection(models.Model):
     name = models.CharField(max_length=50)
     display_name = models.CharField(max_length=50, help_text="The name to show for this section", default="")
+    collapsible = models.BooleanField(default=True, help_text='Whether this section of the data is collapsible')
     order_of_appearance = models.IntegerField(
         default=0,
         help_text="The order in which you'd like this to appear in the tab. 0 is at the top."
@@ -278,11 +280,8 @@ class Snugget(models.Model):
     @staticmethod
     def findSnuggetsForPoint(lat=0, lng=0, merge_deform = True):
         pnt = Point(lng, lat)
-        groups = ShapefileGroup.objects.all()
-        groupsDict = {}
-
-        for group in groups:
-            groupsDict[group] = []
+        groups = ShapefileGroup.objects.all().order_by('order_of_appearance')
+        groupsDict = OrderedDict({el:[] for el in groups})
 
 ######################################################
 # GENERATED CODE GOES HERE
@@ -290,7 +289,7 @@ class Snugget(models.Model):
 # modelsGeoFilters
 # END OF GENERATED CODE BLOCK
 ######################################################
-
+        return groupsDict
 
 
     def __str__(self):
