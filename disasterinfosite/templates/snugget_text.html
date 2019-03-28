@@ -1,5 +1,5 @@
 {% block snugget-content %}
-  <div class="snugget__content">
+  <div class="snugget">
     {% if snugget.dynamic_image %}
     <div class="intensity-meter">
       {{ snugget.dynamic_image | safe }}
@@ -7,5 +7,4 @@
     {% endif %}
     {{ snugget.content | safe }}
   </div>
-  {% include "pop_out.html" %}
 {% endblock %}

@@ -26,11 +26,16 @@
           <h4 class="section-title section-title--static">{{ section.name }}</h4>
           <div class="section-content">
           {% endif %}
+            <div class="snugget__content">
             {% for snugget in snuggets|dictsort:"order" %}
-              <div class="snugget">
-                {% show_snugget snugget %}
-              </div>
+              {% show_snugget snugget %}
             {% endfor %}
+            </div>
+            <div class="snugget__popout">
+            {% for snugget in snuggets|dictsort:"order" %}
+              {% include "pop_out.html" %}
+            {% endfor %}
+            </div>
           </div>
         {% endfor %}
       </div>
