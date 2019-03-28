@@ -320,9 +320,9 @@ def modelsGeoFilterGen(stem, keyField):
   text  = "        qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
   text += "        " + stem + "_rating = " + "qs_" + stem + ".values_list('" + keyField.lower() + "', flat=True)\n"
   text += "        for rating in " + stem + "_rating:\n"
-  text += "            individualSnugget = Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact=rating).order_by('order').select_subclasses()\n"
-  text += "            if individualSnugget:\n"
-  text += "                groupsDict[individualSnugget[0].group].extend(individualSnugget)\n\n"
+  text += "            " + stem + "_snugget = Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact=rating).order_by('order').select_subclasses()\n"
+  text += "            if " + stem + "_snugget:\n"
+  text += "                groupsDict[" + stem +".getGroup()].extend(" + stem + "_snugget)\n\n"
   return text
 
 
