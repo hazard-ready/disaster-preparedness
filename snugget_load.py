@@ -85,6 +85,8 @@ def processRow(row, overwriteAll):
 
   setDefaults(row)
 
+  order = row["txt_location"]
+
   if created:
     print("Created a new snugget section: ", row["section"])
 
@@ -92,9 +94,9 @@ def processRow(row, overwriteAll):
   # if we have a lookup value then deal with this value specifically:
   if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
     filterVal = row["lookup_value"]
-    oldSnugget = checkForSnugget(shapefile, section, row["txt_location"], filterColumn, filterVal)
+    oldSnugget = checkForSnugget(shapefile, section, order, filterColumn, filterVal)
     overwriteAll = askUserAboutOverwriting(row, oldSnugget, overwriteAll)
-    processSnugget(row, shapefile, section, filterColumn, filterVal)
+    processSnugget(row, shapefile, section, order, filterColumn, filterVal)
     return overwriteAll
   else:
     filterVals = findAllFilterVals(shapefile)
@@ -106,17 +108,17 @@ def processRow(row, overwriteAll):
         print("Because no filter for lookup_value", row["lookup_value"], "was found in", row["shapefile"])
         return overwriteAll
       else:
-        oldSnugget = checkForSnugget(shapefile, section, row["txt_location"], filterColumn, filterVal)
+        oldSnugget = checkForSnugget(shapefile, section, order, filterColumn, filterVal)
         if oldSnugget is not None and oldSnugget not in oldSnuggets:
           oldSnuggets.append(oldSnugget)
       overwriteAll = askUserAboutOverwriting(row, oldSnuggets, overwriteAll)
-      processSnugget(row, shapefile, section, filterColumn, filterVal)
+      processSnugget(row, shapefile, section, order, filterColumn, filterVal)
 
     return overwriteAll
 
 
-def processSnugget(row, shapefile, section, filterColumn, filterVal):
-  removeOldSnugget(shapefile, section, filterColumn, filterVal)
+def processSnugget(row, shapefile, section, order, filterColumn, filterVal):
+  removeOldSnugget(shapefile, section, order, filterColumn, filterVal)
   if row["image_slideshow_folder"] is not '':
     addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal)
   elif row["video"] is not '':
@@ -257,8 +259,8 @@ def checkForSnugget(shapefile, section, order, filterColumn, filterVal):
     return None
 
 
-def removeOldSnugget(shapefile, section, filterColumn, filterVal):
-  kwargs = {'section': section, filterColumn: getShapefileFilter(shapefile, filterVal)}
+def removeOldSnugget(shapefile, section, order, filterColumn, filterVal):
+  kwargs = {'section': section, filterColumn: getShapefileFilter(shapefile, filterVal), 'order': order}
   Snugget.objects.filter(**kwargs).delete()
 
 
