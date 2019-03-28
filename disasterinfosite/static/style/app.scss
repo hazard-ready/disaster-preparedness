@@ -580,6 +580,7 @@ form:invalid {
 
 /* Snugget content */
 .snugget {
+  align-items: self-start;
   display: flex;
   flex-direction: column;
 
@@ -595,25 +596,34 @@ form:invalid {
   @include breakpoint(medium-and-up) {
     width: 50%;
   }
+
+  @include breakpoint(medium-and-up) {
+    width: 60%;
+  }
 }
 
 .snugget__popout {
   flex-grow: 1;
-  overflow: hidden;
+  margin-left: auto;
+  position: relative;
   width: auto;
 
+  img {
+    position: absolute;
+  }
+
   @include breakpoint(medium-and-up) {
-    padding-left: 10px;
     width: 50%;
   }
 
   @include breakpoint(large) {
-    padding-left: 40px;
+    width: 40%;
   }
 }
 
 .popout__video {
   max-width: 100%;
+  position: absolute;
 }
 
 /* Intensity meter */
