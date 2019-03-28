@@ -546,7 +546,11 @@ form:invalid {
   background-color: $white;
   padding: 5px 10px;
 
-  @include breakpoint(medium-and-up) {
+  @include breakpoint(medium) {
+    padding: 10px 20px;
+  }
+
+  @include breakpoint(large) {
     padding: 10px 40px;
   }
 }
@@ -588,12 +592,8 @@ form:invalid {
   flex-grow: 3;
   width: auto;
 
-  @include breakpoint(medium) {
+  @include breakpoint(medium-and-up) {
     width: 50%;
-  }
-
-  @include breakpoint(large) {
-    width: 60%;
   }
 }
 
@@ -602,12 +602,13 @@ form:invalid {
   overflow: hidden;
   width: auto;
 
-  @include breakpoint(medium) {
+  @include breakpoint(medium-and-up) {
+    padding-left: 10px;
     width: 50%;
   }
 
   @include breakpoint(large) {
-    width: 40%;
+    padding-left: 40px;
   }
 }
 
