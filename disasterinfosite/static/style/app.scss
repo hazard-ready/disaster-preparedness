@@ -568,62 +568,55 @@ form:invalid {
 }
 
 .section-content {
-  max-height: 9000px;
-  overflow: auto;
-  transition: max-height 0.3s ease-out;
-}
-
-.section-content--collapse {
-  max-height: 0;
-  overflow: hidden;
-}
-
-/* Snugget content */
-.snugget {
-  align-items: self-start;
   display: flex;
   flex-direction: column;
+  max-height: 9000px;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
 
-  @include breakpoint(medium-and-up) {
+  @include breakpoint(large) {
     flex-direction: row;
   }
 }
 
+.section-content--collapse {
+  max-height: 0;
+}
+
+/* Snugget content */
 .snugget__content {
-  flex-grow: 3;
   width: auto;
 
-  @include breakpoint(medium-and-up) {
-    width: 50%;
-  }
-
-  @include breakpoint(medium-and-up) {
-    width: 60%;
+  @include breakpoint(large) {
+    width: 70%;
   }
 }
 
 .snugget__popout {
-  flex-grow: 1;
-  margin-left: auto;
-  position: relative;
+  flex-basis: min-content;
   width: auto;
 
-  img {
-    position: absolute;
-  }
-
-  @include breakpoint(medium-and-up) {
-    width: 50%;
-  }
-
   @include breakpoint(large) {
-    width: 40%;
+    margin-left: auto;
+    padding-left: 20px;
+    width: 30%;
   }
 }
 
 .popout__video {
   max-width: 100%;
-  position: absolute;
+}
+
+.popout__image {
+  max-width: 300px;
+
+  @include breakpoint(medium) {
+    width: 50%;
+  }
+  @include breakpoint(large) {
+    min-width: 175px;
+    max-width: 100%;
+  }
 }
 
 /* Intensity meter */
@@ -672,33 +665,49 @@ form:invalid {
 /* Historical photos */
 
 .past-photos {
-  width: 272px;
-  height: 200px;
-  padding: 10px;
+  width: 335px;
+  height: 320px;
   margin: 0 auto;
 
-  @include breakpoint(medium-and-up) {
-    width: 416px;
-    height: 288px;
+  @include breakpoint(medium) {
+    width: 540px;
+    height: 400px;
+  }
+
+  @include breakpoint(large) {
+    width: 335px;
+    height: 320px;
   }
 }
 
+.past-photo__caption {
+  margin: 0 auto;
+}
+
 .slideshow-image {
-  width: 270px;
-  @include breakpoint(medium-and-up) {
-    width: 400px;
+  margin: 0 auto;
+  max-height: 275px;
+
+  @include breakpoint(medium) {
+    max-height: 380px;
+  }
+
+  @include breakpoint(large) {
+    max-height: 275px;
   }
 }
 
 /* Arrows for photo slider */
 .slick-prev {
-  left: 15px;
+  left: 0 !important;
+  top: 36%;
   width: 36px;
   z-index: 9;
 }
 
 .slick-next {
-  right: 15px;
+  right: 0 !important;
+  top: 36%;
   width: 36px;
   z-index: 9;
 }
