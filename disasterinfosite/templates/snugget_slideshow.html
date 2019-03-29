@@ -1,16 +1,9 @@
 {% load i18n %}
 
 {% block snugget-content %}
-  <div class="snugget-content">
+  <div class="snugget">
     {{ snugget.text | safe }}
   </div>
-  <div class="past-photos">
-    {% for photo in snugget.photos %}
-    <div class="past-photo__container">
-       <img alt="" title="" class="slideshow-image" src="{{ photo.image.url }}"/>
-       <div class="past-photo__caption">{{ photo.caption }}</div>
-     </div>
-    {% endfor %}
-  </div>
-  {% include "pop_out.html" %}
+
+  <!-- see pop_out.html for slideshow. It could go here too. -->
 {% endblock %}

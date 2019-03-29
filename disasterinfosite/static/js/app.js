@@ -273,7 +273,7 @@ $(document).ready(function() {
         if ($currentSlideElement) {
           $currentSlideElement.slick({
             slidesToShow: 1,
-            variableWidth: true
+            variableWidth: false
           });
         }
       } else {

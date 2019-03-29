@@ -1,7 +1,7 @@
 {% load embed_video_tags %}
 
 {% block popout-content %}
-<div class="snugget__popout">
+
   {% if snugget.pop_out.link %}
     <a href="{{snugget.pop_out.link}}" target="_blank">
   {% endif %}
@@ -15,15 +15,29 @@
   {% endif %}
 
   {% if snugget.pop_out.image %}
-    <img alt="{{ snugget.pop_out.alt_text }}" src="{{ snugget.pop_out.image.url }}"/>
+    <img class="popout__image" alt="{{ snugget.pop_out.alt_text }}" src="{{ snugget.pop_out.image.url }}"/>
   {% endif %}
   {% if snugget.pop_out.video %}
 
     {% video snugget.pop_out.video as v %}
-      {% video v "small" %}
+    <div class="popout__video">
+      {% video v "340x200" %}
+    </div>
     {% endvideo %}
 
   {% endif %}
-</div>
+
+<!-- Right now all photo slideshows are in the popout section. If we want to have both, we'll need to make something like pop_out_image_folder in the snuggets file. -->
+  {% if snugget.photos %}
+    <div class="past-photos">
+    {% for photo in snugget.photos %}
+    <div class="past-photo__container">
+       <img alt="" title="" class="slideshow-image" src="{{ photo.image.url }}"/>
+       <div class="past-photo__caption">{{ photo.caption }}</div>
+     </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
 {% endblock %}
 
