@@ -621,45 +621,71 @@ form:invalid {
 
 /* Intensity meter */
 .intensity-meter {
-  float: left;
-  margin: 0 15px;
-  width: 100px;
+  background: linear-gradient(
+    to right,
+    $low-intensity,
+    $moderate-intensity,
+    $high-intensity,
+    $very-high-intensity,
+    $extreme-intensity
+  );
+  margin-top: 40px;
+  position: relative;
+  height: 18px;
+  width: auto;
 
-  @include breakpoint(medium-and-up) {
-    margin: 0 10px 0 0;
+  @include breakpoint(large) {
+    margin-top: 50px;
+    width: 70%;
   }
 }
 
-.intensity-content {
-  margin-top: 10px;
+.intensity-marker {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  width: 2px;
+  background-color: $dark-accent;
+
+  &:before {
+    color: $dark-grey;
+    content: "\25BC";
+    top: -18px;
+    position: absolute;
+    left: -7px;
+    text-align: center;
+  }
 }
 
-.intensity {
-  display: inline-block;
-  margin-bottom: 20px;
-  width: 100%;
+.intensity-label {
+  color: $dark-grey;
+  font-size: 14px;
+  position: absolute;
+  top: -32px;
 }
 
-.intensity-meter-segment {
-  stroke: $soft-black;
-  stroke-width: 1;
-  stroke-miterlimit: 4;
+.intensity-captions {
+  position: relative;
+  width: auto;
+
+  @include breakpoint(large) {
+    width: 70%;
+  }
 }
 
-.low-color {
-  fill: $low-intensity;
+.intensity-caption {
+  color: $medium-grey;
+  font-size: 14px;
+  font-style: italic;
+  position: absolute;
 }
-.moderate-color {
-  fill: $moderate-intensity;
+
+.intensity-caption--low {
+  left: 0;
 }
-.high-color {
-  fill: $high-intensity;
-}
-.very-high-color {
-  fill: $very-high-intensity;
-}
-.extreme-color {
-  fill: $extreme-intensity;
+
+.intensity-caption--high {
+  right: 0;
 }
 
 /* Historical photos */
