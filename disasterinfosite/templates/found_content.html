@@ -18,9 +18,26 @@
     <div class="disaster-container" id="{{group.name}}">
       <h2 class="link--grey">{{group.display_name}}</h2>
         <div class="disaster-content">
+        <div class="intensity-meter">
+          <div class="sr-only">An intensity meter at {{group.percentage}}%</div>
+          <div class="intensity-label caps" style="right: calc((100% - {{group.percentage}}%) / 1.5)">
+            label
+          </div>
+          <div class="intensity-marker" style="left: {{group.percentage}}%"></div>
+        </div>
+        <div class="intensity-captions">
+          <div class="intensity-caption intensity-caption--low" aria-hidden=”true”>
+            Low Intensity
+          </div>
+          <div class="intensity-caption intensity-caption--high" aria-hidden=”true”>
+          High Intensity
+        </div>
+        </div>
         {% for section, snuggets in hazard.items %}
           {% if section.collapsible %}
-          <h4 class="section-title section-title--collapse link--grey" data-section="{{group.name}}-{{section.name|slugify}}">{{ section.name }}</h4>
+          <h4 class="section-title section-title--collapse link--grey" data-section="{{group.name}}-{{section.name|slugify}}">
+            {{ section.name }}
+          </h4>
           <div class="section-content section-content--collapse" id="{{group.name}}-{{section.name|slugify}}">
           {% else %}
           <h4 class="section-title section-title--static">{{ section.name }}</h4>

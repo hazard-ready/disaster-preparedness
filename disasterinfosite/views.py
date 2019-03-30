@@ -1,6 +1,5 @@
 from collections import OrderedDict
 from .models import Snugget, Location, SiteSettings, SupplyKit, ImportantLink, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, SlideshowSnugget
-from .fire_dial import make_icon
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
@@ -129,7 +128,8 @@ def app_view(request):
                         template = 'found_content.html'
 
                         for snugget in snuggets:
-                            snugget.dynamic_image = make_icon(snugget.percentage)
+                            if snugget.percentage:
+                                group.percentage = snugget.percentage
                             if snugget.__class__ == SlideshowSnugget:
                                 snugget.photos = PastEventsPhoto.objects.filter(snugget=snugget)
 
