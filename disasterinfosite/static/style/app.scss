@@ -89,13 +89,13 @@ h2 {
   border-bottom: 2px solid $light-grey;
   color: $dark-accent;
   font-family: $serif;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: $font-weight-semibold;
   line-height: $big-header-line-height;
   padding-bottom: 20px;
 
   @include breakpoint(large) {
-    font-size: 28px;
+    font-size: 32px;
   }
 }
 
@@ -125,11 +125,12 @@ h3 {
 h4 {
   color: $light-accent;
   font-family: $serif;
-  font-size: 16px;
+  font-size: 21px;
   font-weight: $font-weight-bold;
   line-height: $small-header-line-height;
+  margin-bottom: 10px;
   @include breakpoint(large) {
-    font-size: 18px;
+    font-size: 24px;
   }
 }
 
