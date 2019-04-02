@@ -20,8 +20,11 @@
   {% if snugget.pop_out.video %}
 
     {% video snugget.pop_out.video as v %}
-    <div class="popout__video">
+    <div class="popout__video popout__video--medium hide-for-small">
       {% video v "340x200" %}
+    </div>
+    <div class="popout__video popout__video--small hide-for-medium-up">
+      {% video v "300x176" %}
     </div>
     {% endvideo %}
 

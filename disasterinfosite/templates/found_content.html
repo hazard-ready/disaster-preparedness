@@ -35,7 +35,7 @@
         </div>
         {% for section, snuggets in hazard.items %}
           {% if section.collapsible %}
-          <h4 class="section-title section-title--collapse link--grey" data-section="{{group.name}}-{{section.name|slugify}}">
+          <h4 class="section-title section-title--collapse" data-section="{{group.name}}-{{section.name|slugify}}">
             {{ section.name }}
           </h4>
           <div class="section-content section-content--collapse" id="{{group.name}}-{{section.name|slugify}}">
