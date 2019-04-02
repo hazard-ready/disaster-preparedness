@@ -3,7 +3,8 @@ $black: #000;
 $black-tint: rgba(255, 255, 255, 0.5);
 $soft-black: #121212;
 $dark-grey: #444;
-$medium-grey: #ccc;
+$medium-grey: #777;
+$light-grey: #ccc;
 $soft-white: #f9f9f9;
 $white: #fff;
 
@@ -85,7 +86,7 @@ h1 {
 }
 
 h2 {
-  border-bottom: 2px solid $medium-grey;
+  border-bottom: 2px solid $light-grey;
   color: $dark-accent;
   font-family: $serif;
   font-size: 24px;
@@ -157,7 +158,7 @@ h4 {
 .snugget__content a,
 .snugget__popout a {
   text-decoration: none;
-  border-bottom: 2px solid $medium-grey;
+  border-bottom: 2px solid $light-grey;
   color: $soft-black;
 
   &:visited,
@@ -291,7 +292,7 @@ header {
 /* Search */
 .location-form {
   border-radius: 4px;
-  border: solid 1px $medium-grey;
+  border: solid 1px $light-grey;
   display: flex;
   flex-grow: 2;
   margin: 0 5px;
@@ -491,8 +492,8 @@ input:invalid {
 
 form:invalid {
   .button--submit {
-    border-color: $medium-grey;
-    background-color: $medium-grey;
+    border-color: $light-grey;
+    background-color: $light-grey;
   }
 }
 
@@ -675,6 +676,7 @@ form:invalid {
 }
 
 .intensity-captions {
+  margin-bottom: 50px;
   position: relative;
   width: auto;
 
