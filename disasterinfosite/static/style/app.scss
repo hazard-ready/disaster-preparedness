@@ -267,11 +267,15 @@ header {
 }
 
 .header__about {
+  color: $soft-black;
   font-family: $sans-serif;
   font-size: 16px;
   line-height: $small-header-line-height;
-  color: $soft-black;
-  margin: 20px 0 0 5px;
+  margin: 0;
+
+  @include breakpoint(medium) {
+    margin: 20px 10px 0 5px;
+  }
 
   @include breakpoint(large) {
     font-size: 18px;
@@ -282,6 +286,7 @@ header {
 .header__about--small {
   position: absolute;
   right: 10px;
+  top: 20px;
 }
 
 /* Search */
@@ -290,7 +295,7 @@ header {
   border: solid 1px $medium-grey;
   display: flex;
   flex-grow: 2;
-  margin: 0;
+  margin: 0 5px;
   position: relative;
 
   @include breakpoint(medium) {
@@ -310,7 +315,7 @@ header {
   line-height: 2;
   height: auto;
 
-  margin: 2px;
+  margin: 2px 2px 2px 8px;
   z-index: $z-index-bottom;
 
   &:focus {
@@ -338,11 +343,14 @@ header {
 
 #auto-location {
   border-right: solid 2px $white;
+  font-weight: 400;
   margin-left: auto;
+  line-height: 1;
   max-width: 52px;
   z-index: $z-index-next;
 
   @include breakpoint(medium-and-up) {
+    line-height: 1.15;
     max-width: unset;
   }
 }
