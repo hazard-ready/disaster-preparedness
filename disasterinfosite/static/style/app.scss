@@ -576,6 +576,7 @@ form:invalid {
 }
 
 .section-title--collapse {
+  border-bottom: 2px solid $light-grey;
   cursor: pointer;
 }
 
@@ -706,7 +707,7 @@ form:invalid {
 .past-photos {
   width: 335px;
   height: 320px;
-  margin: 0 auto;
+  margin: 30px auto 0;
 
   @include breakpoint(medium) {
     width: 540px;
@@ -720,7 +721,9 @@ form:invalid {
 }
 
 .past-photo__caption {
+  color: $medium-grey;
   margin: 0 auto;
+  text-align: center;
 }
 
 .slideshow-image {
