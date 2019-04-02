@@ -85,6 +85,7 @@ h1 {
 }
 
 h2 {
+  border-bottom: 2px solid $medium-grey;
   color: $dark-accent;
   font-family: $serif;
   font-size: 24px;
@@ -152,13 +153,10 @@ h4 {
 }
 
 .link--grey,
-.snugget__content a {
-  text-decoration: none;
-  border-bottom: 2px solid $medium-grey;
-}
-
 .snugget__content a,
 .snugget__popout a {
+  text-decoration: none;
+  border-bottom: 2px solid $medium-grey;
   color: $soft-black;
 
   &:visited,
@@ -423,10 +421,6 @@ header {
 .info__start-over {
   color: $dark-grey;
   font-weight: $font-weight-regular;
-  text-align: center;
-  @include breakpoint(medium-and-up) {
-    text-align: left;
-  }
 }
 
 /* Map */
