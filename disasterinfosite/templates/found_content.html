@@ -59,7 +59,9 @@
             </div>
             <div class="snugget__popout">
             {% for snugget in snuggets|dictsort:"order" %}
-              {% include "pop_out.html" %}
+              {% if snugget.photos or snugget.pop_out.has_content %}
+                {% include "pop_out.html" %}
+              {% endif %}
             {% endfor %}
             </div>
           </div>
