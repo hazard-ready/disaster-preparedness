@@ -2,14 +2,17 @@
 $black: #000;
 $black-tint: rgba(255, 255, 255, 0.5);
 $soft-black: #121212;
+$deep-grey: #333;
 $dark-grey: #444;
-$medium-grey: #ccc;
+$medium-grey: #777;
+$light-grey: #ccc;
 $soft-white: #f9f9f9;
 $white: #fff;
 
 $dark-accent: #0037a7;
 $light-accent: #106edf;
 $bright-accent: #00a4b2;
+$popout-border: #2cb3b3;
 
 $low-intensity: #ffffb2;
 $moderate-intensity: #fed976;
@@ -85,14 +88,16 @@ h1 {
 }
 
 h2 {
+  border-bottom: 2px solid $light-grey;
   color: $dark-accent;
   font-family: $serif;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: $font-weight-semibold;
   line-height: $big-header-line-height;
+  padding-bottom: 20px;
 
   @include breakpoint(large) {
-    font-size: 28px;
+    font-size: 32px;
   }
 }
 
@@ -122,11 +127,12 @@ h3 {
 h4 {
   color: $light-accent;
   font-family: $serif;
-  font-size: 16px;
+  font-size: 21px;
   font-weight: $font-weight-bold;
   line-height: $small-header-line-height;
+  margin-bottom: 10px;
   @include breakpoint(large) {
-    font-size: 18px;
+    font-size: 24px;
   }
 }
 
@@ -151,11 +157,15 @@ h4 {
   text-decoration: none;
 }
 
-.link--grey {
+.link--grey,
+.snugget__content a,
+.snugget__popout a {
   text-decoration: none;
-  border-bottom: 2px solid $medium-grey;
+  border-bottom: 2px solid $light-grey;
+  color: $soft-black;
 
-  &:visited {
+  &:visited,
+  &:hover {
     color: $dark-grey;
   }
 }
@@ -260,11 +270,15 @@ header {
 }
 
 .header__about {
+  color: $soft-black;
   font-family: $sans-serif;
   font-size: 16px;
   line-height: $small-header-line-height;
-  color: $soft-black;
-  margin: 20px 0 0 5px;
+  margin: 0;
+
+  @include breakpoint(medium) {
+    margin: 20px 10px 0 5px;
+  }
 
   @include breakpoint(large) {
     font-size: 18px;
@@ -275,15 +289,16 @@ header {
 .header__about--small {
   position: absolute;
   right: 10px;
+  top: 20px;
 }
 
 /* Search */
 .location-form {
   border-radius: 4px;
-  border: solid 1px $medium-grey;
+  border: solid 1px $light-grey;
   display: flex;
   flex-grow: 2;
-  margin: 0;
+  margin: 0 5px;
   position: relative;
 
   @include breakpoint(medium) {
@@ -303,7 +318,7 @@ header {
   line-height: 2;
   height: auto;
 
-  margin: 2px;
+  margin: 2px 2px 2px 8px;
   z-index: $z-index-bottom;
 
   &:focus {
@@ -327,19 +342,18 @@ header {
   &:hover {
     background-color: $dark-accent;
   }
-
-  img {
-    height: 24px;
-  }
 }
 
 #auto-location {
   border-right: solid 2px $white;
+  font-weight: 400;
   margin-left: auto;
+  line-height: 1;
   max-width: 52px;
   z-index: $z-index-next;
 
   @include breakpoint(medium-and-up) {
+    line-height: 1.15;
     max-width: unset;
   }
 }
@@ -347,6 +361,13 @@ header {
 #location-submit {
   border-bottom-right-radius: 4px;
   border-top-right-radius: 4px;
+  flex-shrink: 0;
+
+  img {
+    height: 24px;
+    width: 24px;
+    padding-top: 2px;
+  }
 }
 
 .geocode-error-message {
@@ -405,10 +426,20 @@ header {
 .info__start-over {
   color: $dark-grey;
   font-weight: $font-weight-regular;
-  text-align: center;
+}
+
+.info__hazards {
+  margin-top: 20px;
+
   @include breakpoint(medium-and-up) {
-    text-align: left;
+    margin-top: 40px;
   }
+}
+
+.hazard-link {
+  border-bottom: 2px solid $popout-border;
+  color: $bright-accent;
+  text-decoration: none;
 }
 
 /* Map */
@@ -478,8 +509,8 @@ input:invalid {
 
 form:invalid {
   .button--submit {
-    border-color: $medium-grey;
-    background-color: $medium-grey;
+    border-color: $light-grey;
+    background-color: $light-grey;
   }
 }
 
@@ -547,15 +578,12 @@ form:invalid {
   padding: 5px 10px;
 
   @include breakpoint(medium) {
-    padding: 10px 20px;
+    padding: 5px 20px;
   }
 
   @include breakpoint(large) {
-    padding: 10px 40px;
+    padding: 5px 40px;
   }
-}
-
-.disaster-content {
 }
 
 /* Sections */
@@ -564,6 +592,7 @@ form:invalid {
 }
 
 .section-title--collapse {
+  border-bottom: 2px solid $light-grey;
   cursor: pointer;
 }
 
@@ -588,18 +617,26 @@ form:invalid {
   width: auto;
 
   @include breakpoint(large) {
-    width: 70%;
+    width: 60%;
   }
 }
 
 .snugget__popout {
+  border: 1px solid $popout-border;
+  border-left-width: 6px;
   flex-basis: min-content;
-  width: auto;
+  padding: 10px;
+  max-width: 100%;
+
+  @include breakpoint(medium) {
+    padding: 20px;
+  }
 
   @include breakpoint(large) {
-    margin-left: auto;
-    padding-left: 20px;
-    width: 30%;
+    border: none;
+    margin: 0 0 0 auto;
+    padding: 0 0 0 30px;
+    width: 25%;
   }
 }
 
@@ -665,6 +702,7 @@ form:invalid {
 }
 
 .intensity-captions {
+  margin-bottom: 50px;
   position: relative;
   width: auto;
 
@@ -691,9 +729,9 @@ form:invalid {
 /* Historical photos */
 
 .past-photos {
-  width: 335px;
+  max-width: 100%;
   height: 320px;
-  margin: 0 auto;
+  margin: 30px auto 0;
 
   @include breakpoint(medium) {
     width: 540px;
@@ -707,7 +745,9 @@ form:invalid {
 }
 
 .past-photo__caption {
+  color: $medium-grey;
   margin: 0 auto;
+  text-align: center;
 }
 
 .slideshow-image {
@@ -751,13 +791,27 @@ form:invalid {
 /* Geek box */
 
 #geek-box {
-  .geek-box-logo {
-    margin: 0 auto;
-    max-width: 30%;
-    max-height: 5rem;
+  background-color: $deep-grey;
+  color: $soft-white;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 
-    @include breakpoint(medium-and-up) {
-      margin: 0.5rem;
-    }
+  @include breakpoint(medium-and-up) {
+    flex-direction: row;
+  }
+
+  h3 {
+    color: $soft-white;
+  }
+}
+
+.geek-box-logo {
+  margin: 0 auto;
+  width: 200px;
+
+  @include breakpoint(medium-and-up) {
+    margin: 10px;
+    width: 300px;
   }
 }
