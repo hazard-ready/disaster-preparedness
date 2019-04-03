@@ -1,6 +1,8 @@
 {% extends "index.html" %}
 {% load i18n %}
 {% load show_snugget %}
+{% load webpack_static from webpack_loader %}
+
 
 {% block info-instructions %}
   <div class="information-container">
@@ -43,7 +45,7 @@
         {% for section, snuggets in hazard.items %}
           {% if section.collapsible %}
           <h4 class="section-title section-title--collapse" data-section="{{group.name}}-{{section.name|slugify}}">
-            {{ section.name }}
+            <img class="caret" src="{% webpack_static 'build/caret.svg' %}" alt="">{{ section.name }}
           </h4>
           <div class="section-content section-content--collapse" id="{{group.name}}-{{section.name|slugify}}">
           {% else %}

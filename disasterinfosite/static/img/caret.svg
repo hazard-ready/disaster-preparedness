@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="baseline-arrow_forward_ios-24px" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) ">
+            <polygon id="Path" fill="#106edf" fill-rule="nonzero" points="5.88 4.12 13.76 12 5.88 19.88 8 22 18 12 8 2"></polygon>
+            <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+        </g>
+    </g>
+</svg>
