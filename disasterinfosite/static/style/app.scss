@@ -427,6 +427,20 @@ header {
   font-weight: $font-weight-regular;
 }
 
+.info__hazards {
+  margin-top: 20px;
+
+  @include breakpoint(medium-and-up) {
+    margin-top: 40px;
+  }
+}
+
+.hazard-link {
+  border-bottom: 2px solid $popout-border;
+  color: $bright-accent;
+  text-decoration: none;
+}
+
 /* Map */
 .map-container {
   flex-grow: 2;

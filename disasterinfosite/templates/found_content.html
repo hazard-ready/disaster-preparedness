@@ -10,6 +10,13 @@
         {% trans "Wrong address? Start over" %}
       </a>
     </div>
+    <div class="info__hazards">
+      {% for group, hazard in data.items %}
+        <a class="hazard-link caps" href="#{{group.name}}">
+          {{group.display_name}}
+        </a>{% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </div>
   </div>
 {% endblock info-instructions %}
 
