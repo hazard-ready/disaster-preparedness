@@ -1,7 +1,7 @@
 {% load embed_video_tags %}
 
 {% block popout-content %}
-
+<div class="popout-content">
   {% if snugget.pop_out.link %}
     <a href="{{snugget.pop_out.link}}" target="_blank">
   {% endif %}
@@ -30,8 +30,8 @@
 
   {% endif %}
 
-<!-- Right now all photo slideshows are in the popout section. If we want to have both, we'll need to make something like pop_out_image_folder in the snuggets file. -->
   {% if snugget.photos %}
+  <!-- Right now all photo slideshows are in the popout section. If we want to have both, we'll need to make something like pop_out_image_folder in the snuggets file. -->
     <div class="past-photos">
     {% for photo in snugget.photos %}
     <div class="past-photo__container">
@@ -39,8 +39,8 @@
        <div class="past-photo__caption">{{ photo.caption }}</div>
      </div>
     {% endfor %}
-  </div>
+    </div>
   {% endif %}
-
+</div>
 {% endblock %}
 

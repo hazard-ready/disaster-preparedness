@@ -247,6 +247,11 @@ class SnuggetPopOut(models.Model):
     alt_text = models.TextField(default='', max_length=255)
     video = EmbedVideoField(null=True)
 
+    @property
+    def has_content(self):
+        "Returns true if this popout has some content"
+        return (self.text or self.image or self.link or self.video)
+
     def __str__(self):
         return self.text[:100]
 

@@ -14,6 +14,7 @@ require("../img/thinking.gif");
 require("../img/logo.png");
 require("../img/logo-no-text.png");
 require("../img/icon-search.png");
+require("../img/caret.svg");
 
 require("./users");
 require("slick-carousel");
@@ -261,15 +262,20 @@ $(document).ready(function() {
   // Set up expanding and collapsing sections. Set up slideshow
   // in applicable sections when they are expanded.
   var collapseSectionClass = "section-content--collapse";
+  var caretUpClass = "caret--up";
 
   $(".section-title--collapse").on("click", function(event) {
-    var contentSectionId = $(event.target).data("section");
+    var $sectionTitle = $(event.delegateTarget);
+    var contentSectionId = $sectionTitle.data("section");
     if (contentSectionId) {
       var $contentSection = $("#" + contentSectionId);
+      var $titleCaret = $sectionTitle.find(".caret");
       var $currentSlideElement = $("#" + contentSectionId + " .past-photos");
 
       if ($contentSection.hasClass(collapseSectionClass)) {
         $contentSection.removeClass(collapseSectionClass);
+        $titleCaret.addClass(caretUpClass);
+
         if ($currentSlideElement) {
           $currentSlideElement.slick({
             slidesToShow: 1,
@@ -278,6 +284,7 @@ $(document).ready(function() {
         }
       } else {
         $contentSection.addClass(collapseSectionClass);
+        $titleCaret.removeClass(caretUpClass);
         if ($currentSlideElement) {
           $currentSlideElement.slick("unslick");
         }
