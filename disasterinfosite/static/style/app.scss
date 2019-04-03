@@ -592,6 +592,7 @@ form:invalid {
 }
 
 .section-title--collapse {
+  display: flex; // Fold caret aside wrapped text nicely on smaller sizes
   border-bottom: 2px solid $light-grey;
   cursor: pointer;
 }
