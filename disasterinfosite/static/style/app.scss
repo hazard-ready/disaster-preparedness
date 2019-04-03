@@ -2,6 +2,7 @@
 $black: #000;
 $black-tint: rgba(255, 255, 255, 0.5);
 $soft-black: #121212;
+$deep-grey: #333;
 $dark-grey: #444;
 $medium-grey: #777;
 $light-grey: #ccc;
@@ -791,13 +792,27 @@ form:invalid {
 /* Geek box */
 
 #geek-box {
-  .geek-box-logo {
-    margin: 0 auto;
-    max-width: 30%;
-    max-height: 5rem;
+  background-color: $deep-grey;
+  color: $soft-white;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 
-    @include breakpoint(medium-and-up) {
-      margin: 0.5rem;
-    }
+  @include breakpoint(medium-and-up) {
+    flex-direction: row;
+  }
+
+  h3 {
+    color: $soft-white;
+  }
+}
+
+.geek-box-logo {
+  margin: 0 auto;
+  width: 200px;
+
+  @include breakpoint(medium-and-up) {
+    margin: 10px;
+    width: 300px;
   }
 }
