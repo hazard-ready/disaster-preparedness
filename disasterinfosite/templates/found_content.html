@@ -5,68 +5,92 @@
 
 
 {% block info-instructions %}
-  <div class="information-container">
-    <h1><span class="info__header">{% trans "What to expect for" %}</span> <span class="info__location">{{ location_name }}</span></h1>
-    <div class="info__start-over">
-      <a class="link--grey" href="{{ settings.site_url }}">
-        {% trans "Wrong address? Start over" %}
-      </a>
-    </div>
-    <div class="info__hazards">
-      {% for group, hazard in data.items %}
-        <a class="hazard-link caps" href="#{{group.name}}">
-          {{group.display_name}}
-        </a>{% if not forloop.last %}, {% endif %}
-      {% endfor %}
-    </div>
+<div class="information-container">
+  <h1>
+    <span class="info__header">{% trans "What to expect for" %}</span>
+    <span class="info__location">{{ location_name }}</span>
+  </h1>
+  <div class="info__start-over">
+    <a class="link--grey" href="{{ settings.site_url }}">
+      {% trans "Wrong address? Start over" %}
+    </a>
   </div>
+  <div class="info__hazards">
+    {% for group, hazard in data.items %}
+    <a class="hazard-link caps" href="#{{group.name}}">
+      {{group.display_name}}
+    </a>
+    {% if not forloop.last %}, {% endif %}
+  {% endfor %}
+  </div>
+</div>
 {% endblock info-instructions %}
 
 {% block main-content %}
   {% for group, hazard in data.items %}
-    <div class="disaster-container" id="{{group.name}}">
-      <h2>{{group.display_name}}</h2>
-        <div class="disaster-content">
-        <div class="intensity-meter">
-          <div class="sr-only">An intensity meter at {{group.percentage}}%</div>
-          <div class="intensity-label caps" style="right: calc((100% - {{group.percentage}}%) / 1.5)">
-            label
-          </div>
-          <div class="intensity-marker" style="left: {{group.percentage}}%"></div>
-        </div>
-        <div class="intensity-captions">
-          <div class="intensity-caption intensity-caption--low" aria-hidden=”true”>
-            Low Intensity
-          </div>
-          <div class="intensity-caption intensity-caption--high" aria-hidden=”true”>
-          High Intensity
-        </div>
-        </div>
-        {% for section, snuggets in hazard.items %}
-          {% if section.collapsible %}
-          <h4 class="section-title section-title--collapse" data-section="{{group.name}}-{{section.name|slugify}}">
-            <img class="caret" src="{% webpack_static 'build/caret.svg' %}" alt="">{{ section.name }}
-          </h4>
-          <div class="section-content section-content--collapse" id="{{group.name}}-{{section.name|slugify}}">
-          {% else %}
-          <h4 class="section-title section-title--static">{{ section.name }}</h4>
-          <div class="section-content">
-          {% endif %}
-            <div class="snugget__content">
-            {% for snugget in snuggets|dictsort:"order" %}
-              {% show_snugget snugget %}
-            {% endfor %}
-            </div>
-            <div class="snugget__popout">
-            {% for snugget in snuggets|dictsort:"order" %}
-              {% if snugget.photos or snugget.pop_out.has_content %}
-                {% include "pop_out.html" %}
-              {% endif %}
-            {% endfor %}
-            </div>
-          </div>
-        {% endfor %}
+<div class="disaster-container" id="{{group.name}}">
+  <h2>{{group.display_name}}</h2>
+  <div class="disaster-content">
+    <div class="intensity-meter">
+      <div class="sr-only">An intensity meter at {{group.percentage}}%</div>
+      <div
+        class="intensity-label caps"
+        style="right: calc((100% - {{group.percentage}}%) / 1.5)"
+      >
+        label
+      </div>
+      <div class="intensity-marker" style="left: {{group.percentage}}%"></div>
+    </div>
+    <div class="intensity-captions">
+      <div
+        class="intensity-caption intensity-caption--low"
+        aria-hidden="”true”"
+      >
+        Low Risk
+      </div>
+      <div
+        class="intensity-caption intensity-caption--high"
+        aria-hidden="”true”"
+      >
+        High Risk
       </div>
     </div>
+    {% for section, snuggets in hazard.items %}
+      {% if section.collapsible %}
+    <h4
+      class="section-title section-title--collapse"
+      data-section="{{group.name}}-{{section.name|slugify}}"
+    >
+      <img
+        class="caret"
+        src="{% webpack_static 'build/caret.svg' %}"
+        alt=""
+      />{{ section.name }}
+    </h4>
+    <div
+      class="section-content section-content--collapse"
+      id="{{group.name}}-{{section.name|slugify}}"
+    >
+      {% else %}
+      <h4 class="section-title section-title--static">{{ section.name }}</h4>
+      <div class="section-content">
+        {% endif %}
+        <div class="snugget__content">
+          {% for snugget in snuggets|dictsort:"order" %}
+            {% show_snugget snugget %}
+          {% endfor %}
+        </div>
+        <div class="snugget__popout">
+          {% for snugget in snuggets|dictsort:"order" %}
+            {% if snugget.photos or snugget.pop_out.has_content %}
+              {% include "pop_out.html" %}
+              {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
   {% endfor %}
 {% endblock main-content %}
+</div>

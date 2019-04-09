@@ -637,9 +637,18 @@ form:invalid {
 }
 
 .snugget__popout {
+  flex-basis: min-content;
+  max-width: 100%;
+
+  @include breakpoint(large) {
+    margin: 0 0 0 auto;
+    width: 25%;
+  }
+}
+
+.popout-content {
   border: 1px solid $popout-border;
   border-left-width: 6px;
-  flex-basis: min-content;
   padding: 10px;
   max-width: 100%;
 
@@ -649,9 +658,7 @@ form:invalid {
 
   @include breakpoint(large) {
     border: none;
-    margin: 0 0 0 auto;
     padding: 0 0 0 30px;
-    width: 25%;
   }
 }
 
@@ -828,5 +835,47 @@ form:invalid {
   @include breakpoint(medium-and-up) {
     margin: 10px;
     width: 300px;
+  }
+}
+
+/* About page */
+.about-container {
+  background-color: $white;
+  margin: 0 auto 20px;
+  padding: 5px 10px;
+
+  @include breakpoint(medium) {
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 5px 20px;
+  }
+
+  @include breakpoint(large) {
+    margin-right: 20px;
+    margin-top: 30px;
+    padding: 5px 40px;
+  }
+}
+
+/* Footer */
+footer {
+  background-color: $deep-grey;
+  color: $soft-white;
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+
+  a:visited {
+    color: $low-intensity;
+  }
+
+  img {
+    margin: 0 auto;
+    width: 60px;
+
+    @include breakpoint(medium-and-up) {
+      margin: 5px;
+      width: 100px;
+    }
   }
 }
