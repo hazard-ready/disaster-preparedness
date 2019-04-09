@@ -6,5 +6,10 @@
     <div class="geek-text">
         <h3>{% trans "Who made this?" %}</h3>
         <p>{{ settings.who_made_this | safe}}</p>
+        {% if settings.contact_email %}
+          <p>
+            {% blocktrans with email=settings.contact_email %}Have questions? <a href="mailto:{{ email }}">Email the creators</a> for more information.{% endblocktrans %}
+          </p>
+        {% endif %}
     </div>
 </div>

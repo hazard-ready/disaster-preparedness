@@ -86,6 +86,11 @@ def update_profile(request):
         return HttpResponse(status=403)
 
 @ensure_csrf_cookie
+def about_view(request):
+    return render(request, "about.html", { 'location': Location.get_solo(), 'settings': SiteSettings.get_solo() })
+
+
+@ensure_csrf_cookie
 def app_view(request):
 
     username = None

@@ -37,26 +37,33 @@
         </div>
       </a>
     </div>
-<div role="contentinfo" id="geek-box-container">
-  <div id="geek-box">
-    <h3 class="caps">{% trans "How does it work?" %}</h3>
-    <p>
-        {% blocktrans with title=settings.site_title area_name=location.area_name %}{{ title }} is designed to help educate and prepare people for disasters that occur in their area. Disasters don’t strike locations equally so we found it important to give location specific information in order to properly prepare. {{ title }} organizes current information and packages it in a way that makes it accessible for any {{ area_name }} resident.{% endblocktrans %}
-    </p>
-    <p>
-        {% blocktrans with area_name=location.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original data sources. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.{% endblocktrans %}
-    </p>
+  </header>
+  <div class="content-container">
+    <div class="about-container">
+      <h3 class="caps">{% trans "About Hazard Ready" %}</h3>
+      <p>{{ settings.who_made_this | safe}}</p>
+      <img src="{% webpack_static 'build/logo.png' %}" alt="">
+    </div>
+    <div class="about-container">
+      <h3 class="caps">{% trans "How does it work?" %}</h3>
+      <p>
+          {% blocktrans with title=settings.site_title area_name=location.area_name %}{{ title }} is designed to help educate and prepare people for disasters that occur in their area. Disasters don’t strike locations equally so we found it important to give location specific information in order to properly prepare. {{ title }} organizes current information and packages it in a way that makes it accessible for any {{ area_name }} resident.{% endblocktrans %}
+      </p>
+      <p>
+          {% blocktrans with area_name=location.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original data sources. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.{% endblocktrans %}
+      </p>
+    </div>
     {% if settings.data_download %}
+      <div class="about-container">
+
         <p>
             {% blocktrans with title=settings.site_title download=settings.data_download%}Data used for {{ title }} is available for download <a href="{{ download }}" target="_blank">here</a>.{% endblocktrans %}
         </p>
-    {% endif %}
-    {% if settings.contact_email %}
-        <p>
-            {% blocktrans with email=settings.contact_email %}Have questions? <a href="mailto:{{ email }}">Email the creators</a> for more information.{% endblocktrans %}
-        </p>
+      </div>
     {% endif %}
     {% if quick_data_overview %}
+      <div class="about-container">
+
         <h3 class="caps">{% trans "Quick Data Overview" %}</h3>
         <p>
             {% blocktrans with area_name=location.area_name %}Take a look at some overviews of the data we used for {{ area_name }}:{% endblocktrans %}
@@ -66,16 +73,16 @@
                 <li><a  target="_blank" href="{{ item }}">{{ item.link_text }}</a></li>
             {% endfor %}
         </ul>
+      </div>
     {% endif %}
-    <h3 class="caps">{% trans "Who made this?" %}</h3>
-    <p>{{ settings.who_made_this | safe}}</p>
-    <img class="geek-box-logo" src="{% webpack_static 'build/logo.png' %}" alt="">
   </div>
-</div>
- {% render_bundle 'vendor' 'js' %}
-    <!-- Load MapQuest Places search (for autocomplete) from CDN -->
-  <script src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
-  {% render_bundle 'app' 'js' %}
+<footer>
+    <a href="http://hazardready.org" target="_blank"><img src="{% webpack_static 'build/logo.png' %}" alt=""></a>
+    <div>more content here?</div>
+</footer>
+
+{% render_bundle 'vendor' 'js' %}
+{% render_bundle 'app' 'js' %}
 
   <!-- script for Google Analytics -->
   <script>

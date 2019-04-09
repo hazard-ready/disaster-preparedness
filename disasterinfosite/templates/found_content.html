@@ -2,8 +2,9 @@
 {% load i18n %}
 {% load show_snugget %}
 {% load webpack_static from webpack_loader %}
-{% block info-instructions %}
 
+
+{% block info-instructions %}
 <div class="information-container">
   <h1>
     <span class="info__header">{% trans "What to expect for" %}</span>
@@ -24,6 +25,7 @@
   </div>
 </div>
 {% endblock info-instructions %}
+
 {% block main-content %}
   {% for group, hazard in data.items %}
 <div class="disaster-container" id="{{group.name}}">

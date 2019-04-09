@@ -837,3 +837,45 @@ form:invalid {
     width: 300px;
   }
 }
+
+/* About page */
+.about-container {
+  background-color: $white;
+  margin: 0 auto 20px;
+  padding: 5px 10px;
+
+  @include breakpoint(medium) {
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 5px 20px;
+  }
+
+  @include breakpoint(large) {
+    margin-right: 20px;
+    margin-top: 30px;
+    padding: 5px 40px;
+  }
+}
+
+/* Footer */
+footer {
+  background-color: $deep-grey;
+  color: $soft-white;
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+
+  a:visited {
+    color: $low-intensity;
+  }
+
+  img {
+    margin: 0 auto;
+    width: 60px;
+
+    @include breakpoint(medium-and-up) {
+      margin: 5px;
+      width: 100px;
+    }
+  }
+}
