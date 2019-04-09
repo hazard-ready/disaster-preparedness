@@ -1,0 +1,108 @@
+{% load js %}
+{% load i18n %}
+
+{% load render_bundle from webpack_loader %}
+{% load webpack_static from webpack_loader %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<!doctype html>
+<html class="no-js" lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:url" content="{{ settings.site_url }}"/>
+  <meta property="og:title" content="{{ settings.site_description }}">
+  {% trans "Enter your location for a personalized report on your risks and how to prepare." as meta_description %}
+  <meta property="og:description" content="{{ settings.intro_text }} {{ meta_description }}">
+
+  <title>{{ settings.site_title }}</title>
+
+ <!-- Load fonts -->
+ <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i|Source+Serif+Pro:600,700" rel="stylesheet">
+
+  {% render_bundle 'app' 'css' %}
+
+  <link rel="shortcut icon" href="{% webpack_static 'build/favicon.ico' %}"/>
+
+</head>
+<body>
+  <header>
+    <div class="logo__container">
+      <a class="link--plain" href="{{ settings.site_url }}">
+        <img class="logo--header" src="{% webpack_static 'build/logo-no-text.png' %}" alt="">
+        <div class="logo__text">
+          <h5 class="project-title caps">{{ settings.site_title }}</h5>
+          <h3 class="h3--sans-serif">Hazard Ready</h3>
+        </div>
+      </a>
+    </div>
+<div role="contentinfo" id="geek-box-container">
+  <div id="geek-box">
+    <h3 class="caps">{% trans "How does it work?" %}</h3>
+    <p>
+        {% blocktrans with title=settings.site_title area_name=location.area_name %}{{ title }} is designed to help educate and prepare people for disasters that occur in their area. Disasters don’t strike locations equally so we found it important to give location specific information in order to properly prepare. {{ title }} organizes current information and packages it in a way that makes it accessible for any {{ area_name }} resident.{% endblocktrans %}
+    </p>
+    <p>
+        {% blocktrans with area_name=location.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original data sources. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.{% endblocktrans %}
+    </p>
+    {% if settings.data_download %}
+        <p>
+            {% blocktrans with title=settings.site_title download=settings.data_download%}Data used for {{ title }} is available for download <a href="{{ download }}" target="_blank">here</a>.{% endblocktrans %}
+        </p>
+    {% endif %}
+    {% if settings.contact_email %}
+        <p>
+            {% blocktrans with email=settings.contact_email %}Have questions? <a href="mailto:{{ email }}">Email the creators</a> for more information.{% endblocktrans %}
+        </p>
+    {% endif %}
+    {% if quick_data_overview %}
+        <h3 class="caps">{% trans "Quick Data Overview" %}</h3>
+        <p>
+            {% blocktrans with area_name=location.area_name %}Take a look at some overviews of the data we used for {{ area_name }}:{% endblocktrans %}
+        </p>
+        <ul>
+            {% for item in quick_data_overview %}
+                <li><a  target="_blank" href="{{ item }}">{{ item.link_text }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <h3 class="caps">{% trans "Who made this?" %}</h3>
+    <p>{{ settings.who_made_this | safe}}</p>
+    <img class="geek-box-logo" src="{% webpack_static 'build/logo.png' %}" alt="">
+  </div>
+</div>
+ {% render_bundle 'vendor' 'js' %}
+    <!-- Load MapQuest Places search (for autocomplete) from CDN -->
+  <script src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
+  {% render_bundle 'app' 'js' %}
+
+  <!-- script for Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    // Replace the 'UA-numbers' part on the next line with your project's identifier
+    // ga('create', 'UA-74680572-2', 'auto');
+    ga('send', 'pageview');
+    /**
+    * Function that tracks a click on an outbound link in Analytics.
+    * This function takes a valid URL string as an argument, and uses that URL string
+    * as the event label. Setting the transport method to 'beacon' lets the hit be sent
+    * using 'navigator.sendBeacon' in browser that support it.
+    * The new_tab parameter helps open the URL in the current tab if that's the intent.
+    */
+    var trackOutboundLink = function(url, new_tab) {
+      ga('send', 'event', 'outbound', 'click', url, {
+         'transport': 'beacon',
+         'hitCallback': new_tab ? function() {} : function(){ document.location = url; }
+      });
+      return new_tab;
+    }
+  </script>
+
+</body>
+</html>
+

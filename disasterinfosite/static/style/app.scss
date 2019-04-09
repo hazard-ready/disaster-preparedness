@@ -637,9 +637,18 @@ form:invalid {
 }
 
 .snugget__popout {
+  flex-basis: min-content;
+  max-width: 100%;
+
+  @include breakpoint(large) {
+    margin: 0 0 0 auto;
+    width: 25%;
+  }
+}
+
+.popout-content {
   border: 1px solid $popout-border;
   border-left-width: 6px;
-  flex-basis: min-content;
   padding: 10px;
   max-width: 100%;
 
@@ -649,9 +658,7 @@ form:invalid {
 
   @include breakpoint(large) {
     border: none;
-    margin: 0 0 0 auto;
     padding: 0 0 0 30px;
-    width: 25%;
   }
 }
 
