@@ -636,13 +636,15 @@ form:invalid {
   }
 }
 
+/* flex-basis is set to the width of the youtube embed */
 .snugget__popout {
-  flex-basis: min-content;
+  flex-basis: 300px;
   max-width: 100%;
 
   @include breakpoint(large) {
+    flex-basis: 340px;
     margin: 0 0 0 auto;
-    width: 25%;
+    width: 32%;
   }
 }
 
