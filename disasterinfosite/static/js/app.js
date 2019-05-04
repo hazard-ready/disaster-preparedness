@@ -16,6 +16,9 @@ require("../img/logo-no-text.png");
 require("../img/icon-search.png");
 require("../img/caret.svg");
 
+// about page images
+require("../img/flowchart.png");
+
 require("./users");
 require("slick-carousel");
 

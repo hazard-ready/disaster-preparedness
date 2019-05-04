@@ -860,25 +860,21 @@ form:invalid {
   }
 }
 
-/* Footer */
-footer {
-  background-color: $deep-grey;
-  color: $soft-white;
+.about-container--flex {
   display: flex;
-  flex-direction: row;
-  padding: 5px;
 
-  a:visited {
-    color: $low-intensity;
+  @include breakpoint(medium-and-up) {
+    flex-direction: row;
   }
+}
 
-  img {
-    margin: 0 auto;
-    width: 60px;
-
-    @include breakpoint(medium-and-up) {
-      margin: 5px;
-      width: 100px;
-    }
+.about-content__flowchart {
+  flex-shrink: 0;
+  @include breakpoint(large) {
+    flex-basis: 600px;
   }
+}
+
+.about-content__text {
+  margin-top: 20px;
 }
