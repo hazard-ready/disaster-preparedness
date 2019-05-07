@@ -883,28 +883,51 @@ form:invalid {
   margin-top: 20px;
 }
 
-.bio__name {
-  border-bottom: 2px solid #ccc;
-}
-
 .bio {
   display: flex;
+  margin-bottom: 40px;
+  padding: 40px;
 
   @include breakpoint(medium-and-up) {
     flex-direction: row;
   }
-
-  img {
-    flex-basis: 800px;
-  }
 }
 
-.bio--reverse {
+.bio--becks {
+  background-color: $very-high-intensity;
+
   @include breakpoint(medium-and-up) {
     flex-direction: row-reverse;
   }
 }
 
+.bio--carson {
+  background-color: $extreme-intensity;
+}
+
+.bio--grant {
+  background-color: $high-intensity;
+}
+
+.bio__image {
+  flex: 1 1 1000px;
+}
+
+.bio__other {
+  flex: 2 1 auto;
+  margin-left: 40px;
+}
+
+.bio__other--reverse {
+  margin-left: 0;
+  margin-right: 40px;
+}
+
+.bio__name {
+  border-bottom: 2px solid #ccc;
+}
+
 .bio__text {
-  margin: 0 10px;
+  background-color: $white;
+  padding: 10px 20px;
 }

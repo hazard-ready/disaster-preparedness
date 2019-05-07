@@ -21,6 +21,8 @@ require("../img/flowchart.png");
 require("../img/cmk_headshot.jpg");
 require("../img/rbk_headshot.jpg");
 require("../img/gk_headshot.jpg");
+require("../img/linkedin-logo.png");
+require("../img/linkedin-logo@2x.png");
 
 require("./users");
 require("slick-carousel");
