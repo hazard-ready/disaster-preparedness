@@ -41,9 +41,38 @@
   <div class="content-container">
     <div class="about-container">
       <h3 class="caps">{% trans "The Hazard Ready Team" %}</h3>
+      <div class="bio-container">
+        <h4 class="bio__name h4--sans-serif">Carson MacPherson-Krutsky</h4>
+        <div class="bio">
+          <div class="bio__image">
+          <img src="{% webpack_static 'build/cmk_headshot.jpg' %}">
+        </div>
+        <div class="bio__text">
+          Carson has a B.Sc. and M.Sc. in Geology from Western Washington University and the University of Montana. She is now working on her PhD at Boise State University where she studies how to best communicate natural hazard risk information to broad audiences. She writes the content and processes the data for each HazardReady site.
+          <a href="https://www.linkedin.com/in/carsonmk/" target="_blank" rel="noopener">linkedin</a> <a href="https://sites.google.com/view/carsonmk/about" target="_blank" rel="noopener">website</a>
+        </div>
+        </div>
+        <h4 class="bio__name h4--sans-serif right-align">Rebecca Bendick</h4>
+        <div class="bio bio--reverse">
+          <img src="{% webpack_static 'build/rbk_headshot.jpg' %}">
+          <div class="bio__text">
+          Rebecca Bendick has a Ph.D. in geophysics from the University of Colorado. Her research on tectonics and earthquake mechanics led to an interest in how human communities are affected by natural disasters, and inspires her ongoing efforts to help people better understand and prepare for them. She writes and lectures on the ethics of science communication as well as on her basic geophysical research.
+            <a href="https://hs.umt.edu/geosciences/faculty/bendick/" target="_blank" rel="noopener">website</a>
+          </div>
+        </div>
+        <h4 class="bio__name h4--sans-serif">Grant Kier</h4>
+        <div class="bio">
+          <img src="{% webpack_static 'build/gk_headshot.jpg' %}">
+          <div class="bio__text">
+          Grant Kier has a M.Sc. in geology from the University of Colorado. He is broadly interested in community resilience in the context of manmade and natural changes. He also has a background in business practices and currently works on economic development, fostering small and startup companies in western Montana.
+          </div>
+        </div>
+      </div>
     </div>
     <div class="about-container">
-      <h3 class="caps">{% blocktrans with title=settings.site_title %}{{ title }} Partners and Collaborators{% endblocktrans %}</h3>
+    {{ settings.about_text | safe }}
+
+   <!--   <h3 class="caps">{% blocktrans with title=settings.site_title %}{{ title }} Partners and Collaborators{% endblocktrans %}</h3>
       <ul>
         <li><a href="https://rdpo.net/" target="_blank" rel="noopener">Regional Disaster Planning Organization (RDPO)</a>
           <p>RDPO is a partnership of government agencies, non-governmental organizations, and private-sector stakeholders in the Portland Metropolitan Region collaborating to increase the region’s resiliency to disasters. The metropolitan region spans Clackamas, Columbia, Multnomah, and Washington Counties in Oregon and Clark County in Washington.</p></li>
@@ -55,7 +84,7 @@
       <li>Washington County</li>
       <li><a href="https://www.clark.wa.gov/public-health/emergency-preparedness-and-response" target="_blank" rel="noopener">Clark County</a></li>
       <li><a href="https://www.clackamas.us/dm" target="_blank" rel="noopener">Clackamas County</a></li>
-</ul>
+</ul> -->
     </div>
     <div class="about-container about-container--flex">
       <div class="about-content__flowchart">

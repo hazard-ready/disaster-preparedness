@@ -18,6 +18,9 @@ require("../img/caret.svg");
 
 // about page images
 require("../img/flowchart.png");
+require("../img/cmk_headshot.jpg");
+require("../img/rbk_headshot.jpg");
+require("../img/gk_headshot.jpg");
 
 require("./users");
 require("slick-carousel");

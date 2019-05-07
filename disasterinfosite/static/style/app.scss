@@ -203,6 +203,10 @@ h4 {
   border: 0;
 }
 
+.right-align {
+  text-align: right;
+}
+
 img {
   max-width: 100%;
 }
@@ -877,4 +881,30 @@ form:invalid {
 
 .about-content__text {
   margin-top: 20px;
+}
+
+.bio__name {
+  border-bottom: 2px solid #ccc;
+}
+
+.bio {
+  display: flex;
+
+  @include breakpoint(medium-and-up) {
+    flex-direction: row;
+  }
+
+  img {
+    flex-basis: 800px;
+  }
+}
+
+.bio--reverse {
+  @include breakpoint(medium-and-up) {
+    flex-direction: row-reverse;
+  }
+}
+
+.bio__text {
+  margin: 0 10px;
 }
