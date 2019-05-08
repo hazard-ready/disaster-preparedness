@@ -828,16 +828,28 @@ form:invalid {
   h3 {
     color: $soft-white;
   }
+
+  ul {
+    list-style: none;
+    padding-left: 15px;
+  }
+
+  a,
+  a:hover,
+  a:visited,
+  a:active {
+    color: $low-intensity;
+  }
 }
 
 .geek-box-logo {
   margin: 0 auto;
   height: 100%;
-  width: 200px;
+  flex: 1 1 200px;
 
   @include breakpoint(medium-and-up) {
     margin: 10px;
-    width: 300px;
+    flex: 1 0 300px;
   }
 }
 
