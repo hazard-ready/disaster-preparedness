@@ -872,6 +872,23 @@ form:invalid {
   }
 }
 
+.rdpo-container {
+  text-align: center;
+}
+
+.partner-logo-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.partner-logo {
+  margin: 10px;
+  vertical-align: middle;
+  width: 100px;
+}
+
 .about-container--flex {
   display: flex;
   flex-direction: column;

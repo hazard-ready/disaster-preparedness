@@ -91,21 +91,36 @@
       </div>
     </div>
     <div class="about-container">
-    {{ settings.about_text | safe }}
-
-   <!--   <h3 class="caps">{% blocktrans with title=settings.site_title %}{{ title }} Partners and Collaborators{% endblocktrans %}</h3>
-      <ul>
-        <li><a href="https://rdpo.net/" target="_blank" rel="noopener">Regional Disaster Planning Organization (RDPO)</a>
-          <p>RDPO is a partnership of government agencies, non-governmental organizations, and private-sector stakeholders in the Portland Metropolitan Region collaborating to increase the region’s resiliency to disasters. The metropolitan region spans Clackamas, Columbia, Multnomah, and Washington Counties in Oregon and Clark County in Washington.</p></li>
-
-      <li><a href="https://www.redcross.org/local/oregon.html" target="_blank" rel="noopener">American Red Cross: Cascades Region</a></li>
-      <li><a href="https://www.mercycorpsnw.org/" target="_blank" rel="noopener">Mercy Corps</a></li>
-      <li><a href="https://www.portlandoregon.gov/pbem/" target="_blank" rel="noopener">Portland Bureau of Emergency Management</a></li>
-      <li><a href="https://multco.us/em" target="_blank" rel="noopener">Multnomah County</a></li>
-      <li>Washington County</li>
-      <li><a href="https://www.clark.wa.gov/public-health/emergency-preparedness-and-response" target="_blank" rel="noopener">Clark County</a></li>
-      <li><a href="https://www.clackamas.us/dm" target="_blank" rel="noopener">Clackamas County</a></li>
-</ul> -->
+      <h3 class="caps">{% blocktrans with title=settings.site_title %}{{ title }} Partners and Collaborators{% endblocktrans %}</h3>
+        <div class="rdpo-container">
+          <a href="https://rdpo.net/" target="_blank" rel="noopener">
+            <img class="partner-logo" src="{% webpack_static 'build/RDPO-logo.png' %}" alt="Regional Disaster Planning Organization (RDPO)">
+          </a>
+          <p>RDPO is a partnership of government agencies, non-governmental organizations, and private-sector stakeholders in the Portland Metropolitan Region collaborating to increase the region’s resiliency to disasters. The metropolitan region spans Clackamas, Columbia, Multnomah, and Washington Counties in Oregon and Clark County in Washington.</p>
+        </div>
+        <div class="partner-logo-container">
+          <a href="https://www.redcross.org/local/oregon.html" target="_blank" rel="noopener">
+            <img class="partner-logo" src="{% webpack_static 'build/red-cross-logo.png' %}" alt="American Red Cross: Cascades Region">
+          </a>
+          <a href="https://www.mercycorpsnw.org/" target="_blank" rel="noopener">
+            <img class="partner-logo" src="{% webpack_static 'build/logo-mercy-corps.svg' %}" alt="Mercy Corps">
+          </a>
+          <a href="https://www.portlandoregon.gov/pbem/" target="_blank" rel="noopener">
+            <img class="partner-logo" src="{% webpack_static 'build/PBEM-Logo-with-text.jpg' %}" alt="Portland Bureau of Emergency Management">
+          </a>
+          <a href="https://multco.us/em" target="_blank" rel="noopener">
+            <img class="partner-logo" src="{% webpack_static 'build/multnomah_county_logo.png' %}" alt="Multnomah County">
+          </a>
+          <a href="https://www.co.washington.or.us/EmergencyManagement/" target="_blank" rel="noopener">
+            <img class="partner-logo" src="{% webpack_static 'build/WA-county-OR-logo.jpeg' %}" alt="Washington County">
+          </a>
+          <a href="https://www.clark.wa.gov/public-health/emergency-preparedness-and-response" target="_blank" rel="noopener">
+            <img class="partner-logo" src="{% webpack_static 'build/clark county.jpeg' %}" alt="Clark County">
+          </a>
+            <a href="https://www.clackamas.us/dm" target="_blank" rel="noopener">
+              <img class="partner-logo" src="{% webpack_static 'build/clackamas-county.png' %}" alt="Clackamas County">
+            </a>
+      </div>
     </div>
     <div class="about-container about-container--flex">
       <div class="about-content__flowchart">
