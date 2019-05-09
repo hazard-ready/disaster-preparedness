@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             name='SiteSettings',
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('about_text', models.TextField(help_text='Describe the data and the agencies that it came from.', default='Information about your organization goes here.')),
+                ('about_text', models.TextField(default="This shows up on the about page, below 'The Hazard Ready Team'.", help_text='This is a good place to describe your partners and collaborators, as well as the data and the agencies that it came from.')),
                 ('contact_email', models.EmailField(blank=True, help_text='Put a contact email for the maintainer of this site here.', max_length=254)),
                 ('site_url', models.URLField(default='https://www.example.com', help_text='Put the URL to this site here.')),
                 ('site_title', models.CharField(default='Your Title Here!', max_length=50)),

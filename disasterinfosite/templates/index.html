@@ -65,7 +65,6 @@
     {% block info-instructions %}
     <div class="information-container" role="main">
       <h3>{{ settings.site_description }}</h3>
-      <p>{{ settings.about_text | safe }}</p>
       <p>{{ settings.intro_text | safe }}</p>
 
       {% trans "Give a location by typing in the box at the top of the page, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
@@ -80,7 +79,7 @@
 {% block main-content %}
 <div class="intro-content">
    <h2 class="caps">{% trans "What are my risks?" %}</h2>
-    <h3 class>{% trans "What to Expect" %}</h3>
+    <h3>{% trans "What to Expect" %}</h3>
     <p>
       {% blocktrans %}
         {{ settings.site_title }} gives you an idea of which natural disasters you might experience in the future based on a location in {{ location.area_name }}.
