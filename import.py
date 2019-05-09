@@ -41,10 +41,16 @@ def main():
 
   first = True
   for f in os.listdir(dataDir):
+    rasterFound = False
+    shapefileFound = False
     if f[-4:].lower() == ".tif":
+      rasterFound = True
       stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening raster data source:", stem)
       rst = GDALRaster(os.path.join(dataDir, f), write=False)
+      keyField = "lookup_val"
+      shapeType = "Raster"
+      # TODO: figure out if we need to reproject this to EPSG:4326 or can just run with whatever we're given
       print(rst.name)
       print(rst.width, rst.height)
       print(rst.srs)
@@ -62,12 +68,12 @@ def main():
       print(rst.bands[0].datatype())
       print(rst.bands[0].datatype(as_string=True))
     elif f[-4:].lower() == ".shp":
+      shapefileFound = True
       stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening shapefile:", stem)
       #TODO: if there's already a reprojected shapefile, use the field in that instead of prompting the user.
       sf = shapefile.Reader(os.path.join(dataDir, f))
       keyField = askUserForFieldNames(sf, stem)
-      shapefileGroup = askUserForShapefileGroup(stem, existingShapefileGroups)
 
       reprojected = processShapefile(f, stem, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID, keyField)
       simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
@@ -77,9 +83,14 @@ def main():
 
 #Code generation: one line in this function writes one line of code to be copied elsewhere
 # one block represents the code generation for each destination file
+    if shapefileFound or rasterFound:
+      shapefileGroup = askUserForShapefileGroup(stem, existingShapefileGroups)
       modelsLocationsList += "            '" + stem + "': " + stem + ".objects.data_bounds(),\n"
-
-      modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType, shapefileGroup)
+      if shapefileFound:
+        modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType, shapefileGroup)
+      elif rasterFound:
+      	# Note that for now we just automatically use band 0 of any raster.
+        modelsClasses += modelClassGenRaster(stem, rst, 0, shapefileGroup)
       modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem + ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
       modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
       if shapefileGroup not in existingShapefileGroups:
@@ -97,10 +108,16 @@ def main():
       loadMappings += "    '" + keyField.lower() + "': '" + keyField + "',\n"
       loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
       loadMappings += "}\n\n"
-      loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + simplified + "'))\n"
+      if shapefileFound:
+        loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + simplified + "'))\n"
+      elif rasterFound:
+        loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + os.path.join(dataDir, f) + "'))\n"
       loadImports += "    print('Loading data for " + stem + "')\n"
       loadImports += "    from .models import " + stem + "\n"
-      loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
+      if shapefileFound:
+        loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
+      elif rasterFound:
+        loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True)\n"
       loadImports += "    lm_" + stem + ".save(strict=True, verbose=verbose)\n\n"
 
       print("")
@@ -321,6 +338,19 @@ def findFieldType(sf, fieldName):
         exit()
 
 
+# See https://docs.djangoproject.com/en/2.2/ref/contrib/gis/gdal/#django.contrib.gis.gdal.GDALBand.datatype for the possible values
+def findFieldTypeRaster(rst, bandNumber):
+  fieldType = rst.bands[bandNumber].datatype(as_string=True)
+  if "Float" in fieldType:
+    return "FloatField()"
+  elif "Int" in fieldType or fieldType == "GDT_Byte":
+    return "IntegerField()"
+  else:
+    print("Field type unrecognised:")
+    print(fieldType)
+    exit()
+
+
 
 def modelClassGen(stem, sf, keyField, srs, shapeType, shapefileGroup):
   text  = "class " + stem + "(models.Model):\n"
@@ -335,6 +365,20 @@ def modelClassGen(stem, sf, keyField, srs, shapeType, shapefileGroup):
 
   return text
 
+
+
+def modelClassGenRaster(stem, rst, bandNumber, shapefileGroup):
+  text  = "class " + stem + "(models.Model):\n"
+  text += "    def getGroup():\n"
+  text += "        return ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')[0]\n\n"
+  text += "    lookup_val = models." + findFieldTypeRaster(rst, bandNumber) + "\n"
+  text += "    geom = models.RasterField(srid=" + str(rst.srs.srid) + ")\n"
+  text += "    objects = ShapeManager()\n\n"
+  text += "    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)\n"
+  text += "    def __str__(self):\n"
+  text += "        return str(self.lookup_val)\n\n"
+
+  return text
 
 
 def modelsGeoFilterGen(stem, keyField):
