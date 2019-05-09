@@ -1,6 +1,7 @@
 import os
 import subprocess
 
+from django.contrib.gis.gdal import GDALRaster
 import shapefile
 
 def main():
@@ -40,7 +41,27 @@ def main():
 
   first = True
   for f in os.listdir(dataDir):
-    if f[-4:].lower() == ".shp":
+    if f[-4:].lower() == ".tif":
+      stem = f[:-4].replace(".", "_").replace("-","_")
+      print("Opening raster data source:", stem)
+      rst = GDALRaster(os.path.join(dataDir, f), write=False)
+      print(rst.name)
+      print(rst.width, rst.height)
+      print(rst.srs)
+      print(rst.srs.srid)
+      print(rst.bands)
+      print(rst.geotransform)
+      print(rst.origin)
+      print(rst.scale)
+      print(rst.skew)
+      print(rst.extent)
+      print(len(rst.bands))
+      print(rst.bands[0].data(size=(4,4)))
+      print(rst.info)
+      print(rst.metadata)
+      print(rst.bands[0].datatype())
+      print(rst.bands[0].datatype(as_string=True))
+    elif f[-4:].lower() == ".shp":
       stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening shapefile:", stem)
       #TODO: if there's already a reprojected shapefile, use the field in that instead of prompting the user.
@@ -252,8 +273,8 @@ def detectGeometryType(sf, stem):
     print("WARNING:", stem, "has a point geometry, and this application currently only handles polygons properly")
     return "MultiPoint"
   elif shapeType > 20:
-  	print("Support for Multipart geometries is not implemented yet")
-  	exit()
+    print("Support for Multipart geometries is not implemented yet")
+    exit()
   else:
     print("Geometry field type ", shapeType, "unrecognised")
 # the list of valid geometry field type codes is at
@@ -268,7 +289,7 @@ def findEncoding(sf, inputDir, stem):
   encodingFile = os.path.join(inputDir, stem+".cpg")
 # if .cpg is not found, try .CPG in case we're on a case sensitive file system
   if not os.path.exists(encodingFile):
-  	encodingFile = os.path.join(inputDir, stem+".CPG")
+    encodingFile = os.path.join(inputDir, stem+".CPG")
 
   if os.path.exists(encodingFile):
     with open(encodingFile, 'r') as f:
