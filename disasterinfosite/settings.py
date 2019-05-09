@@ -14,11 +14,11 @@ from os import environ
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY_PDX']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
@@ -26,13 +26,7 @@ if DEBUG:
     logging.basicConfig(level = logging.DEBUG, format = '%(asctime)s %(levelname)s %(message)s')
 else:
     # hazardready.org is the current production server. 23.92.25.126 is its numeric address. eldang.eldan.co.uk is our demo/test server
-    ALLOWED_HOSTS = ['hazardready.org', '.hazardready.org', '23.92.25.126', 'eldang.eldan.co.uk']
-    logging.basicConfig(
-        level = logging.WARNING,
-        format = '%(asctime)s %(levelname)s %(message)s',
-        filename = '/my_log_file.log',
-        filemode = 'a'
-    )
+    ALLOWED_HOSTS = ['hazardready.org', '.hazardready.org', '23.92.25.126']
 
 # Application definition
 INSTALLED_APPS = (
@@ -107,7 +101,7 @@ TEMPLATES = [
 import dj_database_url
 
 DATABASES = {}
-DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] = dj_database_url.parse(os.environ["DATABASE_URL_PDX"])
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 # Allow database connections to persist
@@ -132,7 +126,7 @@ WEBPACK_LOADER = {
     }
 }
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'media')
 
 if DEBUG:
     # Use this setting if the app is being served at the domain root (e.g. hazardready.org/ )
@@ -142,7 +136,7 @@ else:
     # STATIC_URL = '/SUBDIR/static/'
     # So for our current test server, eldang.eldan.co.uk/zr/ , we need:
     # STATIC_URL = '/zr/static/'
-    STATIC_URL = '/disaster-preparedness/static/'
+    STATIC_URL = '/pdx/static/'
 
 # Specially for GeoDjango on Heroku
 GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
@@ -153,4 +147,4 @@ GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'img')
-MEDIA_URL = '/media/img/'
+MEDIA_URL = '/pdx/static/img/'
