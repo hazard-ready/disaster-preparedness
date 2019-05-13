@@ -47,7 +47,7 @@ def main():
       rasterFound = True
       stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening raster data source:", stem)
-      rst = GDALRaster(os.path.join(dataDir, f), write=False)
+      rst = processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID)
       keyField = "lookup_val"
       shapeType = "Raster"
       # TODO: figure out if we need to reproject this to EPSG:4326 or can just run with whatever we're given
@@ -211,6 +211,31 @@ def processShapefile(f, stem, inputDir, outputDir, srs, keyField):
     ]
     subprocess.run(ogrCmd, check=True)
   return reprojected
+
+
+
+
+def processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID):
+  originalPath = os.path.join(dataDir, f)
+  original = GDALRaster(originalPath, write=False)
+  reprojectedPath = os.path.join(reprojectedDir, f)
+  if original.srs.srid == desiredSRID:
+    print("Skipping reprojection because this file is already in " + SRIDNamespace + ":" + desiredSRID + ".")
+    return original
+  else:
+    if os.path.exists(reprojectedPath):
+      print("Skipping reprojection because this file has previously been reprojected.")
+    else:
+      print("Reprojecting to " + SRIDNamespace + ":" + desiredSRID + ".")
+      gdalCmd = [
+        "gdalwarp",
+        "-t_srs", SRIDNamespace + ":" + desiredSRID,
+        originalPath,
+        reprojectedPath
+      ]
+      subprocess.run(gdalCmd, check=True)
+    return GDALRaster(reprojectedPath, write=False)
+
 
 
 
