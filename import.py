@@ -219,7 +219,7 @@ def processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID):
   originalPath = os.path.join(dataDir, f)
   original = GDALRaster(originalPath, write=False)
   reprojectedPath = os.path.join(reprojectedDir, f)
-  if original.srs.srid == desiredSRID:
+  if str(original.srs.srid) == desiredSRID:
     print("Skipping reprojection because this file is already in " + SRIDNamespace + ":" + desiredSRID + ".")
     return original
   else:
