@@ -123,8 +123,8 @@ def main():
         loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
       elif rasterFound:
         loadImports += "    " + stem + "_raster = GDALRaster(" + stem + "_tif, write=True)\n"
-        loadImports += "    lm_" + stem + " = " + stem + "(rast=" + stem + "_raster)"
-      loadImports += "    lm_" + stem + ".save(strict=True, verbose=verbose)\n\n"
+        loadImports += "    lm_" + stem + " = " + stem + "(rast=" + stem + "_raster)\n"
+      loadImports += "    lm_" + stem + ".save()\n\n"
 
       print("")
       first = False
