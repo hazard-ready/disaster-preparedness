@@ -95,6 +95,10 @@ def app_view(request):
 
     username = None
     profile = None
+    path = request.path[:-3] # slice off the old language code
+
+    if 'QUERY_STRING' in request.META:
+        path = path + '?' + request.META['QUERY_STRING']
 
     if request.user.is_authenticated:
         username = request.user.username
@@ -107,7 +111,8 @@ def app_view(request):
         'data_bounds': Location.get_data_bounds(),
         'quick_data_overview': DataOverviewImage.objects.all(),
         'username': username,
-        'profile': profile
+        'profile': profile,
+        'nextPath': path
     }
 
     template = "index.html"

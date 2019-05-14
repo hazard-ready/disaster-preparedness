@@ -64,7 +64,7 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 LANGUAGE_CODE = 'en'
 USE_L10N = True
 
-# Uncomment to translate Django models.
+# If you're translating this site, add the languages you're translating to here.w
 gettext = lambda s: s
 LANGUAGES = (
     ('en', gettext('English')),
