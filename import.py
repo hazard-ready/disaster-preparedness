@@ -406,7 +406,8 @@ def modelClassGenRaster(stem, rst, bandNumber, shapefileGroup):
   text  = "class " + stem + "(models.Model):\n"
   text += "    def getGroup():\n"
   text += "        return ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')[0]\n\n"
-  text += "    rast = models.RasterField(srid=" + str(rst.srs.srid) + ")\n\n"
+  text += "    rast = models.RasterField(srid=" + str(rst.srs.srid) + ")\n"
+  text += "    objects = RasterManager()\n\n"
   text += "    def data_bounds(self):\n"
   text += "        return self.rast.extent\n\n"
   text += "    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)\n"
@@ -427,7 +428,7 @@ def modelsGeoFilterGen(stem, keyField):
 
 
 def modelsGeoFilterGenRaster(stem):
-  text  = "        qs_" + stem + " = " + stem + ".objects.filter(rast_contains=pnt)\n"
+  text  = "        qs_" + stem + " = " + stem + ".objects.first().filter(rast__contains=pnt)\n"
   text += "        " + stem + "_rating = " + "qs_" + stem + ".values_list(flat=True)\n"
   text += "        for rating in " + stem + "_rating:\n"
   text += "            " + stem + "_snugget = Snugget.objects.filter(" + stem + "_filter__exact=rating).order_by('order').select_subclasses()\n"
