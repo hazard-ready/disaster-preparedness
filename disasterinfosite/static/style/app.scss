@@ -975,4 +975,12 @@ form:invalid {
   @include breakpoint(medium-and-up) {
     margin: 16px 0;
   }
+
+  .link-icon {
+    vertical-align: top;
+  }
+}
+
+.bio__links--reverse {
+  text-align: right;
 }
