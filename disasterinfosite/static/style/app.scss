@@ -184,6 +184,14 @@ h4 {
   }
 }
 
+.hide-for-medium-down {
+  display: none;
+
+  @include breakpoint(large) {
+    display: inline-block;
+  }
+}
+
 .hide-for-medium-up {
   display: inline-block;
 
