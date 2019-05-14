@@ -51,6 +51,7 @@ def main():
       keyField = "lookup_val"
       shapeType = "Raster"
       # TODO: figure out if we need to reproject this to EPSG:4326 or can just run with whatever we're given
+      '''
       print(rst.name)
       print(rst.width, rst.height)
       print(rst.srs)
@@ -67,6 +68,7 @@ def main():
       print(rst.metadata)
       print(rst.bands[0].datatype())
       print(rst.bands[0].datatype(as_string=True))
+      '''
     elif f[-4:].lower() == ".shp":
       shapefileFound = True
       stem = f[:-4].replace(".", "_").replace("-","_")
@@ -230,6 +232,8 @@ def processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID):
       gdalCmd = [
         "gdalwarp",
         "-t_srs", SRIDNamespace + ":" + desiredSRID,
+        "-r", "cubic",
+        "-multi", "-wo", "NUM_THREADS=ALL_CPUS",
         originalPath,
         reprojectedPath
       ]
