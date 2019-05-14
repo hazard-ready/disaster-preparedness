@@ -428,7 +428,7 @@ def modelsGeoFilterGen(stem, keyField):
 
 
 def modelsGeoFilterGenRaster(stem):
-  text  = "        qs_" + stem + " = " + stem + ".objects.first().filter(rast__contains=pnt)\n"
+  text  = "        qs_" + stem + " = " + stem + ".objects.filter(rast__contains=pnt)\n"
   text += "        " + stem + "_rating = " + "qs_" + stem + ".values_list(flat=True)\n"
   text += "        for rating in " + stem + "_rating:\n"
   text += "            " + stem + "_snugget = Snugget.objects.filter(" + stem + "_filter__exact=rating).order_by('order').select_subclasses()\n"
