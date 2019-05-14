@@ -45,6 +45,7 @@
         </div>
       </a>
       <a class="header__about--small link--plain hide-for-medium-up" href="about"><h5 class="header__about link--grey">About</h5></a>
+      {% include "language_selector.html" %}
     </div>
 
     {% block search %}
@@ -58,6 +59,7 @@
       </div>
     {% endblock search %}
     <a class="hide-for-small link--plain" href="about"><h5 class="header__about link--grey">About</h5></a>
+    {% include "language_selector.html" %}
   </header>
 
   <div class="content-container">
