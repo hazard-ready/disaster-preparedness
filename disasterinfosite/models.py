@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models
+from django.contrib.gis.gdal import OGRGeometry
 from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models import Extent
 from embed_video.fields import EmbedVideoField
@@ -9,6 +10,7 @@ from solo.models import SingletonModel
 from django.core.files.storage import FileSystemStorage
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+
 
 SNUG_TEXT = 0
 SNUG_VIDEO = 1
@@ -159,6 +161,10 @@ class ShapeManager(models.Manager):
     def data_bounds(self):
         return self.aggregate(Extent('geom'))['geom__extent']
 
+class RasterManager(models.Manager):
+    def has_point(self, pnt):
+        return self.filter(rast__contains=pnt)
+
 class ShapefileGroup(models.Model):
     name = models.CharField(max_length=50)
     display_name = models.CharField(max_length=50, default="")
@@ -261,6 +267,62 @@ class SnuggetPopOut(models.Model):
 def default_display_name(sender, instance, *args, **kwargs):
     if not instance.display_name:
         instance.display_name = instance.name
+
+
+# looks up a point in a raster
+# algorithm for this function taken from the django-raster project version 0.6 at
+# https://github.com/geodesign/django-raster/blob/master/raster/utils.py
+# and is covered by the following licence:
+'''
+Copyright (c) Daniel Wiesmann and Mike Flaxman
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice,
+       this list of conditions and the following disclaimer.
+
+    2. Redistributions in binary form must reproduce the above copyright
+       notice, this list of conditions and the following disclaimer in the
+       documentation and/or other materials provided with the distribution.
+
+    3. Neither the name of the author nor the names of other contributors may
+       be used to endorse or promote products derived from this software
+       without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+'''
+def rasterPointLookup(rst, lng, lat):
+    pnt = OGRGeometry('POINT({0} {1})'.format(lng, lat), srs=rst.srs)
+
+    # if the point is outside the raster's extent, we can save time and just return None here
+    bbox = OGRGeometry.from_bbox(rst.extent)
+    bbox.srs = rst.srs
+    if not pnt.intersects(bbox):
+        return None
+
+    # otherwise we need to choose a raster pixel
+    offset = (abs(rst.origin.x - pnt.coords[0]), abs(rst.origin.y - pnt.coords[1]))
+    offset_idx = [int(offset[0] / abs(rst.scale.x)), int(offset[1] / abs(rst.scale.y))]
+
+    # points very close to the boundary can get rounded to 1 pixel beyond it, so fix that here
+    if offset_idx[0] == rst.width:
+        offset_idx[0] -= 1
+    if offset_idx[1] == rst.height:
+        offset_idx[1] -= 1
+
+    return rst.bands[0].data(offset=offset_idx, size=(1,1))[0]
+
 
 
 class Snugget(models.Model):
