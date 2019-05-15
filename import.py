@@ -403,7 +403,7 @@ def modelClassGen(stem, sf, keyField, srs, shapeType, shapefileGroup):
 
 
 def modelClassGenRaster(stem, rst, bandNumber, shapefileGroup):
-  text  = "class " + stem + "(models.Model):\n"
+  text  = "class " + stem + "(SingletonModel):\n"
   text += "    def getGroup():\n"
   text += "        return ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')[0]\n\n"
   text += "    rast = models.RasterField(srid=" + str(rst.srs.srid) + ")\n"
