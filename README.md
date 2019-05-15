@@ -1,5 +1,19 @@
 # Disaster Preparedness Web Interactive
 
+### raster notes
+
+I will flesh these out properly tomorrow, but here are assumptions for me not to forget to mention:
+
+1. only GeoTIFF is currently supported
+2. we use band 0 without asking
+3. unsigned integer values
+4. one file per data source
+5. higher value == more serious warning
+6. SRIDs other than EPSG:4326 get reprojected to that (same as for shapefiles)
+7. we now have a minimum requirement of GDAL 2.0.0
+
+### end raster notes
+
 The project will explore traditional and qualitative scoring assessments of “risk/resiliency factors” associated with regional crisis preparedness and demonstrate how actionable steps in community engagement can create a different portrait of resiliency. It is based on [a pioneering project from Oregon](https://github.com/Oregon-Public-Broadcasting/earthquake-preparedness) but has been generalized to make it easy to clone and tailor to other regions.
 
 # Dependencies
@@ -9,7 +23,7 @@ The project will explore traditional and qualitative scoring assessments of “r
 - PostgresSQL (most package managers will auto-install this as a dependency of either of the following items)
 - PostGIS
 - Postgresql-server-dev-all
-- GDAL
+- GDAL (version 2.0.0 or newer)
 - libjpeg-dev
 - Python modules listed in [requirements.txt](./requirements.txt)
   - On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.
