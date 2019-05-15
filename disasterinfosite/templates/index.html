@@ -44,7 +44,10 @@
           <h3 class="h3--sans-serif">Hazard Ready</h3>
         </div>
       </a>
-      <a class="header__about--small link--plain hide-for-medium-up" href="about"><h5 class="header__about link--grey">About</h5></a>
+      <div class="header__about header__about--small hide-for-medium-up--flex">
+        <a class="link--plain" href="about"><h5 class="about__link link--grey">About</h5></a>
+        {% include "language_selector.html" %}
+      </div>
     </div>
 
     {% block search %}
@@ -57,7 +60,10 @@
         <div class="geocode-error-message"></div>
       </div>
     {% endblock search %}
-    <a class="hide-for-small link--plain" href="about"><h5 class="header__about link--grey">About</h5></a>
+    <div class="header__about hide-for-small--flex">
+      <a class="link--plain" href="about"><h5 class="about__link link--grey">About</h5></a>
+      {% include "language_selector.html" %}
+    </div>
   </header>
 
   <div class="content-container">
