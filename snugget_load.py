@@ -147,12 +147,23 @@ def getFilterFieldName(shapefile):
 
 def getShapefileFilter(shapefile, filterVal):
   fieldName = getFilterFieldName(shapefile)
-  kwargs = {fieldName: filterVal}
-  if shapefile.objects.filter(**kwargs).exists():
-    return shapefile.objects.get(**kwargs)
+  if fieldName == 'rast':
+    if int(filterVal) in shapefile.objects.first().rast.bands[0].data():
+      return int(filterVal)
+    else:
+      print(
+        "Lookup value of", filterVal,
+        "not found in", shapefile,
+        "which only has values between", str(shapefile.objects.first().rast.bands[0].min),
+        "and", str(shapefile.objects.first().rast.bands[0].max), "inclusive."
+      )
   else:
-    print("Could not find a filter field for", shapefile)
-    return None
+    kwargs = {fieldName: filterVal}
+    if shapefile.objects.filter(**kwargs).exists():
+      return shapefile.objects.get(**kwargs)
+    else:
+      print("Could not find a filter field for", shapefile)
+  return None
 
 
 def addPopOutIfExists(row):
