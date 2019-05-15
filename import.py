@@ -133,10 +133,6 @@ def main():
   # clear trailing comma from this one
   modelsLocationsList = modelsLocationsList.strip(",\n") + "\n"
 
-  # assemble the whole return statement for the snugget class after going through the loop
-  modelsSnuggetReturns = "        return groupsDict\n"
-
-
   # make sure this gets its own line of code
   adminModelImports += "\n"
 
@@ -156,7 +152,7 @@ def main():
   outputGeneratedCode(modelsLocationsList, modelsFile, "locationsList")
   outputGeneratedCode(modelsClasses, modelsFile, "modelsClasses")
   outputGeneratedCode(modelsFilters, modelsFile, "modelsFilters")
-  outputGeneratedCode(modelsGeoFilters + "\n" + modelsSnuggetReturns, modelsFile, "modelsGeoFilters")
+  outputGeneratedCode(modelsGeoFilters, modelsFile, "modelsGeoFilters")
 
   outputGeneratedCode(adminModelImports, adminFile, "adminModelImports")
   outputGeneratedCode(adminLists, adminFile, "adminLists")
