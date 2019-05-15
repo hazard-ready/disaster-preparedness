@@ -427,12 +427,10 @@ def modelsGeoFilterGen(stem, keyField):
 
 
 def modelsGeoFilterGenRaster(stem):
-  text  = "        qs_" + stem + " = " + stem + ".objects.filter(rast__contains=pnt)\n"
-  text += "        " + stem + "_rating = " + "qs_" + stem + ".values_list(flat=True)\n"
-  text += "        for rating in " + stem + "_rating:\n"
-  text += "            " + stem + "_snugget = Snugget.objects.filter(" + stem + "_filter__exact=rating).order_by('order').select_subclasses()\n"
-  text += "            if " + stem + "_snugget:\n"
-  text += "                groupsDict[" + stem +".getGroup()].extend(" + stem + "_snugget)\n\n"
+  text += "        " + stem + "_rating = " + "rasterPointLookup(" + stem + ".objects.first().rast, lng, lat)\n"
+  text += "        " + stem + "_snugget = Snugget.objects.filter(" + stem + "_filter__exact=rating).order_by('order').select_subclasses()\n"
+  text += "        if " + stem + "_snugget:\n"
+  text += "            groupsDict[" + stem +".getGroup()].extend(" + stem + "_snugget)\n\n"
   return text
 
 
