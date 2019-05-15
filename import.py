@@ -50,24 +50,6 @@ def main():
       rst = processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID)
       keyField = "lookup_val"
       shapeType = "Raster"
-      '''
-      print(rst.name)
-      print(rst.width, rst.height)
-      print(rst.srs)
-      print(rst.srs.srid)
-      print(rst.bands)
-      print(rst.geotransform)
-      print(rst.origin)
-      print(rst.scale)
-      print(rst.skew)
-      print(rst.extent)
-      print(len(rst.bands))
-      print(rst.bands[0].data(size=(4,4)))
-      print(rst.info)
-      print(rst.metadata)
-      print(rst.bands[0].datatype())
-      print(rst.bands[0].datatype(as_string=True))
-      '''
     elif f[-4:].lower() == ".shp":
       shapefileFound = True
       stem = f[:-4].replace(".", "_").replace("-","_")
@@ -89,14 +71,13 @@ def main():
       if shapefileFound:
         modelsLocationsList += "            '" + stem + "': " + stem + ".objects.data_bounds(),\n"
         modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType, shapefileGroup)
+        modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem + ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
+        modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
       elif rasterFound:
         modelsLocationsList += "            '" + stem + "': " + stem + ".objects.first().data_bounds(),\n"
         # Note that for now we just automatically use band 0 of any raster.
         modelsClasses += modelClassGenRaster(stem, rst, 0, shapefileGroup)
-      modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem + ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
-      if shapefileFound:
-        modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
-      elif rasterFound:
+        modelsFilters += "    " + stem + "_filter = models.IntegerField(null=True)\n"
         modelsGeoFilters += modelsGeoFilterGenRaster(stem)
       if shapefileGroup not in existingShapefileGroups:
         existingShapefileGroups.append(shapefileGroup)
