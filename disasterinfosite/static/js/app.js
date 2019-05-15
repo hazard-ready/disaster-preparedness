@@ -15,6 +15,7 @@ require("../img/logo.png");
 require("../img/logo-no-text.png");
 require("../img/icon-search.png");
 require("../img/caret.svg");
+require("../img/language.svg");
 
 // about page images
 require("../img/flowchart.png");

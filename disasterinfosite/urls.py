@@ -15,8 +15,8 @@ urlpatterns = [
    url(r'^i18n/', include('django.conf.urls.i18n'))
 ]
 # Recommend removing the prefix_default_language argument if you translate/localize this site.
-urlpatterns += i18n_patterns(url(r'^$', views.app_view, name='index'), prefix_default_language=False)
-urlpatterns += i18n_patterns(url(r'^about/$', views.about_view, name='about'), prefix_default_language=False)
+urlpatterns += i18n_patterns(url(r'^$', views.app_view, name='index'))
+urlpatterns += i18n_patterns(url(r'^about/$', views.about_view, name='about'))
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
