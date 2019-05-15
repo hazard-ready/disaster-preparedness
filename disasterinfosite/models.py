@@ -309,7 +309,7 @@ def rasterPointLookup(rst, lng, lat):
     bbox = OGRGeometry.from_bbox(rst.extent)
     bbox.srs = rst.srs
     if not pnt.intersects(bbox):
-        return None
+        return -1
 
     # otherwise we need to choose a raster pixel
     offset = (abs(rst.origin.x - pnt.coords[0]), abs(rst.origin.y - pnt.coords[1]))
