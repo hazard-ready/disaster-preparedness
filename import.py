@@ -208,7 +208,7 @@ def processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID):
       gdalCmd = [
         "gdalwarp",
         "-t_srs", SRIDNamespace + ":" + desiredSRID,
-        "-r", "cubic",
+        "-r", "max",
         "-multi", "-wo", "NUM_THREADS=ALL_CPUS",
         originalPath,
         reprojectedPath
