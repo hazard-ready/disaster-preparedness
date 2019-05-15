@@ -1,4 +1,5 @@
 import os
+from django.contrib.gis.gdal import GDALRaster
 from django.contrib.gis.utils import LayerMapping
 
 
