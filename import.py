@@ -50,7 +50,6 @@ def main():
       rst = processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID)
       keyField = "lookup_val"
       shapeType = "Raster"
-      # TODO: figure out if we need to reproject this to EPSG:4326 or can just run with whatever we're given
       '''
       print(rst.name)
       print(rst.width, rst.height)
