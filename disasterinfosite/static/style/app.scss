@@ -341,8 +341,8 @@ header {
 #location-text,
 .mq-input {
   border: none;
-  flex-basis: 218px;
-  flex-grow: 100;
+  flex-basis: 200px;
+  flex-grow: 1;
   line-height: 2;
   height: auto;
 
@@ -358,10 +358,9 @@ header {
   z-index: $z-index-high !important;
 }
 
-#location-submit,
-#auto-location {
-  background-color: $light-accent;
+#location-submit {
   border: none;
+  background-color: $light-accent;
   color: $white;
   flex-grow: 0;
   transition: color 1s;
@@ -373,16 +372,31 @@ header {
 }
 
 #auto-location {
-  border-right: solid 2px $white;
-  font-weight: 400;
+  background-color: $white;
+  border: none;
+  color: $light-accent;
+  flex-grow: 0;
+  font-weight: 600;
   margin-left: auto;
-  line-height: 1;
-  max-width: 52px;
+  line-height: 1.4;
+  transition: color 1s;
   z-index: $z-index-next;
 
+  &:focus,
+  &:hover {
+    background-color: $light-accent;
+    color: $white;
+  }
+}
+
+.icon--locate-me {
+  height: 16px;
+  margin: 3px;
+  vertical-align: top;
+
   @include breakpoint(medium-and-up) {
-    line-height: 1.15;
-    max-width: unset;
+    height: 18px;
+    vertical-align: middle;
   }
 }
 

@@ -55,7 +55,7 @@
       <div class="location-form" role="form" aria-label="location-search">
         <label class="sr-only" for="location-text">Location</label>
         <input name="location-text" id="location-text" type="text" placeholder="Enter your home address to see your risk" />
-        <button id="auto-location" class="auto-location-submit caps">{{ find_me }}</button>
+        <button id="auto-location" class="auto-location-submit caps"><img class="icon--locate-me" src="{% webpack_static 'build/locate-me.svg' %}" alt="">{{ find_me }}</button>
         <button id="location-submit"><img src="{% webpack_static 'build/icon-search.png' %}" alt="search"></button>
         <div class="geocode-error-message"></div>
       </div>
