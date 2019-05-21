@@ -387,6 +387,10 @@ header {
     background-color: $light-accent;
     color: $white;
   }
+
+  @include breakpoint(medium-and-up) {
+    width: 130px;
+  }
 }
 
 .icon--locate-me {
@@ -396,7 +400,6 @@ header {
 
   @include breakpoint(medium-and-up) {
     height: 18px;
-    vertical-align: middle;
   }
 }
 
