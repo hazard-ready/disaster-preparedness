@@ -236,7 +236,7 @@ header {
   display: flex;
   background-color: $white;
   flex-direction: column;
-  padding: 2px;
+  padding: 2px 2px 10px 2px;
 
   @include breakpoint(medium-and-up) {
     flex-direction: row;
@@ -253,7 +253,7 @@ header {
   position: relative;
 
   h3 {
-    margin: 5px 0;
+    margin: 0 0 5px 0;
   }
 
   @include breakpoint(medium) {
@@ -269,7 +269,11 @@ header {
 
 .logo--header {
   display: inline-block;
-  max-height: 56px;
+  max-height: 48px;
+
+  @include breakpoint(medium) {
+    max-height: 56px;
+  }
 
   @include breakpoint(large) {
     max-height: 65px;
@@ -295,6 +299,7 @@ header {
 
 .header__about {
   align-items: baseline;
+  flex-shrink: 0;
 }
 
 .header__about--small {
@@ -311,7 +316,7 @@ header {
   margin: 0;
 
   @include breakpoint(medium) {
-    margin: 20px 10px 0 5px;
+    margin: 20px 5px 0 5px;
   }
 
   @include breakpoint(large) {
@@ -325,7 +330,7 @@ header {
   border-radius: 4px;
   border: solid 1px $light-grey;
   display: flex;
-  flex-grow: 2;
+  flex: 2 1 auto;
   margin: 0 5px;
   position: relative;
 
@@ -334,19 +339,20 @@ header {
   }
 
   @include breakpoint(large) {
-    margin: 14px 10px 14px auto;
+    margin: 14px 25px 14px auto;
+    max-width: 800px;
   }
 }
 
 #location-text,
 .mq-input {
   border: none;
-  flex-basis: 218px;
-  flex-grow: 100;
+  flex: 1 1 auto;
   line-height: 2;
   height: auto;
-
   margin: 2px 2px 2px 8px;
+  min-width: 170px;
+  text-overflow: ellipsis;
   z-index: $z-index-bottom;
 
   &:focus {
@@ -358,31 +364,50 @@ header {
   z-index: $z-index-high !important;
 }
 
-#location-submit,
-#auto-location {
+.mq-input-icon {
+  right: 0;
+}
+
+#location-submit {
   background-color: $light-accent;
-  border: none;
+  border: 1px solid $light-accent;
   color: $white;
   flex-grow: 0;
-  transition: color 1s;
+  transition: background-color 1s;
 
   &:focus,
   &:hover {
     background-color: $dark-accent;
+    border: 1px solid $dark-accent;
   }
 }
 
 #auto-location {
-  border-right: solid 2px $white;
-  font-weight: 400;
+  background-color: $white;
+  border: none;
+  color: $light-accent;
+  flex: 0 0 100px;
+  font-weight: 600;
+  line-height: 1.4;
   margin-left: auto;
-  line-height: 1;
-  max-width: 52px;
+  padding: 0;
+  transition: color 1s;
   z-index: $z-index-next;
 
-  @include breakpoint(medium-and-up) {
-    line-height: 1.15;
-    max-width: unset;
+  &:focus,
+  &:hover {
+    background-color: $light-accent;
+    color: $white;
+  }
+}
+
+.icon--locate-me {
+  height: 16px;
+  margin: 3px 3px 3px 0;
+  vertical-align: top;
+
+  @include breakpoint(large-and-up) {
+    height: 18px;
   }
 }
 
@@ -390,12 +415,12 @@ header {
   border-bottom-right-radius: 4px;
   border-top-right-radius: 4px;
   flex-shrink: 0;
+}
 
-  img {
-    height: 24px;
-    width: 24px;
-    padding-top: 2px;
-  }
+.icon--search {
+  height: 20px;
+  width: 20px;
+  padding-top: 4px;
 }
 
 .geocode-error-message {
@@ -613,6 +638,7 @@ form:invalid {
   cursor: pointer;
   font-size: 18px;
   font-weight: $font-weight-bold;
+  padding: 5px;
 }
 
 /* Disaster tabs */
