@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminModelImports
+from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings, SupplyKit, ImportantLink
 # END OF GENERATED CODE BLOCK
 ######################################################
 from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile
@@ -32,6 +33,15 @@ class SnuggetAdmin(admin.ModelAdmin):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminLists
+    fieldsets = (
+        (None, {
+            'fields': ('section', 'sub_section'),
+        }),
+        ('Filters', {
+            'description': 'Choose a filter value this snugget will show up for.',
+            'fields': ((),)
+            }),
+    )
 # END OF GENERATED CODE BLOCK
 ######################################################
 
