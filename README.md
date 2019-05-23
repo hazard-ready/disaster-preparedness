@@ -171,7 +171,7 @@ _Not tested by the current maintainers_
 
 1. The format must be GeoTIFF, with a `.tif` file extension.
 2. Band 0 must contain a unique identifier for each set of text to display.  If the file contains multiple bands, all but the first will be ignored.
-3. Band 0 must contain unsigned integers.
+3. Band 0 must contain unsigned integers no larger than 255 (they'll be stored as a single byte and real numbers will be rounded off to the nearest integer).
 4. The values in Band 0 must be higher for more serious warnings.  This is because the file will be reprojected to EPSG:4326 during import, and values are rounded up in the reprojection.  As long as higher values are the more serious warnings, this will not create a risk of people seeing an inappropriate "all clear" message for their location.
 5. Each data source must be one single `.tif` file.  Large files will be tiled automatically during the load but the data import pipeline does not currently have the ability to combine rasters.
 

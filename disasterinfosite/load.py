@@ -53,7 +53,8 @@ def tileLoadRaster(model, filename, band=0):
                 ),
                 'size': (width, height),
                 'offset': (0, 0)
-              }]
+              }],
+              'datatype': 1 # GDT_Byte aka 8-bit unsigned integer
             })
         )
         if rasterTile.rast.bands[band].min is None:
