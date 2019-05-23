@@ -93,7 +93,7 @@ def processRow(row, overwriteAll):
   # check if a snugget for this data already exists
   # if we have a lookup value then deal with this value specifically:
   if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
-    filterVal = row["lookup_value"]
+    filterVal = getShapefileFilter(shapefile, row["lookup_value"])
     oldSnugget = checkForSnugget(shapefile, section, order, filterColumn, filterVal)
     overwriteAll = askUserAboutOverwriting(row, oldSnugget, overwriteAll)
     processSnugget(row, shapefile, section, order, filterColumn, filterVal)
@@ -177,13 +177,12 @@ def addPopOutIfExists(row):
 
 def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
   group = shapefile.getGroup()
-  shapefileFilter = getShapefileFilter(shapefile, filterVal)
 
-  if shapefileFilter is not None:
+  if filterVal is not None:
     kwargs = {
       'section': section,
       'group': group,
-      filterColumn: shapefileFilter,
+      filterColumn: filterVal,
       'content': row["text"],
       'percentage': row["intensity"],
       'order': row['txt_location']
@@ -197,12 +196,11 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
 
 def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
   group = shapefile.getGroup()
-  shapefileFilter = getShapefileFilter(shapefile, filterVal)
 
   kwargs = {
     'section': section,
     'group': group,
-    filterColumn: shapefileFilter,
+    filterColumn: filterVal,
     'text': row["text"],
     'video': row["video"],
     'percentage': row["intensity"],
@@ -216,12 +214,11 @@ def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
 
 def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
   group = shapefile.getGroup()
-  shapefileFilter = getShapefileFilter(shapefile, filterVal)
 
   kwargs = {
     'section': section,
     'group': group,
-    filterColumn: shapefileFilter,
+    filterColumn: filterVal,
     'text': row["text"],
     'percentage': row["intensity"],
     'order': row['txt_location']
@@ -269,16 +266,15 @@ def findAllFilterVals(shapefile):
 
 
 def checkForSnugget(shapefile, section, order, filterColumn, filterVal):
-  filter = getShapefileFilter(shapefile, filterVal)
-  if filter is not None:
-    kwargs = {'section': section, 'order': order, filterColumn: filter}
+  if filterVal is not None:
+    kwargs = {'section': section, 'order': order, filterColumn: filterVal}
     if Snugget.objects.filter(**kwargs).exists():
       return Snugget.objects.select_subclasses().get(**kwargs)
   return None
 
 
 def removeOldSnugget(shapefile, section, order, filterColumn, filterVal):
-  kwargs = {'section': section, filterColumn: getShapefileFilter(shapefile, filterVal), 'order': order}
+  kwargs = {'section': section, filterColumn: filterVal, 'order': order}
   Snugget.objects.filter(**kwargs).delete()
 
 
