@@ -181,7 +181,7 @@ If the structure of your text content is simple enough, you can import shapefile
 
 - `heading` : A human-readable heading that describes the content of this shapefile or raster, to be displayed on the page. This will correspond to the shapefile group.
 - `section` : A section name that will be displayed on the page (must not be empty)
-- `shapefile` : The file name for the shapefile or raster file this row corresponds to, without the extention. For example: `EQ_GroundShaking_MostLike` for text that relates to the content of `EQ_GroundShaking_MostLike.shp`. (must not be empty; must correspond exactly to the available files)
+- `shapefile` : The file name for the shapefile or raster file this row corresponds to, without the extension. For example: `EQ_GroundShaking_MostLike` for text that relates to the content of `EQ_GroundShaking_MostLike.shp`. (must not be empty; must correspond exactly to the available files)
 
 -`txt_location` : The order in which this text will appear within its section.
 
