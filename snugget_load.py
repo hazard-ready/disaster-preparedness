@@ -186,18 +186,19 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
   group = shapefile.getGroup()
   shapefileFilter = getShapefileFilter(shapefile, filterVal)
 
-  kwargs = {
-    'section': section,
-    'group': group,
-    filterColumn: shapefileFilter,
-    'content': row["text"],
-    'percentage': row["intensity"],
-    'order': row['txt_location']
-  }
-  snugget = TextSnugget.objects.create(**kwargs)
-  snugget.pop_out = addPopOutIfExists(row)
-  snugget.save()
-  print('Created snugget:', snugget)
+  if shapefileFilter is not None:
+    kwargs = {
+      'section': section,
+      'group': group,
+      filterColumn: shapefileFilter,
+      'content': row["text"],
+      'percentage': row["intensity"],
+      'order': row['txt_location']
+    }
+    snugget = TextSnugget.objects.create(**kwargs)
+    snugget.pop_out = addPopOutIfExists(row)
+    snugget.save()
+    print('Created snugget:', snugget)
 
 
 
