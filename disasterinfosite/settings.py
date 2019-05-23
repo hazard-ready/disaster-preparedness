@@ -151,6 +151,6 @@ GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'img')
 
 if DEBUG:
-    MEDIA_URL = '/static/img/'
+    MEDIA_URL = '/media/img/'
 else:
-    MEDIA_URL = '/pdx/static/img'
+    MEDIA_URL = '/pdx/static/img/'
