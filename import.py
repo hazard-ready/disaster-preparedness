@@ -189,26 +189,22 @@ def processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID):
   originalPath = os.path.join(dataDir, f)
   original = GDALRaster(originalPath, write=False)
   reprojectedPath = os.path.join(reprojectedDir, f)
-  if str(original.srs.srid) == desiredSRID:
-    print("Skipping reprojection because this file is already in " + SRIDNamespace + ":" + desiredSRID + ".")
-    return original, originalPath
+  if os.path.exists(reprojectedPath):
+    print("Skipping reprojection because this file has previously been reprojected.")
   else:
-    if os.path.exists(reprojectedPath):
-      print("Skipping reprojection because this file has previously been reprojected.")
-    else:
-      print("Reprojecting to " + SRIDNamespace + ":" + desiredSRID + ".")
-      gdalCmd = [
-        "gdalwarp",
-        "-t_srs", SRIDNamespace + ":" + desiredSRID,
-        "-ot", "Byte",
-        "-dstnodata", "255",
-        "-r", "max",
-        "-multi", "-wo", "NUM_THREADS=ALL_CPUS",
-        originalPath,
-        reprojectedPath
-      ]
-      subprocess.run(gdalCmd, check=True)
-    return GDALRaster(reprojectedPath, write=False), reprojectedPath
+    print("Reprojecting to " + SRIDNamespace + ":" + desiredSRID + ".")
+    gdalCmd = [
+      "gdalwarp",
+      "-t_srs", SRIDNamespace + ":" + desiredSRID,
+      "-ot", "Byte",
+      "-dstnodata", "255",
+      "-r", "max",
+      "-multi", "-wo", "NUM_THREADS=ALL_CPUS",
+      originalPath,
+      reprojectedPath
+    ]
+    subprocess.run(gdalCmd, check=True)
+  return GDALRaster(reprojectedPath, write=False), reprojectedPath
 
 
 

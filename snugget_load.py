@@ -141,14 +141,20 @@ def getFilterFieldName(shapefile):
 def getShapefileFilter(shapefile, filterVal):
   fieldName = getFilterFieldName(shapefile)
   if fieldName == 'rast':
-    for tile in shapefile.objects.defer("rast").all():
-      if int(filterVal) in tile.rast.bands[0].data():
-        return int(filterVal)
+    minima = [256]
+    maxima = [0]
+    for tile in shapefile.objects.all():
+      if tile.rast.bands[0].min is not None:
+        if int(filterVal) in tile.rast.bands[0].data():
+          return int(filterVal)
+        minima.append(tile.rast.bands[0].min)
+        maxima.append(tile.rast.bands[0].max)
     print(
       "Lookup value of", filterVal,
       "not found in", shapefile,
-      ", the first tile of which only has values between", str(shapefile.objects.first().rast.bands[0].min),
-      "and", str(shapefile.objects.first().rast.bands[0].max), "inclusive."
+      ", which only has values between", str(min(minima)),
+      "and", str(max(maxima)),
+      "inclusive (and may not have all values in between)."
     )
   else:
     kwargs = {fieldName: filterVal}
