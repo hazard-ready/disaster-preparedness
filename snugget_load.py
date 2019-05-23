@@ -94,27 +94,25 @@ def processRow(row, overwriteAll):
   # if we have a lookup value then deal with this value specifically:
   if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
     filterVal = row["lookup_value"]
-    oldSnugget = checkForSnugget(shapefile, section, order, filterColumn, filterVal)
-    overwriteAll = askUserAboutOverwriting(row, oldSnugget, overwriteAll)
-    processSnugget(row, shapefile, section, order, filterColumn, filterVal)
-    return overwriteAll
+    if filterVal is None:
+      print("Skipping row:")
+      print(row)
+      print("Because no filter for lookup_value", row["lookup_value"], "was found in", row["shapefile"])
+    else:
+      oldSnugget = checkForSnugget(shapefile, section, order, filterColumn, filterVal)
+      overwriteAll = askUserAboutOverwriting(row, oldSnugget, overwriteAll)
+      processSnugget(row, shapefile, section, order, filterColumn, filterVal)
   else:
     filterVals = findAllFilterVals(shapefile)
     oldSnuggets = []
     for filterVal in filterVals:
-      if filterVal is None:
-        print("Skipping row:")
-        print(row)
-        print("Because no filter for lookup_value", row["lookup_value"], "was found in", row["shapefile"])
-        return overwriteAll
-      else:
-        oldSnugget = checkForSnugget(shapefile, section, order, filterColumn, filterVal)
-        if oldSnugget is not None and oldSnugget not in oldSnuggets:
-          oldSnuggets.append(oldSnugget)
+      oldSnugget = checkForSnugget(shapefile, section, order, filterColumn, filterVal)
+      if oldSnugget is not None and oldSnugget not in oldSnuggets:
+        oldSnuggets.append(oldSnugget)
       overwriteAll = askUserAboutOverwriting(row, oldSnuggets, overwriteAll)
       processSnugget(row, shapefile, section, order, filterColumn, filterVal)
 
-    return overwriteAll
+  return overwriteAll
 
 
 def processSnugget(row, shapefile, section, order, filterColumn, filterVal):
@@ -260,7 +258,19 @@ def addSlideshow(folder, snugget):
 
 def findAllFilterVals(shapefile):
   fieldName = getFilterFieldName(shapefile)
-  return shapefile.objects.values_list(fieldName, flat=True)
+  if fieldName == 'rast':
+    # If it's a raster, we take a small shortcut and just return the whole
+    # range of values from min to max, assuming all the intermediate ones exist.
+    # This may create some surplus snuggets, but won't miss any that should be there.
+    minima = [256]
+    maxima = [0]
+    for tile in shapefile.objects.all():
+      if tile.rast.bands[0].min is not None:
+        minima.append(tile.rast.bands[0].min)
+        maxima.append(tile.rast.bands[0].max)
+    return list(range(min(minima), max(maxima)+1))
+  else:
+    return shapefile.objects.values_list(fieldName, flat=True)
 
 
 def checkForSnugget(shapefile, section, order, filterColumn, filterVal):
