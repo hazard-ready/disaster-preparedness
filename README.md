@@ -193,7 +193,7 @@ If the structure of your text content is simple enough, you can import shapefile
 
 -`pop_out_txt` : Text to go in the auxiliary sidebar for this snugget.
 
--`lookup_value` : The value of the unique identifier in the shapefile (e.g. an intensity value or a hazard classification), or the pixel value of a raster that corresponds to this. This field can be empty; if it is then the rest of this row will be applied to every available value.
+-`lookup_value` : The value of the unique identifier in the shapefile (e.g. an intensity value or a hazard classification), or the pixel value of a raster that corresponds to this. This field can be empty; if it is then the rest of this row will be applied to every available value. If this field contains a value that is not present in the data, the load script will find that, warn you, and skip loading it.
 
 -`intensity` : Relative severity scaled from 0-100, to display graphically on the page. If this is empty, or if a value is provided for `image`, it will simply not be displayed.
 
