@@ -104,6 +104,13 @@ class Location(SingletonModel):
     # GENERATED CODE GOES HERE
     # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
     # locationsList
+            'RDPOLiquefact_Clark': RDPOLiquefact_Clark.objects.data_bounds(),
+            'RDPO_counties': RDPO_counties.objects.data_bounds(),
+            'RDPOLiquefaction_OR': RDPOLiquefaction_OR.objects.data_bounds(),
+            'RDPOCascadiaM9_3_Clark': RDPOCascadiaM9_3_Clark.objects.data_bounds(),
+            'RDPO_region': RDPO_region.objects.data_bounds(),
+            'RDPOCascadiaM9_OR': RDPOCascadiaM9_OR.objects.data_bounds(),
+            'OR_lsd': OR_lsd.objects.data_bounds()
     # END OF GENERATED CODE BLOCK
     ######################################################
         }
@@ -116,10 +123,11 @@ class Location(SingletonModel):
         east = [-180]
 
         for box in bounds.values():
-            west.append(box[0])
-            south.append(box[1])
-            east.append(box[2])
-            north.append(box[3])
+            if box is not None:
+                west.append(box[0])
+                south.append(box[1])
+                east.append(box[2])
+                north.append(box[3])
 
         # The largest box that contains all the bounding boxes, how Leaflet wants it.
         return [[min(south), min(west)], [max(north), max(east)]]
@@ -155,15 +163,16 @@ class ImportantLink(models.Model):
         return self.title +': ' + self.link
 
 class ShapeManager(models.Manager):
-    def has_point(self, pnt):
-        return self.filter(geom__contains=pnt)
-
     def data_bounds(self):
         return self.aggregate(Extent('geom'))['geom__extent']
 
+
 class RasterManager(models.Manager):
-    def has_point(self, pnt):
-        return self.filter(rast__contains=pnt)
+    def data_bounds(self):
+        return self.aggregate(Extent('bbox'))['bbox__extent']
+
+
+
 
 class ShapefileGroup(models.Model):
     name = models.CharField(max_length=50)
@@ -182,6 +191,91 @@ class ShapefileGroup(models.Model):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # modelsClasses
+class RDPOLiquefact_Clark(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='RDPOLiquefact_Clark')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_counties(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='RDPO_counties')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPOLiquefaction_OR(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='RDPOLiquefaction_OR')[0]
+
+    lookup_val = models.IntegerField()
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPOCascadiaM9_3_Clark(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='RDPOCascadiaM9_3_Clark')[0]
+
+    lookup_val = models.IntegerField()
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_region(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='RDPO_region')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPOCascadiaM9_OR(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='RDPOCascadiaM9_OR')[0]
+
+    lookup_val = models.IntegerField()
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class OR_lsd(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='OR_lsd')[0]
+
+    rast = models.RasterField(srid=4326)
+    bbox = models.PolygonField(srid=4326)
+    objects = RasterManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return str(self.rast.name)
+
 # END OF GENERATED CODE BLOCK
 ######################################################
 
@@ -269,59 +363,37 @@ def default_display_name(sender, instance, *args, **kwargs):
         instance.display_name = instance.name
 
 
-# looks up a point in a raster
-# algorithm for this function taken from the django-raster project version 0.6 at
+# looks up a point in a set of rasters and returns the first value it finds
+# or None if there are no rasters or the point is not within any of them.
+# basic algorithm for this function taken from the django-raster project version 0.6 at
 # https://github.com/geodesign/django-raster/blob/master/raster/utils.py
-# and is covered by the following licence:
-'''
-Copyright (c) Daniel Wiesmann and Mike Flaxman
-All rights reserved.
+def rasterPointLookup(rasterCollection, lng, lat, band=0):
+    # if we have no data at all, then save time and return None immediately
+    if rasterCollection.objects.only("bbox").first() is None:
+        return None
 
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
+    collectionSRS = rasterCollection.objects.only("bbox").first().bbox.srs
+    pnt = OGRGeometry('POINT({0} {1})'.format(lng, lat), srs=collectionSRS)
+    results = []
 
-    1. Redistributions of source code must retain the above copyright notice,
-       this list of conditions and the following disclaimer.
+    # deferring the raster field will let us speed things up by doing boundary checks against the much faster-to-retrive bbox
+    for tile in rasterCollection.objects.defer("rast").all():
+        # only bother to check for data if we're within the bounds
+        bbox = OGRGeometry(tile.bbox.wkt, srs=collectionSRS)
+        if pnt.intersects(bbox):
+            rst = tile.rast
+            offset = (abs(rst.origin.x - pnt.coords[0]), abs(rst.origin.y - pnt.coords[1]))
+            offset_idx = [int(offset[0] / abs(rst.scale.x)), int(offset[1] / abs(rst.scale.y))]
 
-    2. Redistributions in binary form must reproduce the above copyright
-       notice, this list of conditions and the following disclaimer in the
-       documentation and/or other materials provided with the distribution.
+            # points very close to the boundary can get rounded to 1 pixel beyond it, so fix that here
+            if offset_idx[0] == rst.width:
+                offset_idx[0] -= 1
+            if offset_idx[1] == rst.height:
+                offset_idx[1] -= 1
 
-    3. Neither the name of the author nor the names of other contributors may
-       be used to endorse or promote products derived from this software
-       without specific prior written permission.
+            return rst.bands[band].data(offset=offset_idx, size=(1,1))[0]
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-'''
-def rasterPointLookup(rst, lng, lat):
-    pnt = OGRGeometry('POINT({0} {1})'.format(lng, lat), srs=rst.srs)
-
-    # if the point is outside the raster's extent, we can save time and just return None here
-    bbox = OGRGeometry.from_bbox(rst.extent)
-    bbox.srs = rst.srs
-    if not pnt.intersects(bbox):
-        return -1
-
-    # otherwise we need to choose a raster pixel
-    offset = (abs(rst.origin.x - pnt.coords[0]), abs(rst.origin.y - pnt.coords[1]))
-    offset_idx = [int(offset[0] / abs(rst.scale.x)), int(offset[1] / abs(rst.scale.y))]
-
-    # points very close to the boundary can get rounded to 1 pixel beyond it, so fix that here
-    if offset_idx[0] == rst.width:
-        offset_idx[0] -= 1
-    if offset_idx[1] == rst.height:
-        offset_idx[1] -= 1
-
-    return rst.bands[0].data(offset=offset_idx, size=(1,1))[0]
+    return None
 
 
 
@@ -332,6 +404,13 @@ class Snugget(models.Model):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # modelsFilters
+    RDPOLiquefact_Clark_filter = models.ForeignKey(RDPOLiquefact_Clark, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_counties_filter = models.ForeignKey(RDPO_counties, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPOLiquefaction_OR_filter = models.ForeignKey(RDPOLiquefaction_OR, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPOCascadiaM9_3_Clark_filter = models.ForeignKey(RDPOCascadiaM9_3_Clark, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_region_filter = models.ForeignKey(RDPO_region, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPOCascadiaM9_OR_filter = models.ForeignKey(RDPOCascadiaM9_OR, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    OR_lsd_filter = models.IntegerField(null=True)
 # END OF GENERATED CODE BLOCK
 ######################################################
 
@@ -354,6 +433,54 @@ class Snugget(models.Model):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # modelsGeoFilters
+        qs_RDPOLiquefact_Clark = RDPOLiquefact_Clark.objects.filter(geom__contains=pnt)
+        RDPOLiquefact_Clark_rating = qs_RDPOLiquefact_Clark.values_list('lookup_val', flat=True)
+        for rating in RDPOLiquefact_Clark_rating:
+            RDPOLiquefact_Clark_snugget = Snugget.objects.filter(RDPOLiquefact_Clark_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPOLiquefact_Clark_snugget:
+                groupsDict[RDPOLiquefact_Clark.getGroup()].extend(RDPOLiquefact_Clark_snugget)
+
+        qs_RDPO_counties = RDPO_counties.objects.filter(geom__contains=pnt)
+        RDPO_counties_rating = qs_RDPO_counties.values_list('lookup_val', flat=True)
+        for rating in RDPO_counties_rating:
+            RDPO_counties_snugget = Snugget.objects.filter(RDPO_counties_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_counties_snugget:
+                groupsDict[RDPO_counties.getGroup()].extend(RDPO_counties_snugget)
+
+        qs_RDPOLiquefaction_OR = RDPOLiquefaction_OR.objects.filter(geom__contains=pnt)
+        RDPOLiquefaction_OR_rating = qs_RDPOLiquefaction_OR.values_list('lookup_val', flat=True)
+        for rating in RDPOLiquefaction_OR_rating:
+            RDPOLiquefaction_OR_snugget = Snugget.objects.filter(RDPOLiquefaction_OR_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPOLiquefaction_OR_snugget:
+                groupsDict[RDPOLiquefaction_OR.getGroup()].extend(RDPOLiquefaction_OR_snugget)
+
+        qs_RDPOCascadiaM9_3_Clark = RDPOCascadiaM9_3_Clark.objects.filter(geom__contains=pnt)
+        RDPOCascadiaM9_3_Clark_rating = qs_RDPOCascadiaM9_3_Clark.values_list('lookup_val', flat=True)
+        for rating in RDPOCascadiaM9_3_Clark_rating:
+            RDPOCascadiaM9_3_Clark_snugget = Snugget.objects.filter(RDPOCascadiaM9_3_Clark_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPOCascadiaM9_3_Clark_snugget:
+                groupsDict[RDPOCascadiaM9_3_Clark.getGroup()].extend(RDPOCascadiaM9_3_Clark_snugget)
+
+        qs_RDPO_region = RDPO_region.objects.filter(geom__contains=pnt)
+        RDPO_region_rating = qs_RDPO_region.values_list('lookup_val', flat=True)
+        for rating in RDPO_region_rating:
+            RDPO_region_snugget = Snugget.objects.filter(RDPO_region_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_region_snugget:
+                groupsDict[RDPO_region.getGroup()].extend(RDPO_region_snugget)
+
+        qs_RDPOCascadiaM9_OR = RDPOCascadiaM9_OR.objects.filter(geom__contains=pnt)
+        RDPOCascadiaM9_OR_rating = qs_RDPOCascadiaM9_OR.values_list('lookup_val', flat=True)
+        for rating in RDPOCascadiaM9_OR_rating:
+            RDPOCascadiaM9_OR_snugget = Snugget.objects.filter(RDPOCascadiaM9_OR_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPOCascadiaM9_OR_snugget:
+                groupsDict[RDPOCascadiaM9_OR.getGroup()].extend(RDPOCascadiaM9_OR_snugget)
+
+        OR_lsd_rating = rasterPointLookup(OR_lsd, lng, lat)
+        if OR_lsd_rating is not None:
+            OR_lsd_snugget = Snugget.objects.filter(OR_lsd_filter__exact=OR_lsd_rating).order_by('order').select_subclasses()
+            if OR_lsd_snugget:
+                groupsDict[OR_lsd.getGroup()].extend(OR_lsd_snugget)
+
 # END OF GENERATED CODE BLOCK
 ######################################################
         return groupsDict
