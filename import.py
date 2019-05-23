@@ -341,18 +341,6 @@ def findFieldType(sf, fieldName):
         exit()
 
 
-# See https://docs.djangoproject.com/en/2.2/ref/contrib/gis/gdal/#django.contrib.gis.gdal.GDALBand.datatype for the possible values
-def findFieldTypeRaster(rst, bandNumber=0):
-  fieldType = rst.bands[bandNumber].datatype(as_string=True)
-  if "Float" in fieldType:
-    return "FloatField()"
-  elif "Int" in fieldType or fieldType == "GDT_Byte":
-    return "IntegerField()"
-  else:
-    print("Field type unrecognised:")
-    print(fieldType)
-    exit()
-
 
 
 def modelClassGen(stem, sf, keyField, srs, shapeType, shapefileGroup):
