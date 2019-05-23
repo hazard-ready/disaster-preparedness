@@ -193,12 +193,13 @@ If the structure of your text content is simple enough, you can import shapefile
 
 -`pop_out_txt` : Text to go in the auxiliary sidebar for this snugget.
 
-- `lookup_value` : The value of the unique identifier in the shapefile (e.g. an intensity value or a hazard classification), or the pixel value of a raster that corresponds to this. This field can be empty; if it is then the rest of this row will be applied to every available value.
-- `intensity` : Relative severity scaled from 0-100, to display graphically on the page. If this is empty, or if a value is provided for `image`, it will simply not be displayed.
+-`lookup_value` : The value of the unique identifier in the shapefile (e.g. an intensity value or a hazard classification), or the pixel value of a raster that corresponds to this. This field can be empty; if it is then the rest of this row will be applied to every available value.
+
+-`intensity` : Relative severity scaled from 0-100, to display graphically on the page. If this is empty, or if a value is provided for `image`, it will simply not be displayed.
 
 -`intensity_txt` : Explanatory text for the intensity value.
 
-- `text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria. If you put a url in the snugget text, like `http://www.github.com`, we'll automatically make it into a link for you.
+-`text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria. If you put a url in the snugget text, like `http://www.github.com`, we'll automatically make it into a link for you.
 
 -`image_slideshow_folder` : If this is present, the snugget loader will look for a folder inside an `images` folder at the same level as `snuggets.xlsx` (example: if `snuggets.xlsx` is in `data\images` and you set this value to `earthquake_photos`, the loader will look for images in `data\images\earthquake_photos`). The loader expects to find two things in that folder: images, and a file called `slideshow.csv`.
 
