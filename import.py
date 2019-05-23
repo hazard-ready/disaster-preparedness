@@ -191,7 +191,7 @@ def processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID):
   reprojectedPath = os.path.join(reprojectedDir, f)
   if str(original.srs.srid) == desiredSRID:
     print("Skipping reprojection because this file is already in " + SRIDNamespace + ":" + desiredSRID + ".")
-    return original
+    return original, originalPath
   else:
     if os.path.exists(reprojectedPath):
       print("Skipping reprojection because this file has previously been reprojected.")
@@ -200,6 +200,8 @@ def processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID):
       gdalCmd = [
         "gdalwarp",
         "-t_srs", SRIDNamespace + ":" + desiredSRID,
+        "-ot", "Byte",
+        "-dstnodata", "255",
         "-r", "max",
         "-multi", "-wo", "NUM_THREADS=ALL_CPUS",
         originalPath,
