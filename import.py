@@ -43,21 +43,18 @@ def main():
   for f in os.listdir(dataDir):
     rasterFound = False
     shapefileFound = False
-    if f[-4:].lower() == ".tif":
+    stem = f[:-4].replace(".", "_").replace("-","_")
+    extension = f[-4:].lower()
+    if extension == ".tif":
       rasterFound = True
-      stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening raster data source:", stem)
-      rst = processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID)
-      keyField = "lookup_val"
-      shapeType = "Raster"
-    elif f[-4:].lower() == ".shp":
+      rst, reprojected = processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID)
+    elif extension == ".shp":
       shapefileFound = True
-      stem = f[:-4].replace(".", "_").replace("-","_")
       print("Opening shapefile:", stem)
       #TODO: if there's already a reprojected shapefile, use the field in that instead of prompting the user.
       sf = shapefile.Reader(os.path.join(dataDir, f))
       keyField = askUserForFieldNames(sf, stem)
-
       reprojected = processShapefile(f, stem, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID, keyField)
       simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
       sf = shapefile.Reader(simplified)
@@ -68,13 +65,12 @@ def main():
 # one block represents the code generation for each destination file
     if shapefileFound or rasterFound:
       shapefileGroup = askUserForShapefileGroup(stem, existingShapefileGroups)
+      modelsLocationsList += "            '" + stem + "': " + stem + ".objects.data_bounds(),\n"
       if shapefileFound:
-        modelsLocationsList += "            '" + stem + "': " + stem + ".objects.data_bounds(),\n"
         modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType, shapefileGroup)
         modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem + ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
         modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
       elif rasterFound:
-        modelsLocationsList += "            '" + stem + "': " + stem + ".objects.first().data_bounds(),\n"
         # Note that for now we just automatically use band 0 of any raster.
         modelsClasses += modelClassGenRaster(stem, rst, 0, shapefileGroup)
         modelsFilters += "    " + stem + "_filter = models.IntegerField(null=True)\n"
@@ -90,23 +86,19 @@ def main():
       adminFilterRefs += "'" + stem + "_filter'"
       adminSiteRegistrations += "admin.site.register(" + stem + ", GeoNoEditAdmin)\n"
 
-      loadMappings += stem + "_mapping = {\n"
-      if shapefileFound:
-        loadMappings += "    '" + keyField.lower() + "': '" + keyField + "',\n"
-      loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
-      loadMappings += "}\n\n"
-      if shapefileFound:
-        loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + simplified + "'))\n"
-      elif rasterFound:
-        loadPaths += stem + "_tif = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + os.path.join(dataDir, f) + "'))\n"
       loadImports += "    print('Loading data for " + stem + "')\n"
       loadImports += "    from .models import " + stem + "\n"
       if shapefileFound:
         loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
+        loadImports += "    lm_" + stem + ".save()\n\n"
+        loadMappings += stem + "_mapping = {\n"
+        loadMappings += "    '" + keyField.lower() + "': '" + keyField + "',\n"
+        loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
+        loadMappings += "}\n\n"
+        loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + simplified + "'))\n"
       elif rasterFound:
-        loadImports += "    " + stem + "_raster = GDALRaster(" + stem + "_tif, write=True)\n"
-        loadImports += "    lm_" + stem + " = " + stem + "(rast=" + stem + "_raster)\n"
-      loadImports += "    lm_" + stem + ".save()\n\n"
+        loadImports += "    tileLoadRaster(" + stem + ", " + stem + "_tif)\n"
+        loadPaths += stem + "_tif = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + reprojected + "'))\n"
 
       print("")
       first = False
@@ -214,7 +206,7 @@ def processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID):
         reprojectedPath
       ]
       subprocess.run(gdalCmd, check=True)
-    return GDALRaster(reprojectedPath, write=False)
+    return GDALRaster(reprojectedPath, write=False), reprojectedPath
 
 
 
@@ -350,7 +342,7 @@ def findFieldType(sf, fieldName):
 
 
 # See https://docs.djangoproject.com/en/2.2/ref/contrib/gis/gdal/#django.contrib.gis.gdal.GDALBand.datatype for the possible values
-def findFieldTypeRaster(rst, bandNumber):
+def findFieldTypeRaster(rst, bandNumber=0):
   fieldType = rst.bands[bandNumber].datatype(as_string=True)
   if "Float" in fieldType:
     return "FloatField()"
@@ -379,16 +371,15 @@ def modelClassGen(stem, sf, keyField, srs, shapeType, shapefileGroup):
 
 
 def modelClassGenRaster(stem, rst, bandNumber, shapefileGroup):
-  text  = "class " + stem + "(SingletonModel):\n"
+  text  = "class " + stem + "(models.Model):\n"
   text += "    def getGroup():\n"
   text += "        return ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')[0]\n\n"
   text += "    rast = models.RasterField(srid=" + str(rst.srs.srid) + ")\n"
+  text += "    bbox = models.PolygonField(srid=" + str(rst.srs.srid) + ")\n"
   text += "    objects = RasterManager()\n\n"
-  text += "    def data_bounds(self):\n"
-  text += "        return self.rast.extent\n\n"
   text += "    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)\n"
   text += "    def __str__(self):\n"
-  text += "        return 'string method not yet implemented'\n\n"
+  text += "        return str(self.rast.name) + ',\t' + str(self.bbox) \n\n"
 
   return text
 
@@ -404,10 +395,11 @@ def modelsGeoFilterGen(stem, keyField):
 
 
 def modelsGeoFilterGenRaster(stem):
-  text  = "        " + stem + "_rating = " + "rasterPointLookup(" + stem + ".objects.first().rast, lng, lat)\n"
-  text += "        " + stem + "_snugget = Snugget.objects.filter(" + stem + "_filter__exact=" + stem + "_rating).order_by('order').select_subclasses()\n"
-  text += "        if " + stem + "_snugget:\n"
-  text += "            groupsDict[" + stem +".getGroup()].extend(" + stem + "_snugget)\n\n"
+  text  = "        " + stem + "_rating = " + "rasterPointLookup(" + stem + ", lng, lat)\n"
+  text += "        if " + stem + "_rating is not None:\n"
+  text += "            " + stem + "_snugget = Snugget.objects.filter(" + stem + "_filter__exact=" + stem + "_rating).order_by('order').select_subclasses()\n"
+  text += "            if " + stem + "_snugget:\n"
+  text += "                groupsDict[" + stem +".getGroup()].extend(" + stem + "_snugget)\n\n"
   return text
 
 
