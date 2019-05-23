@@ -94,14 +94,9 @@ def processRow(row, overwriteAll):
   # if we have a lookup value then deal with this value specifically:
   if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
     filterVal = row["lookup_value"]
-    if filterVal is None:
-      print("Skipping row:")
-      print(row)
-      print("Because no filter for lookup_value", row["lookup_value"], "was found in", row["shapefile"])
-    else:
-      oldSnugget = checkForSnugget(shapefile, section, order, filterColumn, filterVal)
-      overwriteAll = askUserAboutOverwriting(row, oldSnugget, overwriteAll)
-      processSnugget(row, shapefile, section, order, filterColumn, filterVal)
+    oldSnugget = checkForSnugget(shapefile, section, order, filterColumn, filterVal)
+    overwriteAll = askUserAboutOverwriting(row, oldSnugget, overwriteAll)
+    processSnugget(row, shapefile, section, order, filterColumn, filterVal)
   else:
     filterVals = findAllFilterVals(shapefile)
     oldSnuggets = []
@@ -274,11 +269,12 @@ def findAllFilterVals(shapefile):
 
 
 def checkForSnugget(shapefile, section, order, filterColumn, filterVal):
-  kwargs = {'section': section, 'order': order, filterColumn: getShapefileFilter(shapefile, filterVal)}
-  if Snugget.objects.filter(**kwargs).exists():
-    return Snugget.objects.select_subclasses().get(**kwargs)
-  else:
-    return None
+  filter = getShapefileFilter(shapefile, filterVal)
+  if filter is not None:
+    kwargs = {'section': section, 'order': order, filterColumn: filter}
+    if Snugget.objects.filter(**kwargs).exists():
+      return Snugget.objects.select_subclasses().get(**kwargs)
+  return None
 
 
 def removeOldSnugget(shapefile, section, order, filterColumn, filterVal):
