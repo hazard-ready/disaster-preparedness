@@ -1,7 +1,7 @@
-# Uncomment if you want to translate Django models.
+# Uncomment if you want to translate Django models. You will need to make migrations and migrate after doing this.
 
 # from modeltranslation.translator import register, translator, TranslationOptions
-# from .models import SiteSettings, Location, SupplyKit, ImportantLink, ShapefileGroup, PastEventsPhoto, DataOverviewImage, TextSnugget, SnuggetSection, SnuggetSubSection
+# from .models import SiteSettings, Location, SupplyKit, ImportantLink, ShapefileGroup, PastEventsPhoto, DataOverviewImage, TextSnugget, EmbedSnugget, SlideshowSnugget, SnuggetPopOut, SnuggetSection
 
 # @register(SiteSettings)
 # class SiteSettingsTranslationOptions(TranslationOptions):
@@ -35,10 +35,18 @@
 # class TextSnuggetTranslationOptions(TranslationOptions):
 #   fields = ('content',)
 
-# @register(SnuggetSection)
-# class SunggetSectionTranslationOptions(TranslationOptions):
-#   fields = ('display_name',)
+# @register(EmbedSnugget)
+# class EmbedSnuggetTranslationOptions(TranslationOptions):
+#   fields = ('text',)
 
-# @register(SnuggetSubSection)
-# class SunggetSubSectionTranslationOptions(TranslationOptions):
+# @register(SlideshowSnugget)
+# class SlideshowSnuggetTranslationOptions(TranslationOptions):
+#   fields = ('text',)
+
+# @register(SnuggetPopOut)
+# class SnuggetPopOutTranslationOptions(TranslationOptions):
+#   fields = ('text', 'alt_text')
+
+# @register(SnuggetSection)
+# class SnuggetSectionTranslationOptions(TranslationOptions):
 #   fields = ('display_name',)
