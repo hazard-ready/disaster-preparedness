@@ -1,0 +1,437 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-24 20:36+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: disasterinfosite/settings.py:70
+msgid "English"
+msgstr ""
+
+#: disasterinfosite/settings.py:71
+msgid "Spanish"
+msgstr ""
+
+#: disasterinfosite/templates/about.html:16
+#: disasterinfosite/templates/index.html:16
+msgid ""
+"Enter your location for a personalized report on your risks and how to "
+"prepare."
+msgstr ""
+
+#: disasterinfosite/templates/about.html:43
+msgid "The Hazard Ready Team"
+msgstr ""
+
+#: disasterinfosite/templates/about.html:53
+msgid ""
+"Carson has a B.Sc. and M.Sc. in Geology from Western Washington University "
+"and the University of Montana. She is now working on her PhD at Boise State "
+"University where she studies how to best communicate natural hazard risk "
+"information to broad audiences. She writes the content and processes the "
+"data for each HazardReady site."
+msgstr ""
+
+#: disasterinfosite/templates/about.html:70
+msgid ""
+"Rebecca Bendick has a Ph.D. in geophysics from the University of Colorado. "
+"Her research on tectonics and earthquake mechanics led to an interest in how "
+"human communities are affected by natural disasters, and inspires her "
+"ongoing efforts to help people better understand and prepare for them. She "
+"writes and lectures on the ethics of science communication as well as on her "
+"basic geophysical research."
+msgstr ""
+
+#: disasterinfosite/templates/about.html:86
+msgid ""
+"Grant Kier has a M.Sc. in geology from the University of Colorado. He is "
+"broadly interested in community resilience in the context of manmade and "
+"natural changes. He also has a background in business practices and "
+"currently works on economic development, fostering small and startup "
+"companies in western Montana."
+msgstr ""
+
+#: disasterinfosite/templates/about.html:94
+#, python-format
+msgid "%(title)s Partners and Collaborators"
+msgstr ""
+
+#: disasterinfosite/templates/about.html:99
+msgid ""
+"RDPO is a partnership of government agencies, non-governmental "
+"organizations, and private-sector stakeholders in the Portland Metropolitan "
+"Region collaborating to increase the region’s resiliency to disasters. The "
+"metropolitan region spans Clackamas, Columbia, Multnomah, and Washington "
+"Counties in Oregon and Clark County in Washington."
+msgstr ""
+
+#: disasterinfosite/templates/about.html:103
+msgid "American Red Cross: Cascades Region"
+msgstr ""
+
+#: disasterinfosite/templates/about.html:106
+msgid "Mercy Corps"
+msgstr ""
+
+#: disasterinfosite/templates/about.html:109
+msgid "Portland Bureau of Emergency Management"
+msgstr ""
+
+#: disasterinfosite/templates/about.html:112
+msgid "Multnomah County"
+msgstr ""
+
+#: disasterinfosite/templates/about.html:115
+msgid "Washington County"
+msgstr ""
+
+#: disasterinfosite/templates/about.html:118
+msgid "Clark County"
+msgstr ""
+
+#: disasterinfosite/templates/about.html:121
+msgid "Clackamas County"
+msgstr ""
+
+#: disasterinfosite/templates/about.html:129
+msgid ""
+"How we build Hazard Ready Sites: 1. Gather data. Locate the most relevant "
+"and up-to-date data on natural hazards for your region from trusted sources "
+"like FEMA, NOAA, and the USGS. 2. Quality Check. Work with local partners "
+"(community groups & emergency managers) to ensure the data and infomration "
+"are accurate. 3. Process data. Take in raw data and make it compatible with "
+"the backend Hazard Ready framework. 4. Build content. Write the webpage "
+"text, gather images and videos, locate local resources for each hazard and "
+"region. 5. Feedback and focus groups. Go back and forth on content and "
+"designs to ensure the information is location specific and relevant to the "
+"community's needs. 6. Revise, revise, revise."
+msgstr ""
+
+#: disasterinfosite/templates/about.html:134
+#, python-format
+msgid ""
+"%(title)s is designed to help educate and prepare people for disasters that "
+"occur in their area. Disasters don’t strike locations equally so we found it "
+"important to give location specific information in order to properly "
+"prepare. %(title)s organizes current information and packages it in a way "
+"that makes it accessible for any %(area_name)s resident."
+msgstr ""
+
+#: disasterinfosite/templates/about.html:137
+#, python-format
+msgid ""
+"This site uses the most up-to-date hazard risk data available for "
+"%(area_name)s. The user of this site is responsible for verifying any "
+"particular information with the original data sources. Although these data "
+"represent the best current assessment of hazards, they are not predictive of "
+"future events. The descriptions of risk and how to prepare for those risks "
+"are based on best information from the American Red Cross and the Federal "
+"Emergency Management Agency."
+msgstr ""
+
+#: disasterinfosite/templates/about.html:145
+#, python-format
+msgid ""
+"Data used for %(title)s is available for download <a href=\"%(download)s\" "
+"target=\"_blank\" rel=\"noopener\">here</a>."
+msgstr ""
+
+#: disasterinfosite/templates/about.html:152
+msgid "Quick Data Overview"
+msgstr ""
+
+#: disasterinfosite/templates/about.html:154
+#, python-format
+msgid "Take a look at some overviews of the data we used for %(area_name)s:"
+msgstr ""
+
+#: disasterinfosite/templates/found_content.html:10
+msgid "What to expect for"
+msgstr ""
+
+#: disasterinfosite/templates/found_content.html:15
+#: disasterinfosite/templates/no_content_found.html:9
+msgid "Wrong address? Start over"
+msgstr ""
+
+#: disasterinfosite/templates/found_content.html:35
+#, python-format
+msgid "An intensity meter at %(group.percentage)s%%"
+msgstr ""
+
+#: disasterinfosite/templates/found_content.html:49
+msgid "Low Risk"
+msgstr ""
+
+#: disasterinfosite/templates/found_content.html:55
+msgid "High Risk"
+msgstr ""
+
+#: disasterinfosite/templates/geek_box.html:7
+msgid "Who made this?"
+msgstr ""
+
+#: disasterinfosite/templates/geek_box.html:11
+#, python-format
+msgid ""
+"Have questions? <a href=\"mailto:%(email)s\">Email the creators</a> for more "
+"information."
+msgstr ""
+
+#: disasterinfosite/templates/index.html:48
+#: disasterinfosite/templates/index.html:64
+msgid "About"
+msgstr ""
+
+#: disasterinfosite/templates/index.html:54
+msgid "Find Me"
+msgstr ""
+
+#: disasterinfosite/templates/index.html:56
+msgid "Location"
+msgstr ""
+
+#: disasterinfosite/templates/index.html:76
+msgid ""
+"Give a location by typing in the box at the top of the page, clicking on the "
+"map, or clicking 'find me'. You'll get a personalized report on your natural "
+"hazard risks and steps you can take to prepare."
+msgstr ""
+
+#: disasterinfosite/templates/index.html:87
+msgid "What are my risks?"
+msgstr ""
+
+#: disasterinfosite/templates/index.html:88
+msgid "What to Expect"
+msgstr ""
+
+#: disasterinfosite/templates/index.html:90
+#, python-format
+msgid ""
+"\n"
+"        %(settings.site_title)s gives you an idea of which natural disasters "
+"you might experience in the future based on a location in "
+"%(location.area_name)s.\n"
+"      "
+msgstr ""
+
+#: disasterinfosite/templates/index.html:95
+msgid "How to Prepare"
+msgstr ""
+
+#: disasterinfosite/templates/index.html:97
+msgid ""
+"You have the power to make a difference. Find out how you can protect your "
+"loved ones and home before the next disaster hits."
+msgstr ""
+
+#: disasterinfosite/templates/index.html:100
+msgid "In Recent History"
+msgstr ""
+
+#: disasterinfosite/templates/index.html:102
+#, python-format
+msgid ""
+"\n"
+"        Find out which disasters have struck %(location.area_name)s in the "
+"past, what impact they had, and where they happened.\n"
+"      "
+msgstr ""
+
+#: disasterinfosite/templates/index.html:115
+msgid "Getting results for your location..."
+msgstr ""
+
+#: disasterinfosite/templates/language_selector.html:27
+msgid "Language"
+msgstr ""
+
+#: disasterinfosite/templates/no_content_found.html:6
+msgid "No information available for"
+msgstr ""
+
+#: disasterinfosite/templates/no_content_found.html:17
+msgid "No information available."
+msgstr ""
+
+#: disasterinfosite/templates/no_content_found.html:19
+#, python-format
+msgid "It looks like your location is outside of %(area_name)s."
+msgstr ""
+
+#: disasterinfosite/templates/no_content_found.html:20
+msgid ""
+"While we value and promote resilience everywhere, the data that powers this "
+"site isn't available for other places yet."
+msgstr ""
+
+#: disasterinfosite/templates/supply-kit.html:3
+msgid "Experts suggest you have the following:"
+msgstr ""
+
+#: disasterinfosite/templates/supply-kit.html:8
+msgid "Days of supplies"
+msgstr ""
+
+#: disasterinfosite/templates/supply-kit.html:8
+#: disasterinfosite/templates/supply-kit.html:13
+#: disasterinfosite/templates/supply-kit.html:18
+msgid "per person"
+msgstr ""
+
+#: disasterinfosite/templates/supply-kit.html:13
+msgid "Gallons of water"
+msgstr ""
+
+#: disasterinfosite/templates/supply-kit.html:18
+msgid "Meals"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_interaction_buttons.html:3
+msgid "Log Out"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_interaction_buttons.html:4
+msgid "Update My Info"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_interaction_buttons.html:5
+#: disasterinfosite/templates/users/user_interactions.html:3
+#: disasterinfosite/templates/users/user_login.html:3
+msgid "Log In"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_interaction_buttons.html:6
+#: disasterinfosite/templates/users/user_interactions.html:4
+#: disasterinfosite/templates/users/user_signup.html:3
+msgid "Sign Up"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_interactions.html:5
+#: disasterinfosite/templates/users/user_login.html:4
+#: disasterinfosite/templates/users/user_profile.html:23
+#: disasterinfosite/templates/users/user_signup.html:4
+msgid "Cancel"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_interactions.html:10
+msgid "Welcome back!"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_interactions.html:12
+#, python-format
+msgid "If your username isn't %(username)s, you might want to log out."
+msgstr ""
+
+#: disasterinfosite/templates/users/user_interactions.html:25
+#, python-format
+msgid "Welcome back, %(username)s!"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_interactions.html:28
+msgid "We're logging you in. Just a moment..."
+msgstr ""
+
+#: disasterinfosite/templates/users/user_interactions.html:32
+msgid "Whoops, it looks like that username or password didn't work."
+msgstr ""
+
+#: disasterinfosite/templates/users/user_interactions.html:39
+msgid "Whoops, we're not sure what happened there. Maybe you should try again."
+msgstr ""
+
+#: disasterinfosite/templates/users/user_login.html:7
+msgid "Required."
+msgstr ""
+
+#: disasterinfosite/templates/users/user_login.html:9
+msgid "Username (your email address)"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_login.html:12
+msgid "Password"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_login.html:22
+msgid ""
+"Need some help (like a password reset)? <a href=\"mailto:help@hazardready.org"
+"\">Email us.</a>"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_profile.html:6
+#: disasterinfosite/templates/users/user_signup.html:14
+msgid "Street Address"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_profile.html:9
+#: disasterinfosite/templates/users/user_signup.html:17
+msgid "Other Address Information"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_profile.html:12
+#: disasterinfosite/templates/users/user_signup.html:20
+msgid "City"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_profile.html:15
+#: disasterinfosite/templates/users/user_signup.html:23
+msgid "State"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_profile.html:18
+#: disasterinfosite/templates/users/user_signup.html:26
+msgid "Zip Code"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_profile.html:22
+msgid "Update"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_profile.html:28
+msgid "Thanks for keeping us up to date!"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_signup.html:8
+msgid "Email address (this will be your username)"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_signup.html:11
+msgid "Password (more than 8 characters long, please)"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_signup.html:35
+msgid "Need some help? <a href=\"mailto:help@hazardready.org\">Email us.</a>"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_signup.html:40
+msgid ""
+"Thanks for signing up! We'll get ahold of you with relevant news and "
+"information. You can come back anytime to update your address."
+msgstr ""
+
+#: disasterinfosite/templates/users/user_why_sign_up.html:4
+msgid "Why should you sign up?"
+msgstr ""
+
+#: disasterinfosite/templates/users/user_why_sign_up.html:6
+msgid ""
+"Sign up for free to access customized hazard preparedness information. By "
+"providing your address, you will get updates about seasonal hazards and "
+"ongoing incidents specific to your location. We want you to be better "
+"prepared so you can keep your family, friends, and neighbors safe when a "
+"disaster strikes! Personal information will be protected and secure."
+msgstr ""
