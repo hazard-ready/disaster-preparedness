@@ -64,14 +64,16 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 LANGUAGE_CODE = 'en'
 USE_L10N = True
 
-# If you're translating this site, add the languages you're translating to here.w
+# If you're translating this site, add the languages you're translating to here.
 gettext = lambda s: s
 LANGUAGES = (
     ('en', gettext('English')),
     ('es', gettext('Spanish'))
 )
 
-MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+# If you have only one language beside English, this trailing comma is important.
+MODELTRANSLATION_LANGUAGES = ('es',)
+
 USE_I18N = True
 TIME_ZONE = 'UTC'
 USE_TZ = True
