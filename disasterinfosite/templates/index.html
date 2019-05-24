@@ -45,7 +45,7 @@
         </div>
       </a>
       <div class="header__about header__about--small hide-for-medium-up--flex">
-        <a class="link--plain" href="about"><h5 class="about__link link--grey">About</h5></a>
+        <a class="link--plain" href="about"><h5 class="about__link link--grey">{% trans "About" %}</h5></a>
         {% include "language_selector.html" %}
       </div>
     </div>
@@ -53,7 +53,7 @@
     {% block search %}
     {% trans "Find Me" as find_me %}
       <div class="location-form" role="form" aria-label="location-search">
-        <label class="sr-only" for="location-text">Location</label>
+        <label class="sr-only" for="location-text">{% trans "Location" %}</label>
         <input name="location-text" id="location-text" type="text" placeholder="Enter your home address to see your risk" />
         <button id="auto-location" class="auto-location-submit caps"><img class="icon--locate-me" src="{% webpack_static 'build/locate-me.svg' %}" alt="">{{ find_me }}</button>
         <button id="location-submit"><img class="icon--search" src="{% webpack_static 'build/icon-search.png' %}" alt="search"></button>
@@ -61,7 +61,7 @@
       </div>
     {% endblock search %}
     <div class="header__about hide-for-small--flex">
-      <a class="link--plain" href="about"><h5 class="about__link link--grey">About</h5></a>
+      <a class="link--plain" href="about"><h5 class="about__link link--grey">{% trans "About" %}</h5></a>
       {% include "language_selector.html" %}
     </div>
   </header>

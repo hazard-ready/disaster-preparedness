@@ -32,7 +32,7 @@
   <h2>{{group.display_name}}</h2>
   <div class="disaster-content">
     <div class="intensity-meter">
-      <div class="sr-only">An intensity meter at {{group.percentage}}%</div>
+      <div class="sr-only">{% blocktrans %}An intensity meter at {{group.percentage}}%{% endblocktrans %}</div>
       <div
         class="intensity-label caps"
         style="right: calc((100% - {{group.percentage}}%) / 1.5)"
@@ -46,13 +46,13 @@
         class="intensity-caption intensity-caption--low"
         aria-hidden="”true”"
       >
-        Low Risk
+        {% trans "Low Risk" %}
       </div>
       <div
         class="intensity-caption intensity-caption--high"
         aria-hidden="”true”"
       >
-        High Risk
+        {% trans "High Risk" %}
       </div>
     </div>
     {% for section, snuggets in hazard.items %}
