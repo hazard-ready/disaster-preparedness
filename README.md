@@ -9,7 +9,7 @@ The project will explore traditional and qualitative scoring assessments of “r
 - PostgresSQL (most package managers will auto-install this as a dependency of either of the following items)
 - PostGIS
 - Postgresql-server-dev-all
-- GDAL
+- GDAL (version 2.0.0 or newer)
 - libjpeg-dev
 - Python modules listed in [requirements.txt](./requirements.txt)
   - On a Linux machine you may need to install `python-dev` (through the Linux package manager) as a prerequisite, and if you have trouble getting `psycopg2` to install you may have better luck using the package manager's version of that module.
@@ -42,7 +42,7 @@ While management and data loading files are in this project's root directory, ev
 
 ## File structure
 
-- `/disasterinfosite/data` contains the shapefiles and text content (snuggets - see [Adding New Data](#adding-new-data) below for explanation) that will be loaded.
+- `/disasterinfosite/data` contains the data sources (shapefiles and/or rasters) and text content (snuggets - see [Adding New Data](#adding-new-data) below for explanation) that will be loaded.
 - `/disasterinfosite/migrations` contains Django-generated files that specify how to set the database up. We don't recommend editing these manually.
 - `/disasterinfosite/static/css` contains all the stylesheets for this site.
 - `/disasterinfosite/static/img` contains all the static images - if you want to change icons, etc, look here.
@@ -94,9 +94,9 @@ This assumes `python` is the command configured to run the correct python versio
 
 0. `source venv/bin/activate` or `. venv/bin/activate` if you haven't already activated the virtualenv this session.
 1. Unzip `data.zip` inside disasterinfosite, so that the data is in `disasterinfosite/data`. This data includes some sample shapefiles and related data for Missoula County, Montana, USA, to get you started. See below for instructions on replacing this with your own data.
-1. `python import.py` to process these shapefiles and update some Django code to fit. For each shapefile, the script will prompt you for two things:
+1. `python import.py` to process the data and update some Django code to fit. For each data source, the script will prompt you for two things:
    - Which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition). If there is a field named `lookup_val`, that will be used by default. If you use the example `data.zip` provided in this project, use the field name `FEMADES` for `Flood_FEMA_DFRIM_2015`.
-   - Whether you want to group the content from this shapefile in a tab with content from any others. If you want a shapefile to have its own unique tab, just press return at this prompt. If you want to group 2 or more shapefiles together under 1 tab (e.g. if you have a shapefile for wildfire probability and another with historical wildfire information), just enter the same group name for both at this prompt. Note that these group names are only used in the code--headings displayed to the user come from the "snugget" file loaded in step 6 below--and should contain only letters, no spaces or punctuation.
+   - Whether you want to group the content from this data source in a tab with content from any others. If you want a dataset to have its own unique tab, just press return at this prompt. If you want to group 2 or more datasets together under 1 tab (e.g. if you have a shapefile for wildfire probability and another with historical wildfire information), just enter the same group name for both at this prompt. Note that these group names are only used in the code--headings displayed to the user come from the "snugget" file loaded in step 6 below--and should contain only letters, no spaces or punctuation.
 1. `python manage.py makemigrations` - this and the next 2 steps combined load the new data into the database.
 1. `python manage.py migrate`
 1. `python manage.py shell`
@@ -125,7 +125,7 @@ Save them to your `.bash_profile` or equivalent.
 1. `python manage.py createsuperuser`
 2. `python manage.py runserver` to run a development server on localhost:8000 or see below for how to deploy via Apache.
 3. Visit http://server.ip/admin and log in with new user.
-4. You should see a list of content. _Don't try to directly edit data that came from the shapefiles - they are liable to be so complex with so many points that attempting this freezes or crashes the browser._ **TODO: Do those shapefiles need to show up in here at all?**
+4. You should see a list of content. _Don't try to directly edit data that came from the shapefiles/rasters - they are liable to be so complex with so many points that attempting this freezes or crashes the browser._ **TODO: Do those shapefiles need to show up in here at all?**
 5. There are other pieces of content that you can and should edit, though! They are bits of text and other information that show up on this site.
 6. **Important Links** - Add as many of these as you want. They show up under 'Important Links' when location-specific information is found. You can put any text in the 'link' field and web addresses are turned into links automatically. The title shows up in bold over each link.
 7. **Location Information** - Area Name shows up all over the place, especially in the instructions on the home page. 'Community leaders' appears under location-specific information.
@@ -156,23 +156,32 @@ _Not tested by the current maintainers_
 
 ### What you need
 
-1. At least one shapefile, meeting the following requirements:
-   1. Each shapefile's attribute table must contain a column with a unique identifier for each set of text to display (e.g. all the areas for which you want to display "Expected ground shaking: severe" have one ID, and all the areas for which you want to display "Expected ground shaking: moderate" have another). This column will be used to look up text when a user selects a location.
-   2. That column's name must comply with the [Django field name restrictions](https://docs.djangoproject.com/en/1.9/topics/db/models/#field-name-restrictions), including not being one of the [Python 3 reserved words](https://stackoverflow.com/questions/22864221/is-the-list-of-python-reserved-words-and-builtins-available-in-a-library/22864250#22864250). For example, if the column is called `id`, `object`, `map`, `property` or `type`, you'll have to rename it.
-   3. It doesn't matter which coordinate reference system the shapefile has been saved with, but if you're making them yourself then we recommend using EPSG:4326, because the import pipeline will reproject it to that anyway.
-   4. If you have multiple shapefiles, clip them all to cover the same area. Otherwise, if users click on a location that is covered by some shapefiles but not others they will see partial data without a clear explanation that there is missing data.
-   5. Multiple shapes may overlap, but each shape may only have one value for the lookup field. If you have multiple shapes with the same lookup value, the import process will combine them.
+1. At least one shapefile or raster, meeting the requirements listed below.
 2. Some text content to display when a user chooses a location in one or more of your shapefiles. In this project, the text content is referred to as **snuggets**, from "story nuggets".
 
-If you have raster data, first convert it to a shapefile. See [Converting raster files](#converting-raster-files) below for pointers if you don't already know how to do that.
+#### Requirements for a shapefile
+
+1. Each shapefile's attribute table must contain a column with a unique identifier for each set of text to display (e.g. all the areas for which you want to display "Expected ground shaking: severe" have one ID, and all the areas for which you want to display "Expected ground shaking: moderate" have another). This column will be used to look up text when a user selects a location.
+2. That column's name must comply with the [Django field name restrictions](https://docs.djangoproject.com/en/1.9/topics/db/models/#field-name-restrictions), including not being one of the [Python 3 reserved words](https://stackoverflow.com/questions/22864221/is-the-list-of-python-reserved-words-and-builtins-available-in-a-library/22864250#22864250). For example, if the column is called `id`, `object`, `map`, `property` or `type`, you'll have to rename it.
+3. It doesn't matter which coordinate reference system the shapefile has been saved with, but if you're making them yourself then we recommend using EPSG:4326, because the import pipeline will reproject it to that anyway.
+4. If you have multiple shapefiles, clip them all to cover the same area. Otherwise, if users click on a location that is covered by some shapefiles but not others they will see partial data without a clear explanation that there is missing data.
+5. Multiple shapes may overlap, but each shape may only have one value for the lookup field. If you have multiple shapes with the same lookup value, the import process will combine them.
+
+#### Requirements for a raster file
+
+1. The format must be GeoTIFF, with a `.tif` file extension.
+2. Band 0 must contain a unique identifier for each set of text to display.  If the file contains multiple bands, all but the first will be ignored.
+3. Band 0 must contain unsigned integers no larger than 254 (they'll be stored as a single byte, real numbers will be rounded off to the nearest integer, and 255 is reserved for NODATA).
+4. The values in Band 0 must be higher for more serious warnings.  This is because the file will be reprojected to EPSG:4326 during import, and values are rounded up in the reprojection.  As long as higher values are the more serious warnings, this will not create a risk of people seeing an inappropriate "all clear" message for their location.
+5. Each data source must be one single `.tif` file.  Large files will be tiled automatically during the load but the data import pipeline does not currently have the ability to combine rasters.
 
 ### Fully automated pipeline
 
-If the structure of your text content is simple enough, you can import shapefiles and snuggets automatically without having to do much manual work. We recommend using this pathway if possible, because it makes moving the site to a new server significantly easier. To do this, you will need a `snuggets.csv` file with the same columns as the example one we've included in `data.zip`. The columns can be in any order, but the headings must be exactly as typed here:
+If the structure of your text content is simple enough, you can import shapefiles/rasters and snuggets automatically without having to do much manual work. We recommend using this pathway if possible, because it makes moving the site to a new server significantly easier. To do this, you will need a `snuggets.xlsx` file with the same columns as the example one we've included in `data.zip`. The columns can be in any order, but the headings must be exactly as typed here:
 
-- `heading` : A human-readable heading that describes the content of this shapefile, to be displayed on the page. This will correspond to the shapefile group.
+- `heading` : A human-readable heading that describes the content of this shapefile or raster, to be displayed on the page. This will correspond to the shapefile group.
 - `section` : A section name that will be displayed on the page (must not be empty)
-- `shapefile` : The file name for the shapefile this row corresponds to, without the extenstion. For example: `EQ_GroundShaking_MostLike` for text that relates to the content of `EQ_GroundShaking_MostLike.shp`. (must not be empty; must correspond exactly to the available shapefiles)
+- `shapefile` : The file name for the shapefile or raster file this row corresponds to, without the extension. For example: `EQ_GroundShaking_MostLike` for text that relates to the content of `EQ_GroundShaking_MostLike.shp`. (must not be empty; must correspond exactly to the available files)
 
 -`txt_location` : The order in which this text will appear within its section.
 
@@ -184,32 +193,33 @@ If the structure of your text content is simple enough, you can import shapefile
 
 -`pop_out_txt` : Text to go in the auxiliary sidebar for this snugget.
 
-- `lookup_value` : The value of the unique identifier in the shapefile (e.g. an intensity value or a hazard classification). This field can be empty; if it is then the rest of this row will be applied to every available value.
-- `intensity` : Relative severity scaled from 0-100, to display graphically on the page. If this is empty, or if a value is provided for `image`, it will simply not be displayed.
+-`lookup_value` : The value of the unique identifier in the shapefile (e.g. an intensity value or a hazard classification), or the pixel value of a raster that corresponds to this. This field can be empty; if it is then the rest of this row will be applied to every available value. If this field contains a value that is not present in the data, the load script will find that, warn you, and skip loading it.
+
+-`intensity` : Relative severity scaled from 0-100, to display graphically on the page. If this is empty, or if a value is provided for `image`, it will simply not be displayed.
 
 -`intensity_txt` : Explanatory text for the intensity value.
 
-- `text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria. If you put a url in the snugget text, like `http://www.github.com`, we'll automatically make it into a link for you.
+-`text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria. If you put a url in the snugget text, like `http://www.github.com`, we'll automatically make it into a link for you.
 
--`image_slideshow_folder` : If this is present, the snugget loader will look for a folder inside an `images` folder at the same level as `snuggets.csv` (example: if `snuggets.csv` is in `data\images` and you set this value to `earthquake_photos`, the loader will look for images in `data\images\earthquake_photos`). The loader expects to find two things in that folder: images, and a file called `slideshow.csv`.
+-`image_slideshow_folder` : If this is present, the snugget loader will look for a folder inside an `images` folder at the same level as `snuggets.xlsx` (example: if `snuggets.xlsx` is in `data\images` and you set this value to `earthquake_photos`, the loader will look for images in `data\images\earthquake_photos`). The loader expects to find two things in that folder: images, and a file called `slideshow.csv`.
 
 `slideshow.csv` should have two columns: `image` and `caption`. `image` is the filename of the image, and `caption` is whatever you would like the caption for that image to be.
 
 -`video` is the url of a YouTube video that you would like to embed in this snugget.
 
-You can have any number of sections, but every row must be a unique combination of `shapefile`, `section`, and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used. Note that this allows you to create a default value for a given section, subsection and shapefile, by having a row with `lookup_value` blank (so it applies to all values present in the shapefile), followed by rows with specified `lookup_value`s which will overwrite the default for that value only.
+You can have any number of sections, but every row must be a unique combination of `shapefile`, `section`, and `lookup_value`. If you define more than one row for the same permutation, only the last one in the file will actually be used. Note that this allows you to create a default value for a given section, subsection and shapefile, by having a row with `lookup_value` blank (so it applies to all values present in the data source), followed by rows with specified `lookup_value`s which will overwrite the default for that value only.
 
 Blank rows or additional columns won't cause problems. Any row that is missing any of the required fields will be skipped and a warning will be printed.
 
-Once `snuggets.csv` is ready, simply put it and the relevant shapefiles in `disasterinfosite/data` (and remove any other files or subdirectories from there), and follow the instructions in [Load Some Data](#load-some-data) above.
+Once `snuggets.xlsx` is ready, simply put it and the relevant data files in `disasterinfosite/data` (and remove any other files or subdirectories from there), and follow the instructions in [Load Some Data](#load-some-data) above.
 
 #### Updating existing data
 
 If you make changes to `snuggets.xlsx` you should only need to re-run `python snugget_load.py` and restart your web server.
 
-If you make changes to the shapefiles, or change which field from the shapefiles you want to use as the ID, then before running `python import.py` you will also need to remove the `disasterinfosite/data/reprojected` and `word/data/simplified` directories that the importer had created. It uses these to avoid having to repeat the time-consuming reprojection and simplification of the shapefiles every time it is run, but that means changes to the shapefiles themselves won't be picked up unless they are removed.
+If you make changes to the shapefiles/rasters, or change which field from the shapefiles you want to use as the ID, then before running `python import.py` you will also need to remove the `disasterinfosite/data/reprojected` and `word/data/simplified` directories that the importer had created. It uses these to avoid having to repeat the time-consuming reprojection and simplification of the shapefiles or reprojection of the rasters every time it is run, but that means changes to the files themselves won't be picked up unless they are removed.
 
-If you have existing data that needs to be removed—perhaps because you are replacing our sample data, or retiring a shapefile you previously used—you may have to clear the database first. To do this:
+If you have existing data that needs to be removed—perhaps because you are replacing our sample data, or retiring a dataset you previously used—you may have to clear the database first. To do this:
 
 1. `psql -d [DBNAME] -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public; CREATE EXTENSION postgis;"`
 2. `python manage.py migrate` - if this step throws errors, delete all the .py files in `disasterinfosite/migrations` **except** `__init__.py` and `0001_initial.py`, and try again.
@@ -233,36 +243,6 @@ If you have some data that fits that automated import model and some that does n
 1. You'll have to reproject the shapefiles that aren't going through the import pipeline to EPSG:4326 yourself.
 2. Put the shapefiles that aren't being manually imported somewhere other than `disasterinfosite/data` to keep them out of the automated pipeline.
 3. Be very careful to avoid putting any of your manually edited code between the `# GENERATED CODE GOES HERE` and `# END OF GENERATED CODE BLOCK` comment pairs in the Python files, because that part gets overwritten by `import.py` each time.
-
-### Converting raster files
-
-The import pipeline doesn't currently have a way to handle raster data. Instead you'll have to convert the file to vector data first, and save the shapefile this creates in `disasterinfosite/data`. Here are three ways to do that:
-
-#### Using GDAL from the command line
-
-GDAL includes a [polygonize](http://www.gdal.org/gdal_polygonize.html) tool. If you have this available, then simply run:
-
-```shell
-gdal_polygonize.py RASTERFILENAME.tif -f 'ESRI Shapefile' OUTPUTFILENAME.shp
-```
-
-This is the preferred method if you already have GDAL installed, but if you don't then be aware that installing GDAL can be complicated.
-
-The output file will have an attribute `DN` that contains the pixel values from the raster file.
-
-#### Using QGIS
-
-- Open the raster file in QGIS
-- Choose `Raster > Conversion > Polygonize` from the menus
-- Use the Select button by "Output file" to give this a destination in `disasterinfosite/data`, and leave the other options as they are
-- Click "OK" and be warned that it may take a while
-- When it's finished, check the shapefile it's created. It likes to create lines instead of polygons - if it did that, then use `Vector > Geometry Tools > Lines to Polygons` to make an actual polygons file, and take the lines file out of `disasterinfosite/data`.
-
-The output file will have an attribute `DN` that contains the pixel values from the raster file.
-
-#### Using ArcGIS
-
-Try [these instructions](http://help.arcgis.com/en/arcgisdesktop/10.0/help/index.html#/Raster_to_Polygon/001200000008000000/).
 
 ## Django Admin settings and what they mean
 

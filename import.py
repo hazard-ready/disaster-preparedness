@@ -1,6 +1,7 @@
 import os
 import subprocess
 
+from django.contrib.gis.gdal import GDALRaster
 import shapefile
 
 def main():
@@ -40,14 +41,20 @@ def main():
 
   first = True
   for f in os.listdir(dataDir):
-    if f[-4:].lower() == ".shp":
-      stem = f[:-4].replace(".", "_").replace("-","_")
+    rasterFound = False
+    shapefileFound = False
+    stem = f[:-4].replace(".", "_").replace("-","_")
+    extension = f[-4:].lower()
+    if extension == ".tif":
+      rasterFound = True
+      print("Opening raster data source:", stem)
+      rst, reprojected = processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID)
+    elif extension == ".shp":
+      shapefileFound = True
       print("Opening shapefile:", stem)
       #TODO: if there's already a reprojected shapefile, use the field in that instead of prompting the user.
       sf = shapefile.Reader(os.path.join(dataDir, f))
       keyField = askUserForFieldNames(sf, stem)
-      shapefileGroup = askUserForShapefileGroup(stem, existingShapefileGroups)
-
       reprojected = processShapefile(f, stem, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID, keyField)
       simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
       sf = shapefile.Reader(simplified)
@@ -56,11 +63,18 @@ def main():
 
 #Code generation: one line in this function writes one line of code to be copied elsewhere
 # one block represents the code generation for each destination file
+    if shapefileFound or rasterFound:
+      shapefileGroup = askUserForShapefileGroup(stem, existingShapefileGroups)
       modelsLocationsList += "            '" + stem + "': " + stem + ".objects.data_bounds(),\n"
-
-      modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType, shapefileGroup)
-      modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem + ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
-      modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
+      if shapefileFound:
+        modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType, shapefileGroup)
+        modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem + ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
+        modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
+      elif rasterFound:
+        # Note that for now we just automatically use band 0 of any raster.
+        modelsClasses += modelClassGenRaster(stem, rst, 0, shapefileGroup)
+        modelsFilters += "    " + stem + "_filter = models.IntegerField(null=True)\n"
+        modelsGeoFilters += modelsGeoFilterGenRaster(stem)
       if shapefileGroup not in existingShapefileGroups:
         existingShapefileGroups.append(shapefileGroup)
         loadGroups += "    " + shapefileGroup + " = ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')\n"
@@ -72,25 +86,25 @@ def main():
       adminFilterRefs += "'" + stem + "_filter'"
       adminSiteRegistrations += "admin.site.register(" + stem + ", GeoNoEditAdmin)\n"
 
-      loadMappings += stem + "_mapping = {\n"
-      loadMappings += "    '" + keyField.lower() + "': '" + keyField + "',\n"
-      loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
-      loadMappings += "}\n\n"
-      loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + simplified + "'))\n"
       loadImports += "    print('Loading data for " + stem + "')\n"
       loadImports += "    from .models import " + stem + "\n"
-      loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
-      loadImports += "    lm_" + stem + ".save(strict=True, verbose=verbose)\n\n"
+      if shapefileFound:
+        loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
+        loadImports += "    lm_" + stem + ".save()\n\n"
+        loadMappings += stem + "_mapping = {\n"
+        loadMappings += "    '" + keyField.lower() + "': '" + keyField + "',\n"
+        loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
+        loadMappings += "}\n\n"
+        loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + simplified + "'))\n"
+      elif rasterFound:
+        loadImports += "    tileLoadRaster(" + stem + ", " + stem + "_tif)\n"
+        loadPaths += stem + "_tif = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + reprojected + "'))\n"
 
       print("")
       first = False
 
   # clear trailing comma from this one
   modelsLocationsList = modelsLocationsList.strip(",\n") + "\n"
-
-  # assemble the whole return statement for the snugget class after going through the loop
-  modelsSnuggetReturns = "        return groupsDict\n"
-
 
   # make sure this gets its own line of code
   adminModelImports += "\n"
@@ -111,7 +125,7 @@ def main():
   outputGeneratedCode(modelsLocationsList, modelsFile, "locationsList")
   outputGeneratedCode(modelsClasses, modelsFile, "modelsClasses")
   outputGeneratedCode(modelsFilters, modelsFile, "modelsFilters")
-  outputGeneratedCode(modelsGeoFilters + "\n" + modelsSnuggetReturns, modelsFile, "modelsGeoFilters")
+  outputGeneratedCode(modelsGeoFilters, modelsFile, "modelsGeoFilters")
 
   outputGeneratedCode(adminModelImports, adminFile, "adminModelImports")
   outputGeneratedCode(adminLists, adminFile, "adminLists")
@@ -167,6 +181,31 @@ def processShapefile(f, stem, inputDir, outputDir, srs, keyField):
     ]
     subprocess.run(ogrCmd, check=True)
   return reprojected
+
+
+
+
+def processRaster(f, stem, dataDir, reprojectedDir, SRIDNamespace, desiredSRID):
+  originalPath = os.path.join(dataDir, f)
+  original = GDALRaster(originalPath, write=False)
+  reprojectedPath = os.path.join(reprojectedDir, f)
+  if os.path.exists(reprojectedPath):
+    print("Skipping reprojection because this file has previously been reprojected.")
+  else:
+    print("Reprojecting to " + SRIDNamespace + ":" + desiredSRID + ".")
+    gdalCmd = [
+      "gdalwarp",
+      "-t_srs", SRIDNamespace + ":" + desiredSRID,
+      "-ot", "Byte",
+      "-dstnodata", "255",
+      "-r", "max",
+      "-multi", "-wo", "NUM_THREADS=ALL_CPUS",
+      originalPath,
+      reprojectedPath
+    ]
+    subprocess.run(gdalCmd, check=True)
+  return GDALRaster(reprojectedPath, write=False), reprojectedPath
+
 
 
 
@@ -252,8 +291,8 @@ def detectGeometryType(sf, stem):
     print("WARNING:", stem, "has a point geometry, and this application currently only handles polygons properly")
     return "MultiPoint"
   elif shapeType > 20:
-  	print("Support for Multipart geometries is not implemented yet")
-  	exit()
+    print("Support for Multipart geometries is not implemented yet")
+    exit()
   else:
     print("Geometry field type ", shapeType, "unrecognised")
 # the list of valid geometry field type codes is at
@@ -268,7 +307,7 @@ def findEncoding(sf, inputDir, stem):
   encodingFile = os.path.join(inputDir, stem+".cpg")
 # if .cpg is not found, try .CPG in case we're on a case sensitive file system
   if not os.path.exists(encodingFile):
-  	encodingFile = os.path.join(inputDir, stem+".CPG")
+    encodingFile = os.path.join(inputDir, stem+".CPG")
 
   if os.path.exists(encodingFile):
     with open(encodingFile, 'r') as f:
@@ -301,6 +340,7 @@ def findFieldType(sf, fieldName):
 
 
 
+
 def modelClassGen(stem, sf, keyField, srs, shapeType, shapefileGroup):
   text  = "class " + stem + "(models.Model):\n"
   text += "    def getGroup():\n"
@@ -316,11 +356,34 @@ def modelClassGen(stem, sf, keyField, srs, shapeType, shapefileGroup):
 
 
 
+def modelClassGenRaster(stem, rst, bandNumber, shapefileGroup):
+  text  = "class " + stem + "(models.Model):\n"
+  text += "    def getGroup():\n"
+  text += "        return ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')[0]\n\n"
+  text += "    rast = models.RasterField(srid=" + str(rst.srs.srid) + ")\n"
+  text += "    bbox = models.PolygonField(srid=" + str(rst.srs.srid) + ")\n"
+  text += "    objects = RasterManager()\n\n"
+  text += "    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)\n"
+  text += "    def __str__(self):\n"
+  text += "        return str(self.rast.name) + ',\t' + str(self.bbox) \n\n"
+
+  return text
+
+
 def modelsGeoFilterGen(stem, keyField):
   text  = "        qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
   text += "        " + stem + "_rating = " + "qs_" + stem + ".values_list('" + keyField.lower() + "', flat=True)\n"
   text += "        for rating in " + stem + "_rating:\n"
   text += "            " + stem + "_snugget = Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact=rating).order_by('order').select_subclasses()\n"
+  text += "            if " + stem + "_snugget:\n"
+  text += "                groupsDict[" + stem +".getGroup()].extend(" + stem + "_snugget)\n\n"
+  return text
+
+
+def modelsGeoFilterGenRaster(stem):
+  text  = "        " + stem + "_rating = " + "rasterPointLookup(" + stem + ", lng, lat)\n"
+  text += "        if " + stem + "_rating is not None:\n"
+  text += "            " + stem + "_snugget = Snugget.objects.filter(" + stem + "_filter__exact=" + stem + "_rating).order_by('order').select_subclasses()\n"
   text += "            if " + stem + "_snugget:\n"
   text += "                groupsDict[" + stem +".getGroup()].extend(" + stem + "_snugget)\n\n"
   return text
