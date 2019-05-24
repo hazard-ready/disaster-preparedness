@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models
+from django.contrib.gis.gdal import OGRGeometry
 from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models import Extent
 from embed_video.fields import EmbedVideoField
@@ -9,6 +10,7 @@ from solo.models import SingletonModel
 from django.core.files.storage import FileSystemStorage
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+
 
 SNUG_TEXT = 0
 SNUG_VIDEO = 1
@@ -114,10 +116,11 @@ class Location(SingletonModel):
         east = [-180]
 
         for box in bounds.values():
-            west.append(box[0])
-            south.append(box[1])
-            east.append(box[2])
-            north.append(box[3])
+            if box is not None:
+                west.append(box[0])
+                south.append(box[1])
+                east.append(box[2])
+                north.append(box[3])
 
         # The largest box that contains all the bounding boxes, how Leaflet wants it.
         return [[min(south), min(west)], [max(north), max(east)]]
@@ -153,11 +156,16 @@ class ImportantLink(models.Model):
         return self.title +': ' + self.link
 
 class ShapeManager(models.Manager):
-    def has_point(self, pnt):
-        return self.filter(geom__contains=pnt)
-
     def data_bounds(self):
         return self.aggregate(Extent('geom'))['geom__extent']
+
+
+class RasterManager(models.Manager):
+    def data_bounds(self):
+        return self.aggregate(Extent('bbox'))['bbox__extent']
+
+
+
 
 class ShapefileGroup(models.Model):
     name = models.CharField(max_length=50)
@@ -261,6 +269,40 @@ class SnuggetPopOut(models.Model):
 def default_display_name(sender, instance, *args, **kwargs):
     if not instance.display_name:
         instance.display_name = instance.name
+
+
+# looks up a point in a set of rasters and returns the first value it finds
+# or None if there are no rasters or the point is not within any of them.
+# basic algorithm for this function taken from the django-raster project version 0.6 at
+# https://github.com/geodesign/django-raster/blob/master/raster/utils.py
+def rasterPointLookup(rasterCollection, lng, lat, band=0):
+    # if we have no data at all, then save time and return None immediately
+    if rasterCollection.objects.only("bbox").first() is None:
+        return None
+
+    collectionSRS = rasterCollection.objects.only("bbox").first().bbox.srs
+    pnt = OGRGeometry('POINT({0} {1})'.format(lng, lat), srs=collectionSRS)
+    results = []
+
+    # deferring the raster field will let us speed things up by doing boundary checks against the much faster-to-retrive bbox
+    for tile in rasterCollection.objects.defer("rast").all():
+        # only bother to check for data if we're within the bounds
+        bbox = OGRGeometry(tile.bbox.wkt, srs=collectionSRS)
+        if pnt.intersects(bbox):
+            rst = tile.rast
+            offset = (abs(rst.origin.x - pnt.coords[0]), abs(rst.origin.y - pnt.coords[1]))
+            offset_idx = [int(offset[0] / abs(rst.scale.x)), int(offset[1] / abs(rst.scale.y))]
+
+            # points very close to the boundary can get rounded to 1 pixel beyond it, so fix that here
+            if offset_idx[0] == rst.width:
+                offset_idx[0] -= 1
+            if offset_idx[1] == rst.height:
+                offset_idx[1] -= 1
+
+            return rst.bands[band].data(offset=offset_idx, size=(1,1))[0]
+
+    return None
+
 
 
 class Snugget(models.Model):

@@ -93,28 +93,21 @@ def processRow(row, overwriteAll):
   # check if a snugget for this data already exists
   # if we have a lookup value then deal with this value specifically:
   if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
-    filterVal = row["lookup_value"]
+    filterVal = getShapefileFilter(shapefile, row["lookup_value"])
     oldSnugget = checkForSnugget(shapefile, section, order, filterColumn, filterVal)
     overwriteAll = askUserAboutOverwriting(row, oldSnugget, overwriteAll)
     processSnugget(row, shapefile, section, order, filterColumn, filterVal)
-    return overwriteAll
   else:
     filterVals = findAllFilterVals(shapefile)
     oldSnuggets = []
     for filterVal in filterVals:
-      if filterVal is None:
-        print("Skipping row:")
-        print(row)
-        print("Because no filter for lookup_value", row["lookup_value"], "was found in", row["shapefile"])
-        return overwriteAll
-      else:
-        oldSnugget = checkForSnugget(shapefile, section, order, filterColumn, filterVal)
-        if oldSnugget is not None and oldSnugget not in oldSnuggets:
-          oldSnuggets.append(oldSnugget)
+      oldSnugget = checkForSnugget(shapefile, section, order, filterColumn, filterVal)
+      if oldSnugget is not None and oldSnugget not in oldSnuggets:
+        oldSnuggets.append(oldSnugget)
       overwriteAll = askUserAboutOverwriting(row, oldSnuggets, overwriteAll)
       processSnugget(row, shapefile, section, order, filterColumn, filterVal)
 
-    return overwriteAll
+  return overwriteAll
 
 
 def processSnugget(row, shapefile, section, order, filterColumn, filterVal):
@@ -147,12 +140,29 @@ def getFilterFieldName(shapefile):
 
 def getShapefileFilter(shapefile, filterVal):
   fieldName = getFilterFieldName(shapefile)
-  kwargs = {fieldName: filterVal}
-  if shapefile.objects.filter(**kwargs).exists():
-    return shapefile.objects.get(**kwargs)
+  if fieldName == 'rast':
+    minima = [256]
+    maxima = [0]
+    for tile in shapefile.objects.all():
+      if tile.rast.bands[0].min is not None:
+        if int(filterVal) in tile.rast.bands[0].data():
+          return int(filterVal)
+        minima.append(tile.rast.bands[0].min)
+        maxima.append(tile.rast.bands[0].max)
+    print(
+      "Lookup value of", filterVal,
+      "not found in", shapefile,
+      ", which only has values between", str(min(minima)),
+      "and", str(max(maxima)),
+      "inclusive (and may not have all values in between)."
+    )
   else:
-    print("Could not find a filter field for", shapefile)
-    return None
+    kwargs = {fieldName: filterVal}
+    if shapefile.objects.filter(**kwargs).exists():
+      return shapefile.objects.get(**kwargs)
+    else:
+      print("Could not find a filter field for", shapefile)
+  return None
 
 
 def addPopOutIfExists(row):
@@ -173,31 +183,30 @@ def addPopOutIfExists(row):
 
 def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
   group = shapefile.getGroup()
-  shapefileFilter = getShapefileFilter(shapefile, filterVal)
 
-  kwargs = {
-    'section': section,
-    'group': group,
-    filterColumn: shapefileFilter,
-    'content': row["text"],
-    'percentage': row["intensity"],
-    'order': row['txt_location']
-  }
-  snugget = TextSnugget.objects.create(**kwargs)
-  snugget.pop_out = addPopOutIfExists(row)
-  snugget.save()
-  print('Created snugget:', snugget)
+  if filterVal is not None:
+    kwargs = {
+      'section': section,
+      'group': group,
+      filterColumn: filterVal,
+      'content': row["text"],
+      'percentage': row["intensity"],
+      'order': row['txt_location']
+    }
+    snugget = TextSnugget.objects.create(**kwargs)
+    snugget.pop_out = addPopOutIfExists(row)
+    snugget.save()
+    print('Created snugget:', snugget)
 
 
 
 def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
   group = shapefile.getGroup()
-  shapefileFilter = getShapefileFilter(shapefile, filterVal)
 
   kwargs = {
     'section': section,
     'group': group,
-    filterColumn: shapefileFilter,
+    filterColumn: filterVal,
     'text': row["text"],
     'video': row["video"],
     'percentage': row["intensity"],
@@ -211,12 +220,11 @@ def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
 
 def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
   group = shapefile.getGroup()
-  shapefileFilter = getShapefileFilter(shapefile, filterVal)
 
   kwargs = {
     'section': section,
     'group': group,
-    filterColumn: shapefileFilter,
+    filterColumn: filterVal,
     'text': row["text"],
     'percentage': row["intensity"],
     'order': row['txt_location']
@@ -248,19 +256,31 @@ def addSlideshow(folder, snugget):
 
 def findAllFilterVals(shapefile):
   fieldName = getFilterFieldName(shapefile)
-  return shapefile.objects.values_list(fieldName, flat=True)
+  if fieldName == 'rast':
+    # If it's a raster, we take a small shortcut and just return the whole
+    # range of values from min to max, assuming all the intermediate ones exist.
+    # This may create some surplus snuggets, but won't miss any that should be there.
+    minima = [256]
+    maxima = [0]
+    for tile in shapefile.objects.all():
+      if tile.rast.bands[0].min is not None:
+        minima.append(tile.rast.bands[0].min)
+        maxima.append(tile.rast.bands[0].max)
+    return list(range(min(minima), max(maxima)+1))
+  else:
+    return shapefile.objects.values_list(fieldName, flat=True)
 
 
 def checkForSnugget(shapefile, section, order, filterColumn, filterVal):
-  kwargs = {'section': section, 'order': order, filterColumn: getShapefileFilter(shapefile, filterVal)}
-  if Snugget.objects.filter(**kwargs).exists():
-    return Snugget.objects.select_subclasses().get(**kwargs)
-  else:
-    return None
+  if filterVal is not None:
+    kwargs = {'section': section, 'order': order, filterColumn: filterVal}
+    if Snugget.objects.filter(**kwargs).exists():
+      return Snugget.objects.select_subclasses().get(**kwargs)
+  return None
 
 
 def removeOldSnugget(shapefile, section, order, filterColumn, filterVal):
-  kwargs = {'section': section, filterColumn: getShapefileFilter(shapefile, filterVal), 'order': order}
+  kwargs = {'section': section, filterColumn: filterVal, 'order': order}
   Snugget.objects.filter(**kwargs).delete()
 
 
