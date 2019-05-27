@@ -135,6 +135,28 @@ Landslide:	0 tiles,	0.0019981861114501953	seconds
 
 Removing the "if point is in bbox" secondary check: negligible, inconsistent changes.  Would probably need to do some more thorough instrumenting to find any difference.  I'm taking it out anyway to simplify the code.
 
-Removing the .defer("rast") instruction: also doesn't make an appreciable difference, but I'll test it again with large tiles.
+Removing the .defer("rast") instruction: also doesn't make an appreciable difference; also confirmed with larger tiles.  I'm removing it to simplify the code.
 
 
+
+rasterTileMaxDimension = 8053 # to minimise the number of tiles with these particular files
+
+Point lookup in Portland metro area:
+Wildfire: 	1 tile ,	0.33343505859375	seconds
+Quake:   		1 tile ,	0.897590160369873	seconds
+Landslide:	1 tile ,	0.6214628219604492	seconds
+
+Point lookup in Medford:
+Wildfire: 	0 tiles,	0.0026998519897460938	seconds
+Quake:   		1 tiles,	0.40561890602111816	seconds
+Landslide:	1 tiles,	0.6859381198883057	seconds
+
+Point lookup in Clark County:
+Wildfire: 	 1 tile ,	0.24318313598632812 	seconds
+Quake:   		 1 tile ,	0.7148270606994629	seconds
+Landslide:	 1 tile ,	0.6124980449676514	seconds
+
+Point lookup in Seattle:
+Wildfire: 	0 tiles,	0.0026350021362304688	seconds
+Quake:   		0 tiles,	0.002240896224975586	seconds
+Landslide:	0 tiles,	0.002039194107055664	seconds
