@@ -419,21 +419,21 @@ def rasterPointLookup(rasterCollection, lng, lat, band=0):
     # deferring the raster field will let us speed things up by doing boundary checks against the much faster-to-retrive bbox
     for tile in rasterCollection.objects.filter(bbox__contains=Point(lng, lat)).defer("rast").all():
         tilesRead += 1
-        # only bother to check for data if we're within the bounds
         bbox = OGRGeometry(tile.bbox.wkt, srs=collectionSRS)
-        if pnt.intersects(bbox):
-            rst = tile.rast
-            offset = (abs(rst.origin.x - pnt.coords[0]), abs(rst.origin.y - pnt.coords[1]))
-            offset_idx = [int(offset[0] / abs(rst.scale.x)), int(offset[1] / abs(rst.scale.y))]
+        rst = tile.rast
+        offset = (abs(rst.origin.x - pnt.coords[0]), abs(rst.origin.y - pnt.coords[1]))
+        offset_idx = [int(offset[0] / abs(rst.scale.x)), int(offset[1] / abs(rst.scale.y))]
 
-            # points very close to the boundary can get rounded to 1 pixel beyond it, so fix that here
-            if offset_idx[0] == rst.width:
-                offset_idx[0] -= 1
-            if offset_idx[1] == rst.height:
-                offset_idx[1] -= 1
+        # points very close to the boundary can get rounded to 1 pixel beyond it, so fix that here
+        if offset_idx[0] == rst.width:
+            offset_idx[0] -= 1
+        if offset_idx[1] == rst.height:
+            offset_idx[1] -= 1
 
+        result = rst.bands[band].data(offset=offset_idx, size=(1,1))[0]
+        if result != rst.bands[band].nodata_value:
             print("Result found in", rasterCollection, "after checking", tilesRead, "tiles in", elapsedTime(startTime))
-            return rst.bands[band].data(offset=offset_idx, size=(1,1))[0]
+            return result
 
     print("Null return from", rasterCollection, "after checking", tilesRead, "tiles in", elapsedTime(startTime))
     return None

@@ -132,3 +132,9 @@ Quake:   		0 tiles,	0.0021648406982421875	seconds
 Landslide:	0 tiles,	0.0019981861114501953	seconds
 
 
+
+Removing the "if point is in bbox" secondary check: negligible, inconsistent changes.  Would probably need to do some more thorough instrumenting to find any difference.  I'm taking it out anyway to simplify the code.
+
+Removing the .defer("rast") instruction: also doesn't make an appreciable difference, but I'll test it again with large tiles.
+
+
