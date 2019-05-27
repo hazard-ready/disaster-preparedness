@@ -7,7 +7,7 @@ from django.contrib.gis.utils import LayerMapping
 
 # If a raster's height or width is > this threshold, tile it
 # In theory this can be up to INT_MAX * 2, but that runs into memory constraints
-rasterTileMaxDimension = 8053
+rasterTileMaxDimension = 1000
 
 
 ######################################################

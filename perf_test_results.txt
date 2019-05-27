@@ -139,6 +139,34 @@ Removing the .defer("rast") instruction: also doesn't make an appreciable differ
 
 
 
+
+rasterTileMaxDimension = 1000
+
+Point lookup in Portland metro area:
+Wildfire: 	1 tiles,	0.047904014587402344	seconds
+Quake:   		1 tiles,	0.016494035720825195	seconds
+Landslide:	1 tiles,	0.015326976776123047	seconds
+
+Point lookup in Medford:
+Wildfire: 	0 tiles,	0.0021398067474365234	seconds
+Quake:   		1 tiles,	0.032180070877075195	seconds
+Landslide:	1 tiles,	0.013848066329956055	seconds
+
+Point lookup in Clark County:
+Wildfire: 	1 tiles,	0.030608177185058594	seconds
+Quake:   		1 tiles,	0.017763853073120117	seconds
+Landslide:	1 tiles,	0.013483047485351562	seconds
+
+Point lookup in Seattle:
+Wildfire: 	0 tiles,	0.0023729801177978516	seconds
+Quake:   		0 tiles,	0.0016939640045166016	seconds
+Landslide:	0 tiles,	0.0016989707946777344	seconds
+
+
+
+
+
+
 rasterTileMaxDimension = 8053 # to minimise the number of tiles with these particular files
 
 Point lookup in Portland metro area:
