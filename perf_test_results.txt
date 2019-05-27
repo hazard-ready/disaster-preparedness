@@ -78,7 +78,31 @@ Landslide:	1864 tiles,	0.12743186950683594	seconds
 
 
 
-What about 100?
+
+rasterTileMaxDimension = 100
+
+Point lookup in Portland metro area:
+Wildfire: 	  575 tiles,	0.08680295944213867	seconds
+Quake:   		 5755 tiles,	0.7230222225189209	seconds
+Landslide:	63853 tiles,	6.822306156158447	seconds
+
+Point lookup in Medford:
+Wildfire: 	 1108 tiles,	0.07879805564880371	seconds
+Quake:   		 4995 tiles,	0.6761898994445801	seconds
+Landslide:	55566 tiles,	6.434469938278198	seconds
+
+Point lookup in Clark County:
+Wildfire: 	 1108 tiles,	0.08355116844177246 	seconds
+Quake:   		23717 tiles,	1.5798180103302002	seconds
+Landslide:	64555 tiles,	7.032153129577637	seconds
+
+Point lookup in Seattle:
+Wildfire: 	  1108 tiles,	0.08159065246582031	seconds
+Quake:   		 23717 tiles,	1.6114399433135986	seconds
+Landslide:	178079 tiles,	12.84434723854065	seconds
+
+
+
 10?
 1?
 
