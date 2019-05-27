@@ -12,6 +12,17 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
 
+#### instrumenting the code; get rid of this before PR
+import time
+
+def elapsedTime(startTime):
+  seconds = time.time() - startTime
+  return str(seconds) + " seconds."
+#### see above
+
+
+
+
 SNUG_TEXT = 0
 SNUG_VIDEO = 1
 SNUG_SLIDESHOW = 2
@@ -239,7 +250,7 @@ class Wildfire_risk(models.Model):
 
     group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
     def __str__(self):
-        return str(self.rast.name) + ',	' + str(self.bbox) 
+        return str(self.rast.name) + ', ' + str(self.bbox)
 
 class RDPOCascadiaM9_3_Clark(models.Model):
     def getGroup():
@@ -263,7 +274,7 @@ class casceq_m9pgv1(models.Model):
 
     group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
     def __str__(self):
-        return str(self.rast.name) + ',	' + str(self.bbox) 
+        return str(self.rast.name) + ', ' + str(self.bbox)
 
 class RDPO_region(models.Model):
     def getGroup():
@@ -299,7 +310,7 @@ class OR_lsd(models.Model):
 
     group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
     def __str__(self):
-        return str(self.rast.name) + ',	' + str(self.bbox) 
+        return str(self.rast.name) + ', ' + str(self.bbox)
 
 # END OF GENERATED CODE BLOCK
 ######################################################
@@ -393,6 +404,10 @@ def default_display_name(sender, instance, *args, **kwargs):
 # basic algorithm for this function taken from the django-raster project version 0.6 at
 # https://github.com/geodesign/django-raster/blob/master/raster/utils.py
 def rasterPointLookup(rasterCollection, lng, lat, band=0):
+    print("Looking up (", lng, ",", lat, ") in", rasterCollection)
+    startTime = time.time()
+    tilesRead = 0
+
     # if we have no data at all, then save time and return None immediately
     if rasterCollection.objects.only("bbox").first() is None:
         return None
@@ -403,6 +418,7 @@ def rasterPointLookup(rasterCollection, lng, lat, band=0):
 
     # deferring the raster field will let us speed things up by doing boundary checks against the much faster-to-retrive bbox
     for tile in rasterCollection.objects.defer("rast").all():
+        tilesRead += 1
         # only bother to check for data if we're within the bounds
         bbox = OGRGeometry(tile.bbox.wkt, srs=collectionSRS)
         if pnt.intersects(bbox):
@@ -416,8 +432,10 @@ def rasterPointLookup(rasterCollection, lng, lat, band=0):
             if offset_idx[1] == rst.height:
                 offset_idx[1] -= 1
 
+            print("Result found in", rasterCollection, "after checking", tilesRead, "tiles in", elapsedTime(startTime))
             return rst.bands[band].data(offset=offset_idx, size=(1,1))[0]
 
+    print("Null return from", rasterCollection, "after checking", tilesRead, "tiles in", elapsedTime(startTime))
     return None
 
 

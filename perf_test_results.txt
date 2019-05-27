@@ -1,0 +1,50 @@
+BASELINE
+rasterTileMaxDimension = 5000
+3 rasters loaded:
+	OR_lsd (the really big one, with an Oregon-sized chunk of the Pacific included) 10,5503x43,321 pixels = 4.57GB after type conversion
+	casceq_m9pgv1 (still the whole state, but at a coarser resolution) 24158x12604 pixels = 304.6MB after type conversion
+	Wildfire_risk (cropped, so relatively small) 5465x4088 pixels = 23.1MB after type conversion
+
+Point lookup in Portland metro area:
+Wildfire: 	 1 tile ,	0.28232288360595703	seconds
+Quake:   		 4 tiles,	0.3120689392089844	seconds
+Landslide:	28 tiles,	0.23883509635925293	seconds
+
+Point lookup in Medford:
+Wildfire: 	 2 tiles,	0.0024521350860595703	seconds
+Quake:   		 6 tiles,	0.15493392944335938	seconds
+Landslide:	33 tiles,	0.2814779281616211	seconds
+
+Point lookup in Clark County:
+Wildfire: 	 1 tile ,	0.23767495155334473 	seconds
+Quake:   		 4 tiles,	0.256274938583374	seconds
+Landslide:	28 tiles,	0.24993085861206055	seconds
+
+Point lookup in Seattle:
+Wildfire: 	 2 tiles,	0.0024709701538085938	seconds
+Quake:   		15 tiles,	0.003129720687866211	seconds
+Landslide:	86 tiles,	0.009229898452758789	seconds
+
+
+
+
+LARGER TILES:
+Try tile size of 8053 because that would get the EQ file into only 3 tiles and wildfires into 1 tile.
+
+
+
+SMALLER TILES:
+Try tile size of 1000 and see what happens
+What about 100?
+10?
+1?
+
+
+
+
+
+INDEXED SEARCH:
+Try making Django/Postgis prefilter by bounding box instead of stepping through them.
+
+
+
