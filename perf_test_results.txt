@@ -29,7 +29,27 @@ Landslide:	86 tiles,	0.009229898452758789	seconds
 
 
 LARGER TILES:
-Try tile size of 8053 because that would get the EQ file into only 3 tiles and wildfires into 1 tile.
+rasterTileMaxDimension = 8053 # to minimise the number of tiles with these particular files
+
+Point lookup in Portland metro area:
+Wildfire: 	 1 tile ,	0.3345217704772949	seconds
+Quake:   		 1 tile ,	0.8657350540161133	seconds
+Landslide:	15 tiles,	0.6289210319519043	seconds
+
+Point lookup in Medford:
+Wildfire: 	 1 tiles,	0.002093791961669922	seconds
+Quake:   		 2 tiles,	0.41138410568237305	seconds
+Landslide:	14 tiles,	0.6676127910614014	seconds
+
+Point lookup in Clark County:
+Wildfire: 	 1 tile ,	0.2514200210571289 	seconds
+Quake:   		 1 tile ,	0.7178440093994141	seconds
+Landslide:	14 tiles,	0.6249191761016846	seconds
+
+Point lookup in Seattle:
+Wildfire: 	 1 tile ,	0.002512216567993164	seconds
+Quake:   		 6 tiles,	0.002386331558227539	seconds
+Landslide:	38 tiles,	0.005290985107421875	seconds
 
 
 
