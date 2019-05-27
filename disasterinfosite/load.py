@@ -48,7 +48,9 @@ RDPOCascadiaM9_OR_mapping = {
 RDPOLiquefact_Clark_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPOLiquefact_Clark.shp'))
 RDPO_counties_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPO_counties.shp'))
 RDPOLiquefaction_OR_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPOLiquefaction_OR.shp'))
+Wildfire_risk_tif = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/reprojected/Wildfire_risk.tif'))
 RDPOCascadiaM9_3_Clark_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPOCascadiaM9_3_Clark.shp'))
+casceq_m9pgv1_tif = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/reprojected/casceq_m9pgv1.tif'))
 RDPO_region_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPO_region.shp'))
 RDPOCascadiaM9_OR_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPOCascadiaM9_OR.shp'))
 OR_lsd_tif = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/reprojected/OR_lsd.tif'))
@@ -115,7 +117,9 @@ def run(verbose=True):
     RDPOLiquefact_Clark = ShapefileGroup.objects.get_or_create(name='RDPOLiquefact_Clark')
     RDPO_counties = ShapefileGroup.objects.get_or_create(name='RDPO_counties')
     RDPOLiquefaction_OR = ShapefileGroup.objects.get_or_create(name='RDPOLiquefaction_OR')
+    Wildfire_risk = ShapefileGroup.objects.get_or_create(name='Wildfire_risk')
     RDPOCascadiaM9_3_Clark = ShapefileGroup.objects.get_or_create(name='RDPOCascadiaM9_3_Clark')
+    casceq_m9pgv1 = ShapefileGroup.objects.get_or_create(name='casceq_m9pgv1')
     RDPO_region = ShapefileGroup.objects.get_or_create(name='RDPO_region')
     RDPOCascadiaM9_OR = ShapefileGroup.objects.get_or_create(name='RDPOCascadiaM9_OR')
     OR_lsd = ShapefileGroup.objects.get_or_create(name='OR_lsd')
@@ -141,11 +145,17 @@ def run(verbose=True):
     lm_RDPOLiquefaction_OR = LayerMapping(RDPOLiquefaction_OR, RDPOLiquefaction_OR_shp, RDPOLiquefaction_OR_mapping, transform=True, encoding='UTF-8', unique=['lookup_val'])
     lm_RDPOLiquefaction_OR.save()
 
+    print('Loading data for Wildfire_risk')
+    from .models import Wildfire_risk
+    tileLoadRaster(Wildfire_risk, Wildfire_risk_tif)
     print('Loading data for RDPOCascadiaM9_3_Clark')
     from .models import RDPOCascadiaM9_3_Clark
     lm_RDPOCascadiaM9_3_Clark = LayerMapping(RDPOCascadiaM9_3_Clark, RDPOCascadiaM9_3_Clark_shp, RDPOCascadiaM9_3_Clark_mapping, transform=True, encoding='UTF-8', unique=['lookup_val'])
     lm_RDPOCascadiaM9_3_Clark.save()
 
+    print('Loading data for casceq_m9pgv1')
+    from .models import casceq_m9pgv1
+    tileLoadRaster(casceq_m9pgv1, casceq_m9pgv1_tif)
     print('Loading data for RDPO_region')
     from .models import RDPO_region
     lm_RDPO_region = LayerMapping(RDPO_region, RDPO_region_shp, RDPO_region_mapping, transform=True, encoding='UTF-8', unique=['lookup_val'])

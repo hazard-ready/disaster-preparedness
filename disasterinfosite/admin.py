@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminModelImports
-from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings, SupplyKit, ImportantLink, RDPOLiquefact_Clark, RDPO_counties, RDPOLiquefaction_OR, RDPOCascadiaM9_3_Clark, RDPO_region, RDPOCascadiaM9_OR, OR_lsd
+from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings, SupplyKit, ImportantLink, RDPOLiquefact_Clark, RDPO_counties, RDPOLiquefaction_OR, Wildfire_risk, RDPOCascadiaM9_3_Clark, casceq_m9pgv1, RDPO_region, RDPOCascadiaM9_OR, OR_lsd
 # END OF GENERATED CODE BLOCK
 ######################################################
 from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile
@@ -33,8 +33,8 @@ class SnuggetAdmin(admin.ModelAdmin):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminLists
-    list_display = ('shortname', 'section', 'RDPOLiquefact_Clark_filter', 'RDPO_counties_filter', 'RDPOLiquefaction_OR_filter', 'RDPOCascadiaM9_3_Clark_filter', 'RDPO_region_filter', 'RDPOCascadiaM9_OR_filter', 'OR_lsd_filter')
-    list_filter = ('section', 'RDPOLiquefact_Clark_filter', 'RDPO_counties_filter', 'RDPOLiquefaction_OR_filter', 'RDPOCascadiaM9_3_Clark_filter', 'RDPO_region_filter', 'RDPOCascadiaM9_OR_filter', 'OR_lsd_filter')
+    list_display = ('shortname', 'section', 'RDPOLiquefact_Clark_filter', 'RDPO_counties_filter', 'RDPOLiquefaction_OR_filter', 'Wildfire_risk_filter', 'RDPOCascadiaM9_3_Clark_filter', 'casceq_m9pgv1_filter', 'RDPO_region_filter', 'RDPOCascadiaM9_OR_filter', 'OR_lsd_filter')
+    list_filter = ('section', 'RDPOLiquefact_Clark_filter', 'RDPO_counties_filter', 'RDPOLiquefaction_OR_filter', 'Wildfire_risk_filter', 'RDPOCascadiaM9_3_Clark_filter', 'casceq_m9pgv1_filter', 'RDPO_region_filter', 'RDPOCascadiaM9_OR_filter', 'OR_lsd_filter')
 
     fieldsets = (
         (None, {
@@ -42,7 +42,7 @@ class SnuggetAdmin(admin.ModelAdmin):
         }),
         ('Filters', {
             'description': 'Choose a filter value this snugget will show up for.  It is recommended you only select a value for one filter and leave the rest empty.',
-            'fields': (('RDPOLiquefact_Clark_filter', 'RDPO_counties_filter', 'RDPOLiquefaction_OR_filter', 'RDPOCascadiaM9_3_Clark_filter', 'RDPO_region_filter', 'RDPOCascadiaM9_OR_filter', 'OR_lsd_filter'))
+            'fields': (('RDPOLiquefact_Clark_filter', 'RDPO_counties_filter', 'RDPOLiquefaction_OR_filter', 'Wildfire_risk_filter', 'RDPOCascadiaM9_3_Clark_filter', 'casceq_m9pgv1_filter', 'RDPO_region_filter', 'RDPOCascadiaM9_OR_filter', 'OR_lsd_filter'))
         })
     )
 # END OF GENERATED CODE BLOCK
@@ -120,7 +120,9 @@ admin.site.register(SupplyKit, SingletonModelAdmin)
 admin.site.register(RDPOLiquefact_Clark, GeoNoEditAdmin)
 admin.site.register(RDPO_counties, GeoNoEditAdmin)
 admin.site.register(RDPOLiquefaction_OR, GeoNoEditAdmin)
+admin.site.register(Wildfire_risk, GeoNoEditAdmin)
 admin.site.register(RDPOCascadiaM9_3_Clark, GeoNoEditAdmin)
+admin.site.register(casceq_m9pgv1, GeoNoEditAdmin)
 admin.site.register(RDPO_region, GeoNoEditAdmin)
 admin.site.register(RDPOCascadiaM9_OR, GeoNoEditAdmin)
 admin.site.register(OR_lsd, GeoNoEditAdmin)
