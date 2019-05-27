@@ -103,15 +103,32 @@ Landslide:	178079 tiles,	12.84434723854065	seconds
 
 
 
-10?
-1?
-
-
 
 
 
 INDEXED SEARCH:
 Try making Django/Postgis prefilter by bounding box instead of stepping through them.
 
+rasterTileMaxDimension = 100
+
+Point lookup in Portland metro area:
+Wildfire: 	1 tiles,	0.022413969039916992	seconds
+Quake:   		1 tiles,	0.003475189208984375	seconds
+Landslide:	1 tiles,	0.004115104675292969	seconds
+
+Point lookup in Medford:
+Wildfire: 	0 tiles,	0.0027201175689697266	seconds
+Quake:   		1 tiles,	0.020598888397216797	seconds
+Landslide:	1 tiles,	0.0035729408264160156	seconds
+
+Point lookup in Clark County:
+Wildfire: 	1 tiles,	0.0220949649810791 	seconds
+Quake:   		1 tiles,	0.004285335540771484	seconds
+Landslide:	1 tiles,	0.0045549869537353516	seconds
+
+Point lookup in Seattle:
+Wildfire: 	0 tiles,	0.0029561519622802734	seconds
+Quake:   		0 tiles,	0.0021648406982421875	seconds
+Landslide:	0 tiles,	0.0019981861114501953	seconds
 
 

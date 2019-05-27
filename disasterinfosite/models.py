@@ -417,7 +417,7 @@ def rasterPointLookup(rasterCollection, lng, lat, band=0):
     results = []
 
     # deferring the raster field will let us speed things up by doing boundary checks against the much faster-to-retrive bbox
-    for tile in rasterCollection.objects.defer("rast").all():
+    for tile in rasterCollection.objects.filter(bbox__contains=Point(lng, lat)).defer("rast").all():
         tilesRead += 1
         # only bother to check for data if we're within the bounds
         bbox = OGRGeometry(tile.bbox.wkt, srs=collectionSRS)
