@@ -6,9 +6,10 @@ from django.contrib.gis.geos import Polygon
 from django.contrib.gis.utils import LayerMapping
 
 
-# If a raster's height or width is > this threshold, tile it
-# In theory this can be up to INT_MAX * 2, but that runs into memory constraints
-rasterTileSize = 5000
+# The width & height to tile rasters to.
+# Empirically, tile sizes as large as 8053 work, while 10000 hits a memory overflow bug in either Django or GDAL and crashes.
+# However, smaller tiles give us faster lookups, while really small (e.g. 10) make the data load interminably slow.
+rasterTileSize = 128
 
 
 ######################################################
