@@ -64,8 +64,8 @@ def tileLoadRaster(model, filename, band=0):
         if rasterTile.rast.bands[band].min is None:
             # This situation causes GDAL to print 2 lines of error code to the console, which are always safe to ignore, so we can use ANSI escape sequences to clean that up
             sys.stdout.write("\033[F\033[F\033[K")
-            print("Skipping tile\t(" + str(x) + ", " + str(y) + ") with \tOrigin (" + str(originX) + ", " + str(originY) + ") due to lack of data.\tIt's safe to ignore 'no valid pixels' GDAL_ERRORs in conjunction with this.")
-            sys.stdout.write("\033[F\033[K")
+            print("Skipping tile\t(" + str(x) + ", " + str(y) + ") with \tOrigin (" + str(originX) + ", " + str(originY) + ") due to lack of data.\tIt's safe to ignore 'no valid pixels' GDAL_ERRORs in conjunction with this.\n\t\t\t\t\t\t\t\t\t")
+            sys.stdout.write("\033[F\033[F\033[K")
             tilesSkipped += 1
         else:
             sys.stdout.write('.')
