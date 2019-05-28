@@ -1,7 +1,7 @@
 BASELINE
 rasterTileMaxDimension = 5000
 3 rasters loaded:
-	OR_lsd (the really big one, with an Oregon-sized chunk of the Pacific included) 10,5503x43,321 pixels = 4.57GB after type conversion
+	OR_lsd (the really big one, with an Oregon-sized chunk of the Pacific included) 105,503x43,321 pixels = 4.57GB after type conversion
 	casceq_m9pgv1 (still the whole state, but at a coarser resolution) 24158x12604 pixels = 304.6MB after type conversion
 	Wildfire_risk (cropped, so relatively small) 5465x4088 pixels = 23.1MB after type conversion
 
@@ -137,6 +137,7 @@ Removing the "if point is in bbox" secondary check: negligible, inconsistent cha
 
 Removing the .defer("rast") instruction: also doesn't make an appreciable difference; also confirmed with larger tiles.  I'm removing it to simplify the code.
 
+I tried a tile size of 10x10 but the load takes > 12 hours.  Given the small potential speed improvements, this doesn't seem worth it so I quit that particular experiment.
 
 
 
