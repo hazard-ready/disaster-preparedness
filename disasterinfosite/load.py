@@ -64,7 +64,7 @@ def tileLoadRaster(model, filename, band=0):
         if rasterTile.rast.bands[band].min is None:
             # This situation causes GDAL to print 2 lines of error code to the console, which are always safe to ignore, so we can use ANSI escape sequences to clean that up
             sys.stdout.write("\033[F\033[K")
-            print("Skipping tile\t(" + str(x) + ", " + str(y) + ") with \tOrigin (" + str(originX) + ", " + str(originY) + ") due to lack of data.\tIt's safe to ignore 'no valid pixels' GDAL_ERRORs in conjunction with this.")
+            print("Skipping tile (" + str(x) + ", " + str(y) + ")\twith origin (" + str(originX)[:9] + ", " + str(originY)[:9] + ")\tdue to lack of data. It's safe to ignore 'no valid pixels' GDAL_ERRORs in conjunction with this.")
             sys.stdout.write("\033[F\033[F\033[K")
             tilesSkipped += 1
         else:
@@ -74,7 +74,7 @@ def tileLoadRaster(model, filename, band=0):
             tilesLoaded += 1
         if x == 0:
             sys.stdout.flush() # make sure output shows up at least once per column
-    print("Loaded", str(tilesLoaded), "tiles and skipped", str(tilesSkipped), "because they contained only NODATA pixels.")
+    print("\t...loaded", str(tilesLoaded), "tiles and skipped", str(tilesSkipped), "because they contained only NODATA pixels.")
     # clear remaining detritus from GDAL_ERRORs
     print("                                                                                          ")
     sys.stdout.write("\033[F\033[K")
@@ -98,5 +98,5 @@ def run(verbose=True):
 # END OF GENERATED CODE BLOCK
 ######################################################
 
-    print('Data load finished.')
+    print("Data load finished.  GDAL_ERROR 'Failed to compute statistics, no valid pixels found in sampling' is safe to ignore if the data includes any raster files with any NODATA pixels.")
 
