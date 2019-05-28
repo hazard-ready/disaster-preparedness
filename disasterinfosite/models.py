@@ -271,37 +271,41 @@ def default_display_name(sender, instance, *args, **kwargs):
         instance.display_name = instance.name
 
 
-# looks up a point in a set of rasters and returns the first value it finds
-# or None if there are no rasters or the point is not within any of them.
-# basic algorithm for this function taken from the django-raster project version 0.6 at
+# looks up a point in a set of rasters and returns the first non-NODATA value it finds
+# or None if there are no rasters, the point is not within any of them or it's in a NODATA pixel.
+# raster algebra taken from the django-raster project version 0.6 at
 # https://github.com/geodesign/django-raster/blob/master/raster/utils.py
 def rasterPointLookup(rasterCollection, lng, lat, band=0):
     # if we have no data at all, then save time and return None immediately
-    if rasterCollection.objects.only("bbox").first() is None:
+    sampleBBOX = rasterCollection.objects.only("bbox").first().bbox
+    if sampleBBOX is None:
         return None
 
-    collectionSRS = rasterCollection.objects.only("bbox").first().bbox.srs
-    pnt = OGRGeometry('POINT({0} {1})'.format(lng, lat), srs=collectionSRS)
-    results = []
+    rasterPoint = OGRGeometry('POINT({0} {1})'.format(lng, lat), srs=sampleBBOX.srs)
+    vectorPoint = Point(lng, lat, srid=sampleBBOX.srid)
 
-    # deferring the raster field will let us speed things up by doing boundary checks against the much faster-to-retrive bbox
-    for tile in rasterCollection.objects.defer("rast").all():
+    # Using the filter here lets PostGIS do an indexed search on the bbox field, which is much faster than stepping through the objects.
+    # Note that it will almost always only return one raster, but there could theoretically be 2 or 4 if our point is perfectly on a tile boundary.
+    # In that instance, we return the first non-NODATA value we find.
+    for tile in rasterCollection.objects.filter(bbox__contains=vectorPoint).all():
         # only bother to check for data if we're within the bounds
-        bbox = OGRGeometry(tile.bbox.wkt, srs=collectionSRS)
-        if pnt.intersects(bbox):
-            rst = tile.rast
-            offset = (abs(rst.origin.x - pnt.coords[0]), abs(rst.origin.y - pnt.coords[1]))
-            offset_idx = [int(offset[0] / abs(rst.scale.x)), int(offset[1] / abs(rst.scale.y))]
+        rst = tile.rast
+        offset = (abs(rst.origin.x - pnt.coords[0]), abs(rst.origin.y - pnt.coords[1]))
+        offset_idx = [int(offset[0] / abs(rst.scale.x)), int(offset[1] / abs(rst.scale.y))]
 
-            # points very close to the boundary can get rounded to 1 pixel beyond it, so fix that here
-            if offset_idx[0] == rst.width:
-                offset_idx[0] -= 1
-            if offset_idx[1] == rst.height:
-                offset_idx[1] -= 1
+        # points very close to the boundary can get rounded to 1 pixel beyond it, so fix that here
+        if offset_idx[0] == rst.width:
+            offset_idx[0] -= 1
+        if offset_idx[1] == rst.height:
+            offset_idx[1] -= 1
 
+        result = rst.bands[band].data(offset=offset_idx, size=(1,1))[0]
+        if result != rst.bands[band].nodata_value:
             return rst.bands[band].data(offset=offset_idx, size=(1,1))[0]
 
     return None
+
+
 
 
 
