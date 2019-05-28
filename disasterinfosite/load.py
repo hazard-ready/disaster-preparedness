@@ -1,5 +1,6 @@
 import math
 import os
+import sys
 from django.contrib.gis.gdal import GDALRaster
 from django.contrib.gis.geos import Polygon
 from django.contrib.gis.utils import LayerMapping
@@ -58,9 +59,14 @@ def tileLoadRaster(model, filename, band=0):
             })
         )
         if rasterTile.rast.bands[band].min is None:
-            print("...Skipping due to lack of data:\ttile (" + str(x) + ", " + str(y) + ")\tDimensions", str(width), "x", str(height), "\tOrigin (" + str(originX) + ", " + str(originY) + ").\tIt's safe to ignore the GDAL_ERROR above this line.")
+            # This situation causes GDAL to print 2 lines of error code to the console, which are always safe to ignore, so we can use ANSI escape sequences to clean that up
+            sys.stdout.write("\033[F")
+            sys.stdout.write("\033[K")
+            print("Skipping tile\t(" + str(x) + ", " + str(y) + ") with \tOrigin (" + str(originX) + ", " + str(originY) + ") due to lack of data.\tIt's safe to ignore the GDAL_ERROR above this line.")
         else:
-            print("...Loading\ttile (" + str(x) + ", " + str(y) + ")\tDimensions", str(width), "x", str(height), "\tOrigin (" + str(originX) + ", " + str(originY) + ")")
+            sys.stdout.write('.')
+            if x == 0:
+                sys.stdout.flush() # make sure output shows up at least once per column
             rasterTile.bbox=Polygon.from_bbox(rasterTile.rast.extent)
             rasterTile.save()
 
