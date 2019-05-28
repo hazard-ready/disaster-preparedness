@@ -290,7 +290,7 @@ def rasterPointLookup(rasterCollection, lng, lat, band=0):
     for tile in rasterCollection.objects.filter(bbox__contains=vectorPoint).all():
         # only bother to check for data if we're within the bounds
         rst = tile.rast
-        offset = (abs(rst.origin.x - pnt.coords[0]), abs(rst.origin.y - pnt.coords[1]))
+        offset = (abs(rst.origin.x - rasterPoint.coords[0]), abs(rst.origin.y - rasterPoint.coords[1]))
         offset_idx = [int(offset[0] / abs(rst.scale.x)), int(offset[1] / abs(rst.scale.y))]
 
         # points very close to the boundary can get rounded to 1 pixel beyond it, so fix that here
