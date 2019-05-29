@@ -97,7 +97,7 @@ def main():
         loadMappings += "}\n\n"
         loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + simplified + "'))\n"
       elif rasterFound:
-        loadImports += "    tileLoadRaster(" + stem + ", " + stem + "_tif)\n"
+        loadImports += "    tileLoadRaster(" + stem + ", " + stem + "_tif)\n\n"
         loadPaths += stem + "_tif = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + reprojected + "'))\n"
 
       print("")
