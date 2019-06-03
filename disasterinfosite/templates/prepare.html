@@ -1,0 +1,20 @@
+{% load js %}
+{% load i18n %}
+
+{% load render_bundle from webpack_loader %}
+{% load webpack_static from webpack_loader %}
+{% get_current_language as SELECTED_LANGUAGE_CODE %}
+
+<!doctype html>
+<html class="no-js" lang="{{ SELECTED_LANGUAGE_CODE }}">
+  {% include "head-meta.html" %}
+
+  <body>
+    {% include "header.html" %}
+    <div class="content-container">
+    </div>
+    {% include "geek_box.html" %}
+    {% include "page-end-meta.html" %}
+
+  </body>
+</html>
