@@ -1,0 +1,30 @@
+<header>
+  <div class="logo__container">
+    <a class="link--plain" href="{{ settings.site_url }}">
+      <img class="logo--header" src="{% webpack_static 'build/logo-no-text.png' %}" alt="">
+      <div class="logo__text">
+        <h5 class="project-title caps">{{ settings.site_title }}</h5>
+        <h3 class="h3--sans-serif">Hazard Ready</h3>
+      </div>
+    </a>
+    <div class="header__about header__about--small hide-for-medium-up--flex">
+      <a class="link--plain" href="about"><h5 class="about__link link--grey">About</h5></a>
+      {% include "language_selector.html" %}
+    </div>
+  </div>
+
+  {% block search %}
+  {% trans "Find Me" as find_me %}
+    <div class="location-form" role="form" aria-label="location-search">
+      <label class="sr-only" for="location-text">Location</label>
+      <input name="location-text" id="location-text" type="text" placeholder="Enter your home address to see your risk" />
+      <button id="auto-location" class="auto-location-submit caps"><img class="icon--locate-me" src="{% webpack_static 'build/locate-me.svg' %}" alt="">{{ find_me }}</button>
+      <button id="location-submit"><img class="icon--search" src="{% webpack_static 'build/icon-search.png' %}" alt="search"></button>
+      <div class="geocode-error-message"></div>
+    </div>
+  {% endblock search %}
+  <div class="header__about hide-for-small--flex">
+    <a class="link--plain" href="about"><h5 class="about__link link--grey">About</h5></a>
+    {% include "language_selector.html" %}
+  </div>
+</header>
