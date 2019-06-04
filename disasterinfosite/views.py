@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from .models import Snugget, Location, SiteSettings, SupplyKit, ImportantLink, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, SlideshowSnugget
+from .models import Snugget, Location, SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, SlideshowSnugget
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
