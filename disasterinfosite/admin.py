@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminModelImports
-from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings, SupplyKit, ImportantLink
+from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings
 # END OF GENERATED CODE BLOCK
 ######################################################
 from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile
@@ -91,7 +91,6 @@ class GeoNoEditAdmin(admin.GeoModelAdmin):
     modifiable = False
 
 # Uncomment the next lines if you want to translate fields in DjangoAdmin to different languages.
-# admin.site.register(ImportantLink, TranslationAdmin)
 # class SiteSettingsAdmin(SingletonModelAdmin, TranslationAdmin):
 #     pass
 # admin.site.register(SiteSettings, SiteSettingsAdmin)
@@ -100,15 +99,10 @@ class GeoNoEditAdmin(admin.GeoModelAdmin):
 #     pass
 # admin.site.register(Location, LocationAdmin)
 
-# class SupplyKitAdmin(SingletonModelAdmin, TranslationAdmin):
-#     pass
-# admin.site.register(SupplyKit, SupplyKitAdmin)
 
 # Keep this block as-is if you don't want to translate these models into other languages in DjangoAdmin.
-admin.site.register(ImportantLink, admin.ModelAdmin)
 admin.site.register(SiteSettings, SingletonModelAdmin)
 admin.site.register(Location, SingletonModelAdmin)
-admin.site.register(SupplyKit, SingletonModelAdmin)
 
 ######################################################
 # GENERATED CODE GOES HERE

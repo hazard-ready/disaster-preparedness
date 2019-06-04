@@ -10,6 +10,8 @@ from solo.models import SingletonModel
 from django.core.files.storage import FileSystemStorage
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.contrib.postgres import fields
+from django.contrib.postgres.validators import RangeMinValueValidator, RangeMaxValueValidator
 
 
 SNUG_TEXT = 0
@@ -129,31 +131,6 @@ class Location(SingletonModel):
     class Meta:
         verbose_name = "Location Information"
 
-class SupplyKit(SingletonModel):
-    """ A singleton model representing the supply kit information """
-    days = models.PositiveIntegerField(
-        default=3,
-        help_text="The number of days' worth of supplies prepared residents should have on hand."
-    )
-    text = models.TextField(
-        help_text="More information about building your supply kit. Any web address in here gets turned into a link automatically."
-    )
-
-    @property
-    def meals(self):
-        return 3 * self.days
-
-class ImportantLink(models.Model):
-    """ A model representing a link with a title """
-    title = models.CharField(
-        max_length=50,
-        help_text="A title for your important link, like 'Evacuation Information'"
-    )
-    link = models.TextField(
-        help_text="Your link and any information about it. Any web address in here gets turned into a link automatically."
-    )
-    def __str__(self):
-        return self.title +': ' + self.link
 
 class ShapeManager(models.Manager):
     def data_bounds(self):
@@ -163,8 +140,6 @@ class ShapeManager(models.Manager):
 class RasterManager(models.Manager):
     def data_bounds(self):
         return self.aggregate(Extent('bbox'))['bbox__extent']
-
-
 
 
 class ShapefileGroup(models.Model):
@@ -186,47 +161,6 @@ class ShapefileGroup(models.Model):
 # modelsClasses
 # END OF GENERATED CODE BLOCK
 ######################################################
-
-class RecoveryLevels(models.Model):
-    name = models.CharField(max_length=50)
-    shortLabel = models.CharField(max_length=2)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
-
-class Infrastructure(models.Model):
-    name = models.CharField(max_length=255)
-    eventOccursRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
-    firstDayRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
-    threeDaysRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
-    sevenDaysRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
-    fourWeeksRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
-    threeMonthsRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
-    sixMonthsRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
-    twelveMonthsRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
-    threeYearsRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
-    threePlusYearsRecovery = models.ForeignKey(RecoveryLevels, related_name='+', on_delete=models.PROTECT, null=True, blank=True)
-
-    def __str__(self):
-        return self.name + " in " + str(self.zone)
-
-
-class InfrastructureGroup(models.Model):
-    name = models.CharField(max_length=50)
-    items = models.ManyToManyField(Infrastructure)
-
-    def __str__(self):
-        return self.name
-
-
-class InfrastructureCategory(models.Model):
-    name = models.CharField(max_length=50)
-    groups = models.ManyToManyField(InfrastructureGroup)
-
-    def __str__(self):
-        return self.name + " in " + str(self.zone)
-
 
 class SnuggetType(models.Model):
     name = models.CharField(max_length=50)
@@ -304,9 +238,6 @@ def rasterPointLookup(rasterCollection, lng, lat, band=0):
             return rst.bands[band].data(offset=offset_idx, size=(1,1))[0]
 
     return None
-
-
-
 
 
 class Snugget(models.Model):
@@ -400,3 +331,20 @@ class DataOverviewImage(models.Model):
 
     def __str__(self):
         return self.image.url
+
+class PreparednessAction(models.Model):
+    title = models.TextField(default="")
+    image = models.ImageField(upload_to="prepare_images")
+    cost = fields.IntegerRangeField(blank=True,
+        validators=[
+            RangeMinValueValidator(0),
+            RangeMaxValueValidator(3)
+        ])
+    happy_text = models.TextField(default="")
+    useful_text = models.TextField(default="")
+    property_text = models.TextField(default="")
+    content_text = models.TextField(default="")
+    link_text = models.TextField(default="")
+    link_icon = models.ImageField(upload_to="prepare_images")
+    link = models.URLField(default="")
+
