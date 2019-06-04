@@ -1,7 +1,6 @@
 {% load js %}
 {% load i18n %}
 
-{% load render_bundle from webpack_loader %}
 {% load webpack_static from webpack_loader %}
 {% get_current_language as SELECTED_LANGUAGE_CODE %}
 
@@ -10,8 +9,12 @@
   {% include "head-meta.html" %}
 
   <body>
-    {% include "header.html" %}
+    {% include "prepare-header.html" %}
     <div class="content-container">
+      {% for item in actions %}
+        <h4>{{ item.title }}</h4>
+        {{ item.content_text | safe }}
+      {% endfor %}
     </div>
     {% include "geek_box.html" %}
     {% include "page-end-meta.html" %}
