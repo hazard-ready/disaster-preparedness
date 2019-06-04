@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings
 # END OF GENERATED CODE BLOCK
 ######################################################
-from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile
+from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, PreparednessAction
 from .actions import export_as_csv_action
 # To turn translation on from modeltranslation.admin import TranslationAdmin
 
