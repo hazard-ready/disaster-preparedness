@@ -10,7 +10,6 @@ from solo.models import SingletonModel
 from django.core.files.storage import FileSystemStorage
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from django.contrib.postgres import fields
 from django.contrib.postgres.validators import RangeMinValueValidator, RangeMaxValueValidator
 
 
@@ -335,7 +334,7 @@ class DataOverviewImage(models.Model):
 class PreparednessAction(models.Model):
     title = models.TextField(default="")
     image = models.ImageField(upload_to="prepare_images")
-    cost = fields.IntegerRangeField(blank=True,
+    cost = models.IntegerField(default=0,
         validators=[
             RangeMinValueValidator(0),
             RangeMaxValueValidator(3)
