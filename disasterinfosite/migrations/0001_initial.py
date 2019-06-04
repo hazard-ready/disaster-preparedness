@@ -203,7 +203,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.TextField(default='')),
                 ('image', models.ImageField(upload_to='prepare_images')),
-                ('cost', models.IntegerField(default=0, validators=[django.contrib.postgres.validators.RangeMinValueValidator(0), django.contrib.postgres.validators.RangeMaxValueValidator(3)])),
+                ('cost', models.IntegerField(default=0, validators=[django.contrib.postgres.validators.RangeMinValueValidator(0), django.contrib.postgres.validators.RangeMaxValueValidator(4)])),
                 ('happy_text', models.TextField(default='')),
                 ('useful_text', models.TextField(default='')),
                 ('property_text', models.TextField(default='')),
