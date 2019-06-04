@@ -1,7 +1,6 @@
 {% load js %}
 {% load i18n %}
 
-{% load render_bundle from webpack_loader %}
 {% load webpack_static from webpack_loader %}
 {% get_current_language as SELECTED_LANGUAGE_CODE %}
 
@@ -10,7 +9,7 @@
 {% include "head-meta.html" %}
 
 <body>
-{% include "header.html" %}
+{% include "about-header.html" %}
 
   <div class="content-container">
     <div class="about-container">
