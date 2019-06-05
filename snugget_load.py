@@ -229,7 +229,7 @@ def findAllFilterVals(shapefile):
         maxima.append(tile.rast.bands[0].max)
     return list(range(min(minima), max(maxima)+1))
   else:
-    return shapefile.objects.values_list(fieldName, flat=True)
+    return shapefile.objects.all()
 
 
 def checkForSnugget(shapefile, section, order, filterColumn, filterVal):
