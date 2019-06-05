@@ -17,6 +17,8 @@ urlpatterns = [
 # Recommend removing the prefix_default_language argument if you translate/localize this site.
 urlpatterns += i18n_patterns(url(r'^$', views.app_view, name='index'))
 urlpatterns += i18n_patterns(url(r'^about/$', views.about_view, name='about'))
+urlpatterns += i18n_patterns(url(r'^prepare/$', views.prepare_view, name='prepare'))
+
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,9 +1,9 @@
-import openpyxl # library to read .xlsx format
 import os
 
 from django.core.files import File
 from django.contrib.contenttypes.models import ContentType
 from disasterinfosite.models import *
+from load_helpers import XLSXDictReader, runLoader
 
 currentPath = os.path.dirname(__file__)
 appName = "disasterinfosite"
@@ -12,9 +12,8 @@ dataDir = os.path.join(appDir, "data")
 snuggetFile = os.path.join(dataDir, "snuggets.xlsx")
 slideshowFilename = "slideshow.xlsx" # there can be multiple of these files in different locations, so the full path is assembled in addSlideshow()
 
-requiredFields = ['shapefile', 'section', 'subsection']
-# all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
-optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'pop_out_video', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', '']
+# all other fields in snuggetFile are required.
+optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'pop_out_video', 'intensity_txt', 'text', 'image_slideshow_folder', 'video']
 
 defaults = {
   "intensity": None,
@@ -23,53 +22,13 @@ defaults = {
 }
 
 def run():
-  overwriteAll = False
-
-  newSnuggets = XLSXDictReader(snuggetFile)
-  rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
-  for row in newSnuggets:
-    rowCount += 1
-    if allRequiredFieldsPresent(row, rowCount):
-      checkHTMLTagClosures(row, rowCount)
-      overwriteAll = processRow(row, overwriteAll)
-
+  config = {
+    'file': snuggetFile,
+    'optional': optionalFields,
+    'processRow': processRow
+  }
+  rowCount = runLoader(config)
   print("Snugget load complete. Processed", rowCount, "rows in", snuggetFile)
-
-
-def allRequiredFieldsPresent(row, rowCount):
-  if any(a != '' for a in row.values()): # if the entire row is not empty
-    blanks = []
-    for key in row.keys():
-      if (key not in optionalFields) and (row[key] == ''):
-        blanks.append(key)
-    if blanks == []:
-      return True
-    else:
-      print("Unable to process row", rowCount, "with content:")
-      print(row)
-      if len(blanks) > 1:
-        print("Because required fields", blanks, "are empty.")
-      else:
-        print("Because required field", "'" + blanks[0] + "'", "is empty.")
-      return False
-  else: # the entire row is blank
-    print("Skipping empty row", rowCount)
-    return False
-
-
-def checkHTMLTagClosures(row, rowCount):
-  tags_to_check = ["ol", "ul", "li", "a", "b"]
-  mismatches = {}
-  for key in row.keys():
-    if key == 'text' or key.startswith('text-'):
-      for tag in tags_to_check:
-        tag_opening_no_attr = "<" + tag + ">"
-        tag_opening_with_attr = "<" + tag + " "
-        tag_closing = "</" + tag + ">"
-        tag_openings = row[key].count(tag_opening_no_attr) + row[key].count(tag_opening_with_attr)
-        tag_closings = row[key].count(tag_closing)
-        if tag_openings > tag_closings:
-          print("WARNING: In row", str(rowCount), key, "has", str(tag_openings), "opening <" + tag + "> tag[s] but only", str(tag_closings), "closing tag[s].")
 
 
 def setDefaults(row):
@@ -268,7 +227,7 @@ def findAllFilterVals(shapefile):
         maxima.append(tile.rast.bands[0].max)
     return list(range(min(minima), max(maxima)+1))
   else:
-    return shapefile.objects.values_list(fieldName, flat=True)
+    return shapefile.objects.all()
 
 
 def checkForSnugget(shapefile, section, order, filterColumn, filterVal):
@@ -315,36 +274,3 @@ def askUserAboutOverwriting(row, old, overwriteAll):
       return True
     elif response == "R":
       return False
-
-
-
-# drop-in replacement for built-in csv.DictReader() function with .xlsx files
-# originally from https://gist.github.com/mdellavo/853413
-# then heavily adapted first to make it work, then to simplify, and finally with suggestions from later commenters on that gist
-def XLSXDictReader(fileName, sheetName=None):
-  book = openpyxl.reader.excel.load_workbook(fileName)
-  # if there's no sheet name specified, try to get the active sheet.  This will work reliably for workbooks with only one sheet; unpredictably if there are multiple worksheets present.
-  if sheetName is None:
-    sheet = book.active
-  elif sheetName not in book.sheetnames:
-    print(sheetName, "not found in", fileName)
-    exit()
-  else:
-    sheet = book[sheetName]
-
-  rows = sheet.max_row + 1
-  cols = sheet.max_column + 1
-
-  def cleanValue(s):
-    if s == None:
-      return ''
-    else:
-      return str(s).strip()
-
-  def item(i, j):
-    return (
-      cleanValue(sheet.cell(row=1, column=j).value),
-      cleanValue(sheet.cell(row=i, column=j).value)
-    )
-
-  return (dict(item(i,j) for j in range(1, cols)) for i in range(2, rows))

@@ -17,47 +17,33 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='RecoveryLevels',
+            migrations.CreateModel(
+            name='SiteSettings',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('shortLabel', models.CharField(max_length=2)),
-                ('description', models.TextField()),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('about_text', models.TextField(default='Information about your organization goes here.', help_text='Describe the data and the agencies that it came from.')),
+                ('contact_email', models.EmailField(blank=True, help_text='Put a contact email for the maintainer of this site here.', max_length=254)),
+                ('site_url', models.URLField(default='https://www.example.com', help_text='Put the URL to this site here.')),
+                ('site_title', models.CharField(default='Your Title Here!', max_length=50)),
+                ('site_description', models.CharField(default='A disaster preparedness website', help_text='A small, catchy description for this site.', max_length=200)),
+                ('data_download', models.URLField(help_text='A link where people can download a zipfile of all the data that powers this site.', blank=True)),
+                ('intro_text', models.TextField(help_text='A description of what we are trying to help people prepare for, or the goal of your site.', default='A natural disaster could strike your area at any time.')),
+                ('who_made_this', models.TextField(help_text='Include information about who you are and how to contact you.', default='Information about the creators and maintainers of this particular site.'))
             ],
+            options={
+                'verbose_name': 'Site Settings',
+            },
         ),
         migrations.CreateModel(
-            name='Infrastructure',
+            name='Location',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('eventOccursRecovery', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='disasterinfosite.RecoveryLevels')),
-                ('firstDayRecovery', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='disasterinfosite.RecoveryLevels')),
-                ('threeDaysRecovery', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='disasterinfosite.RecoveryLevels')),
-                ('sevenDaysRecovery', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='disasterinfosite.RecoveryLevels')),
-                ('fourWeeksRecovery', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='disasterinfosite.RecoveryLevels')),
-                ('threeMonthsRecovery', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='disasterinfosite.RecoveryLevels')),
-                ('sixMonthsRecovery', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='disasterinfosite.RecoveryLevels')),
-                ('twelveMonthsRecovery', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='disasterinfosite.RecoveryLevels')),
-                ('threeYearsRecovery', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='disasterinfosite.RecoveryLevels')),
-                ('threePlusYearsRecovery', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='disasterinfosite.RecoveryLevels')),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('area_name', models.CharField(default='the affected area', help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.", max_length=100)),
+                ('community_leaders', models.TextField(help_text='Information about community leaders, how to contact them, and form groups.', default='Information about community leaders goes here.')),
             ],
-        ),
-        migrations.CreateModel(
-            name='InfrastructureGroup',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('items', models.ManyToManyField(to='disasterinfosite.Infrastructure')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='InfrastructureCategory',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('groups', models.ManyToManyField(to='disasterinfosite.InfrastructureGroup')),
-            ],
+            options={
+                'verbose_name': 'Location Information'
+            },
         ),
         migrations.CreateModel(
             name='ShapefileGroup',
@@ -158,15 +144,6 @@ class Migration(migrations.Migration):
             bases=('disasterinfosite.snugget',),
         ),
         migrations.CreateModel(
-            name='ImportantLink',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(help_text="A title for your important link, like 'Evacuation Information'", max_length=50)),
-                ('link', models.TextField(help_text='Your link and any information about it. Any web address in here gets turned into a link automatically.')),
-                ('title_es', models.CharField(help_text="A title for your important link, like 'Evacuation Information'", max_length=50, null=True)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Location',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -212,18 +189,6 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='SupplyKit',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('days', models.PositiveIntegerField(default=3, help_text="The number of days' worth of supplies prepared residents should have on hand.")),
-                ('text', models.TextField(help_text='More information about building your supply kit. Any web address in here gets turned into a link automatically.')),
-                ('text_es', models.TextField(help_text='More information about building your supply kit. Any web address in here gets turned into a link automatically.', null=True)),
-            ],
-            options={
-                'abstract': False,
-            },
-        ),
-        migrations.CreateModel(
             name='TextSnugget',
             fields=[
                 ('snugget_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='disasterinfosite.Snugget')),
@@ -231,5 +196,21 @@ class Migration(migrations.Migration):
                 ('content_es', models.TextField(null=True)),
             ],
             bases=('disasterinfosite.snugget',),
+        ),
+        migrations.CreateModel(
+            name='PreparednessAction',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('title', models.TextField(default='')),
+                ('image', models.ImageField(upload_to='prepare_images')),
+                ('cost', models.IntegerField(default=0, validators=[django.contrib.postgres.validators.RangeMinValueValidator(0), django.contrib.postgres.validators.RangeMaxValueValidator(4)])),
+                ('happy_text', models.TextField(default='')),
+                ('useful_text', models.TextField(default='')),
+                ('property_text', models.TextField(default='')),
+                ('content_text', models.TextField(default='')),
+                ('link_text', models.TextField(default='')),
+                ('link_icon', models.ImageField(upload_to='prepare_images')),
+                ('link', models.URLField(default='')),
+            ],
         ),
     ]
