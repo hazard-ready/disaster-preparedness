@@ -104,8 +104,10 @@ This assumes `python` is the command configured to run the correct python versio
    2. `load.run()`
    3. `import snugget_load`
    4. `snugget_load.run()`
-   5. `exit()` [to go back to the normal command line]
-      The parts that have `snugget_load` are to import text that will be displayed in the site. See [Adding New Data](#adding-new-data) below for an explanation of "snuggets" and the format of this file.
+   5. `import prepare_load`
+   6. `prepare_load.run()`
+   7. `exit()` [to go back to the normal command line]
+      The parts that have `snugget_load` and `prepare_load` are to import text that will be displayed in the site. See [Adding New Data](#adding-new-data) below for an explanation of "snuggets" and the format of this file.
 1. If this is your first time through, or you emptied the database before loading new data: `python manage.py createsuperuser` and follow the instructions to add a Django admin user
 1. If you don't already have web hosting set up, you can test your work on localhost:8000 with `python manage.py runserver`
 
@@ -170,14 +172,18 @@ _Not tested by the current maintainers_
 #### Requirements for a raster file
 
 1. The format must be GeoTIFF, with a `.tif` file extension.
-2. Band 0 must contain a unique identifier for each set of text to display.  If the file contains multiple bands, all but the first will be ignored.
+2. Band 0 must contain a unique identifier for each set of text to display. If the file contains multiple bands, all but the first will be ignored.
 3. Band 0 must contain unsigned integers no larger than 254 (they'll be stored as a single byte, real numbers will be rounded off to the nearest integer, and 255 is reserved for NODATA).
-4. The values in Band 0 must be higher for more serious warnings.  This is because the file will be reprojected to EPSG:4326 during import, and values are rounded up in the reprojection.  As long as higher values are the more serious warnings, this will not create a risk of people seeing an inappropriate "all clear" message for their location.
-5. Each data source must be one single `.tif` file.  Large files will be tiled automatically during the load but the data import pipeline does not currently have the ability to combine rasters.
+4. The values in Band 0 must be higher for more serious warnings. This is because the file will be reprojected to EPSG:4326 during import, and values are rounded up in the reprojection. As long as higher values are the more serious warnings, this will not create a risk of people seeing an inappropriate "all clear" message for their location.
+5. Each data source must be one single `.tif` file. Large files will be tiled automatically during the load but the data import pipeline does not currently have the ability to combine rasters.
 
 ### Fully automated pipeline
 
-If the structure of your text content is simple enough, you can import shapefiles/rasters and snuggets automatically without having to do much manual work. We recommend using this pathway if possible, because it makes moving the site to a new server significantly easier. To do this, you will need a `snuggets.xlsx` file with the same columns as the example one we've included in `data.zip`. The columns can be in any order, but the headings must be exactly as typed here:
+If the structure of your text content is simple enough, you can import shapefiles/rasters, snuggets and preparedness actions automatically without having to do much manual work. We recommend using this pathway if possible, because it makes moving the site to a new server significantly easier.
+
+#### Importing snuggets
+
+To do this, you will need a `snuggets.xlsx` file with the same columns as the example one we've included in `data.zip`. The columns can be in any order, but the headings must be exactly as typed here:
 
 - `heading` : A human-readable heading that describes the content of this shapefile or raster, to be displayed on the page. This will correspond to the shapefile group.
 - `section` : A section name that will be displayed on the page (must not be empty)
@@ -201,7 +207,7 @@ If the structure of your text content is simple enough, you can import shapefile
 
 -`text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria. If you put a url in the snugget text, like `http://www.github.com`, we'll automatically make it into a link for you.
 
--`image_slideshow_folder` : If this is present, the snugget loader will look for a folder inside an `images` folder at the same level as `snuggets.xlsx` (example: if `snuggets.xlsx` is in `data\images` and you set this value to `earthquake_photos`, the loader will look for images in `data\images\earthquake_photos`). The loader expects to find two things in that folder: images, and a file called `slideshow.csv`.
+-`image_slideshow_folder` : If this is present, the snugget loader will look for a folder inside an `images` folder at the same level as `snuggets.xlsx` (example: if `snuggets.xlsx` is in `data` and you set this value to `earthquake_photos`, the loader will look for images in `data\images\earthquake_photos`). The loader expects to find two things in that folder: images, and a file called `slideshow.csv`.
 
 `slideshow.csv` should have two columns: `image` and `caption`. `image` is the filename of the image, and `caption` is whatever you would like the caption for that image to be.
 
@@ -212,6 +218,26 @@ You can have any number of sections, but every row must be a unique combination 
 Blank rows or additional columns won't cause problems. Any row that is missing any of the required fields will be skipped and a warning will be printed.
 
 Once `snuggets.xlsx` is ready, simply put it and the relevant data files in `disasterinfosite/data` (and remove any other files or subdirectories from there), and follow the instructions in [Load Some Data](#load-some-data) above.
+
+#### Importing Preparedness Actions
+
+This is the content that shows up on the Prepare page. The concept is similar to loading the snuggets - you need a `prepare.xlsx` file with the same columns as the example one we've included in `data.zip`. The columns can be in any order, but the headings must be exactly as typed here:
+
+- `section` the title of the section, like 'Learn your hazards'
+- `cost` An value representing how much it costs to take the action. Your options are:
+  - 0: Free!
+  - 1: $1 - $30
+  - 2: $31 - $100
+  - 3: $101 - $300
+  - 4: more than \$301
+- `image` The filename of an image to associate with the text of this preparedness action. The prepare loader will look for these files inside `images\prepare` at the same level as this file. So if this file is in `data`, the loader will look for your images in `data\images\prepare`.
+- `happy` A sentence or two about how this action can reduce physical or emotional harm after an event.
+- `useful` A sentence or two about how this action can be useful for other situations
+- `property` A sentence or two about how this action can help protect your property
+- `text` Explanatory content about this action. HTML is allowed in this field.
+- `external_link` A link to visit for more information
+- `external_text` The text to display for the link
+- `external_icon` An icon or image to display for the link
 
 #### Updating existing data
 

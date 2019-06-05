@@ -25,7 +25,7 @@ def main():
   modelsFilters = ""
   modelsGeoFilters = ""
   modelsSnuggetRatings = ""
-  adminModelImports = "from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings, SupplyKit, ImportantLink"
+  adminModelImports = "from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings"
   adminFilterRefs = ""
   adminSiteRegistrations = ""
   loadMappings = ""

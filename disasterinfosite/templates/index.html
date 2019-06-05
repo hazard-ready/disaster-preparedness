@@ -1,70 +1,18 @@
 {% load js %}
 {% load i18n %}
 
-{% load render_bundle from webpack_loader %}
 {% load webpack_static from webpack_loader %}
 {% get_current_language as LANGUAGE_CODE %}
 
 <!doctype html>
 <html class="no-js" lang="{{ LANGUAGE_CODE }}">
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:url" content="{{ settings.site_url }}"/>
-  <meta property="og:title" content="{{ settings.site_description }}">
-  {% trans "Enter your location for a personalized report on your risks and how to prepare." as meta_description %}
-  <meta property="og:description" content="{{ settings.intro_text }} {{ meta_description }}">
-
-  <title>{{ settings.site_title }}</title>
-
- <!-- Load fonts -->
- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i|Source+Serif+Pro:600,700" rel="stylesheet">
-
- <!-- Load MapQuest Places search styles (for autocomplete) from CDN -->
- <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css"/>
-
-  {% render_bundle 'app' 'css' %}
-
-  <link rel="shortcut icon" href="{% webpack_static 'build/favicon.ico' %}"/>
-
-
+{% include "head-meta.html" %}
   <script type="text/javascript">
     var mapBounds = {{ data_bounds | js }};
   </script>
 
-</head>
 <body>
-  <header>
-    <div class="logo__container">
-      <a class="link--plain" href="{{ settings.site_url }}">
-        <img class="logo--header" src="{% webpack_static 'build/logo-no-text.png' %}" alt="">
-        <div class="logo__text">
-          <h5 class="project-title caps">{{ settings.site_title }}</h5>
-          <h3 class="h3--sans-serif">Hazard Ready</h3>
-        </div>
-      </a>
-      <div class="header__about header__about--small hide-for-medium-up--flex">
-        <a class="link--plain" href="about"><h5 class="about__link link--grey">About</h5></a>
-        {% include "language_selector.html" %}
-      </div>
-    </div>
-
-    {% block search %}
-    {% trans "Find Me" as find_me %}
-      <div class="location-form" role="form" aria-label="location-search">
-        <label class="sr-only" for="location-text">Location</label>
-        <input name="location-text" id="location-text" type="text" placeholder="Enter your home address to see your risk" />
-        <button id="auto-location" class="auto-location-submit caps"><img class="icon--locate-me" src="{% webpack_static 'build/locate-me.svg' %}" alt="">{{ find_me }}</button>
-        <button id="location-submit"><img class="icon--search" src="{% webpack_static 'build/icon-search.png' %}" alt="search"></button>
-        <div class="geocode-error-message"></div>
-      </div>
-    {% endblock search %}
-    <div class="header__about hide-for-small--flex">
-      <a class="link--plain" href="about"><h5 class="about__link link--grey">About</h5></a>
-      {% include "language_selector.html" %}
-    </div>
-  </header>
+{% include "header.html" %}
 
   <div class="content-container">
   <div class="map-info-container">
@@ -115,36 +63,10 @@
     <h1 class="loading-text caps">{% trans "Getting results for your location..." %}</h1>
     <img class="loading-spinner" src="{% webpack_static 'build/thinking.gif' %}">
   </div>
-  {% render_bundle 'vendor' 'js' %}
     <!-- Load MapQuest Places search (for autocomplete) from CDN -->
   <script src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
-  {% render_bundle 'app' 'js' %}
 
-  <!-- script for Google Analytics -->
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  {% include "page-end-meta.html" %}
 
-    // Replace the 'UA-numbers' part on the next line with your project's identifier
-    // ga('create', 'UA-74680572-2', 'auto');
-    ga('send', 'pageview');
-    /**
-    * Function that tracks a click on an outbound link in Analytics.
-    * This function takes a valid URL string as an argument, and uses that URL string
-    * as the event label. Setting the transport method to 'beacon' lets the hit be sent
-    * using 'navigator.sendBeacon' in browser that support it.
-    * The new_tab parameter helps open the URL in the current tab if that's the intent.
-    */
-    var trackOutboundLink = function(url, new_tab) {
-      ga('send', 'event', 'outbound', 'click', url, {
-         'transport': 'beacon',
-         'hitCallback': new_tab ? function() {} : function(){ document.location = url; }
-      });
-      return new_tab;
-    }
-  </script>
-
-</body>
+  </body>
 </html>
