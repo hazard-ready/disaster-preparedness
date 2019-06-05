@@ -15,7 +15,7 @@ def checkHTMLTagClosures(row, rowCount):
           print("WARNING: In row", str(rowCount), key, "has", str(tag_openings), "opening <" + tag + "> tag[s] but only", str(tag_closings), "closing tag[s].")
 
 
-def allRequiredFieldsPresent(requiredFields, optionalFields, row, rowCount):
+def allRequiredFieldsPresent(optionalFields, row, rowCount):
   if any(a != '' for a in row.values()): # if the entire row is not empty
     blanks = []
     for key in row.keys():
@@ -76,7 +76,7 @@ def runLoader(config):
   rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
   for row in newSnuggets:
     rowCount += 1
-    if allRequiredFieldsPresent(config['required'], config['optional'], row, rowCount):
+    if allRequiredFieldsPresent(config['optional'], row, rowCount):
       checkHTMLTagClosures(row, rowCount)
       overwriteAll = config['processRow'](row, overwriteAll)
 

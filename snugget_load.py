@@ -12,8 +12,7 @@ dataDir = os.path.join(appDir, "data")
 snuggetFile = os.path.join(dataDir, "snuggets.xlsx")
 slideshowFilename = "slideshow.xlsx" # there can be multiple of these files in different locations, so the full path is assembled in addSlideshow()
 
-requiredFields = ['shapefile', 'section', 'subsection']
-# all other fields in snuggetFile are required. The empty string is to deal with Excel's charming habit of putting a blank column after all data in a CSV.
+# all other fields in snuggetFile are required.
 optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'pop_out_video', 'intensity_txt', 'text', 'image_slideshow_folder', 'video']
 
 defaults = {
@@ -25,7 +24,6 @@ defaults = {
 def run():
   config = {
     'file': snuggetFile,
-    'required': requiredFields,
     'optional': optionalFields,
     'processRow': processRow
   }

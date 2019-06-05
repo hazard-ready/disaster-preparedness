@@ -11,14 +11,13 @@ dataDir = os.path.join(appDir, "data")
 imagesDir = os.path.join(dataDir, 'images/prepare')
 file = os.path.join(dataDir, "prepare.xlsx")
 
-requiredFields = ['section', 'cost', 'text', 'external_text', 'external_link']
+#All other fields are required
 optionalFields = ['image', 'happy', 'useful', 'property', 'external_icon']
 
 
 def run():
   config = {
     'file': file,
-    'required': requiredFields,
     'optional': optionalFields,
     'processRow': processRow
   }
