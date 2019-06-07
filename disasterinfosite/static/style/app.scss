@@ -87,6 +87,12 @@ h1 {
   }
 }
 
+.h1-sans-serif {
+  color: $soft-white;
+  font-family: $sans-serif;
+  font-weight: $font-weight-bold;
+}
+
 h2 {
   border-bottom: 2px solid $light-grey;
   color: $dark-accent;
@@ -1053,4 +1059,15 @@ form:invalid {
 
 .bio__links--reverse {
   text-align: right;
+}
+
+/* Prepare page */
+.prepare-hero {
+  position: relative;
+}
+
+.hero__text {
+  position: absolute;
+  top: 0;
+  width: 50%;
 }

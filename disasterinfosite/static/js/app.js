@@ -27,6 +27,9 @@ require("../img/linkedin-logo.png");
 require("../img/linkedin-logo@2x.png");
 require("../img/about-link.svg");
 
+// prepare page
+require("../img/basic_kit.jpg");
+
 require("./users");
 require("slick-carousel");
 
