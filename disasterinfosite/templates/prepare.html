@@ -11,6 +11,10 @@
   <body>
     {% include "prepare-header.html" %}
     <div class="content-container">
+      <div class="prepare-hero">
+        <img src="{% webpack_static 'build/basic_kit.jpg' %}">
+        <h1 class="h1-sans-serif hero__text">Take the first step towards getting prepared</h1>
+      </div>
       {% for item in actions %}
         <h4>{{ item.title }}</h4>
         {{ item.content_text | safe }}
