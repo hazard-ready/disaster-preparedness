@@ -1,10 +1,32 @@
 /* Prepare page */
 .prepare-hero {
+  background-image: url('/static/build/basic_kit.jpg');
+  background-position: bottom center;
+  height: 200px;
   position: relative;
+}
+
+.overlay {
+  background-color: $black-tint;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .hero__text {
   position: absolute;
+  left: 10px;
   top: 0;
-  width: 50%;
+  width: 70%;
+
+  @include breakpoint(medium) {
+    left: 20px;
+    width: 60%;
+  }
+
+  @include breakpoint(large) {
+    top: 30px;
+  }
 }
