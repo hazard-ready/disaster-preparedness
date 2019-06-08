@@ -1,5 +1,6 @@
 {% load js %}
 {% load i18n %}
+{% load show_cost %}
 
 {% load webpack_static from webpack_loader %}
 {% get_current_language as SELECTED_LANGUAGE_CODE %}
@@ -16,9 +17,18 @@
           <h1 class="h1-sans-serif hero__text">Take the first step toward getting prepared</h1>
         </div>
       </div>
-      {% for item in actions %}
-        <h4>{{ item.title }}</h4>
-        {{ item.content_text | safe }}
+      {% regroup actions by cost as actions_by_cost %}
+      {% for cost, items in actions_by_cost %}
+        <h4 class="section-title section-title--collapse" data-section="cost--{{cost}}">
+          <img class="caret" src="{% webpack_static 'build/caret.svg' %}" alt=""/>
+          {{ cost | show_cost }}
+        </h4>
+        <div class="section-content section-content--collapse" id="cost--{{cost}}">
+          {% for item in items %}
+            {{ item.title }}
+            {{ item.content_text | safe }}
+          {% endfor %}
+        </div>
       {% endfor %}
     </div>
     {% include "geek_box.html" %}
