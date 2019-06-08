@@ -1,0 +1,39 @@
+/* login and sign in */
+
+#user-interaction-container {
+  background-color: $soft-white;
+}
+
+.user-interaction__buttons {
+  text-align: center;
+
+  @include breakpoint(medium-and-up) {
+    text-align: right;
+  }
+
+  .button:not(:last-child) {
+    margin-right: 1rem;
+    @include breakpoint(medium-and-up) {
+      margin-right: 2rem;
+    }
+
+    @include breakpoint(large) {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+.user-interactions-help {
+  padding-top: 1rem;
+}
+
+#user-info-container,
+#user-info-container--invalid,
+#user-signup-result-container,
+#user-login-container,
+#user-signup-container,
+#user-profile-container,
+#user-profile-result-container,
+#failure-container {
+  display: none;
+}
