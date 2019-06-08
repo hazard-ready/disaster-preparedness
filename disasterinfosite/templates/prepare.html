@@ -17,6 +17,7 @@
           <h1 class="h1-sans-serif hero__text">Take the first step toward getting prepared</h1>
         </div>
       </div>
+      <div class="disaster-container">
       {% regroup actions by cost as actions_by_cost %}
       {% for cost, items in actions_by_cost %}
         <h4 class="section-title section-title--collapse" data-section="cost--{{cost}}">
@@ -24,12 +25,20 @@
           {{ cost | show_cost }}
         </h4>
         <div class="section-content section-content--collapse" id="cost--{{cost}}">
-          {% for item in items %}
-            {{ item.title }}
-            {{ item.content_text | safe }}
-          {% endfor %}
+            <div class="item-list">
+              {% for item in items %}
+                {{ item.title }}
+              {% endfor %}
+            </div>
+            <div class="item-detail">
+              Item content will go here
+            </div>
         </div>
       {% endfor %}
+      </div>
+      <div class="disaster-container">
+        Print content goes here.
+      </div>
     </div>
     {% include "geek_box.html" %}
     {% include "page-end-meta.html" %}
