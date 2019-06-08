@@ -67,12 +67,13 @@ header {
 .header__about {
   align-items: baseline;
   flex-shrink: 0;
+  margin-left: auto;
 }
 
 .header__about--small {
   position: absolute;
   right: 10px;
-  top: 20px;
+  top: 15px;
 }
 
 .about__link {
@@ -205,6 +206,7 @@ header {
 
   @include breakpoint(medium-and-up) {
     margin-left: auto;
+    margin-top: 15px;
   }
 }
 
