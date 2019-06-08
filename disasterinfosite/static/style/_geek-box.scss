@@ -1,0 +1,40 @@
+/* Geek box */
+
+#geek-box {
+  background-color: $deep-grey;
+  color: $soft-white;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+  @include breakpoint(medium-and-up) {
+    flex-direction: row;
+  }
+
+  h3 {
+    color: $soft-white;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 15px;
+  }
+
+  a,
+  a:hover,
+  a:visited,
+  a:active {
+    color: $low-intensity;
+  }
+}
+
+.geek-box-logo {
+  margin: 0 auto;
+  height: 100%;
+  flex: 1 1 200px;
+
+  @include breakpoint(medium-and-up) {
+    margin: 10px;
+    flex: 1 0 300px;
+  }
+}

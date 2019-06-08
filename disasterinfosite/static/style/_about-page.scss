@@ -1,0 +1,131 @@
+/* About page */
+.about-container {
+  background-color: $white;
+  margin: 0 auto 20px;
+  padding: 5px 10px;
+
+  @include breakpoint(medium) {
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 5px 20px;
+  }
+
+  @include breakpoint(large) {
+    margin-right: 20px;
+    margin-top: 30px;
+    padding: 5px 40px;
+  }
+}
+
+.about-container--flex {
+  display: flex;
+  flex-direction: column;
+
+  @include breakpoint(large) {
+    flex-direction: row;
+  }
+}
+
+.about-content__flowchart {
+  flex-shrink: 0;
+  @include breakpoint(large) {
+    flex-basis: 600px;
+  }
+}
+
+.about-content__text {
+  margin-top: 20px;
+}
+
+.bio {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  padding: 10px;
+
+  @include breakpoint(medium-and-up) {
+    flex-direction: row;
+  }
+
+  @include breakpoint(large) {
+    margin-bottom: 40px;
+    padding: 40px;
+  }
+}
+
+.bio--becks {
+  background-color: $very-high-intensity;
+
+  @include breakpoint(medium-and-up) {
+    flex-direction: row-reverse;
+  }
+}
+
+.bio--carson {
+  background-color: $extreme-intensity;
+}
+
+.bio--grant {
+  background-color: $high-intensity;
+}
+
+.bio__image {
+  flex: 1 1 250px;
+
+  @include breakpoint(medium-and-up) {
+    flex: 0 1 850px;
+  }
+}
+
+.bio__other {
+  @include breakpoint(medium) {
+    flex: 1 1 auto;
+    margin-left: 10px;
+  }
+
+  @include breakpoint(large) {
+    flex: 3 1 auto;
+    margin-left: 40px;
+  }
+}
+
+.bio__other--reverse {
+  @include breakpoint(medium-and-up) {
+    margin-left: 0;
+    margin-right: 10px;
+
+    h4 {
+      text-align: right;
+    }
+  }
+
+  @include breakpoint(large) {
+    margin-right: 40px;
+  }
+}
+
+.bio__name {
+  border-bottom: 2px solid #ccc;
+  margin-top: 12px;
+}
+
+.bio__text {
+  background-color: $white;
+  padding: 10px 20px;
+}
+
+.bio__links {
+  margin: 15px 20px 5px;
+
+  @include breakpoint(medium-and-up) {
+    margin: 16px 0;
+  }
+
+  .link-icon {
+    vertical-align: top;
+  }
+}
+
+.bio__links--reverse {
+  text-align: right;
+}
