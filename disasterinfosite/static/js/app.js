@@ -29,6 +29,9 @@ require("../img/about-link.svg");
 
 // prepare page
 require("../img/basic_kit.jpg");
+require("../img/icon-happy.svg");
+require("../img/icon-useful.svg");
+require("../img/icon-home.svg");
 
 require("./users");
 require("slick-carousel");

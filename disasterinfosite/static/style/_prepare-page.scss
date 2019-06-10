@@ -1,8 +1,10 @@
 /* Prepare page */
+
 .prepare-hero {
   background-image: url('/static/build/basic_kit.jpg');
   background-position: bottom center;
-  height: 200px;
+  height: 250px;
+  margin-bottom: 30px;
   position: relative;
 }
 
@@ -28,5 +30,64 @@
 
   @include breakpoint(large) {
     top: 30px;
+  }
+}
+
+.prepare-container {
+  background-color: $white;
+  display: flex;
+  flex-direction: row;
+  padding: 5px 10px;
+
+  @include breakpoint(medium) {
+    padding: 5px 20px;
+  }
+
+  @include breakpoint(large) {
+    padding: 5px 40px;
+  }
+}
+
+.prepare-actions {
+  flex: 1 0 40%;
+}
+
+.prepare-content {
+  flex-direction: column;
+}
+
+.prepare-content__list {
+  list-style: none;
+  padding: 0;
+
+  li {
+    cursor: pointer;
+    margin: 20px;
+
+    &:hover, &:focus {
+      text-decoration: underline;
+    }
+  }
+}
+
+.prepare-detail {
+  padding: 40px 0 40px 40px;
+  border-left: 2px solid $light-grey;
+}
+
+.prepare__icon {
+  margin-right: 20px;
+  vertical-align: middle;
+  width: 48px;
+}
+
+.prepare-item__link {
+  text-align: right;
+
+  a {
+    color: $soft-black;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: $font-weight-bold;
   }
 }
