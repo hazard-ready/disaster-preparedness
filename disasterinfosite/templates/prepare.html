@@ -17,28 +17,68 @@
           <h1 class="h1-sans-serif hero__text">Take the first step toward getting prepared</h1>
         </div>
       </div>
-      <div class="disaster-container">
-      {% regroup actions by cost as actions_by_cost %}
-      {% for cost, items in actions_by_cost %}
-        <h4 class="section-title section-title--collapse" data-section="cost--{{cost}}">
-          <img class="caret" src="{% webpack_static 'build/caret.svg' %}" alt=""/>
-          {{ cost | show_cost }}
-        </h4>
-        <div class="section-content section-content--collapse" id="cost--{{cost}}">
-            <div class="item-list">
-              {% for item in items %}
-                {{ item.title }}
-              {% endfor %}
+      <div class="prepare-container">
+        <div class="prepare-actions">
+          {% regroup actions by cost as actions_by_cost %}
+          {% for cost, items in actions_by_cost %}
+            <h4 class="section-title--collapse" data-section="cost--{{cost}}">
+              <img class="caret" src="{% webpack_static 'build/caret.svg' %}" alt=""/>
+              {{ cost | show_cost }}
+            </h4>
+            <div class="section-content section-content--collapse prepare-content" id="cost--{{cost}}">
+                <ul class="prepare-content__list">
+                  {% for item in items %}
+                    <li data-item="{{ item.slug }}">{{ item.title }}</li>
+                  {% endfor %}
+                </ul>
             </div>
-            <div class="item-detail">
-              Item content will go here
-            </div>
+          {% endfor %}
         </div>
-      {% endfor %}
+        <div class="prepare-detail">
+          {% for item in actions %}
+            <div class="{% if forloop.first %}prepare-item{% else %}prepare-item hide{% endif %}" id="{{ item.slug }}">
+              {% if item.image %}
+                <img class="prepare-item__image" alt="" src="{{ item.image.url }}">
+              {% endif %}
+
+              <h3 class="h3--sans-serif">{{ item.title }}</h3>
+
+              {{ item.content_text | safe }}
+
+              {% if item.happy_text %}
+              <p>
+                <img class="prepare__icon" src="{% webpack_static 'build/icon-happy.svg' %}" alt=""> {{ item.happy_text }}
+              </p>
+              {% endif %}
+              {% if item.useful_text %}
+              <p>
+                <img class="prepare__icon" src="{% webpack_static 'build/icon-useful.svg' %}" alt="">  {{ item.useful_text }}
+              </p>
+              {% endif %}
+              {% if item.property_text %}
+              <p>
+                <img class="prepare__icon" src="{% webpack_static 'build/icon-home.svg' %}" alt=""> {{ item.property_text }}
+              </p>
+              {% endif %}
+              {% if item.link %}
+              <div class="prepare-item__link">
+                <a href="{{ item.link }}" target="_blank">
+                  {% if item.link_icon %}
+                    <img class="prepare-item__link-icon" alt="" src="{{ item.link_icon.url }}">
+                  {% endif %}
+                  {% if item.link_text %}
+                    {{ item.link_text }}
+                  {% endif %}
+                </a>
+              </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
       </div>
-      <div class="disaster-container">
+    </div>
+    <div class="prepare-container">
         Print content goes here.
-      </div>
     </div>
     {% include "geek_box.html" %}
     {% include "page-end-meta.html" %}
