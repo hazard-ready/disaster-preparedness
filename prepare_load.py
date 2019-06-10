@@ -36,7 +36,8 @@ def processRow(row, overwriteAll):
     'property_text': row['property'],
     'content_text': row['text'],
     'link_text': row['external_text'],
-    'link': row['external_link']
+    'link': row['external_link'],
+    'slug': row['slug']
   }
   pa = PreparednessAction.objects.create(**kwargs)
   pa.save()
