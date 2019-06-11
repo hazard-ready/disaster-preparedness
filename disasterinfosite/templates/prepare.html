@@ -76,63 +76,64 @@
           {% endfor %}
         </div>
       </div>
-    </div>
-    <div class="print-container">
-      <div class="print-header">
-        <div><img class="prepare__icon" src="{% webpack_static 'build/icon-print.svg' %}" alt=""> {% trans 'Print' %}</div>
-        <div class="print-header__activity">{% trans 'This activity' %}&hellip;</div>
-      </div>
-      <table class="print-table">
-        <tr>
-          <th class="center-align">{% trans 'Completed?' %}</th>
-          <th>{% trans 'Activity' %}</th>
-          <th class="center-align">&hellip;{% trans 'reduces emotional and physical harm' %}<br><img class="print-table__icon" src="{% webpack_static 'build/icon-happy.svg' %}" alt="">
-          </th>
-          <th class="center-align">&hellip;{% trans 'is useful for other situations' %}<br><img class="print-table__icon" src="{% webpack_static 'build/icon-useful.svg' %}" alt="">
-          </th>
-          <th class="center-align">&hellip;{% trans 'helps protect property' %}<br><img class="print-table__icon" src="{% webpack_static 'build/icon-home.svg' %}" alt="">
-          </th>
-          <th class="center-align">&hellip;{% trans 'costs' %}<br><img class="print-table__icon" src="{% webpack_static 'build/icon-money.svg' %}" alt="">
-            </td></th>
-          <th>{% trans 'Resources' %}
-        </tr>
-        {% for item in actions %}
+
+      <div class="print-container">
+        <div class="print-header">
+          <div class="print-button"><img class="prepare__icon" src="{% webpack_static 'build/icon-print.svg' %}" alt=""> {% trans 'Print' %}</div>
+          <div class="print-header__activity">{% trans 'This activity' %}&hellip;</div>
+        </div>
+        <table class="print-table">
           <tr>
-            <td class="center-align"><input type="checkbox"></td>
-            <td>{{ item.title }}</td>
-            <td class="center-align">{% if item.happy_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
-            </td>
-            <td class="center-align">{% if item.useful_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
-            </td>
-            <td class="center-align">{% if item.property_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
-            </td>
-            <td class="center-align">{{ item.cost | show_cost }}</td>
-            <td>{% if item.link %}
-                <a href="{{ item.link }}" target="_blank">
-                  {% if item.link_icon %}
-                    <img class="prepare-item__link-icon" alt="" src="{{ item.link_icon.url }}">
-                  {% endif %}
-                  {% if item.link_text %}
-                    {{ item.link_text }}
-                  {% endif %}
-                </a>
-              {% endif %}
-            </td>
+            <th class="center-align">{% trans 'Completed?' %}</th>
+            <th>{% trans 'Activity' %}</th>
+            <th class="center-align">&hellip;{% trans 'reduces emotional and physical harm' %}<br><img class="print-table__icon" src="{% webpack_static 'build/icon-happy.svg' %}" alt="">
+            </th>
+            <th class="center-align">&hellip;{% trans 'is useful for other situations' %}<br><img class="print-table__icon" src="{% webpack_static 'build/icon-useful.svg' %}" alt="">
+            </th>
+            <th class="center-align">&hellip;{% trans 'helps protect property' %}<br><img class="print-table__icon" src="{% webpack_static 'build/icon-home.svg' %}" alt="">
+            </th>
+            <th class="center-align">&hellip;{% trans 'costs' %}<br><img class="print-table__icon" src="{% webpack_static 'build/icon-money.svg' %}" alt="">
+              </td></th>
+            <th class="resources">{% trans 'Resources' %}
           </tr>
-        {% endfor %}
-      </table>
-      <div class="print-footer">
-        <div class="print-key">
-          {% trans 'Key:' %} $ = $1 - $30
-        </div>
-        <div class="print-key">
-          $$ = $31 - $100
-        </div>
-        <div class="print-key">
-          $$$ = $101 - $300
-        </div>
-        <div class="print-key">
-          $$$$ = $301 {% trans 'or more' %}
+          {% for item in actions %}
+            <tr>
+              <td class="center-align"><input type="checkbox"></td>
+              <td>{{ item.title }}</td>
+              <td class="center-align">{% if item.happy_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
+              </td>
+              <td class="center-align">{% if item.useful_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
+              </td>
+              <td class="center-align">{% if item.property_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
+              </td>
+              <td class="center-align">{{ item.cost | show_cost }}</td>
+              <td class="resources">{% if item.link %}
+                  <a href="{{ item.link }}" target="_blank">
+                    {% if item.link_icon %}
+                      <img class="prepare-item__link-icon" alt="" src="{{ item.link_icon.url }}">
+                    {% endif %}
+                    {% if item.link_text %}
+                      {{ item.link_text }}
+                    {% endif %}
+                  </a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+        <div class="print-footer">
+          <div class="print-key">
+            {% trans 'Key:' %} $ = $1 - $30
+          </div>
+          <div class="print-key">
+            $$ = $31 - $100
+          </div>
+          <div class="print-key">
+            $$$ = $101 - $300
+          </div>
+          <div class="print-key">
+            $$$$ = $301 {% trans 'or more' %}
+          </div>
         </div>
       </div>
     </div>
