@@ -80,33 +80,33 @@
     <div class="print-container">
       <div class="print-header">
         <div><img class="prepare__icon" src="{% webpack_static 'build/icon-print.svg' %}" alt=""> {% trans 'Print' %}</div>
-        <div>{% trans 'This activity' %}&hellip;</div>
+        <div class="print-header__activity">{% trans 'This activity' %}&hellip;</div>
       </div>
       <table class="print-table">
-        <tr class="print-table__header">
-          <th>{% trans 'Completed?' %}</th>
+        <tr>
+          <th class="center-align">{% trans 'Completed?' %}</th>
           <th>{% trans 'Activity' %}</th>
-          <th>&hellip;{% trans 'reduces emotional and physical harm' %} <img class="prepare__icon" src="{% webpack_static 'build/icon-happy.svg' %}" alt="">
+          <th class="center-align">&hellip;{% trans 'reduces emotional and physical harm' %}<br><img class="print-table__icon" src="{% webpack_static 'build/icon-happy.svg' %}" alt="">
           </th>
-          <th>&hellip;{% trans 'is useful for other situations' %} <img class="prepare__icon" src="{% webpack_static 'build/icon-useful.svg' %}" alt="">
+          <th class="center-align">&hellip;{% trans 'is useful for other situations' %}<br><img class="print-table__icon" src="{% webpack_static 'build/icon-useful.svg' %}" alt="">
           </th>
-          <th>&hellip;{% trans 'helps protect property' %} <img class="prepare__icon" src="{% webpack_static 'build/icon-home.svg' %}" alt="">
+          <th class="center-align">&hellip;{% trans 'helps protect property' %}<br><img class="print-table__icon" src="{% webpack_static 'build/icon-home.svg' %}" alt="">
           </th>
-          <th>&hellip;{% trans 'costs' %} <img class="prepare__icon" src="{% webpack_static 'build/icon-money.svg' %}" alt="">
+          <th class="center-align">&hellip;{% trans 'costs' %}<br><img class="print-table__icon" src="{% webpack_static 'build/icon-money.svg' %}" alt="">
             </td></th>
           <th>{% trans 'Resources' %}
         </tr>
         {% for item in actions %}
           <tr>
-            <td><input type="checkbox"></td>
+            <td class="center-align"><input type="checkbox"></td>
             <td>{{ item.title }}</td>
-            <td>{% if item.happy_text %}<img class="prepare__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
+            <td class="center-align">{% if item.happy_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
             </td>
-            <td>{% if item.useful_text %}<img class="prepare__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
+            <td class="center-align">{% if item.useful_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
             </td>
-            <td>{% if item.property_text %}<img class="prepare__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
+            <td class="center-align">{% if item.property_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
             </td>
-            <td>{{ item.cost | show_cost }}</td>
+            <td class="center-align">{{ item.cost | show_cost }}</td>
             <td>{% if item.link %}
                 <a href="{{ item.link }}" target="_blank">
                   {% if item.link_icon %}
