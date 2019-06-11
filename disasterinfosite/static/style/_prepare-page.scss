@@ -91,3 +91,26 @@
     font-weight: $font-weight-bold;
   }
 }
+
+.print-container {
+  background-color: $white;
+  padding: 5px 10px;
+
+  @include breakpoint(medium) {
+    padding: 5px 20px;
+  }
+
+  @include breakpoint(large) {
+    padding: 5px 40px;
+  }
+}
+
+.print-footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 40px;
+}
+
+.print-key {
+  color: $medium-grey;
+}
