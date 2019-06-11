@@ -105,6 +105,45 @@
   }
 }
 
+.print-header {
+  display: flex;
+  height: 60px;
+  font-weight: $font-weight-bold;
+}
+
+.print-header__activity {
+  flex: 1 0 auto;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.print-table {
+  border-collapse: collapse;
+  th {
+    border-bottom: 2px solid $light-grey;
+    color: $dark-grey;
+    padding: 10px;
+    text-align: left;
+  }
+
+  tr:nth-child(even) {
+    background-color: $soft-white;
+  }
+
+  td {
+    padding: 10px;
+  }
+
+  a, a:focus, a:hover {
+    color: $bright-accent;
+    text-decoration: none;
+  }
+}
+
+.print-table__icon {
+  width: 48px;
+}
+
 .print-footer {
   display: flex;
   justify-content: space-around;
