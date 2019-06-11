@@ -13,13 +13,15 @@ var anchor = window.location.hash;
 var $prepareItems = $(".prepare-item");
 var $prepareContentItems = $(".prepare-content__item");
 
+function highlightMenu($itemTitle) {
+  $prepareContentItems.removeClass("prepare-content__item--active");
+  $itemTitle.addClass("prepare-content__item--active");
+}
+
 function showItemDetail(detailId) {
   var $detail = $(detailId);
 
-  $prepareContentItems.removeClass("prepare-content__item--active");
-  $('[data-item="' + detailId.slice(1) + '"]').addClass(
-    "prepare-content__item--active"
-  );
+  highlightMenu($('[data-item="' + detailId.slice(1) + '"]'));
 
   // hide all of the item detail elements but this one
   $prepareItems.addClass("hide");
@@ -28,9 +30,10 @@ function showItemDetail(detailId) {
 
 $(document).ready(function() {
   $prepareContentItems.click(function(event) {
-    $prepareContentItems.removeClass("prepare-content__item--active");
     var $itemTitle = $(event.delegateTarget);
-    $itemTitle.addClass("prepare-content__item--active");
+
+    highlightMenu($itemTitle);
+
     var itemDetailId = $itemTitle.data("item");
     if (itemDetailId) {
       showItemDetail("#" + itemDetailId);
@@ -41,13 +44,14 @@ $(document).ready(function() {
     showItemDetail(anchor);
 
     // Open the relevant collapsible panel on the left and close all others
-    $(".section-content").addClass("section-content--collapse");
-    $(".caret").removeClass("caret--up");
+    var collapseSectionClass = "section-content--collapse";
+    var caretUpClass = "caret--up";
+    $(".section-content").addClass(collapseSectionClass);
+    $(".caret").removeClass(caretUpClass);
     var sectionId = $(anchor).data("section");
-    var $sectionTitle = $('[data-section="' + sectionId + '"]');
+    var $titleCaret = $('[data-section="' + sectionId + '"]').find(".caret");
     var $contentSection = $("#" + sectionId);
-    var $titleCaret = $sectionTitle.find(".caret");
-    $contentSection.removeClass("section-content--collapse");
-    $titleCaret.addClass("caret--up");
+    $contentSection.removeClass(collapseSectionClass);
+    $titleCaret.addClass(caretUpClass);
   }
 });
