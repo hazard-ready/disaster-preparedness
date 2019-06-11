@@ -70,6 +70,10 @@
   }
 }
 
+.prepare-content__item--active {
+  font-weight: $font-weight-bold;
+}
+
 .prepare-detail {
   padding: 40px 0 40px 40px;
   border-left: 2px solid $light-grey;
@@ -89,6 +93,10 @@
     text-decoration: none;
     font-size: 18px;
     font-weight: $font-weight-bold;
+
+    &:focus, &:hover, &:active {
+      color: $bright-accent;
+    }
   }
 }
 

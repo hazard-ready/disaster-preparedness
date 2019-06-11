@@ -27,15 +27,7 @@ require("../img/linkedin-logo.png");
 require("../img/linkedin-logo@2x.png");
 require("../img/about-link.svg");
 
-// prepare page
-require("../img/basic_kit.jpg");
-require("../img/icon-happy.svg");
-require("../img/icon-useful.svg");
-require("../img/icon-home.svg");
-require("../img/icon-print.svg");
-require("../img/icon-check.svg");
-require("../img/icon-money.svg");
-
+require("./prepare");
 require("./users");
 require("slick-carousel");
 
