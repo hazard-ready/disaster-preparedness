@@ -119,6 +119,10 @@
   font-weight: $font-weight-bold;
 }
 
+.print-button {
+  cursor: pointer;
+}
+
 .print-header__activity {
   flex: 1 0 auto;
   text-align: center;
@@ -160,4 +164,23 @@
 
 .print-key {
   color: $medium-grey;
+}
+
+@media print {
+  .header__about,
+  .prepare-hero,
+  .prepare-container,
+  .print-button,
+  .resources,
+  #geek-box {
+    display: none;
+  }
+
+  .content-container {
+    padding: 0;
+  }
+
+  .print-container {
+    padding: 0;
+  }
 }

@@ -54,4 +54,9 @@ $(document).ready(function() {
     $contentSection.removeClass(collapseSectionClass);
     $titleCaret.addClass(caretUpClass);
   }
+
+  $(".print-button").click(function() {
+    window.print();
+    return false;
+  });
 });
