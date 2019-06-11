@@ -38,15 +38,7 @@ require("../img/logo-mercy-corps.svg");
 require("../img/multnomah_county_logo.png");
 require("../img/red-cross-logo.png");
 
-// prepare page
-require("../img/basic_kit.jpg");
-require("../img/icon-happy.svg");
-require("../img/icon-useful.svg");
-require("../img/icon-home.svg");
-require("../img/icon-print.svg");
-require("../img/icon-check.svg");
-require("../img/icon-money.svg");
-
+require("./prepare");
 require("./users");
 require("slick-carousel");
 
