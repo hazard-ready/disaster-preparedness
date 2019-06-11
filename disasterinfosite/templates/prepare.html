@@ -21,11 +21,11 @@
         <div class="prepare-actions">
           {% regroup actions by cost as actions_by_cost %}
           {% for cost, items in actions_by_cost %}
-            <h4 class="section-title--collapse" data-section="cost--{{cost}}">
-              <img class="caret" src="{% webpack_static 'build/caret.svg' %}" alt=""/>
+            <h4 class="{% if forloop.first %}section-title{% else %}section-title section-title--collapse{% endif %}" data-section="cost--{{cost}}">
+              <img class="caret{% if forloop.first %} caret--up{% endif %}" src="{% webpack_static 'build/caret.svg' %}" alt=""/>
               {{ cost | show_cost }}
             </h4>
-            <div class="section-content section-content--collapse prepare-content" id="cost--{{cost}}">
+            <div class="{% if forloop.first %}section-content{% else %}section-content section-content--collapse{% endif %} prepare-content" id="cost--{{cost}}">
                 <ul class="prepare-content__list">
                   {% for item in items %}
                     <li class="prepare-content__item{% if forloop.first %} prepare-content__item--active{% endif %}" data-item="{{ item.slug }}">{{ item.title }}</li>

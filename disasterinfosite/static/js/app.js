@@ -282,7 +282,7 @@ $(document).ready(function() {
   var collapseSectionClass = "section-content--collapse";
   var caretUpClass = "caret--up";
 
-  $(".section-title--collapse").on("click", function(event) {
+  $(".section-title").on("click", function(event) {
     var $sectionTitle = $(event.delegateTarget);
     var contentSectionId = $sectionTitle.data("section");
     if (contentSectionId) {
