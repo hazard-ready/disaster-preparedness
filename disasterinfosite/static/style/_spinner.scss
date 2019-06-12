@@ -1,0 +1,28 @@
+/* loading spinner during geolocation */
+.loading {
+  position: fixed;
+  z-index: $z-index-top;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: $black-tint;
+  text-align: center;
+}
+
+.loading-spinner {
+  max-width: 40%;
+}
+
+.loading-text {
+  color: $white;
+  margin: 10px 0;
+
+  @include breakpoint(medium) {
+    margin: 30px 0 10px;
+  }
+
+  @include breakpoint(large) {
+    margin: 200px 0 50px;
+  }
+}

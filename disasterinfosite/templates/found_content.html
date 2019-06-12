@@ -57,22 +57,15 @@
     </div>
     {% for section, snuggets in hazard.items %}
       {% if section.collapsible %}
-    <h4
-      class="section-title section-title--collapse"
-      data-section="{{group.name}}-{{section.name|slugify}}"
-    >
-      <img
-        class="caret"
-        src="{% webpack_static 'build/caret.svg' %}"
-        alt=""
-      />{{ section.name }}
+    <h4 class="section-title section-title--collapse" data-section="{{group.name}}-{{section.name|slugify}}">
+      <img class="caret" src="{% webpack_static 'build/caret.svg' %}" alt=""/>{{ section.name }}
     </h4>
     <div
       class="section-content section-content--collapse"
       id="{{group.name}}-{{section.name|slugify}}"
     >
       {% else %}
-      <h4 class="section-title section-title--static">{{ section.name }}</h4>
+      <h4 class="section-title--static">{{ section.name }}</h4>
       <div class="section-content">
         {% endif %}
         <div class="snugget__content">

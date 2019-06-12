@@ -38,6 +38,7 @@ require("../img/logo-mercy-corps.svg");
 require("../img/multnomah_county_logo.png");
 require("../img/red-cross-logo.png");
 
+require("./prepare");
 require("./users");
 require("slick-carousel");
 
@@ -59,6 +60,11 @@ var boundaryStyle = {
 var location_query_text = "";
 var input_lat;
 var input_lng;
+var $locationInput;
+
+// grab the position, if possible
+var query_lat = getURLParameter("lat");
+var query_lng = getURLParameter("lng");
 
 // convenience function to extract url parameters
 function getURLParameter(name) {
@@ -123,11 +129,7 @@ function submitLocation(lat, lng, queryText) {
   }
 }
 
-$(document).ready(function() {
-  // grab the position, if possible
-  var query_lat = getURLParameter("lat");
-  var query_lng = getURLParameter("lng");
-
+function setUpMap() {
   // set up the map
   var map = new L.Map("map", {
     scrollWheelZoom: false
@@ -166,11 +168,16 @@ $(document).ready(function() {
     $locationInput.val(""); // clear query text
     submitLocation(e.latlng.lat, e.latlng.lng, "");
   });
+}
 
+$(document).ready(function() {
   // Set up input box
-  var $locationInput = $("#location-text");
+  $locationInput = $("#location-text");
   var $locationSubmit = $("#location-submit");
   var $autoLocationButton = $(".auto-location-submit");
+  if (document.getElementById("map")) {
+    setUpMap();
+  }
 
   // grab and set any previously entered query text
   var loc = getURLParameter("loc");
@@ -286,7 +293,7 @@ $(document).ready(function() {
   var collapseSectionClass = "section-content--collapse";
   var caretUpClass = "caret--up";
 
-  $(".section-title--collapse").on("click", function(event) {
+  $(".section-title").on("click", function(event) {
     var $sectionTitle = $(event.delegateTarget);
     var contentSectionId = $sectionTitle.data("section");
     if (contentSectionId) {

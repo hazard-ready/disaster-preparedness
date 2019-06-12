@@ -1,0 +1,70 @@
+/* Information and Instructions */
+.map-info-container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+
+  @include breakpoint(medium-and-up) {
+    flex-direction: row;
+  }
+}
+
+.information-container {
+  flex-grow: 1;
+  margin: 0 auto 20px;
+
+  @include breakpoint(medium) {
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+
+  @include breakpoint(large) {
+    margin-right: 20px;
+    margin-top: 30px;
+  }
+}
+
+.info__header {
+  font-weight: $font-weight-regular;
+}
+
+.info__start-over {
+  color: $dark-grey;
+  font-weight: $font-weight-regular;
+}
+
+.info__hazards {
+  margin-top: 20px;
+
+  @include breakpoint(medium-and-up) {
+    margin-top: 40px;
+  }
+}
+
+.hazard-link {
+  border-bottom: 2px solid $popout-border;
+  color: $bright-accent;
+  text-decoration: none;
+}
+
+/* Map */
+.map-container {
+  flex-grow: 2;
+  height: 300px;
+  min-width: 50%;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+/* overriding Leaflet defaults */
+/* Change cursor when mousing over the area masked because it's outside the covered area */
+.leaflet-clickable {
+  cursor: not-allowed;
+}
+/* Change cursor when over the area users can click in */
+.leaflet-container {
+  cursor: default;
+}
