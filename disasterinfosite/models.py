@@ -105,6 +105,34 @@ class Location(SingletonModel):
     # GENERATED CODE GOES HERE
     # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
     # locationsList
+            'RDPO_region_quake': RDPO_region_quake.objects.data_bounds(),
+            'RDPO_region_winter': RDPO_region_winter.objects.data_bounds(),
+            'RDPO_Lsd_Clark': RDPO_Lsd_Clark.objects.data_bounds(),
+            'RDPO_counties_quake': RDPO_counties_quake.objects.data_bounds(),
+            'RDPOflood_OR': RDPOflood_OR.objects.data_bounds(),
+            'RDPO_counties_volcano': RDPO_counties_volcano.objects.data_bounds(),
+            'RDPO_region_summer': RDPO_region_summer.objects.data_bounds(),
+            'RDPOFire_Clark': RDPOFire_Clark.objects.data_bounds(),
+            'RDPO_region_fire': RDPO_region_fire.objects.data_bounds(),
+            'RDPOCascadiaM9_3_Clark': RDPOCascadiaM9_3_Clark.objects.data_bounds(),
+            'RDPO_region_volcano': RDPO_region_volcano.objects.data_bounds(),
+            'RDPOLiquefaction_OR': RDPOLiquefaction_OR.objects.data_bounds(),
+            'RDPOCascadiaM9_Col': RDPOCascadiaM9_Col.objects.data_bounds(),
+            'RDPOflood_clark': RDPOflood_clark.objects.data_bounds(),
+            'RDPO_region_flood': RDPO_region_flood.objects.data_bounds(),
+            'RDPOvolcanoes': RDPOvolcanoes.objects.data_bounds(),
+            'RDPO_counties_winter': RDPO_counties_winter.objects.data_bounds(),
+            'RDPO_counties_fire': RDPO_counties_fire.objects.data_bounds(),
+            'RDPO_WA': RDPO_WA.objects.data_bounds(),
+            'RDPO_counties_flood': RDPO_counties_flood.objects.data_bounds(),
+            'RDPO_OR': RDPO_OR.objects.data_bounds(),
+            'RDPOCascadiaM9_3Cnty': RDPOCascadiaM9_3Cnty.objects.data_bounds(),
+            'RDPO_region_slide': RDPO_region_slide.objects.data_bounds(),
+            'RDPOCascadiaM9_OR': RDPOCascadiaM9_OR.objects.data_bounds(),
+            'RDPOLiquefact_Clark': RDPOLiquefact_Clark.objects.data_bounds(),
+            'RDPO_counties_summer': RDPO_counties_summer.objects.data_bounds(),
+            'RDPOhistflood': RDPOhistflood.objects.data_bounds(),
+            'RDPO_counties_slide': RDPO_counties_slide.objects.data_bounds()
     # END OF GENERATED CODE BLOCK
     ######################################################
         }
@@ -158,6 +186,342 @@ class ShapefileGroup(models.Model):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # modelsClasses
+class RDPO_region_quake(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='quake')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_region_winter(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='winter')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_Lsd_Clark(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='slide')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_counties_quake(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='quake')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPOflood_OR(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='flood')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_counties_volcano(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='volcano')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_region_summer(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='summer')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPOFire_Clark(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='fire')[0]
+
+    lookup_val = models.IntegerField()
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_region_fire(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='fire')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPOCascadiaM9_3_Clark(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='quake')[0]
+
+    lookup_val = models.IntegerField()
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_region_volcano(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='volcano')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPOLiquefaction_OR(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='quake')[0]
+
+    lookup_val = models.IntegerField()
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPOCascadiaM9_Col(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='quake')[0]
+
+    rast = models.RasterField(srid=4326)
+    bbox = models.PolygonField(srid=4326)
+    objects = RasterManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.rast.name) + ',	' + str(self.bbox) 
+
+class RDPOflood_clark(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='flood')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_region_flood(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='flood')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPOvolcanoes(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='volcano')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_counties_winter(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='winter')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_counties_fire(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='fire')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_WA(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='quake')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_counties_flood(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='flood')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_OR(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='quake')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPOCascadiaM9_3Cnty(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='quake')[0]
+
+    rast = models.RasterField(srid=4326)
+    bbox = models.PolygonField(srid=4326)
+    objects = RasterManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.rast.name) + ',	' + str(self.bbox) 
+
+class RDPO_region_slide(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='slide')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPOCascadiaM9_OR(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='quake')[0]
+
+    lookup_val = models.IntegerField()
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPOLiquefact_Clark(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='quake')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_counties_summer(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='summer')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPOhistflood(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='flood')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
+class RDPO_counties_slide(models.Model):
+    def getGroup():
+        return ShapefileGroup.objects.get_or_create(name='slide')[0]
+
+    lookup_val = models.CharField(max_length=80)
+    geom = models.MultiPolygonField(srid=4326)
+    objects = ShapeManager()
+
+    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
+    def __str__(self):
+        return str(self.lookup_val)
+
 # END OF GENERATED CODE BLOCK
 ######################################################
 
@@ -246,6 +610,34 @@ class Snugget(models.Model):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # modelsFilters
+    RDPO_region_quake_filter = models.ForeignKey(RDPO_region_quake, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_region_winter_filter = models.ForeignKey(RDPO_region_winter, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_Lsd_Clark_filter = models.ForeignKey(RDPO_Lsd_Clark, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_counties_quake_filter = models.ForeignKey(RDPO_counties_quake, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPOflood_OR_filter = models.ForeignKey(RDPOflood_OR, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_counties_volcano_filter = models.ForeignKey(RDPO_counties_volcano, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_region_summer_filter = models.ForeignKey(RDPO_region_summer, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPOFire_Clark_filter = models.ForeignKey(RDPOFire_Clark, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_region_fire_filter = models.ForeignKey(RDPO_region_fire, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPOCascadiaM9_3_Clark_filter = models.ForeignKey(RDPOCascadiaM9_3_Clark, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_region_volcano_filter = models.ForeignKey(RDPO_region_volcano, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPOLiquefaction_OR_filter = models.ForeignKey(RDPOLiquefaction_OR, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPOCascadiaM9_Col_filter = models.IntegerField(null=True)
+    RDPOflood_clark_filter = models.ForeignKey(RDPOflood_clark, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_region_flood_filter = models.ForeignKey(RDPO_region_flood, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPOvolcanoes_filter = models.ForeignKey(RDPOvolcanoes, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_counties_winter_filter = models.ForeignKey(RDPO_counties_winter, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_counties_fire_filter = models.ForeignKey(RDPO_counties_fire, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_WA_filter = models.ForeignKey(RDPO_WA, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_counties_flood_filter = models.ForeignKey(RDPO_counties_flood, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_OR_filter = models.ForeignKey(RDPO_OR, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPOCascadiaM9_3Cnty_filter = models.IntegerField(null=True)
+    RDPO_region_slide_filter = models.ForeignKey(RDPO_region_slide, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPOCascadiaM9_OR_filter = models.ForeignKey(RDPOCascadiaM9_OR, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPOLiquefact_Clark_filter = models.ForeignKey(RDPOLiquefact_Clark, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_counties_summer_filter = models.ForeignKey(RDPO_counties_summer, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPOhistflood_filter = models.ForeignKey(RDPOhistflood, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
+    RDPO_counties_slide_filter = models.ForeignKey(RDPO_counties_slide, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
 # END OF GENERATED CODE BLOCK
 ######################################################
 
@@ -268,6 +660,200 @@ class Snugget(models.Model):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # modelsGeoFilters
+        qs_RDPO_region_quake = RDPO_region_quake.objects.filter(geom__contains=pnt)
+        RDPO_region_quake_rating = qs_RDPO_region_quake.values_list('lookup_val', flat=True)
+        for rating in RDPO_region_quake_rating:
+            RDPO_region_quake_snugget = Snugget.objects.filter(RDPO_region_quake_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_region_quake_snugget:
+                groupsDict[RDPO_region_quake.getGroup()].extend(RDPO_region_quake_snugget)
+
+        qs_RDPO_region_winter = RDPO_region_winter.objects.filter(geom__contains=pnt)
+        RDPO_region_winter_rating = qs_RDPO_region_winter.values_list('lookup_val', flat=True)
+        for rating in RDPO_region_winter_rating:
+            RDPO_region_winter_snugget = Snugget.objects.filter(RDPO_region_winter_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_region_winter_snugget:
+                groupsDict[RDPO_region_winter.getGroup()].extend(RDPO_region_winter_snugget)
+
+        qs_RDPO_Lsd_Clark = RDPO_Lsd_Clark.objects.filter(geom__contains=pnt)
+        RDPO_Lsd_Clark_rating = qs_RDPO_Lsd_Clark.values_list('lookup_val', flat=True)
+        for rating in RDPO_Lsd_Clark_rating:
+            RDPO_Lsd_Clark_snugget = Snugget.objects.filter(RDPO_Lsd_Clark_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_Lsd_Clark_snugget:
+                groupsDict[RDPO_Lsd_Clark.getGroup()].extend(RDPO_Lsd_Clark_snugget)
+
+        qs_RDPO_counties_quake = RDPO_counties_quake.objects.filter(geom__contains=pnt)
+        RDPO_counties_quake_rating = qs_RDPO_counties_quake.values_list('lookup_val', flat=True)
+        for rating in RDPO_counties_quake_rating:
+            RDPO_counties_quake_snugget = Snugget.objects.filter(RDPO_counties_quake_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_counties_quake_snugget:
+                groupsDict[RDPO_counties_quake.getGroup()].extend(RDPO_counties_quake_snugget)
+
+        qs_RDPOflood_OR = RDPOflood_OR.objects.filter(geom__contains=pnt)
+        RDPOflood_OR_rating = qs_RDPOflood_OR.values_list('lookup_val', flat=True)
+        for rating in RDPOflood_OR_rating:
+            RDPOflood_OR_snugget = Snugget.objects.filter(RDPOflood_OR_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPOflood_OR_snugget:
+                groupsDict[RDPOflood_OR.getGroup()].extend(RDPOflood_OR_snugget)
+
+        qs_RDPO_counties_volcano = RDPO_counties_volcano.objects.filter(geom__contains=pnt)
+        RDPO_counties_volcano_rating = qs_RDPO_counties_volcano.values_list('lookup_val', flat=True)
+        for rating in RDPO_counties_volcano_rating:
+            RDPO_counties_volcano_snugget = Snugget.objects.filter(RDPO_counties_volcano_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_counties_volcano_snugget:
+                groupsDict[RDPO_counties_volcano.getGroup()].extend(RDPO_counties_volcano_snugget)
+
+        qs_RDPO_region_summer = RDPO_region_summer.objects.filter(geom__contains=pnt)
+        RDPO_region_summer_rating = qs_RDPO_region_summer.values_list('lookup_val', flat=True)
+        for rating in RDPO_region_summer_rating:
+            RDPO_region_summer_snugget = Snugget.objects.filter(RDPO_region_summer_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_region_summer_snugget:
+                groupsDict[RDPO_region_summer.getGroup()].extend(RDPO_region_summer_snugget)
+
+        qs_RDPOFire_Clark = RDPOFire_Clark.objects.filter(geom__contains=pnt)
+        RDPOFire_Clark_rating = qs_RDPOFire_Clark.values_list('lookup_val', flat=True)
+        for rating in RDPOFire_Clark_rating:
+            RDPOFire_Clark_snugget = Snugget.objects.filter(RDPOFire_Clark_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPOFire_Clark_snugget:
+                groupsDict[RDPOFire_Clark.getGroup()].extend(RDPOFire_Clark_snugget)
+
+        qs_RDPO_region_fire = RDPO_region_fire.objects.filter(geom__contains=pnt)
+        RDPO_region_fire_rating = qs_RDPO_region_fire.values_list('lookup_val', flat=True)
+        for rating in RDPO_region_fire_rating:
+            RDPO_region_fire_snugget = Snugget.objects.filter(RDPO_region_fire_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_region_fire_snugget:
+                groupsDict[RDPO_region_fire.getGroup()].extend(RDPO_region_fire_snugget)
+
+        qs_RDPOCascadiaM9_3_Clark = RDPOCascadiaM9_3_Clark.objects.filter(geom__contains=pnt)
+        RDPOCascadiaM9_3_Clark_rating = qs_RDPOCascadiaM9_3_Clark.values_list('lookup_val', flat=True)
+        for rating in RDPOCascadiaM9_3_Clark_rating:
+            RDPOCascadiaM9_3_Clark_snugget = Snugget.objects.filter(RDPOCascadiaM9_3_Clark_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPOCascadiaM9_3_Clark_snugget:
+                groupsDict[RDPOCascadiaM9_3_Clark.getGroup()].extend(RDPOCascadiaM9_3_Clark_snugget)
+
+        qs_RDPO_region_volcano = RDPO_region_volcano.objects.filter(geom__contains=pnt)
+        RDPO_region_volcano_rating = qs_RDPO_region_volcano.values_list('lookup_val', flat=True)
+        for rating in RDPO_region_volcano_rating:
+            RDPO_region_volcano_snugget = Snugget.objects.filter(RDPO_region_volcano_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_region_volcano_snugget:
+                groupsDict[RDPO_region_volcano.getGroup()].extend(RDPO_region_volcano_snugget)
+
+        qs_RDPOLiquefaction_OR = RDPOLiquefaction_OR.objects.filter(geom__contains=pnt)
+        RDPOLiquefaction_OR_rating = qs_RDPOLiquefaction_OR.values_list('lookup_val', flat=True)
+        for rating in RDPOLiquefaction_OR_rating:
+            RDPOLiquefaction_OR_snugget = Snugget.objects.filter(RDPOLiquefaction_OR_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPOLiquefaction_OR_snugget:
+                groupsDict[RDPOLiquefaction_OR.getGroup()].extend(RDPOLiquefaction_OR_snugget)
+
+        RDPOCascadiaM9_Col_rating = rasterPointLookup(RDPOCascadiaM9_Col, lng, lat)
+        if RDPOCascadiaM9_Col_rating is not None:
+            RDPOCascadiaM9_Col_snugget = Snugget.objects.filter(RDPOCascadiaM9_Col_filter__exact=RDPOCascadiaM9_Col_rating).order_by('order').select_subclasses()
+            if RDPOCascadiaM9_Col_snugget:
+                groupsDict[RDPOCascadiaM9_Col.getGroup()].extend(RDPOCascadiaM9_Col_snugget)
+
+        qs_RDPOflood_clark = RDPOflood_clark.objects.filter(geom__contains=pnt)
+        RDPOflood_clark_rating = qs_RDPOflood_clark.values_list('lookup_val', flat=True)
+        for rating in RDPOflood_clark_rating:
+            RDPOflood_clark_snugget = Snugget.objects.filter(RDPOflood_clark_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPOflood_clark_snugget:
+                groupsDict[RDPOflood_clark.getGroup()].extend(RDPOflood_clark_snugget)
+
+        qs_RDPO_region_flood = RDPO_region_flood.objects.filter(geom__contains=pnt)
+        RDPO_region_flood_rating = qs_RDPO_region_flood.values_list('lookup_val', flat=True)
+        for rating in RDPO_region_flood_rating:
+            RDPO_region_flood_snugget = Snugget.objects.filter(RDPO_region_flood_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_region_flood_snugget:
+                groupsDict[RDPO_region_flood.getGroup()].extend(RDPO_region_flood_snugget)
+
+        qs_RDPOvolcanoes = RDPOvolcanoes.objects.filter(geom__contains=pnt)
+        RDPOvolcanoes_rating = qs_RDPOvolcanoes.values_list('lookup_val', flat=True)
+        for rating in RDPOvolcanoes_rating:
+            RDPOvolcanoes_snugget = Snugget.objects.filter(RDPOvolcanoes_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPOvolcanoes_snugget:
+                groupsDict[RDPOvolcanoes.getGroup()].extend(RDPOvolcanoes_snugget)
+
+        qs_RDPO_counties_winter = RDPO_counties_winter.objects.filter(geom__contains=pnt)
+        RDPO_counties_winter_rating = qs_RDPO_counties_winter.values_list('lookup_val', flat=True)
+        for rating in RDPO_counties_winter_rating:
+            RDPO_counties_winter_snugget = Snugget.objects.filter(RDPO_counties_winter_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_counties_winter_snugget:
+                groupsDict[RDPO_counties_winter.getGroup()].extend(RDPO_counties_winter_snugget)
+
+        qs_RDPO_counties_fire = RDPO_counties_fire.objects.filter(geom__contains=pnt)
+        RDPO_counties_fire_rating = qs_RDPO_counties_fire.values_list('lookup_val', flat=True)
+        for rating in RDPO_counties_fire_rating:
+            RDPO_counties_fire_snugget = Snugget.objects.filter(RDPO_counties_fire_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_counties_fire_snugget:
+                groupsDict[RDPO_counties_fire.getGroup()].extend(RDPO_counties_fire_snugget)
+
+        qs_RDPO_WA = RDPO_WA.objects.filter(geom__contains=pnt)
+        RDPO_WA_rating = qs_RDPO_WA.values_list('lookup_val', flat=True)
+        for rating in RDPO_WA_rating:
+            RDPO_WA_snugget = Snugget.objects.filter(RDPO_WA_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_WA_snugget:
+                groupsDict[RDPO_WA.getGroup()].extend(RDPO_WA_snugget)
+
+        qs_RDPO_counties_flood = RDPO_counties_flood.objects.filter(geom__contains=pnt)
+        RDPO_counties_flood_rating = qs_RDPO_counties_flood.values_list('lookup_val', flat=True)
+        for rating in RDPO_counties_flood_rating:
+            RDPO_counties_flood_snugget = Snugget.objects.filter(RDPO_counties_flood_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_counties_flood_snugget:
+                groupsDict[RDPO_counties_flood.getGroup()].extend(RDPO_counties_flood_snugget)
+
+        qs_RDPO_OR = RDPO_OR.objects.filter(geom__contains=pnt)
+        RDPO_OR_rating = qs_RDPO_OR.values_list('lookup_val', flat=True)
+        for rating in RDPO_OR_rating:
+            RDPO_OR_snugget = Snugget.objects.filter(RDPO_OR_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_OR_snugget:
+                groupsDict[RDPO_OR.getGroup()].extend(RDPO_OR_snugget)
+
+        RDPOCascadiaM9_3Cnty_rating = rasterPointLookup(RDPOCascadiaM9_3Cnty, lng, lat)
+        if RDPOCascadiaM9_3Cnty_rating is not None:
+            RDPOCascadiaM9_3Cnty_snugget = Snugget.objects.filter(RDPOCascadiaM9_3Cnty_filter__exact=RDPOCascadiaM9_3Cnty_rating).order_by('order').select_subclasses()
+            if RDPOCascadiaM9_3Cnty_snugget:
+                groupsDict[RDPOCascadiaM9_3Cnty.getGroup()].extend(RDPOCascadiaM9_3Cnty_snugget)
+
+        qs_RDPO_region_slide = RDPO_region_slide.objects.filter(geom__contains=pnt)
+        RDPO_region_slide_rating = qs_RDPO_region_slide.values_list('lookup_val', flat=True)
+        for rating in RDPO_region_slide_rating:
+            RDPO_region_slide_snugget = Snugget.objects.filter(RDPO_region_slide_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_region_slide_snugget:
+                groupsDict[RDPO_region_slide.getGroup()].extend(RDPO_region_slide_snugget)
+
+        qs_RDPOCascadiaM9_OR = RDPOCascadiaM9_OR.objects.filter(geom__contains=pnt)
+        RDPOCascadiaM9_OR_rating = qs_RDPOCascadiaM9_OR.values_list('lookup_val', flat=True)
+        for rating in RDPOCascadiaM9_OR_rating:
+            RDPOCascadiaM9_OR_snugget = Snugget.objects.filter(RDPOCascadiaM9_OR_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPOCascadiaM9_OR_snugget:
+                groupsDict[RDPOCascadiaM9_OR.getGroup()].extend(RDPOCascadiaM9_OR_snugget)
+
+        qs_RDPOLiquefact_Clark = RDPOLiquefact_Clark.objects.filter(geom__contains=pnt)
+        RDPOLiquefact_Clark_rating = qs_RDPOLiquefact_Clark.values_list('lookup_val', flat=True)
+        for rating in RDPOLiquefact_Clark_rating:
+            RDPOLiquefact_Clark_snugget = Snugget.objects.filter(RDPOLiquefact_Clark_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPOLiquefact_Clark_snugget:
+                groupsDict[RDPOLiquefact_Clark.getGroup()].extend(RDPOLiquefact_Clark_snugget)
+
+        qs_RDPO_counties_summer = RDPO_counties_summer.objects.filter(geom__contains=pnt)
+        RDPO_counties_summer_rating = qs_RDPO_counties_summer.values_list('lookup_val', flat=True)
+        for rating in RDPO_counties_summer_rating:
+            RDPO_counties_summer_snugget = Snugget.objects.filter(RDPO_counties_summer_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_counties_summer_snugget:
+                groupsDict[RDPO_counties_summer.getGroup()].extend(RDPO_counties_summer_snugget)
+
+        qs_RDPOhistflood = RDPOhistflood.objects.filter(geom__contains=pnt)
+        RDPOhistflood_rating = qs_RDPOhistflood.values_list('lookup_val', flat=True)
+        for rating in RDPOhistflood_rating:
+            RDPOhistflood_snugget = Snugget.objects.filter(RDPOhistflood_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPOhistflood_snugget:
+                groupsDict[RDPOhistflood.getGroup()].extend(RDPOhistflood_snugget)
+
+        qs_RDPO_counties_slide = RDPO_counties_slide.objects.filter(geom__contains=pnt)
+        RDPO_counties_slide_rating = qs_RDPO_counties_slide.values_list('lookup_val', flat=True)
+        for rating in RDPO_counties_slide_rating:
+            RDPO_counties_slide_snugget = Snugget.objects.filter(RDPO_counties_slide_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
+            if RDPO_counties_slide_snugget:
+                groupsDict[RDPO_counties_slide.getGroup()].extend(RDPO_counties_slide_snugget)
+
 # END OF GENERATED CODE BLOCK
 ######################################################
         return groupsDict

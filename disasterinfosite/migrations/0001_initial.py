@@ -8,43 +8,12 @@ import embed_video.fields
 
 
 class Migration(migrations.Migration):
-
-    replaces = [('disasterinfosite', '0001_initial'), ('disasterinfosite', '0002_auto_20190524_2051'), ('disasterinfosite', '0003_auto_20190524_2055'), ('disasterinfosite', '0004_auto_20190524_2056')]
-
     initial = True
 
     dependencies = [
     ]
 
     operations = [
-            migrations.CreateModel(
-            name='SiteSettings',
-            fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('about_text', models.TextField(default='Information about your organization goes here.', help_text='Describe the data and the agencies that it came from.')),
-                ('contact_email', models.EmailField(blank=True, help_text='Put a contact email for the maintainer of this site here.', max_length=254)),
-                ('site_url', models.URLField(default='https://www.example.com', help_text='Put the URL to this site here.')),
-                ('site_title', models.CharField(default='Your Title Here!', max_length=50)),
-                ('site_description', models.CharField(default='A disaster preparedness website', help_text='A small, catchy description for this site.', max_length=200)),
-                ('data_download', models.URLField(help_text='A link where people can download a zipfile of all the data that powers this site.', blank=True)),
-                ('intro_text', models.TextField(help_text='A description of what we are trying to help people prepare for, or the goal of your site.', default='A natural disaster could strike your area at any time.')),
-                ('who_made_this', models.TextField(help_text='Include information about who you are and how to contact you.', default='Information about the creators and maintainers of this particular site.'))
-            ],
-            options={
-                'verbose_name': 'Site Settings',
-            },
-        ),
-        migrations.CreateModel(
-            name='Location',
-            fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('area_name', models.CharField(default='the affected area', help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.", max_length=100)),
-                ('community_leaders', models.TextField(help_text='Information about community leaders, how to contact them, and form groups.', default='Information about community leaders goes here.')),
-            ],
-            options={
-                'verbose_name': 'Location Information'
-            },
-        ),
         migrations.CreateModel(
             name='ShapefileGroup',
             fields=[
