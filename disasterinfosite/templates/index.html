@@ -1,72 +1,73 @@
 {% load js %}
 {% load i18n %}
-
 {% load webpack_static from webpack_loader %}
 {% get_current_language as LANGUAGE_CODE %}
 
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="{{ LANGUAGE_CODE }}">
-{% include "head-meta.html" %}
+  {% include "head-meta.html" %}
   <script type="text/javascript">
     var mapBounds = {{ data_bounds | js }};
   </script>
 
-<body>
-{% include "header.html" %}
+  <body>
+    {% include "header.html" %}
 
-  <div class="content-container">
-  <div class="map-info-container">
-    {% block info-instructions %}
-    <div class="information-container" role="main">
-      <h3>{{ settings.site_description }}</h3>
-      <p>{{ settings.intro_text | safe }}</p>
+    <div class="content-container">
+      <div class="map-info-container">
+        {% block info-instructions %}
+        <div class="information-container" role="main">
+          <h3>{{ settings.site_description }}</h3>
+          <p>{{ settings.intro_text | safe }}</p>
 
-      {% trans "Give a location by typing in the box at the top of the page, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
+          {% trans "Give a location by typing in the box at the top of the page, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
+        </div>
+        {% endblock info-instructions %}
+
+        <div class="map-container" role="application">
+          <div id="map"></div>
+        </div>
+      </div>
+
+      {% block main-content %}
+      <div class="intro-content">
+        <h2 class="caps">{% trans "What are my risks?" %}</h2>
+        <h3>{% trans "What to Expect" %}</h3>
+        <p>
+          {% blocktrans %} {{ settings.site_title }} gives you an idea of which
+          natural disasters you might experience in the future based on a
+          location in {{ location.area_name }}. {% endblocktrans %}
+        </p>
+
+        <h3>{% trans "How to Prepare" %}</h3>
+        <p>
+          {% trans "You have the power to make a difference. Find out how you can protect your loved ones and home before the next disaster hits." %}
+        </p>
+
+        <h3>{% trans "In Recent History" %}</h3>
+        <p>
+          {% blocktrans %} Find out which disasters have struck {{
+          location.area_name }} in the past, what impact they had, and where
+          they happened. {% endblocktrans %}
+        </p>
+      </div>
+      {% endblock main-content %} {% include "users/user_interactions.html" %}
     </div>
-  {% endblock info-instructions %}
 
-    <div class="map-container" role="application">
-      <div id="map"></div>
+    {% include "geek_box.html" %}
+
+    <div class="loading hide">
+      <h1 class="loading-text caps">
+        {% trans "Getting results for your location..." %}
+      </h1>
+      <img
+        class="loading-spinner"
+        src="{% webpack_static 'build/thinking.gif' %}"
+      />
     </div>
-  </div>
-
-{% block main-content %}
-<div class="intro-content">
-   <h2 class="caps">{% trans "What are my risks?" %}</h2>
-    <h3>{% trans "What to Expect" %}</h3>
-    <p>
-      {% blocktrans %}
-        {{ settings.site_title }} gives you an idea of which natural disasters you might experience in the future based on a location in {{ location.area_name }}.
-      {% endblocktrans %}
-    </p>
-
-    <h3>{% trans "How to Prepare" %}</h3>
-    <p>
-      {% trans "You have the power to make a difference. Find out how you can protect your loved ones and home before the next disaster hits." %}
-    </p>
-
-    <h3>{% trans "In Recent History" %}</h3>
-    <p>
-      {% blocktrans %}
-        Find out which disasters have struck {{ location.area_name }} in the past, what impact they had, and where they happened.
-      {% endblocktrans %}
-    </p>
-  </div>
-{% endblock main-content %}
-
-{% include "users/user_interactions.html" %}
-</div>
-
-{% include "geek_box.html" %}
-
-  <div class="loading hide">
-    <h1 class="loading-text caps">{% trans "Getting results for your location..." %}</h1>
-    <img class="loading-spinner" src="{% webpack_static 'build/thinking.gif' %}">
-  </div>
     <!-- Load MapQuest Places search (for autocomplete) from CDN -->
-  <script src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
+    <script src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
 
-  {% include "page-end-meta.html" %}
-
+    {% include "page-end-meta.html" %}
   </body>
 </html>

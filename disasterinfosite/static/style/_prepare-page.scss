@@ -1,0 +1,186 @@
+/* Prepare page */
+
+.prepare-hero {
+  background-image: url('/static/build/basic_kit.jpg');
+  background-position: bottom center;
+  height: 250px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.overlay {
+  background-color: $black-tint;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.hero__text {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  width: 70%;
+
+  @include breakpoint(medium) {
+    left: 20px;
+    width: 60%;
+  }
+
+  @include breakpoint(large) {
+    top: 30px;
+  }
+}
+
+.prepare-container {
+  background-color: $white;
+  display: flex;
+  flex-direction: row;
+  padding: 5px 10px;
+
+  @include breakpoint(medium) {
+    padding: 5px 20px;
+  }
+
+  @include breakpoint(large) {
+    padding: 5px 40px;
+  }
+}
+
+.prepare-actions {
+  flex: 1 0 40%;
+}
+
+.prepare-content {
+  flex-direction: column;
+}
+
+.prepare-content__list {
+  list-style: none;
+  padding: 0;
+
+  li {
+    cursor: pointer;
+    margin: 20px;
+
+    &:hover, &:focus {
+      text-decoration: underline;
+    }
+  }
+}
+
+.prepare-content__item--active {
+  font-weight: $font-weight-bold;
+}
+
+.prepare-detail {
+  padding: 40px 0 40px 40px;
+  border-left: 2px solid $light-grey;
+}
+
+.prepare__icon {
+  margin-right: 20px;
+  vertical-align: middle;
+  width: 48px;
+}
+
+.prepare-item__link {
+  text-align: right;
+
+  a {
+    color: $soft-black;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: $font-weight-bold;
+
+    &:focus, &:hover, &:active {
+      color: $bright-accent;
+    }
+  }
+}
+
+.print-container {
+  background-color: $white;
+  padding: 5px 10px;
+
+  @include breakpoint(medium) {
+    padding: 5px 20px;
+  }
+
+  @include breakpoint(large) {
+    padding: 5px 40px;
+  }
+}
+
+.print-header {
+  display: flex;
+  height: 60px;
+  font-weight: $font-weight-bold;
+}
+
+.print-button {
+  cursor: pointer;
+}
+
+.print-header__activity {
+  flex: 1 0 auto;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.print-table {
+  border-collapse: collapse;
+  th {
+    border-bottom: 2px solid $light-grey;
+    color: $dark-grey;
+    padding: 10px;
+    text-align: left;
+  }
+
+  tr:nth-child(even) {
+    background-color: $soft-white;
+  }
+
+  td {
+    padding: 10px;
+  }
+
+  a, a:focus, a:hover {
+    color: $bright-accent;
+    text-decoration: none;
+  }
+}
+
+.print-table__icon {
+  width: 48px;
+}
+
+.print-footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 40px;
+}
+
+.print-key {
+  color: $medium-grey;
+}
+
+@media print {
+  .header__about,
+  .prepare-hero,
+  .prepare-container,
+  .print-button,
+  .resources,
+  #geek-box {
+    display: none;
+  }
+
+  .content-container {
+    padding: 0;
+  }
+
+  .print-container {
+    padding: 0;
+  }
+}

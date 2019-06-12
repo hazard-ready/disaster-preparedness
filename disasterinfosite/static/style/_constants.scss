@@ -1,0 +1,42 @@
+/* Colors */
+$black: #000;
+$black-tint: rgba(0, 0, 0, 0.5);
+$soft-black: #121212;
+$deep-grey: #333;
+$dark-grey: #444;
+$medium-grey: #777;
+$light-grey: #ccc;
+$soft-white: #f9f9f9;
+$white: #fff;
+
+$dark-accent: #0037a7;
+$light-accent: #106edf;
+$bright-accent: #00a4b2;
+$popout-border: #2cb3b3;
+
+$low-intensity: #ffffb2;
+$moderate-intensity: #fed976;
+$high-intensity: #feb24c;
+$very-high-intensity: #fd8d3c;
+$extreme-intensity: #f03b20;
+
+$error-red: #f03b20;
+
+/* Typography */
+
+$sans-serif: "Source Sans Pro", sans-serif;
+$serif: "Source Serif Pro", serif;
+
+$font-weight-regular: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$big-header-line-height: 1.2; /* maybe 1.3 if we feel saucy */
+$small-header-line-height: 1.3;
+$body-line-height: 1.4;
+
+/* Z-order */
+$z-index-bottom: 0;
+$z-index-next: 1;
+$z-index-high: 1001; /* higher than leaflet tiles and UI anyway */
+$z-index-top: 9999;

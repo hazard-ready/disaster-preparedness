@@ -1,0 +1,126 @@
+/* Main elements */
+html {
+  width: auto !important;
+  height: auto !important;
+}
+
+body {
+  background-color: $soft-white;
+  color: $soft-black;
+  height: auto !important;
+  width: auto !important;
+  font-family: $sans-serif;
+  font-size: 16px;
+  font-weight: $font-weight-regular;
+  line-height: $body-line-height;
+}
+
+/* Other important elements */
+img {
+  max-width: 100%;
+}
+
+.button {
+  margin: 0;
+  padding: 9px 1em;
+}
+
+input:invalid {
+  border-width: 2px;
+}
+
+form:invalid {
+  .button--submit {
+    border-color: $light-grey;
+    background-color: $light-grey;
+  }
+}
+
+.select {
+  height: 40px;
+}
+
+
+/* Base typographical styles */
+h1 {
+  color: $soft-black;
+  font-family: $serif;
+  font-size: 28px;
+  line-height: $big-header-line-height;
+
+  @include breakpoint(large) {
+    font-size: 32px;
+  }
+}
+
+.h1-sans-serif {
+  color: $soft-white;
+  font-family: $sans-serif;
+  font-weight: $font-weight-bold;
+}
+
+h2 {
+  border-bottom: 2px solid $light-grey;
+  color: $dark-accent;
+  font-family: $serif;
+  font-size: 28px;
+  font-weight: $font-weight-semibold;
+  line-height: $big-header-line-height;
+  padding-bottom: 20px;
+
+  @include breakpoint(large) {
+    font-size: 32px;
+  }
+}
+
+.h2--sans-serif {
+  font-family: $sans-serif;
+  font-weight: $font-weight-bold;
+  line-height: $small-header-line-height;
+}
+
+h3 {
+  color: $soft-black;
+  font-family: $serif;
+  font-size: 21px;
+  font-weight: $font-weight-bold;
+  line-height: $small-header-line-height;
+  @include breakpoint(large) {
+    font-size: 24px;
+  }
+}
+
+.h3--sans-serif {
+  font-family: $sans-serif;
+  font-weight: $font-weight-bold;
+  line-height: $small-header-line-height;
+}
+
+h4 {
+  color: $light-accent;
+  font-family: $serif;
+  font-size: 21px;
+  font-weight: $font-weight-bold;
+  line-height: $small-header-line-height;
+  margin-bottom: 10px;
+  @include breakpoint(large) {
+    font-size: 24px;
+  }
+}
+
+.h4--sans-serif {
+  color: $bright-accent;
+  font-family: $sans-serif;
+}
+
+.caption {
+  color: $dark-grey;
+  font-size: 12px;
+  line-height: $body-line-height;
+}
+
+.caps {
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: $font-weight-bold;
+}

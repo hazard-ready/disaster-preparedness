@@ -1,0 +1,252 @@
+/* Disaster tabs */
+
+.disaster-container {
+  background-color: $white;
+  padding: 5px 10px;
+
+  @include breakpoint(medium) {
+    padding: 5px 20px;
+  }
+
+  @include breakpoint(large) {
+    padding: 5px 40px;
+  }
+}
+
+/* Sections */
+.section-title--static {
+  color: $soft-black;
+}
+
+.section-title--collapse {
+  display: flex; // Fold caret aside wrapped text nicely on smaller sizes
+  border-bottom: 2px solid $light-grey;
+  cursor: pointer;
+}
+
+.caret {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.caret--up {
+  -moz-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+  filter: FlipV;
+  -ms-filter: "FlipV";
+}
+
+.section-content {
+  display: flex;
+  flex-direction: column;
+  max-height: 9000px;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+
+  @include breakpoint(large) {
+    flex-direction: row;
+  }
+}
+
+.section-content--collapse {
+  max-height: 0;
+}
+
+/* Snugget content */
+.snugget__content {
+  width: auto;
+
+  @include breakpoint(large) {
+    width: 60%;
+  }
+}
+
+/* flex-basis is set to the width of the youtube embed */
+.snugget__popout {
+  flex-basis: 300px;
+  max-width: 100%;
+
+  @include breakpoint(large) {
+    flex-basis: 340px;
+    margin: 0 0 0 auto;
+    width: 32%;
+  }
+}
+
+.snugget__content a,
+.snugget__popout a {
+  text-decoration: none;
+  border-bottom: 2px solid $light-grey;
+  color: $soft-black;
+
+  &:visited,
+  &:hover {
+    color: $dark-grey;
+  }
+}
+
+.popout-content {
+  border: 1px solid $popout-border;
+  border-left-width: 6px;
+  padding: 10px;
+  max-width: 100%;
+
+  @include breakpoint(medium) {
+    padding: 20px;
+  }
+
+  @include breakpoint(large) {
+    border: none;
+    padding: 0 0 0 30px;
+  }
+}
+
+.popout__video {
+  max-width: 100%;
+}
+
+.popout__image {
+  max-width: 300px;
+
+  @include breakpoint(medium) {
+    width: 50%;
+  }
+  @include breakpoint(large) {
+    min-width: 175px;
+    max-width: 100%;
+  }
+}
+
+/* Intensity meter */
+.intensity-meter {
+  background: linear-gradient(
+    to right,
+    $low-intensity,
+    $moderate-intensity,
+    $high-intensity,
+    $very-high-intensity,
+    $extreme-intensity
+  );
+  margin-top: 40px;
+  position: relative;
+  height: 18px;
+  width: auto;
+
+  @include breakpoint(large) {
+    margin-top: 50px;
+    width: 70%;
+  }
+}
+
+.intensity-marker {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  width: 2px;
+  background-color: $dark-accent;
+
+  &:before {
+    color: $dark-grey;
+    content: "\25BC";
+    top: -18px;
+    position: absolute;
+    left: -7px;
+    text-align: center;
+  }
+}
+
+.intensity-label {
+  color: $dark-grey;
+  font-size: 14px;
+  position: absolute;
+  top: -32px;
+}
+
+.intensity-captions {
+  margin-bottom: 50px;
+  position: relative;
+  width: auto;
+
+  @include breakpoint(large) {
+    width: 70%;
+  }
+}
+
+.intensity-caption {
+  color: $medium-grey;
+  font-size: 14px;
+  font-style: italic;
+  position: absolute;
+}
+
+.intensity-caption--low {
+  left: 0;
+}
+
+.intensity-caption--high {
+  right: 0;
+}
+
+/* Historical photos */
+
+.past-photos {
+  max-width: 100%;
+  height: 320px;
+  margin: 30px auto 0;
+
+  @include breakpoint(medium) {
+    width: 540px;
+    height: 400px;
+  }
+
+  @include breakpoint(large) {
+    width: 335px;
+    height: 320px;
+  }
+}
+
+.past-photo__caption {
+  color: $medium-grey;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.slideshow-image {
+  margin: 0 auto;
+  max-height: 275px;
+
+  @include breakpoint(medium) {
+    max-height: 380px;
+  }
+
+  @include breakpoint(large) {
+    max-height: 275px;
+  }
+}
+
+/* Arrows for photo slider */
+.slick-prev {
+  left: 0 !important;
+  top: 36%;
+  width: 36px;
+  z-index: 9;
+}
+
+.slick-next {
+  right: 0 !important;
+  top: 36%;
+  width: 36px;
+  z-index: 9;
+}
+
+.slick-prev::before,
+.slick-next::before {
+  color: #ccc;
+  font-size: 36px;
+
+  &:hover {
+    color: #fff;
+  }
+}

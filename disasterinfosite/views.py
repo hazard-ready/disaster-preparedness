@@ -98,7 +98,7 @@ def prepare_view(request):
     renderData = {
     'location': Location.get_solo(),
     'settings': SiteSettings.get_solo(),
-    'actions': PreparednessAction.objects.all()
+    'actions': PreparednessAction.objects.all().order_by('cost')
     }
     return render(request, "prepare.html", renderData)
 

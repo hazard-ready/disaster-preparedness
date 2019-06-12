@@ -166,6 +166,7 @@ class Migration(migrations.Migration):
                 ('link_text', models.TextField(default='')),
                 ('link_icon', models.ImageField(upload_to='prepare_images')),
                 ('link', models.URLField(default='')),
+                ('slug', models.TextField(default='')),
             ],
         ),
     ]
