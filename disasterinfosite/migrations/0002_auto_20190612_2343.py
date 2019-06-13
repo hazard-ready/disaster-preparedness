@@ -81,9 +81,37 @@ class Migration(migrations.Migration):
             name='RDPOFire_Clark',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('lookup_val', models.IntegerField()),
-                ('geom', django.contrib.gis.db.models.fields.MultiPolygonField(srid=4326)),
+                ('rast', django.contrib.gis.db.models.fields.RasterField(srid=4326)),
+                ('bbox', django.contrib.gis.db.models.fields.PolygonField(srid=4326)),
                 ('group', models.ForeignKey(default=disasterinfosite.models.RDPOFire_Clark.getGroup, on_delete=django.db.models.deletion.PROTECT, to='disasterinfosite.ShapefileGroup')),
+            ],
+        ),
+        migrations.AddField(
+            model_name='snugget',
+            name='RDPOFire_OR_filter',
+            field=models.IntegerField(null=True),
+        ),
+        migrations.AddField(
+            model_name='snugget',
+            name='RDPO_Lsld_OR_filter',
+            field=models.IntegerField(null=True),
+        ),
+        migrations.CreateModel(
+            name='RDPOFire_OR',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('rast', django.contrib.gis.db.models.fields.RasterField(srid=4326)),
+                ('bbox', django.contrib.gis.db.models.fields.PolygonField(srid=4326)),
+                ('group', models.ForeignKey(default=disasterinfosite.models.RDPOFire_OR.getGroup, on_delete=django.db.models.deletion.PROTECT, to='disasterinfosite.ShapefileGroup')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='RDPO_Lsld_OR',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('rast', django.contrib.gis.db.models.fields.RasterField(srid=4326)),
+                ('bbox', django.contrib.gis.db.models.fields.PolygonField(srid=4326)),
+                ('group', models.ForeignKey(default=disasterinfosite.models.RDPO_Lsld_OR.getGroup, on_delete=django.db.models.deletion.PROTECT, to='disasterinfosite.ShapefileGroup')),
             ],
         ),
         migrations.CreateModel(
@@ -288,7 +316,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='snugget',
             name='RDPOFire_Clark_filter',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='+', to='disasterinfosite.RDPOFire_Clark'),
+            field=models.IntegerField(null=True),
         ),
         migrations.AddField(
             model_name='snugget',

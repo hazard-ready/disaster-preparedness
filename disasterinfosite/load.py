@@ -153,10 +153,12 @@ RDPO_Lsd_Clark_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '..
 RDPO_counties_quake_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPO_counties_quake.shp'))
 RDPOflood_OR_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPOflood_OR.shp'))
 RDPO_counties_volcano_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPO_counties_volcano.shp'))
+RDPO_Lsld_OR_tif = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/reprojected/RDPO_Lsld_OR.tif'))
+RDPOFire_Clark_tif = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/reprojected/RDPOFire_Clark.tif'))
 RDPO_region_summer_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPO_region_summer.shp'))
-RDPOFire_Clark_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPOFire_Clark.shp'))
 RDPO_region_fire_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPO_region_fire.shp'))
 RDPOCascadiaM9_3_Clark_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPOCascadiaM9_3_Clark.shp'))
+RDPOFire_OR_tif = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/reprojected/RDPOFire_OR.tif'))
 RDPO_region_volcano_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPO_region_volcano.shp'))
 RDPOLiquefaction_OR_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/simplified/RDPOLiquefaction_OR.shp'))
 RDPOCascadiaM9_Col_tif = os.path.abspath(os.path.join(os.path.dirname(__file__), '../disasterinfosite/data/reprojected/RDPOCascadiaM9_Col.tif'))
@@ -253,8 +255,8 @@ def run(verbose=True):
     slide = ShapefileGroup.objects.get_or_create(name='slide')
     flood = ShapefileGroup.objects.get_or_create(name='flood')
     volcano = ShapefileGroup.objects.get_or_create(name='volcano')
-    summer = ShapefileGroup.objects.get_or_create(name='summer')
     fire = ShapefileGroup.objects.get_or_create(name='fire')
+    summer = ShapefileGroup.objects.get_or_create(name='summer')
 # END OF GENERATED CODE BLOCK
 ######################################################
 
@@ -292,15 +294,18 @@ def run(verbose=True):
     lm_RDPO_counties_volcano = LayerMapping(RDPO_counties_volcano, RDPO_counties_volcano_shp, RDPO_counties_volcano_mapping, transform=True, encoding='UTF-8', unique=['lookup_val'])
     lm_RDPO_counties_volcano.save()
 
+    print('Loading data for RDPO_Lsld_OR')
+    from .models import RDPO_Lsld_OR
+    tileLoadRaster(RDPO_Lsld_OR, RDPO_Lsld_OR_tif)
+
+    print('Loading data for RDPOFire_Clark')
+    from .models import RDPOFire_Clark
+    tileLoadRaster(RDPOFire_Clark, RDPOFire_Clark_tif)
+
     print('Loading data for RDPO_region_summer')
     from .models import RDPO_region_summer
     lm_RDPO_region_summer = LayerMapping(RDPO_region_summer, RDPO_region_summer_shp, RDPO_region_summer_mapping, transform=True, encoding='UTF-8', unique=['lookup_val'])
     lm_RDPO_region_summer.save()
-
-    print('Loading data for RDPOFire_Clark')
-    from .models import RDPOFire_Clark
-    lm_RDPOFire_Clark = LayerMapping(RDPOFire_Clark, RDPOFire_Clark_shp, RDPOFire_Clark_mapping, transform=True, encoding='UTF-8', unique=['lookup_val'])
-    lm_RDPOFire_Clark.save()
 
     print('Loading data for RDPO_region_fire')
     from .models import RDPO_region_fire
@@ -311,6 +316,10 @@ def run(verbose=True):
     from .models import RDPOCascadiaM9_3_Clark
     lm_RDPOCascadiaM9_3_Clark = LayerMapping(RDPOCascadiaM9_3_Clark, RDPOCascadiaM9_3_Clark_shp, RDPOCascadiaM9_3_Clark_mapping, transform=True, encoding='UTF-8', unique=['lookup_val'])
     lm_RDPOCascadiaM9_3_Clark.save()
+
+    print('Loading data for RDPOFire_OR')
+    from .models import RDPOFire_OR
+    tileLoadRaster(RDPOFire_OR, RDPOFire_OR_tif)
 
     print('Loading data for RDPO_region_volcano')
     from .models import RDPO_region_volcano

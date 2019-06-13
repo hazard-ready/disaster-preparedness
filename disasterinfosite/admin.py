@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminModelImports
-from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings, RDPO_region_quake, RDPO_region_winter, RDPO_Lsd_Clark, RDPO_counties_quake, RDPOflood_OR, RDPO_counties_volcano, RDPO_region_summer, RDPOFire_Clark, RDPO_region_fire, RDPOCascadiaM9_3_Clark, RDPO_region_volcano, RDPOLiquefaction_OR, RDPOCascadiaM9_Col, RDPOflood_clark, RDPO_region_flood, RDPOvolcanoes, RDPO_counties_winter, RDPO_counties_fire, RDPO_WA, RDPO_counties_flood, RDPO_OR, RDPOCascadiaM9_3Cnty, RDPO_region_slide, RDPOCascadiaM9_OR, RDPOLiquefact_Clark, RDPO_counties_summer, RDPOhistflood, RDPO_counties_slide
+from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings, RDPO_region_quake, RDPO_region_winter, RDPO_Lsd_Clark, RDPO_counties_quake, RDPOflood_OR, RDPO_counties_volcano, RDPO_Lsld_OR, RDPOFire_Clark, RDPO_region_summer, RDPO_region_fire, RDPOCascadiaM9_3_Clark, RDPOFire_OR, RDPO_region_volcano, RDPOLiquefaction_OR, RDPOCascadiaM9_Col, RDPOflood_clark, RDPO_region_flood, RDPOvolcanoes, RDPO_counties_winter, RDPO_counties_fire, RDPO_WA, RDPO_counties_flood, RDPO_OR, RDPOCascadiaM9_3Cnty, RDPO_region_slide, RDPOCascadiaM9_OR, RDPOLiquefact_Clark, RDPO_counties_summer, RDPOhistflood, RDPO_counties_slide
 # END OF GENERATED CODE BLOCK
 ######################################################
 from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, PreparednessAction
@@ -33,8 +33,8 @@ class SnuggetAdmin(admin.ModelAdmin):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminLists
-    list_display = ('shortname', 'section', 'RDPO_region_quake_filter', 'RDPO_region_winter_filter', 'RDPO_Lsd_Clark_filter', 'RDPO_counties_quake_filter', 'RDPOflood_OR_filter', 'RDPO_counties_volcano_filter', 'RDPO_region_summer_filter', 'RDPOFire_Clark_filter', 'RDPO_region_fire_filter', 'RDPOCascadiaM9_3_Clark_filter', 'RDPO_region_volcano_filter', 'RDPOLiquefaction_OR_filter', 'RDPOCascadiaM9_Col_filter', 'RDPOflood_clark_filter', 'RDPO_region_flood_filter', 'RDPOvolcanoes_filter', 'RDPO_counties_winter_filter', 'RDPO_counties_fire_filter', 'RDPO_WA_filter', 'RDPO_counties_flood_filter', 'RDPO_OR_filter', 'RDPOCascadiaM9_3Cnty_filter', 'RDPO_region_slide_filter', 'RDPOCascadiaM9_OR_filter', 'RDPOLiquefact_Clark_filter', 'RDPO_counties_summer_filter', 'RDPOhistflood_filter', 'RDPO_counties_slide_filter')
-    list_filter = ('section', 'RDPO_region_quake_filter', 'RDPO_region_winter_filter', 'RDPO_Lsd_Clark_filter', 'RDPO_counties_quake_filter', 'RDPOflood_OR_filter', 'RDPO_counties_volcano_filter', 'RDPO_region_summer_filter', 'RDPOFire_Clark_filter', 'RDPO_region_fire_filter', 'RDPOCascadiaM9_3_Clark_filter', 'RDPO_region_volcano_filter', 'RDPOLiquefaction_OR_filter', 'RDPOCascadiaM9_Col_filter', 'RDPOflood_clark_filter', 'RDPO_region_flood_filter', 'RDPOvolcanoes_filter', 'RDPO_counties_winter_filter', 'RDPO_counties_fire_filter', 'RDPO_WA_filter', 'RDPO_counties_flood_filter', 'RDPO_OR_filter', 'RDPOCascadiaM9_3Cnty_filter', 'RDPO_region_slide_filter', 'RDPOCascadiaM9_OR_filter', 'RDPOLiquefact_Clark_filter', 'RDPO_counties_summer_filter', 'RDPOhistflood_filter', 'RDPO_counties_slide_filter')
+    list_display = ('shortname', 'section', 'RDPO_region_quake_filter', 'RDPO_region_winter_filter', 'RDPO_Lsd_Clark_filter', 'RDPO_counties_quake_filter', 'RDPOflood_OR_filter', 'RDPO_counties_volcano_filter', 'RDPO_Lsld_OR_filter', 'RDPOFire_Clark_filter', 'RDPO_region_summer_filter', 'RDPO_region_fire_filter', 'RDPOCascadiaM9_3_Clark_filter', 'RDPOFire_OR_filter', 'RDPO_region_volcano_filter', 'RDPOLiquefaction_OR_filter', 'RDPOCascadiaM9_Col_filter', 'RDPOflood_clark_filter', 'RDPO_region_flood_filter', 'RDPOvolcanoes_filter', 'RDPO_counties_winter_filter', 'RDPO_counties_fire_filter', 'RDPO_WA_filter', 'RDPO_counties_flood_filter', 'RDPO_OR_filter', 'RDPOCascadiaM9_3Cnty_filter', 'RDPO_region_slide_filter', 'RDPOCascadiaM9_OR_filter', 'RDPOLiquefact_Clark_filter', 'RDPO_counties_summer_filter', 'RDPOhistflood_filter', 'RDPO_counties_slide_filter')
+    list_filter = ('section', 'RDPO_region_quake_filter', 'RDPO_region_winter_filter', 'RDPO_Lsd_Clark_filter', 'RDPO_counties_quake_filter', 'RDPOflood_OR_filter', 'RDPO_counties_volcano_filter', 'RDPO_Lsld_OR_filter', 'RDPO_region_fire_filter', 'RDPOCascadiaM9_3_Clark_filter', 'RDPOFire_OR_filter', 'RDPO_region_volcano_filter', 'RDPOLiquefaction_OR_filter', 'RDPOCascadiaM9_Col_filter', 'RDPOflood_clark_filter', 'RDPO_region_flood_filter', 'RDPOvolcanoes_filter', 'RDPO_counties_winter_filter', 'RDPO_counties_fire_filter', 'RDPO_WA_filter', 'RDPO_counties_flood_filter', 'RDPO_OR_filter', 'RDPOCascadiaM9_3Cnty_filter', 'RDPO_region_slide_filter', 'RDPOCascadiaM9_OR_filter', 'RDPOLiquefact_Clark_filter', 'RDPO_counties_summer_filter', 'RDPOhistflood_filter', 'RDPO_counties_slide_filter')
 
     fieldsets = (
         (None, {
@@ -42,7 +42,7 @@ class SnuggetAdmin(admin.ModelAdmin):
         }),
         ('Filters', {
             'description': 'Choose a filter value this snugget will show up for.  It is recommended you only select a value for one filter and leave the rest empty.',
-            'fields': (('RDPO_region_quake_filter', 'RDPO_region_winter_filter', 'RDPO_Lsd_Clark_filter', 'RDPO_counties_quake_filter', 'RDPOflood_OR_filter', 'RDPO_counties_volcano_filter', 'RDPO_region_summer_filter', 'RDPOFire_Clark_filter', 'RDPO_region_fire_filter', 'RDPOCascadiaM9_3_Clark_filter', 'RDPO_region_volcano_filter', 'RDPOLiquefaction_OR_filter', 'RDPOCascadiaM9_Col_filter', 'RDPOflood_clark_filter', 'RDPO_region_flood_filter', 'RDPOvolcanoes_filter', 'RDPO_counties_winter_filter', 'RDPO_counties_fire_filter', 'RDPO_WA_filter', 'RDPO_counties_flood_filter', 'RDPO_OR_filter', 'RDPOCascadiaM9_3Cnty_filter', 'RDPO_region_slide_filter', 'RDPOCascadiaM9_OR_filter', 'RDPOLiquefact_Clark_filter', 'RDPO_counties_summer_filter', 'RDPOhistflood_filter', 'RDPO_counties_slide_filter'))
+            'fields': (('RDPO_region_quake_filter', 'RDPO_region_winter_filter', 'RDPO_Lsd_Clark_filter', 'RDPO_counties_quake_filter', 'RDPOflood_OR_filter', 'RDPO_counties_volcano_filter', 'RDPO_Lsld_OR_filter', 'RDPOFire_Clark_filter', 'RDPO_region_summer_filter', 'RDPO_region_fire_filter', 'RDPOCascadiaM9_3_Clark_filter', 'RDPOFire_OR_filter', 'RDPO_region_volcano_filter', 'RDPOLiquefaction_OR_filter', 'RDPOCascadiaM9_Col_filter', 'RDPOflood_clark_filter', 'RDPO_region_flood_filter', 'RDPOvolcanoes_filter', 'RDPO_counties_winter_filter', 'RDPO_counties_fire_filter', 'RDPO_WA_filter', 'RDPO_counties_flood_filter', 'RDPO_OR_filter', 'RDPOCascadiaM9_3Cnty_filter', 'RDPO_region_slide_filter', 'RDPOCascadiaM9_OR_filter', 'RDPOLiquefact_Clark_filter', 'RDPO_counties_summer_filter', 'RDPOhistflood_filter', 'RDPO_counties_slide_filter'))
         })
     )
 # END OF GENERATED CODE BLOCK
@@ -117,10 +117,12 @@ admin.site.register(RDPO_Lsd_Clark, GeoNoEditAdmin)
 admin.site.register(RDPO_counties_quake, GeoNoEditAdmin)
 admin.site.register(RDPOflood_OR, GeoNoEditAdmin)
 admin.site.register(RDPO_counties_volcano, GeoNoEditAdmin)
-admin.site.register(RDPO_region_summer, GeoNoEditAdmin)
+admin.site.register(RDPO_Lsld_OR, GeoNoEditAdmin)
 admin.site.register(RDPOFire_Clark, GeoNoEditAdmin)
+admin.site.register(RDPO_region_summer, GeoNoEditAdmin)
 admin.site.register(RDPO_region_fire, GeoNoEditAdmin)
 admin.site.register(RDPOCascadiaM9_3_Clark, GeoNoEditAdmin)
+admin.site.register(RDPOFire_OR, GeoNoEditAdmin)
 admin.site.register(RDPO_region_volcano, GeoNoEditAdmin)
 admin.site.register(RDPOLiquefaction_OR, GeoNoEditAdmin)
 admin.site.register(RDPOCascadiaM9_Col, GeoNoEditAdmin)
