@@ -13,6 +13,7 @@ snuggetFile = os.path.join(dataDir, "snuggets.xlsx")
 slideshowFilename = "slideshow.xlsx" # there can be multiple of these files in different locations, so the full path is assembled in addSlideshow()
 
 # all other fields in snuggetFile are required.
+# Note the last field - it's a translation column. Add languages and language codes as you see fit!
 optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'pop_out_video', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', 'text-es']
 
 defaults = {
