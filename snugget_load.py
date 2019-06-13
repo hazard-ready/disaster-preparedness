@@ -3,7 +3,7 @@ import os
 from django.core.files import File
 from django.contrib.contenttypes.models import ContentType
 from disasterinfosite.models import *
-from load_helpers import XLSXDictReader, runLoader
+from load_helpers import XLSXDictReader, runLoader, includeTranslatedFields
 
 currentPath = os.path.dirname(__file__)
 appName = "disasterinfosite"
@@ -13,7 +13,7 @@ snuggetFile = os.path.join(dataDir, "snuggets.xlsx")
 slideshowFilename = "slideshow.xlsx" # there can be multiple of these files in different locations, so the full path is assembled in addSlideshow()
 
 # all other fields in snuggetFile are required.
-optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'pop_out_video', 'intensity_txt', 'text', 'image_slideshow_folder', 'video']
+optionalFields = ['heading', 'intensity', 'lookup_value', 'txt_location', 'pop_out_image', 'pop_out_link','pop_alt_txt', 'pop_out_txt', 'pop_out_video', 'intensity_txt', 'text', 'image_slideshow_folder', 'video', 'text-es']
 
 defaults = {
   "intensity": None,
@@ -144,7 +144,7 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
   group = shapefile.getGroup()
 
   if filterVal is not None:
-    kwargs = {
+    args = {
       'section': section,
       'group': group,
       filterColumn: filterVal,
@@ -152,6 +152,8 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
       'percentage': row["intensity"],
       'order': row['txt_location']
     }
+
+    kwargs = includeTranslatedFields(row, 'content', args)
     snugget = TextSnugget.objects.create(**kwargs)
     snugget.pop_out = addPopOutIfExists(row)
     snugget.save()
@@ -162,7 +164,7 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
 def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
   group = shapefile.getGroup()
 
-  kwargs = {
+  args = {
     'section': section,
     'group': group,
     filterColumn: filterVal,
@@ -171,6 +173,8 @@ def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
     'percentage': row["intensity"],
     'order': row['txt_location']
   }
+  kwargs = includeTranslatedFields(row, 'text', args)
+
   snugget = EmbedSnugget.objects.create(**kwargs)
   snugget.save()
   print('Created embed snugget:', snugget)
@@ -180,7 +184,7 @@ def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
 def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
   group = shapefile.getGroup()
 
-  kwargs = {
+  args = {
     'section': section,
     'group': group,
     filterColumn: filterVal,
@@ -188,6 +192,9 @@ def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
     'percentage': row["intensity"],
     'order': row['txt_location']
   }
+
+  kwargs = includeTranslatedFields(row, 'text', args)
+
   snugget = SlideshowSnugget.objects.create(**kwargs)
   snugget.pop_out = addPopOutIfExists(row)
   addSlideshow(os.path.join(dataDir, 'images/', row["image_slideshow_folder"]), snugget)

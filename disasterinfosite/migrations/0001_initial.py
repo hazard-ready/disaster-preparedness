@@ -55,6 +55,7 @@ class Migration(migrations.Migration):
                 ('likely_scenario_title', models.CharField(blank=True, max_length=80)),
                 ('likely_scenario_text', models.TextField(blank=True)),
                 ('display_name_es', models.CharField(default='', max_length=50, null=True)),
+                ('display_name_en', models.CharField(default='', max_length=50, null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -66,6 +67,7 @@ class Migration(migrations.Migration):
                 ('collapsible', models.BooleanField(default=True, help_text='Whether this section of the data is collapsible')),
                 ('order_of_appearance', models.IntegerField(default=0, help_text="The order in which you'd like this to appear in the tab. 0 is at the top.")),
                 ('display_name_es', models.CharField(default='', help_text='The name to show for this section', max_length=50, null=True)),
+                ('display_name_en', models.CharField(default='', help_text='The name to show for this section', max_length=50, null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -79,6 +81,8 @@ class Migration(migrations.Migration):
                 ('video', embed_video.fields.EmbedVideoField(null=True)),
                 ('alt_text_es', models.TextField(default='', max_length=255, null=True)),
                 ('text_es', models.TextField(default='', null=True)),
+                ('alt_text_en', models.TextField(default='', max_length=255, null=True)),
+                ('text_en', models.TextField(default='', null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -98,6 +102,7 @@ class Migration(migrations.Migration):
                 ('snugget_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='disasterinfosite.Snugget')),
                 ('text', models.TextField(default='')),
                 ('text_es', models.TextField(default='', null=True)),
+                ('text_en', models.TextField(default='', null=True)),
             ],
             bases=('disasterinfosite.snugget',),
         ),
@@ -131,6 +136,7 @@ class Migration(migrations.Migration):
                 ('link_text', models.CharField(default='', max_length=100)),
                 ('image', models.ImageField(storage=disasterinfosite.models.OverwriteStorage(), upload_to='data')),
                 ('link_text_es', models.CharField(default='', max_length=100, null=True)),
+                ('link_text_en', models.CharField(default='', max_length=100, null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -140,6 +146,8 @@ class Migration(migrations.Migration):
                 ('video', embed_video.fields.EmbedVideoField()),
                 ('text', models.TextField(default='')),
                 ('text_es', models.TextField(default='', null=True)),
+                ('text_en', models.TextField(default='', null=True)),
+
             ],
             bases=('disasterinfosite.snugget',),
         ),
@@ -151,6 +159,9 @@ class Migration(migrations.Migration):
                 ('community_leaders', models.TextField(default='Information about community leaders goes here.', help_text='Information about community leaders, how to contact them, and form groups.')),
                 ('area_name_es', models.CharField(default='the affected area', help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.", max_length=100, null=True)),
                 ('community_leaders_es', models.TextField(default='Information about community leaders goes here.', help_text='Information about community leaders, how to contact them, and form groups.', null=True)),
+                ('area_name_en', models.CharField(default='the affected area', help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.", max_length=100, null=True)),
+                ('community_leaders_en', models.TextField(default='Information about community leaders goes here.', help_text='Information about community leaders, how to contact them, and form groups.', null=True)),
+
             ],
             options={
                 'verbose_name': 'Location Information',
@@ -164,6 +175,8 @@ class Migration(migrations.Migration):
                 ('image', models.ImageField(upload_to='photos')),
                 ('caption', models.TextField(default='', max_length=200)),
                 ('caption_es', models.TextField(default='', max_length=200, null=True)),
+                ('caption_en', models.TextField(default='', max_length=200, null=True)),
+
             ],
         ),
         migrations.CreateModel(
@@ -183,6 +196,11 @@ class Migration(migrations.Migration):
                 ('site_description_es', models.CharField(default='A disaster preparedness website', help_text='A small, catchy description for this site.', max_length=200, null=True)),
                 ('site_title_es', models.CharField(default='Your Title Here!', max_length=50, null=True)),
                 ('who_made_this_es', models.TextField(default='Information about the creators and maintainers of this particular site.', help_text='Include information about who you are and how to contact you.', null=True)),
+                ('about_text_en', models.TextField(default='Information about your organization goes here.', help_text='Describe the data and the agencies that it came from.', null=True)),
+                ('intro_text_en', models.TextField(default='A natural disaster could strike your area at any time.', help_text='A description of what we are trying to help people prepare for, or the goal of your site.', null=True)),
+                ('site_description_en', models.CharField(default='A disaster preparedness website', help_text='A small, catchy description for this site.', max_length=200, null=True)),
+                ('site_title_en', models.CharField(default='Your Title Here!', max_length=50, null=True)),
+                ('who_made_this_en', models.TextField(default='Information about the creators and maintainers of this particular site.', help_text='Include information about who you are and how to contact you.', null=True)),
             ],
             options={
                 'verbose_name': 'Site Settings',
@@ -194,6 +212,7 @@ class Migration(migrations.Migration):
                 ('snugget_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='disasterinfosite.Snugget')),
                 ('content', models.TextField()),
                 ('content_es', models.TextField(null=True)),
+                ('content_en', models.TextField(null=True)),
             ],
             bases=('disasterinfosite.snugget',),
         ),
