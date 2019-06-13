@@ -77,9 +77,8 @@ LANGUAGES = (
     ('es', gettext('Spanish'))
 )
 
-# If you have only one language beside English, this trailing comma is important.
-# Leave English out of this list to not have extra fields in Django Admin.
-MODELTRANSLATION_LANGUAGES = ('es',)
+MODELTRANSLATION_LANGUAGES = ('es', 'en')
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 
 USE_I18N = True
 TIME_ZONE = 'UTC'

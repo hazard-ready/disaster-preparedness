@@ -36,6 +36,15 @@ def allRequiredFieldsPresent(optionalFields, row, rowCount):
     return False
 
 
+def includeTranslatedFields(row, fieldName, kwargs):
+  translatedField = next ((k for k in row if k.startswith('text-')), "")
+  if translatedField is not None and row[translatedField] != '':
+    translatedColumn = fieldName + '_' + translatedField.split('-')[1]
+    kwargs[translatedColumn] = row[translatedField]
+    print(kwargs)
+
+  return kwargs
+
 
 # drop-in replacement for built-in csv.DictReader() function with .xlsx files
 # originally from https://gist.github.com/mdellavo/853413
