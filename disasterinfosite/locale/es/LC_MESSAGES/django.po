@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-24 20:36+0000\n"
+"POT-Creation-Date: 2019-06-19 17:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: disasterinfosite/settings.py:70
 msgid "English"
 msgstr "Inglés"
@@ -26,19 +27,10 @@ msgid "Spanish"
 msgstr "Español"
 
 #: disasterinfosite/templates/about.html:16
-#: disasterinfosite/templates/index.html:16
-msgid ""
-"Enter your location for a personalized report on your risks and how to "
-"prepare."
-msgstr ""
-"Ingrese su ubicación para obtener un informe personalizado de sus riesgos y "
-"cómo prepararse."
-
-#: disasterinfosite/templates/about.html:43
 msgid "The Hazard Ready Team"
 msgstr ""
 
-#: disasterinfosite/templates/about.html:53
+#: disasterinfosite/templates/about.html:26
 msgid ""
 "Carson has a B.Sc. and M.Sc. in Geology from Western Washington University "
 "and the University of Montana. She is now working on her PhD at Boise State "
@@ -47,7 +39,7 @@ msgid ""
 "data for each HazardReady site."
 msgstr ""
 
-#: disasterinfosite/templates/about.html:70
+#: disasterinfosite/templates/about.html:43
 msgid ""
 "Rebecca Bendick has a Ph.D. in geophysics from the University of Colorado. "
 "Her research on tectonics and earthquake mechanics led to an interest in how "
@@ -57,7 +49,7 @@ msgid ""
 "basic geophysical research."
 msgstr ""
 
-#: disasterinfosite/templates/about.html:86
+#: disasterinfosite/templates/about.html:59
 msgid ""
 "Grant Kier has a M.Sc. in geology from the University of Colorado. He is "
 "broadly interested in community resilience in the context of manmade and "
@@ -66,12 +58,12 @@ msgid ""
 "companies in western Montana."
 msgstr ""
 
-#: disasterinfosite/templates/about.html:94
+#: disasterinfosite/templates/about.html:67
 #, python-format
 msgid "%(title)s Partners and Collaborators"
 msgstr ""
 
-#: disasterinfosite/templates/about.html:99
+#: disasterinfosite/templates/about.html:72
 msgid ""
 "RDPO is a partnership of government agencies, non-governmental "
 "organizations, and private-sector stakeholders in the Portland Metropolitan "
@@ -80,35 +72,35 @@ msgid ""
 "Counties in Oregon and Clark County in Washington."
 msgstr ""
 
-#: disasterinfosite/templates/about.html:103
+#: disasterinfosite/templates/about.html:76
 msgid "American Red Cross: Cascades Region"
 msgstr ""
 
-#: disasterinfosite/templates/about.html:106
+#: disasterinfosite/templates/about.html:79
 msgid "Mercy Corps"
 msgstr ""
 
-#: disasterinfosite/templates/about.html:109
+#: disasterinfosite/templates/about.html:82
 msgid "Portland Bureau of Emergency Management"
 msgstr ""
 
-#: disasterinfosite/templates/about.html:112
+#: disasterinfosite/templates/about.html:85
 msgid "Multnomah County"
 msgstr ""
 
-#: disasterinfosite/templates/about.html:115
+#: disasterinfosite/templates/about.html:88
 msgid "Washington County"
 msgstr ""
 
-#: disasterinfosite/templates/about.html:118
+#: disasterinfosite/templates/about.html:91
 msgid "Clark County"
 msgstr ""
 
-#: disasterinfosite/templates/about.html:121
+#: disasterinfosite/templates/about.html:94
 msgid "Clackamas County"
 msgstr ""
 
-#: disasterinfosite/templates/about.html:129
+#: disasterinfosite/templates/about.html:102
 msgid ""
 "How we build Hazard Ready Sites: 1. Gather data. Locate the most relevant "
 "and up-to-date data on natural hazards for your region from trusted sources "
@@ -122,7 +114,7 @@ msgid ""
 "community's needs. 6. Revise, revise, revise."
 msgstr ""
 
-#: disasterinfosite/templates/about.html:134
+#: disasterinfosite/templates/about.html:107
 #, python-format
 msgid ""
 "%(title)s is designed to help educate and prepare people for disasters that "
@@ -138,7 +130,7 @@ msgstr ""
 "información actualizada y la presenta de tal manera que sea accesible para "
 "cualquier residente de %(area_name)s."
 
-#: disasterinfosite/templates/about.html:137
+#: disasterinfosite/templates/about.html:110
 #, python-format
 msgid ""
 "This site uses the most up-to-date hazard risk data available for "
@@ -157,7 +149,7 @@ msgstr ""
 "cómo prepararse se basan en la mejor información de la Cruz Roja "
 "Estadounidense y la Agencia Federal de Gestión de Emergencias."
 
-#: disasterinfosite/templates/about.html:145
+#: disasterinfosite/templates/about.html:118
 #, python-format
 msgid ""
 "Data used for %(title)s is available for download <a href=\"%(download)s\" "
@@ -166,11 +158,11 @@ msgstr ""
 "La información utilizada para %(title)s se puede descargar <a href="
 "\"%(download)s\" target=\"_blank\">aquí</a>"
 
-#: disasterinfosite/templates/about.html:152
+#: disasterinfosite/templates/about.html:125
 msgid "Quick Data Overview"
 msgstr "Descripción breve de los datos"
 
-#: disasterinfosite/templates/about.html:154
+#: disasterinfosite/templates/about.html:127
 #, python-format
 msgid "Take a look at some overviews of the data we used for %(area_name)s:"
 msgstr ""
@@ -211,20 +203,19 @@ msgstr ""
 "¿Desea hacer alguna pregunta? <a href=\"mailto:%(email)s\">Escriba a los "
 "creadores</a> para obtener más información."
 
-#: disasterinfosite/templates/index.html:48
-#: disasterinfosite/templates/index.html:64
-msgid "About"
+#: disasterinfosite/templates/head-meta.html:12
+msgid ""
+"Enter your location for a personalized report on your risks and how to "
+"prepare."
 msgstr ""
+"Ingrese su ubicación para obtener un informe personalizado de sus riesgos y "
+"cómo prepararse."
 
-#: disasterinfosite/templates/index.html:54
+#: disasterinfosite/templates/header.html:22
 msgid "Find Me"
 msgstr ""
 
-#: disasterinfosite/templates/index.html:56
-msgid "Location"
-msgstr ""
-
-#: disasterinfosite/templates/index.html:76
+#: disasterinfosite/templates/index.html:23
 msgid ""
 "Give a location by typing in the box at the top of the page, clicking on the "
 "map, or clicking 'find me'. You'll get a personalized report on your natural "
@@ -235,31 +226,35 @@ msgstr ""
 "personalizado sobre sus riesgos naturales y los pasos que puede llevar a "
 "cabo para prepararse."
 
-#: disasterinfosite/templates/index.html:87
+#: disasterinfosite/templates/index.html:34
 msgid "What are my risks?"
 msgstr ""
 
-#: disasterinfosite/templates/index.html:88
+#: disasterinfosite/templates/index.html:35
 msgid "What to Expect"
 msgstr "Qué esperar"
 
-#: disasterinfosite/templates/index.html:90
-#, python-format
+#: disasterinfosite/templates/index.html:37
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "        %(settings.site_title)s gives you an idea of which natural "
+#| "disasters you might experience in the future based on a location in "
+#| "%(location.area_name)s.\n"
+#| "      "
 msgid ""
-"\n"
-"        %(settings.site_title)s gives you an idea of which natural disasters "
-"you might experience in the future based on a location in "
-"%(location.area_name)s.\n"
-"      "
+" %(settings.site_title)s gives you an idea of which natural disasters you "
+"might experience in the future based on a location in "
+"%(location.area_name)s. "
 msgstr ""
 "%(title)s le da una idea de los desastres naturales que puede sufrir en el "
 "futuro según la ubicación en %(area_name)s."
 
-#: disasterinfosite/templates/index.html:95
+#: disasterinfosite/templates/index.html:40
 msgid "How to Prepare"
 msgstr "Cómo prepararse"
 
-#: disasterinfosite/templates/index.html:97
+#: disasterinfosite/templates/index.html:42
 msgid ""
 "You have the power to make a difference. Find out how you can protect your "
 "loved ones and home before the next disaster hits."
@@ -267,23 +262,26 @@ msgstr ""
 "Usted tiene la capacidad de hacer una diferencia. Descubra cómo puede "
 "proteger a sus seres queridos y su casa antes del próximo desastre."
 
-#: disasterinfosite/templates/index.html:100
+#: disasterinfosite/templates/index.html:45
 msgid "In Recent History"
 msgstr "En el pasado reciente"
 
-#: disasterinfosite/templates/index.html:102
-#, python-format
+#: disasterinfosite/templates/index.html:47
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "        Find out which disasters have struck %(location.area_name)s in "
+#| "the past, what impact they had, and where they happened.\n"
+#| "      "
 msgid ""
-"\n"
-"        Find out which disasters have struck %(location.area_name)s in the "
-"past, what impact they had, and where they happened.\n"
-"      "
+" Find out which disasters have struck %(location.area_name)s in the past, "
+"what impact they had, and where they happened. "
 msgstr ""
 "Averigüe qué desastres hubo en %(area_name)s en el pasado, qué impacto "
 "tuvieron y dónde ocurrieron.\n"
 "          "
 
-#: disasterinfosite/templates/index.html:115
+#: disasterinfosite/templates/index.html:57
 msgid "Getting results for your location..."
 msgstr "Obtener resultados para su ubicación…"
 
@@ -311,6 +309,54 @@ msgid ""
 msgstr ""
 "Mientras que valoramos y fomentamos la resiliencia en todos lados, los datos "
 "que impulsan este sitio aún no están disponibles para otros lugares."
+
+#: disasterinfosite/templates/prepare.html:17
+msgid "Take the first step toward getting prepared"
+msgstr ""
+
+#: disasterinfosite/templates/prepare.html:82
+msgid "Print"
+msgstr ""
+
+#: disasterinfosite/templates/prepare.html:83
+msgid "This activity"
+msgstr ""
+
+#: disasterinfosite/templates/prepare.html:87
+msgid "Completed?"
+msgstr ""
+
+#: disasterinfosite/templates/prepare.html:88
+msgid "Activity"
+msgstr ""
+
+#: disasterinfosite/templates/prepare.html:89
+msgid "reduces emotional and physical harm"
+msgstr ""
+
+#: disasterinfosite/templates/prepare.html:91
+msgid "is useful for other situations"
+msgstr ""
+
+#: disasterinfosite/templates/prepare.html:93
+msgid "helps protect property"
+msgstr ""
+
+#: disasterinfosite/templates/prepare.html:95
+msgid "costs"
+msgstr ""
+
+#: disasterinfosite/templates/prepare.html:97
+msgid "Resources"
+msgstr ""
+
+#: disasterinfosite/templates/prepare.html:126
+msgid "Key:"
+msgstr ""
+
+#: disasterinfosite/templates/prepare.html:135
+msgid "or more"
+msgstr ""
 
 #: disasterinfosite/templates/supply-kit.html:3
 msgid "Experts suggest you have the following:"
@@ -482,3 +528,11 @@ msgstr ""
 "Queremos que esté mejor preparado para que pueda mantener a su familia, "
 "amigos y vecinos seguros en caso de desastre. La información personal estará "
 "protegida y segura."
+
+#: disasterinfosite/templatetags/show_cost.py:8
+msgid "Free!"
+msgstr ""
+
+#: disasterinfosite/templatetags/show_cost.py:13
+msgid "Unknown"
+msgstr ""
