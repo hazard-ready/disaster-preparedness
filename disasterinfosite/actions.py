@@ -1,8 +1,8 @@
 import csv
 from django.http import HttpResponse
-from .models import UserProfile
+from .models import UserProfile, SurveyCode
 
-def export_as_csv_action(description="Export selected users as CSV file", fields=None):
+def export_as_csv_action(description="Export selected objects in a CSV file", fields=None):
     def export_as_csv(modeladmin, request, queryset, fields=fields):
         opts = modeladmin.model._meta
         if not fields:
