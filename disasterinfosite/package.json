@@ -30,6 +30,7 @@
     "webpack-bundle-tracker": "^0.4.2-beta"
   },
   "dependencies": {
+    "fsevents": "^1.2.9",
     "jquery": "^3.4.1",
     "leaflet": "^1.5.1",
     "slick-carousel": "^1.6.0"
