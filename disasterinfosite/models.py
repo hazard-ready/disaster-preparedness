@@ -973,3 +973,9 @@ class PreparednessAction(models.Model):
     link = models.URLField(default="")
     slug = models.TextField(default="")
 
+
+class SurveyCode(models.Model):
+    code = models.TextField(default="")
+
+    def __str__(self):
+        return self.code
