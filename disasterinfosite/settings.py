@@ -71,7 +71,7 @@ LANGUAGES = (
     ('es', gettext('Spanish'))
 )
 
-MODELTRANSLATION_LANGUAGES = ('es', 'en')
+MODELTRANSLATION_LANGUAGES = ('en', 'es')
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 
 USE_I18N = True
@@ -96,10 +96,6 @@ TEMPLATES = [
         },
     },
 ]
-
-
-### HEROKU CONFIGURATIONS ###
-# Added per instructions at https://devcenter.heroku.com/articles/getting-started-with-django
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
@@ -145,9 +141,6 @@ else:
 # Specially for GeoDjango on Heroku
 GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
 GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
-
-### ^^^^^^^^^^^^^^^^^^^^^^^^^ ###
-### END HEROKU CONFIGURATIONS ###
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'img')
