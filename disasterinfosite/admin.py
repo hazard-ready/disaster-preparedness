@@ -83,7 +83,7 @@ class UserProfileInline(admin.StackedInline):
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
     inlines = (UserProfileInline, )
-    actions = [export_as_csv_action("CSV Export", fields=('username','address1','address2','city','state','zip_code'))]
+    actions = [export_as_csv_action("CSV Export", fields=('username','address1','address2','city','state','zip_code'), model=UserProfile)]
 
 # Re-register UserAdmin
 admin.site.unregister(User)
@@ -92,7 +92,7 @@ admin.site.register(User, UserAdmin)
 # Make the entered survey codes exportable as a CSV
 class SurveyCodeAdmin(admin.ModelAdmin):
     model = SurveyCode
-    actions = [export_as_csv_action("CSV Export", fields=('code'))]
+    actions = [export_as_csv_action("CSV Export", fields=('code',))]
 
 admin.site.register(SurveyCode, SurveyCodeAdmin)
 
