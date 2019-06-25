@@ -230,17 +230,30 @@ header {
 }
 
 .survey-link {
-  margin: 10px;
+  margin: 14px 5px;
+  position: relative;
   text-decoration: none;
+
+  @include breakpoint(medium) {
+    position: absolute;
+    top: 60px;
+    left: 5%;
+  }
 }
 
 .survey-button {
   background-color: $bright-accent;
   border-radius: 4px;
-  padding: 2px;
+  color: $white;
+  font-family: $serif;
+  font-size: 18px;
+  font-weight: $font-weight-bold;
+  line-height: $small-header-line-height;
+  padding: 8px;
+  text-align: center;
 
-  h4 {
-    color: $white;
-    margin-top: 10px;
+  @include breakpoint(large) {
+    font-size: 20px;
+    min-width: 160px;
   }
 }
