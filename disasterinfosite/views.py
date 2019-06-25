@@ -1,13 +1,29 @@
 from collections import OrderedDict
-from .models import Snugget, Location, SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, SlideshowSnugget, PreparednessAction
+from .models import Snugget, Location, SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, SlideshowSnugget, PreparednessAction, SurveyCode
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 
 import logging
+
+# Remove this method when the survey is over
+@csrf_exempt
+def add_survey_code(request):
+    response = HttpResponse(status=403)
+    if request.method == 'POST':
+        try:
+            code = request.POST.get('code', '')
+            SurveyCode.objects.create(code=code)
+            response.set_cookie('survey', code)
+            response.status_code = 201
+        except ValueError:
+            response.status_code = 400
+
+    return response
+
 
 def create_user(request):
     if request.method == 'POST':
@@ -109,6 +125,11 @@ def app_view(request):
     profile = None
     path = request.path[:-3] # slice off the old language code
 
+    #Remove this when the survey is over
+    showSurveyButton = False
+    if 'survey' in request.COOKIES:
+        showSurveyButton = True
+
     if 'QUERY_STRING' in request.META:
         path = path + '?' + request.META['QUERY_STRING']
 
@@ -124,7 +145,8 @@ def app_view(request):
         'quick_data_overview': DataOverviewImage.objects.all(),
         'username': username,
         'profile': profile,
-        'nextPath': path
+        'nextPath': path,
+        'surveyHeader': showSurveyButton
     }
 
     template = "index.html"

@@ -228,3 +228,32 @@ header {
   font-weight: $font-weight-bold;
   padding: 5px;
 }
+
+.survey-link {
+  margin: 14px 5px;
+  position: relative;
+  text-decoration: none;
+
+  @include breakpoint(medium) {
+    position: absolute;
+    top: 60px;
+    left: 5%;
+  }
+}
+
+.survey-button {
+  background-color: $bright-accent;
+  border-radius: 4px;
+  color: $white;
+  font-family: $serif;
+  font-size: 18px;
+  font-weight: $font-weight-bold;
+  line-height: $small-header-line-height;
+  padding: 8px;
+  text-align: center;
+
+  @include breakpoint(large) {
+    font-size: 20px;
+    min-width: 160px;
+  }
+}

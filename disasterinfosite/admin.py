@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings, RDPO_region_quake, RDPO_region_winter, RDPO_Lsd_Clark, RDPO_counties_quake, RDPOflood_OR, RDPO_counties_volcano, RDPO_Lsld_OR, RDPOFire_Clark, RDPO_region_summer, RDPO_region_fire, RDPOCascadiaM9_3_Clark, RDPOFire_OR, RDPO_region_volcano, RDPOLiquefaction_OR, RDPOCascadiaM9_Col, RDPOflood_clark, RDPO_region_flood, RDPOvolcanoes, RDPO_counties_winter, RDPO_counties_fire, RDPO_WA, RDPO_counties_flood, RDPO_OR, RDPOCascadiaM9_3Cnty, RDPO_region_slide, RDPOCascadiaM9_OR, RDPOLiquefact_Clark, RDPO_counties_summer, RDPOhistflood, RDPO_counties_slide
 # END OF GENERATED CODE BLOCK
 ######################################################
-from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, PreparednessAction
+from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, PreparednessAction, SurveyCode
 from .actions import export_as_csv_action
 # To turn translation on from modeltranslation.admin import TranslationAdmin
 
@@ -83,11 +83,18 @@ class UserProfileInline(admin.StackedInline):
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
     inlines = (UserProfileInline, )
-    actions = [export_as_csv_action("CSV Export", fields=('username','address1','address2','city','state','zip_code'))]
+    actions = [export_as_csv_action("CSV Export", fields=('username','address1','address2','city','state','zip_code'), model=UserProfile)]
 
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+
+# Make the entered survey codes exportable as a CSV
+class SurveyCodeAdmin(admin.ModelAdmin):
+    model = SurveyCode
+    actions = [export_as_csv_action("CSV Export", fields=('code',))]
+
+admin.site.register(SurveyCode, SurveyCodeAdmin)
 
 
 class GeoNoEditAdmin(admin.GeoModelAdmin):

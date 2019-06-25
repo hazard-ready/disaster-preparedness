@@ -10,9 +10,6 @@ import embed_video.fields
 class Migration(migrations.Migration):
     initial = True
 
-    dependencies = [
-    ]
-
     operations = [
         migrations.CreateModel(
             name='ShapefileGroup',
