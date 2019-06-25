@@ -228,3 +228,15 @@ header {
   font-weight: $font-weight-bold;
   padding: 5px;
 }
+
+.survey-link {
+  text-decoration: none;
+}
+
+.survey-button {
+  background-color: $bright-accent;
+  border-radius: 4px;
+  h4 {
+    color: $white;
+  }
+}

@@ -9,6 +9,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 
 import logging
 
+# Remove this method when the survey is over
 @csrf_exempt
 def add_survey_code(request):
     response = HttpResponse(status=403)
@@ -124,6 +125,11 @@ def app_view(request):
     profile = None
     path = request.path[:-3] # slice off the old language code
 
+    #Remove this when the survey is over
+    showSurveyButton = False
+    if 'survey' in request.COOKIES:
+        showSurveyButton = True
+
     if 'QUERY_STRING' in request.META:
         path = path + '?' + request.META['QUERY_STRING']
 
@@ -139,7 +145,8 @@ def app_view(request):
         'quick_data_overview': DataOverviewImage.objects.all(),
         'username': username,
         'profile': profile,
-        'nextPath': path
+        'nextPath': path,
+        'surveyHeader': showSurveyButton
     }
 
     template = "index.html"
