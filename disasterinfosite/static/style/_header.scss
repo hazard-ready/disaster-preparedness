@@ -230,13 +230,17 @@ header {
 }
 
 .survey-link {
+  margin: 10px;
   text-decoration: none;
 }
 
 .survey-button {
   background-color: $bright-accent;
   border-radius: 4px;
+  padding: 2px;
+
   h4 {
     color: $white;
+    margin-top: 10px;
   }
 }
