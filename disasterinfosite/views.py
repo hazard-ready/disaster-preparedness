@@ -1,13 +1,28 @@
 from collections import OrderedDict
-from .models import Snugget, Location, SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, SlideshowSnugget, PreparednessAction
+from .models import Snugget, Location, SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, SlideshowSnugget, PreparednessAction, SurveyCode
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 
 import logging
+
+@csrf_exempt
+def add_survey_code(request):
+    response = HttpResponse(status=403)
+    if request.method == 'POST':
+        try:
+            code = request.POST.get('code', '')
+            SurveyCode.objects.create(code=code)
+            response.set_cookie('survey', code)
+            response.status_code = 201
+        except ValueError:
+            response.status_code = 400
+
+    return response
+
 
 def create_user(request):
     if request.method == 'POST':

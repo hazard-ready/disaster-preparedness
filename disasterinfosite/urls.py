@@ -8,7 +8,8 @@ from disasterinfosite import views
 
 urlpatterns = [
   url(r'^admin/', admin.site.urls),
-  url(r'^i18n/', include('django.conf.urls.i18n'))
+  url(r'^i18n/', include('django.conf.urls.i18n')),
+  url(r'^survey/$', views.add_survey_code, name="survey")
 ]
 
 urlpatterns += i18n_patterns(url(r'^accounts/login/$', views.login_view))
