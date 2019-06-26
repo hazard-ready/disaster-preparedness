@@ -68,12 +68,12 @@ def tileLoadRaster(model, filename, band=0):
             sys.stdout.write("\033[F\033[F\033[K")
             tilesSkipped += 1
         else:
-            sys.stdout.write('.')
+            if y % 10 == 0:
+                sys.stdout.write('.')
             rasterTile.bbox=Polygon.from_bbox(rasterTile.rast.extent)
             rasterTile.save()
             tilesLoaded += 1
-        if x == 0:
-            sys.stdout.flush() # make sure output shows up at least once per column
+        sys.stdout.flush() # flush often because otherwise the ANSI escape sequence "cleverness" becomes clumsiness when it goes out of sync
     print("\t...loaded", str(tilesLoaded), "tiles and skipped", str(tilesSkipped), "because they contained only NODATA pixels.")
     # clear remaining detritus from GDAL_ERRORs
     print("                                                                                          ")
