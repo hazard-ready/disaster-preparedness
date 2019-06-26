@@ -105,16 +105,6 @@ class Location(SingletonModel):
     # GENERATED CODE GOES HERE
     # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
     # locationsList
-            'RDPOLiquefact_Clark': RDPOLiquefact_Clark.objects.data_bounds(),
-            'RDPO_counties': RDPO_counties.objects.data_bounds(),
-            'RDPOLiquefaction_OR': RDPOLiquefaction_OR.objects.data_bounds(),
-            'RDPO_Lsd_Clark': RDPO_Lsd_Clark.objects.data_bounds(),
-            'Wildfire_risk': Wildfire_risk.objects.data_bounds(),
-            'RDPOCascadiaM9_3_Clark': RDPOCascadiaM9_3_Clark.objects.data_bounds(),
-            'casceq_m9pgv1': casceq_m9pgv1.objects.data_bounds(),
-            'RDPO_region': RDPO_region.objects.data_bounds(),
-            'RDPOCascadiaM9_OR': RDPOCascadiaM9_OR.objects.data_bounds(),
-            'OR_lsd': OR_lsd.objects.data_bounds()
     # END OF GENERATED CODE BLOCK
     ######################################################
         }
@@ -168,126 +158,6 @@ class ShapefileGroup(models.Model):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # modelsClasses
-class RDPOLiquefact_Clark(models.Model):
-    def getGroup():
-        return ShapefileGroup.objects.get_or_create(name='RDPOLiquefact_Clark')[0]
-
-    lookup_val = models.CharField(max_length=80)
-    geom = models.MultiPolygonField(srid=4326)
-    objects = ShapeManager()
-
-    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
-    def __str__(self):
-        return str(self.lookup_val)
-
-class RDPO_counties(models.Model):
-    def getGroup():
-        return ShapefileGroup.objects.get_or_create(name='RDPO_counties')[0]
-
-    lookup_val = models.CharField(max_length=80)
-    geom = models.MultiPolygonField(srid=4326)
-    objects = ShapeManager()
-
-    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
-    def __str__(self):
-        return str(self.lookup_val)
-
-class RDPOLiquefaction_OR(models.Model):
-    def getGroup():
-        return ShapefileGroup.objects.get_or_create(name='RDPOLiquefaction_OR')[0]
-
-    lookup_val = models.IntegerField()
-    geom = models.MultiPolygonField(srid=4326)
-    objects = ShapeManager()
-
-    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
-    def __str__(self):
-        return str(self.lookup_val)
-
-class RDPO_Lsd_Clark(models.Model):
-    def getGroup():
-        return ShapefileGroup.objects.get_or_create(name='RDPO_Lsd_Clark')[0]
-
-    lookup_val = models.CharField(max_length=80)
-    geom = models.MultiPolygonField(srid=4326)
-    objects = ShapeManager()
-
-    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
-    def __str__(self):
-        return str(self.lookup_val)
-
-class Wildfire_risk(models.Model):
-    def getGroup():
-        return ShapefileGroup.objects.get_or_create(name='Wildfire_risk')[0]
-
-    rast = models.RasterField(srid=4326)
-    bbox = models.PolygonField(srid=4326)
-    objects = RasterManager()
-
-    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
-    def __str__(self):
-        return str(self.rast.name) + ',	' + str(self.bbox) 
-
-class RDPOCascadiaM9_3_Clark(models.Model):
-    def getGroup():
-        return ShapefileGroup.objects.get_or_create(name='RDPOCascadiaM9_3_Clark')[0]
-
-    lookup_val = models.IntegerField()
-    geom = models.MultiPolygonField(srid=4326)
-    objects = ShapeManager()
-
-    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
-    def __str__(self):
-        return str(self.lookup_val)
-
-class casceq_m9pgv1(models.Model):
-    def getGroup():
-        return ShapefileGroup.objects.get_or_create(name='casceq_m9pgv1')[0]
-
-    rast = models.RasterField(srid=4326)
-    bbox = models.PolygonField(srid=4326)
-    objects = RasterManager()
-
-    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
-    def __str__(self):
-        return str(self.rast.name) + ',	' + str(self.bbox) 
-
-class RDPO_region(models.Model):
-    def getGroup():
-        return ShapefileGroup.objects.get_or_create(name='RDPO_region')[0]
-
-    lookup_val = models.CharField(max_length=80)
-    geom = models.MultiPolygonField(srid=4326)
-    objects = ShapeManager()
-
-    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
-    def __str__(self):
-        return str(self.lookup_val)
-
-class RDPOCascadiaM9_OR(models.Model):
-    def getGroup():
-        return ShapefileGroup.objects.get_or_create(name='RDPOCascadiaM9_OR')[0]
-
-    lookup_val = models.IntegerField()
-    geom = models.MultiPolygonField(srid=4326)
-    objects = ShapeManager()
-
-    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
-    def __str__(self):
-        return str(self.lookup_val)
-
-class OR_lsd(models.Model):
-    def getGroup():
-        return ShapefileGroup.objects.get_or_create(name='OR_lsd')[0]
-
-    rast = models.RasterField(srid=4326)
-    bbox = models.PolygonField(srid=4326)
-    objects = RasterManager()
-
-    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)
-    def __str__(self):
-        return str(self.rast.name) + ',	' + str(self.bbox) 
-
 # END OF GENERATED CODE BLOCK
 ######################################################
 
@@ -376,16 +246,6 @@ class Snugget(models.Model):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # modelsFilters
-    RDPOLiquefact_Clark_filter = models.ForeignKey(RDPOLiquefact_Clark, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
-    RDPO_counties_filter = models.ForeignKey(RDPO_counties, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
-    RDPOLiquefaction_OR_filter = models.ForeignKey(RDPOLiquefaction_OR, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
-    RDPO_Lsd_Clark_filter = models.ForeignKey(RDPO_Lsd_Clark, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
-    Wildfire_risk_filter = models.IntegerField(null=True)
-    RDPOCascadiaM9_3_Clark_filter = models.ForeignKey(RDPOCascadiaM9_3_Clark, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
-    casceq_m9pgv1_filter = models.IntegerField(null=True)
-    RDPO_region_filter = models.ForeignKey(RDPO_region, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
-    RDPOCascadiaM9_OR_filter = models.ForeignKey(RDPOCascadiaM9_OR, related_name='+', on_delete=models.PROTECT, blank=True, null=True)
-    OR_lsd_filter = models.IntegerField(null=True)
 # END OF GENERATED CODE BLOCK
 ######################################################
 
@@ -408,73 +268,6 @@ class Snugget(models.Model):
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # modelsGeoFilters
-        qs_RDPOLiquefact_Clark = RDPOLiquefact_Clark.objects.filter(geom__contains=pnt)
-        RDPOLiquefact_Clark_rating = qs_RDPOLiquefact_Clark.values_list('lookup_val', flat=True)
-        for rating in RDPOLiquefact_Clark_rating:
-            RDPOLiquefact_Clark_snugget = Snugget.objects.filter(RDPOLiquefact_Clark_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
-            if RDPOLiquefact_Clark_snugget:
-                groupsDict[RDPOLiquefact_Clark.getGroup()].extend(RDPOLiquefact_Clark_snugget)
-
-        qs_RDPO_counties = RDPO_counties.objects.filter(geom__contains=pnt)
-        RDPO_counties_rating = qs_RDPO_counties.values_list('lookup_val', flat=True)
-        for rating in RDPO_counties_rating:
-            RDPO_counties_snugget = Snugget.objects.filter(RDPO_counties_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
-            if RDPO_counties_snugget:
-                groupsDict[RDPO_counties.getGroup()].extend(RDPO_counties_snugget)
-
-        qs_RDPOLiquefaction_OR = RDPOLiquefaction_OR.objects.filter(geom__contains=pnt)
-        RDPOLiquefaction_OR_rating = qs_RDPOLiquefaction_OR.values_list('lookup_val', flat=True)
-        for rating in RDPOLiquefaction_OR_rating:
-            RDPOLiquefaction_OR_snugget = Snugget.objects.filter(RDPOLiquefaction_OR_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
-            if RDPOLiquefaction_OR_snugget:
-                groupsDict[RDPOLiquefaction_OR.getGroup()].extend(RDPOLiquefaction_OR_snugget)
-
-        qs_RDPO_Lsd_Clark = RDPO_Lsd_Clark.objects.filter(geom__contains=pnt)
-        RDPO_Lsd_Clark_rating = qs_RDPO_Lsd_Clark.values_list('lookup_val', flat=True)
-        for rating in RDPO_Lsd_Clark_rating:
-            RDPO_Lsd_Clark_snugget = Snugget.objects.filter(RDPO_Lsd_Clark_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
-            if RDPO_Lsd_Clark_snugget:
-                groupsDict[RDPO_Lsd_Clark.getGroup()].extend(RDPO_Lsd_Clark_snugget)
-
-        Wildfire_risk_rating = rasterPointLookup(Wildfire_risk, lng, lat)
-        if Wildfire_risk_rating is not None:
-            Wildfire_risk_snugget = Snugget.objects.filter(Wildfire_risk_filter__exact=Wildfire_risk_rating).order_by('order').select_subclasses()
-            if Wildfire_risk_snugget:
-                groupsDict[Wildfire_risk.getGroup()].extend(Wildfire_risk_snugget)
-
-        qs_RDPOCascadiaM9_3_Clark = RDPOCascadiaM9_3_Clark.objects.filter(geom__contains=pnt)
-        RDPOCascadiaM9_3_Clark_rating = qs_RDPOCascadiaM9_3_Clark.values_list('lookup_val', flat=True)
-        for rating in RDPOCascadiaM9_3_Clark_rating:
-            RDPOCascadiaM9_3_Clark_snugget = Snugget.objects.filter(RDPOCascadiaM9_3_Clark_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
-            if RDPOCascadiaM9_3_Clark_snugget:
-                groupsDict[RDPOCascadiaM9_3_Clark.getGroup()].extend(RDPOCascadiaM9_3_Clark_snugget)
-
-        casceq_m9pgv1_rating = rasterPointLookup(casceq_m9pgv1, lng, lat)
-        if casceq_m9pgv1_rating is not None:
-            casceq_m9pgv1_snugget = Snugget.objects.filter(casceq_m9pgv1_filter__exact=casceq_m9pgv1_rating).order_by('order').select_subclasses()
-            if casceq_m9pgv1_snugget:
-                groupsDict[casceq_m9pgv1.getGroup()].extend(casceq_m9pgv1_snugget)
-
-        qs_RDPO_region = RDPO_region.objects.filter(geom__contains=pnt)
-        RDPO_region_rating = qs_RDPO_region.values_list('lookup_val', flat=True)
-        for rating in RDPO_region_rating:
-            RDPO_region_snugget = Snugget.objects.filter(RDPO_region_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
-            if RDPO_region_snugget:
-                groupsDict[RDPO_region.getGroup()].extend(RDPO_region_snugget)
-
-        qs_RDPOCascadiaM9_OR = RDPOCascadiaM9_OR.objects.filter(geom__contains=pnt)
-        RDPOCascadiaM9_OR_rating = qs_RDPOCascadiaM9_OR.values_list('lookup_val', flat=True)
-        for rating in RDPOCascadiaM9_OR_rating:
-            RDPOCascadiaM9_OR_snugget = Snugget.objects.filter(RDPOCascadiaM9_OR_filter__lookup_val__exact=rating).order_by('order').select_subclasses()
-            if RDPOCascadiaM9_OR_snugget:
-                groupsDict[RDPOCascadiaM9_OR.getGroup()].extend(RDPOCascadiaM9_OR_snugget)
-
-        OR_lsd_rating = rasterPointLookup(OR_lsd, lng, lat)
-        if OR_lsd_rating is not None:
-            OR_lsd_snugget = Snugget.objects.filter(OR_lsd_filter__exact=OR_lsd_rating).order_by('order').select_subclasses()
-            if OR_lsd_snugget:
-                groupsDict[OR_lsd.getGroup()].extend(OR_lsd_snugget)
-
 # END OF GENERATED CODE BLOCK
 ######################################################
         return groupsDict
