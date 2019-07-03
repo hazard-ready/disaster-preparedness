@@ -37,7 +37,7 @@ def allRequiredFieldsPresent(optionalFields, row, rowCount):
 
 
 def includeTranslatedFields(row, fieldName, kwargs):
-  translatedField = next ((k for k in row if k.startswith('text-')), "")
+  translatedField = next ((k for k in row if k.startswith('text-') or k.startswith('pop_out_txt-')), "")
   if translatedField is not None and row[translatedField] != '':
     translatedColumn = fieldName + '_' + translatedField.split('-')[1]
     kwargs[translatedColumn] = row[translatedField]
