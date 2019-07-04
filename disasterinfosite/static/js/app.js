@@ -18,6 +18,9 @@ require("../img/caret.svg");
 require("../img/language.svg");
 require("../img/locate-me.svg");
 
+// Our Data Sources pdf that gets linked to in several snuggets
+require("../img/data-sources.pdf");
+
 // about page images
 require("../img/flowchart.png");
 require("../img/cmk_headshot.jpg");

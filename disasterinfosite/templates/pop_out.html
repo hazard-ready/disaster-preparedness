@@ -38,7 +38,7 @@
     {% for photo in snugget.photos %}
     <div class="past-photo__container">
        <img alt="" title="" class="slideshow-image" src="{{ photo.image.url }}"/>
-       <div class="past-photo__caption">{{ photo.caption }}</div>
+       <div class="past-photo__caption">{{ photo.caption | safe }}</div>
      </div>
     {% endfor %}
     </div>
