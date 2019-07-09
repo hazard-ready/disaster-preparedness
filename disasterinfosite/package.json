@@ -1,7 +1,7 @@
 {
   "name": "hazard-ready",
   "version": "1.0.0",
-  "description": "The generic version of Hazard Ready",
+  "description": "The generic base repo version of Hazard Ready",
   "main": "app.js",
   "scripts": {
     "webpack": "webpack"
@@ -17,22 +17,23 @@
   },
   "homepage": "https://github.com/hazard-ready/disaster-preparedness#readme",
   "devDependencies": {
-    "ajv": "^6.10.0",
-    "css-loader": "^2.1.1",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "file-loader": "^0.11.2",
+    "ajv": "^6.10.1",
+    "css-loader": "^3.0.0",
+    "file-loader": "^4.0.0",
+    "mini-css-extract-plugin": "^0.7.0",
     "node-sass": "^4.12.0",
     "normalize.css": "^8.0.1",
     "sass-loader": "^7.1.0",
-    "style-loader": "^0.18.2",
-    "url-loader": "^1.1.2",
-    "webpack": "^3.12.0",
-    "webpack-bundle-tracker": "^0.4.2-beta"
+    "style-loader": "^0.23.1",
+    "url-loader": "^2.0.1",
+    "webpack": "^4.35.3",
+    "webpack-bundle-tracker": "^0.4.2-beta",
+    "webpack-cli": "^3.3.5"
   },
   "dependencies": {
     "fsevents": "^1.2.9",
     "jquery": "^3.4.1",
     "leaflet": "^1.5.1",
-    "slick-carousel": "^1.6.0"
+    "slick-carousel": "^1.8.1"
   }
 }

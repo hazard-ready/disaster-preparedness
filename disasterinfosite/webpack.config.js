@@ -1,7 +1,7 @@
 var path = require("path");
 var webpack = require("webpack");
 var BundleTracker = require("webpack-bundle-tracker");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 var vendorPath = path.join(__dirname, "static/js/vendor/");
 
@@ -30,23 +30,14 @@ module.exports = {
       $: "jquery",
       jQuery: "jquery"
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "vendor",
-      minChunks: Infinity
-    }),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: "[name].css",
       allChunks: true
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
     })
   ],
   devtool: "eval-source-map",
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.scss$/,
         use: [
@@ -57,15 +48,13 @@ module.exports = {
       },
       {
         test: /\.css(\?v=\d+\.\d+\.\d+)?$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: [
-            {
-              loader: "css-loader",
-              query: { sourceMap: true }
-            }
-          ]
-        })
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            query: { sourceMap: true }
+          },
+          'css-loader'
+        ]
       },
       {
         test: /\.(png|gif|jpe?g|svg|ttf|eot|ico)(\?v=\d+\.\d+\.\d+)?$/i,

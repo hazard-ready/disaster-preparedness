@@ -128,7 +128,7 @@ def getShapefileFilter(shapefile, filterVal):
 def addPopOutIfExists(row):
   if (row["pop_out_image"] != '' or row["pop_out_txt"] != '' or row["pop_alt_txt"] != '' or row["pop_out_link"] != '' or row["pop_out_video"] is not None):
     args = { 'text': row["pop_out_txt"], 'alt_text': row["pop_alt_txt"], 'link': row["pop_out_link"], 'video': row["pop_out_video"] }
-    kwargs = includeTranslatedFields(row, 'text', args)
+    kwargs = includeTranslatedFields(row, 'pop_out_txt', 'text', args)
     popout = SnuggetPopOut.objects.create(**kwargs)
     if row["pop_out_image"] != '':
       imageFile = os.path.join(dataDir, 'images/pop_out', row["pop_out_image"])
@@ -155,7 +155,7 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
       'order': row['txt_location']
     }
 
-    kwargs = includeTranslatedFields(row, 'content', args)
+    kwargs = includeTranslatedFields(row, 'text', 'content', args)
     snugget = TextSnugget.objects.create(**kwargs)
     snugget.pop_out = addPopOutIfExists(row)
     snugget.save()
@@ -175,7 +175,7 @@ def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
     'percentage': row["intensity"],
     'order': row['txt_location']
   }
-  kwargs = includeTranslatedFields(row, 'text', args)
+  kwargs = includeTranslatedFields(row, 'pop_out_txt', 'text', args)
 
   snugget = EmbedSnugget.objects.create(**kwargs)
   snugget.save()
@@ -195,7 +195,7 @@ def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
     'order': row['txt_location']
   }
 
-  kwargs = includeTranslatedFields(row, 'text', args)
+  kwargs = includeTranslatedFields(row, 'pop_out_txt', 'text', args)
 
   snugget = SlideshowSnugget.objects.create(**kwargs)
   snugget.pop_out = addPopOutIfExists(row)
