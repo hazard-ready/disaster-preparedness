@@ -1,7 +1,7 @@
 {
-  "name": "pdx-ready",
+  "name": "hazard-ready",
   "version": "1.0.0",
-  "description": "The Portland version of Hazard Ready",
+  "description": "The generic base repo version of Hazard Ready",
   "main": "app.js",
   "scripts": {
     "webpack": "webpack"
