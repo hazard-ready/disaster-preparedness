@@ -59,12 +59,6 @@
 .section-content--static {
   position: relative;
   overflow: visible;
-
-  .snugget__popout {
-    @include breakpoint(large) {
-      margin-top: -40px;
-    }
-  }
 }
 
 /* Snugget content */
@@ -79,14 +73,17 @@
   }
 }
 
-/* flex-basis is set to the width of the youtube embed */
 .snugget__popout {
-  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  justify-content: space-between;
   margin: 10px 0 0 0;
 
   @include breakpoint(large) {
-    flex: 1 0 340px;
     margin: 0 0 0 10px;
+    /* width is to accommodate the youtube embed */
+    width: 365px;
   }
 }
 
@@ -104,18 +101,18 @@
 
 .popout-content {
   background-color: $popout-background;
-  border: 2px solid $popout-border;
+  border: 2px solid $bright-accent;
   border-top-width: 6px;
   padding: 10px;
   max-width: 100%;
 
-  h4 {
-    color: $popout-border;
-    font-size: 18px;
+  h3, h4 {
+    color: $dark-accent;
+    font-size: 16px;
     margin: 10px 0 0 0;
 
     @include breakpoint(large) {
-      font-size: 21px;
+      font-size: 18px;
     }
   }
   p {
@@ -229,6 +226,10 @@
   @include breakpoint(large) {
     max-height: 275px;
   }
+}
+
+.past-photo__caption {
+  margin-top: 10px;
 }
 
 /* Arrows for photo slider */
