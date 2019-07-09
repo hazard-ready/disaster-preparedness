@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hazard-ready/disaster-preparedness.git"
+    "url": "git+https://github.com/hazard-ready/pdx-ready.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hazard-ready/disaster-preparedness/issues"
+    "url": "https://github.com/hazard-ready/pdx-ready/issues"
   },
-  "homepage": "https://github.com/hazard-ready/disaster-preparedness#readme",
+  "homepage": "https://github.com/hazard-ready/pdx-ready#readme",
   "devDependencies": {
     "ajv": "^6.10.1",
     "css-loader": "^3.0.0",
