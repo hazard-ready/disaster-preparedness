@@ -16,7 +16,11 @@
 /* Sections */
 .section-title--static {
   color: $soft-black;
-  margin-bottom: 0;
+  margin: 20px 0 5px 0;
+
+  @include breakpoint(large) {
+    margin: 0 0 0 10px;
+  }
 }
 
 .section-title--collapse {
@@ -66,11 +70,24 @@
 .snugget__content {
   flex: 0 1 auto;
   ul {
+    margin: 5px 0;
+
+    @include breakpoint(large) {
+      margin: 10px 0;
+    }
     padding-left: 0;
   }
 
   li {
     margin-left: 20px;
+  }
+
+  p {
+    margin: 5px 0;
+
+    @include breakpoint(large) {
+      margin: 10px 0;
+    }
   }
 }
 
@@ -79,10 +96,8 @@
   flex-direction: column;
   flex: 0 0 auto;
   justify-content: space-between;
-  margin: 10px 0 0 0;
 
   @include breakpoint(large) {
-    margin: 0 0 0 10px;
     /* width is to accommodate the youtube embed */
     width: 365px;
   }
@@ -104,8 +119,9 @@
   background-color: $popout-background;
   border: 2px solid $bright-accent;
   border-top-width: 6px;
-  padding: 10px;
+  margin: 10px 0 0 0;
   max-width: 100%;
+  padding: 10px;
 
   h3, h4 {
     color: $dark-accent;
@@ -118,10 +134,15 @@
   }
   p {
     margin: 0;
+    text-align: center;
+
+    @include breakpoint(large) {
+      text-align: left;
+    }
   }
 
   @include breakpoint(large) {
-    margin-bottom: 10px;
+    margin: 0 0 10px 10px;
   }
 }
 
