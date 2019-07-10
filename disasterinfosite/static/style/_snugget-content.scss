@@ -19,7 +19,7 @@
   margin: 20px 0 5px 0;
 
   @include breakpoint(large) {
-    margin: 0 0 0 10px;
+    margin: 20px 0 10px 0;
   }
 }
 
@@ -99,7 +99,7 @@
 
   @include breakpoint(large) {
     /* width is to accommodate the youtube embed */
-    width: 365px;
+    width: 380px;
   }
 }
 
@@ -142,7 +142,7 @@
   }
 
   @include breakpoint(large) {
-    margin: 0 0 10px 10px;
+    margin: 0 0 20px 10px;
   }
 }
 
@@ -237,7 +237,7 @@
   max-width: 100%;
 
   @include breakpoint(large) {
-    width: 335px;
+    width: 345px;
   }
 }
 
