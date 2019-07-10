@@ -57,6 +57,7 @@
 }
 
 .section-content--static {
+  max-height: unset;
   position: relative;
   overflow: visible;
 }
@@ -117,6 +118,10 @@
   }
   p {
     margin: 0;
+  }
+
+  @include breakpoint(large) {
+    margin-bottom: 10px;
   }
 }
 
