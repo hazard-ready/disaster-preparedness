@@ -159,7 +159,27 @@ function setUpMap() {
   });
 }
 
+function setStopHeight() {
+  return $('header').offset().top + 5;
+};
+
 $(document).ready(function() {
+  var stopHeight = setStopHeight();
+
+  var stickMenu = function() {
+    if($(document).scrollTop() >= stopHeight) {
+      $navbar.addClass('sticky');
+    } else {
+      $navbar.removeClass('sticky');
+    }
+  };
+
+  $document.scroll(stickMenu);
+
+  $window.resize(function() {
+    stopHeight = setStopHeight();
+  });
+
   // Set up input box
   $locationInput = $("#location-text");
   var $locationSubmit = $("#location-submit");
