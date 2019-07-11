@@ -17,6 +17,7 @@ header {
 
 .logo__container {
   overflow: auto;
+  margin: 0 0 10px 0;
   position: relative;
 
   h3 {
@@ -24,12 +25,12 @@ header {
   }
 
   @include breakpoint(medium) {
-    margin-right: 5px;
+    margin: 0 5px 0 0;
     min-width: 195px;
   }
 
   @include breakpoint(large) {
-    margin-right: 10px;
+    margin: 0 10px 0 0;
     min-width: 228px;
   }
 }
@@ -107,8 +108,8 @@ header {
   }
 
   @include breakpoint(large) {
-    margin: 14px 25px 14px auto;
-    max-width: 800px;
+    margin: 14px 30px 14px auto;
+    max-width: 600px;
   }
 }
 
@@ -204,8 +205,13 @@ header {
   width: auto;
   margin-left: 10px;
 
-  @include breakpoint(medium-and-up) {
-    margin-left: auto;
+  @include breakpoint(medium) {
+    margin-left: 15px;
+    margin-top: 15px;
+  }
+
+  @include breakpoint(large) {
+    margin-left: 30px;
     margin-top: 15px;
   }
 }
