@@ -36,10 +36,26 @@
   }
 }
 
+.hide-for-medium-down--flex {
+  display: none;
+
+  @include breakpoint(large) {
+    display: flex;
+  }
+}
+
 .hide-for-medium-up--flex {
   display: flex;
 
   @include breakpoint(medium-and-up) {
+    display: none;
+  }
+}
+
+.hide-for-large--flex {
+  display: flex;
+
+  @include breakpoint(large) {
     display: none;
   }
 }
