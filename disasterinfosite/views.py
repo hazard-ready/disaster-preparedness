@@ -141,7 +141,7 @@ def app_view(request):
 
         if lat and lng:
             snugget_content = Snugget.findSnuggetsForPoint(lat=float(lat), lng=float(lng))
-            data = {el:{} for el in snugget_content.keys()}
+            data = {el:{'collapsible': {}, 'static': {}} for el in snugget_content.keys()}
 
             if snugget_content is not None:
                 for group, snuggets in snugget_content.items():
@@ -155,13 +155,20 @@ def app_view(request):
                             if snugget.__class__ == SlideshowSnugget:
                                 snugget.photos = PastEventsPhoto.objects.filter(snugget=snugget)
 
-                            if not snugget.section in data[group]:
-                                data[group][snugget.section] = [snugget]
+                            if snugget.section.collapsible:
+                                if not snugget.section in data[group]['collapsible']:
+                                    data[group]['collapsible'][snugget.section] = [snugget]
+                                else:
+                                    data[group]['collapsible'][snugget.section].append(snugget)
                             else:
-                                data[group][snugget.section].append(snugget)
+                                if not snugget.section in data[group]['static']:
+                                    data[group]['static'][snugget.section] = [snugget]
+                                else:
+                                    data[group]['static'][snugget.section].append(snugget)
 
                     # Sort the sections by order_of_appearance
-                    data[group] = OrderedDict(sorted(data[group].items(), key=lambda t: t[0].order_of_appearance))
+                    data[group]['collapsible'] = OrderedDict(sorted(data[group]['collapsible'].items(), key=lambda t: t[0].order_of_appearance))
+                    data[group]['static'] = OrderedDict(sorted(data[group]['static'].items(), key=lambda t: t[0].order_of_appearance))
 
             renderData['data'] = data
 
