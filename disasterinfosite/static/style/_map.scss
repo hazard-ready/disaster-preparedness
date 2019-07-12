@@ -9,6 +9,36 @@
   }
 }
 
+.map-info-container.sticky {
+  background-color: $soft-white;
+  padding-left: 10px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: $z-index-top;
+
+  @include breakpoint(medium) {
+    padding-left: 30px;
+  }
+
+  @include breakpoint(large) {
+    padding-left: 40px;
+  }
+
+  .information-container {
+    margin: 0;
+  }
+
+  .info__hazards {
+    margin-top: 10px;
+  }
+
+  .map-container {
+    display: none;
+  }
+}
+
 .information-container {
   flex-grow: 1;
   margin: 0 auto 20px;
