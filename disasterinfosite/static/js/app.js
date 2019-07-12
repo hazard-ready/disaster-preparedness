@@ -173,26 +173,35 @@ function setUpMap() {
   });
 }
 
-function setStopHeight() {
-  return $('header').offset().top + 5;
+function setStopHeight(mapInfoContainer) {
+  var headerHeight = $('header').offset().top;
+  var informationHeight = mapInfoContainer.offset().top;
+  return headerHeight + informationHeight + 5;
 };
 
 $(document).ready(function() {
-  var stopHeight = setStopHeight();
+  var infoContainer = $('.information-container--found-content');
+  var mapInfoContainer = $('.map-info-container');
 
-  var stickMenu = function() {
-    if($(document).scrollTop() >= stopHeight) {
-      $navbar.addClass('sticky');
-    } else {
-      $navbar.removeClass('sticky');
-    }
-  };
+  // if we are on the found content page, stick the info container
+  if(infoContainer.length) {
+    var stopHeight = setStopHeight(mapInfoContainer);
+    console.log(stopHeight);
 
-  $document.scroll(stickMenu);
+    var stickMenu = function() {
+      if($(document).scrollTop() >= stopHeight) {
+        mapInfoContainer.addClass('sticky');
+      } else {
+        mapInfoContainer.removeClass('sticky');
+      }
+    };
 
-  $window.resize(function() {
-    stopHeight = setStopHeight();
-  });
+    $(document).scroll(stickMenu);
+
+    $(window).resize(function() {
+      stopHeight = setStopHeight(mapInfoContainer);
+    });
+  }
 
   // Set up input box
   $locationInput = $("#location-text");
