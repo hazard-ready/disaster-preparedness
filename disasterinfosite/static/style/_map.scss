@@ -6,6 +6,9 @@
   padding-bottom: 30px;
   transition: 0.5s all ease-in-out;
 
+  .survey-link {
+    display: none;
+  }
 
   @include breakpoint(medium-and-up) {
     flex-direction: row;
@@ -16,7 +19,7 @@
   background-color: $deep-grey;
   color: $soft-white;
   min-height: 136px;
-  padding-left: 20px;
+  padding: 10px;
   position: fixed;
   left: 0;
   right: 0;
@@ -41,6 +44,16 @@
 
   .map-container {
     display: none;
+  }
+
+  .survey-link {
+    display: block;
+
+    @include breakpoint(medium) {
+      position: absolute;
+      top: 86px;
+      left: 70%;
+    }
   }
 
   .link--grey{
