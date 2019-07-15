@@ -4,6 +4,7 @@
   background-color: $white;
   margin: 10px 0;
   padding: 5px 10px 10px;
+  position: relative;
 
   @include breakpoint(medium) {
     margin: 20px 0;

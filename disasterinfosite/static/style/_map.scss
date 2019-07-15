@@ -2,7 +2,10 @@
 .map-info-container {
   display: flex;
   flex-direction: column;
+  min-height: 400px;
   padding-bottom: 30px;
+  transition: 0.5s all ease-in-out;
+
 
   @include breakpoint(medium-and-up) {
     flex-direction: row;
@@ -10,8 +13,10 @@
 }
 
 .map-info-container.sticky {
-  background-color: $soft-white;
-  padding-left: 10px;
+  background-color: $deep-grey;
+  color: $soft-white;
+  min-height: 136px;
+  padding-left: 20px;
   position: fixed;
   left: 0;
   right: 0;
@@ -19,11 +24,11 @@
   z-index: $z-index-top;
 
   @include breakpoint(medium) {
-    padding-left: 30px;
+    padding-left: 60px;
   }
 
   @include breakpoint(large) {
-    padding-left: 40px;
+    padding-left: 100px;
   }
 
   .information-container {
@@ -36,6 +41,14 @@
 
   .map-container {
     display: none;
+  }
+
+  .link--grey{
+    color: $low-intensity;
+  }
+
+  h1 {
+    color: $soft-white;
   }
 }
 

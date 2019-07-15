@@ -182,17 +182,19 @@ function setStopHeight(mapInfoContainer) {
 $(document).ready(function() {
   var infoContainer = $('.information-container--found-content');
   var mapInfoContainer = $('.map-info-container');
+  var contentContainer = $('.content-container');
 
   // if we are on the found content page, stick the info container
   if(infoContainer.length) {
     var stopHeight = setStopHeight(mapInfoContainer);
-    console.log(stopHeight);
 
     var stickMenu = function() {
       if($(document).scrollTop() >= stopHeight) {
         mapInfoContainer.addClass('sticky');
+        contentContainer.css({ 'padding-top': stopHeight + 100 + 'px'});
       } else {
         mapInfoContainer.removeClass('sticky');
+        contentContainer.css({'padding-top': ''});
       }
     };
 
