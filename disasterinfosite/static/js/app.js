@@ -160,8 +160,8 @@ function setUpMap() {
 }
 
 function setStopHeight(mapInfoContainer) {
-  var headerHeight = $('header').offset().top;
-  var informationHeight = mapInfoContainer.offset().top;
+  var headerHeight = $('header').outerHeight();
+  var informationHeight = mapInfoContainer.outerHeight();
   return headerHeight + informationHeight + 5;
 };
 
