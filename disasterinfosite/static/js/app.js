@@ -173,7 +173,38 @@ function setUpMap() {
   });
 }
 
+function setStopHeight(mapInfoContainer) {
+  var headerHeight = $('header').outerHeight();
+  var informationHeight = mapInfoContainer.outerHeight();
+  return headerHeight + informationHeight + 5;
+};
+
 $(document).ready(function() {
+  var infoContainer = $('.information-container--found-content');
+  var mapInfoContainer = $('.map-info-container');
+  var contentContainer = $('.content-container');
+
+  // if we are on the found content page, stick the info container
+  if(infoContainer.length) {
+    var stopHeight = setStopHeight(mapInfoContainer);
+
+    var stickMenu = function() {
+      if($(document).scrollTop() >= stopHeight) {
+        mapInfoContainer.addClass('sticky');
+        contentContainer.css({ 'padding-top': stopHeight + 100 + 'px'});
+      } else {
+        mapInfoContainer.removeClass('sticky');
+        contentContainer.css({'padding-top': ''});
+      }
+    };
+
+    $(document).scroll(stickMenu);
+
+    $(window).resize(function() {
+      stopHeight = setStopHeight(mapInfoContainer);
+    });
+  }
+
   // Set up input box
   $locationInput = $("#location-text");
   var $locationSubmit = $("#location-submit");

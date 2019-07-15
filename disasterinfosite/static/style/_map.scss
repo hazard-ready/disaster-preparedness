@@ -2,10 +2,66 @@
 .map-info-container {
   display: flex;
   flex-direction: column;
+  min-height: 400px;
   padding-bottom: 30px;
+  transition: 0.5s all ease-in-out;
+
+  .survey-link {
+    display: none;
+  }
 
   @include breakpoint(medium-and-up) {
     flex-direction: row;
+  }
+}
+
+.map-info-container.sticky {
+  background-color: $deep-grey;
+  color: $soft-white;
+  min-height: 136px;
+  padding: 10px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: $z-index-top;
+
+  @include breakpoint(medium) {
+    padding-left: 60px;
+  }
+
+  @include breakpoint(large) {
+    padding-left: 100px;
+  }
+
+  .information-container {
+    margin: 0;
+  }
+
+  .info__hazards {
+    margin-top: 10px;
+  }
+
+  .map-container {
+    display: none;
+  }
+
+  .survey-link {
+    display: block;
+
+    @include breakpoint(medium) {
+      position: absolute;
+      top: 86px;
+      left: 70%;
+    }
+  }
+
+  .link--grey{
+    color: $low-intensity;
+  }
+
+  h1 {
+    color: $soft-white;
   }
 }
 
