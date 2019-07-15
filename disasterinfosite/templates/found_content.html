@@ -25,7 +25,8 @@
 
 {% block main-content %}
   {% for group, hazard in data.items %}
-  <div class="disaster-container" id="{{group.name}}">
+  <div class="disaster-container">
+    <div class="anchor" id="{{group.name}}"></div>
     <h2>{{group.display_name}}</h2>
     <div class="disaster-content">
       <div class="intensity-meter">
