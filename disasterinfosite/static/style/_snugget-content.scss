@@ -182,7 +182,6 @@
 
   @include breakpoint(large) {
     margin-top: 50px;
-    width: 70%;
   }
 }
 
@@ -214,10 +213,6 @@
   margin-bottom: 50px;
   position: relative;
   width: auto;
-
-  @include breakpoint(large) {
-    width: 70%;
-  }
 }
 
 .intensity-caption {
@@ -225,6 +220,11 @@
   font-size: 14px;
   font-style: italic;
   position: absolute;
+  width: 100px;
+
+  @include breakpoint(medium-and-up) {
+    width: auto;
+  }
 }
 
 .intensity-caption--low {

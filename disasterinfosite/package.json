@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/hazard-ready/disaster-preparedness#readme",
   "devDependencies": {
-    "ajv": "^6.10.1",
+    "ajv": "^6.10.2",
     "css-loader": "^3.0.0",
     "file-loader": "^4.0.0",
     "mini-css-extract-plugin": "^0.7.0",
@@ -28,7 +28,7 @@
     "url-loader": "^2.0.1",
     "webpack": "^4.35.3",
     "webpack-bundle-tracker": "^0.4.2-beta",
-    "webpack-cli": "^3.3.5"
+    "webpack-cli": "^3.3.6"
   },
   "dependencies": {
     "fsevents": "^1.2.9",
