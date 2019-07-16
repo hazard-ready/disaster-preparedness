@@ -18,7 +18,7 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY_PDX']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
