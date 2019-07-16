@@ -29,18 +29,20 @@
     <div class="anchor" id="{{group.name}}"></div>
     <h2>{{group.display_name}}</h2>
     <div class="disaster-content">
-      <div class="intensity-meter">
-        <div class="sr-only">{% blocktrans %}An intensity meter at {{group.percentage}}%{% endblocktrans %}</div>
-        <div class="intensity-marker" style="left: {{group.percentage}}%"></div>
-      </div>
-      <div class="intensity-captions">
-        <div class="intensity-caption intensity-caption--low" aria-hidden="”true”">
-          {% trans "Low Risk" %}
+      {% if group.percentage %}
+        <div class="intensity-meter">
+          <div class="sr-only">{% blocktrans %}An intensity meter at {{group.percentage}}%{% endblocktrans %}</div>
+          <div class="intensity-marker" style="left: {{group.percentage}}%"></div>
         </div>
-        <div class="intensity-caption intensity-caption--high" aria-hidden="”true”">
-          {% trans "High Risk" %}
+        <div class="intensity-captions">
+          <div class="intensity-caption intensity-caption--low" aria-hidden="”true”">
+            {% trans "Low Risk" %}
+          </div>
+          <div class="intensity-caption intensity-caption--high" aria-hidden="”true”">
+            {% trans "High Risk" %}
+          </div>
         </div>
-      </div>
+      {% endif %}
       <!-- Non-collapsible snuggets and popouts for large screen sizes -->
         <div class="section-content section-content--static hide-for-medium-down--flex">
           <div class="snugget__content snugget__content---static">
