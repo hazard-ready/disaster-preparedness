@@ -5,7 +5,7 @@
 
 
 {% block info-instructions %}
-<div class="information-container">
+<div class="information-container information-container--found-content">
   <h1>
     <span class="info__header">{% trans "What to expect for" %}</span>
     <span class="info__location">{{ location_name }}</span>
@@ -25,7 +25,8 @@
 
 {% block main-content %}
   {% for group, hazard in data.items %}
-  <div class="disaster-container" id="{{group.name}}">
+  <div class="disaster-container">
+    <div class="anchor" id="{{group.name}}"></div>
     <h2>{{group.display_name}}</h2>
     <div class="disaster-content">
       <div class="intensity-meter">
