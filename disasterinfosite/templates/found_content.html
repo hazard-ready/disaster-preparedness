@@ -17,8 +17,9 @@
   </div>
   <div class="info__hazards">
     {% for group, hazard in data.items %}
-      <a class="hazard-link caps" href="#{{group.name}}">{{group.display_name}}</a>{% if not forloop.last %}<span class="caps">,</span> {% endif %}
+      <a class="hazard-link caps" href="#{{group.name}}">{{group.display_name}}</a><span class="hazard-comma caps">,</span>
     {% endfor %}
+    <a class="prepare-link caps" href="{% url 'prepare' %}" target="_blank">{% trans "Prepare!" %}</a>
   </div>
 </div>
 {% if surveyHeader %}
