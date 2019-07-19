@@ -45,6 +45,25 @@ require("./prepare");
 require("./users");
 require("slick-carousel");
 
+// IE11 polyfills
+require("url-polyfill");
+require("native-promise-only");
+
+if (!String.prototype.includes) {
+  String.prototype.includes = function(search, start) {
+    'use strict';
+    if (typeof start !== 'number') {
+      start = 0;
+    }
+
+    if (start + search.length > this.length) {
+      return false;
+    } else {
+      return this.indexOf(search, start) !== -1;
+    }
+  };
+}
+
 // This is the base repository Mapquest key. Get your own Mapquest key for a new app!
 var MAPQUEST_KEY = "b3ZxSWOID7jOlLLGb8KvPxbF4DGBMEHy";
 var osmUrl =
