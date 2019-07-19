@@ -92,9 +92,11 @@ function loadPageWithParameters(lat, lng, queryText) {
 }
 
 function showGeocodeError() {
-  $(".geocode-error-message").html(
-    $("p").text("We had a problem finding that location.")
-  );
+  $(".geocode-error-message").removeClass('hide');
+}
+
+function hideGeocodeError() {
+  $(".geocode-error-message").addClass('hide');
 }
 
 function submitLocation(lat, lng, queryText) {
@@ -226,6 +228,9 @@ $(document).ready(function() {
   if (!query_lat || !query_lng) location_query_text = "";
   $locationInput.val(location_query_text);
 
+  // Hide a geocoding error message every time, if there is one
+  $locationInput.on("click", hideGeocodeError)
+
   // Set up autocomplete when someone clicks in the input field
   $locationInput.one("click", function() {
     var input = document.getElementById("location-text");
@@ -233,7 +238,7 @@ $(document).ready(function() {
     var autocomplete = placeSearch({
       key: MAPQUEST_KEY,
       container: input,
-      useDeviceLocation: true
+      useDeviceLocation: !!navigator.geolocation
     });
     $locationInput.focus();
 
@@ -293,22 +298,28 @@ $(document).ready(function() {
 
   // auto location (the Find Me button)
   $autoLocationButton.click(function() {
+    hideGeocodeError()
     disableForm();
 
-    navigator.geolocation.getCurrentPosition(
-      function(position) {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
-        // success! onwards to view the content
-        submitLocation(lat, lng);
-      },
-      function(error) {
-        console.log("Error finding your location: " + error.message);
-        showGeocodeError();
-        enableForm();
-      },
-      { timeout: 8000 }
-    );
+    if(!navigator.geolocation) {
+      showGeocodeError();
+      enableForm();
+    } else  {
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+          // success! onwards to view the content
+          submitLocation(lat, lng);
+        },
+        function(error) {
+          console.log("Error finding your location: " + error.message);
+          showGeocodeError();
+          enableForm();
+        },
+        { timeout: 8000 }
+      );
+    }
   });
 
   // during api calls, disable the form
