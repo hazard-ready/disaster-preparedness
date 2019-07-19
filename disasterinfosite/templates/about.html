@@ -62,55 +62,54 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="about-container">
-      <h3 class="caps">{% blocktrans with title=settings.site_title %}{{ title }} Partners and Collaborators{% endblocktrans %}</h3>
-        <div class="rdpo-container">
-          <a href="https://rdpo.net/" target="_blank" rel="noopener">
-            <img class="partner-logo" src="{% webpack_static 'build/RDPO-logo.png' %}" alt="Regional Disaster Planning Organization (RDPO)">
-          </a>
-          <p>{% trans "RDPO is a partnership of government agencies, non-governmental organizations, and private-sector stakeholders in the Portland Metropolitan Region collaborating to increase the region’s resiliency to disasters. The metropolitan region spans Clackamas, Columbia, Multnomah, and Washington Counties in Oregon and Clark County in Washington." %}</p>
-        </div>
-        <div class="partner-logo-container">
-          <a href="https://www.redcross.org/local/oregon.html" target="_blank" rel="noopener">
-            <img class="partner-logo" src="{% webpack_static 'build/red-cross-logo.png' %}" alt="{% trans 'American Red Cross: Cascades Region' %}">
-          </a>
-          <a href="https://www.mercycorpsnw.org/" target="_blank" rel="noopener">
-            <img class="partner-logo" src="{% webpack_static 'build/logo-mercy-corps.svg' %}" alt="{% trans 'Mercy Corps' %}">
-          </a>
-          <a href="https://www.portlandoregon.gov/pbem/" target="_blank" rel="noopener">
-            <img class="partner-logo" src="{% webpack_static 'build/PBEM-Logo-with-text.jpg' %}" alt="{% trans 'Portland Bureau of Emergency Management' %}">
-          </a>
-          <a href="https://multco.us/em" target="_blank" rel="noopener">
-            <img class="partner-logo" src="{% webpack_static 'build/multnomah_county_logo.png' %}" alt="{% trans 'Multnomah County' %}">
-          </a>
-          <a href="https://www.co.washington.or.us/EmergencyManagement/" target="_blank" rel="noopener">
-            <img class="partner-logo" src="{% webpack_static 'build/WA-county-OR-logo.jpeg' %}" alt="{% trans 'Washington County' %}">
-          </a>
-          <a href="https://www.clark.wa.gov/public-health/emergency-preparedness-and-response" target="_blank" rel="noopener">
-            <img class="partner-logo" src="{% webpack_static 'build/clark county.jpeg' %}" alt="{% trans 'Clark County' %}">
-          </a>
-            <a href="https://www.clackamas.us/dm" target="_blank" rel="noopener">
-              <img class="partner-logo" src="{% webpack_static 'build/clackamas-county.png' %}" alt="{% trans 'Clackamas County' %}">
+      <div class="about-container">
+        <h3 class="caps">{% blocktrans with title=settings.site_title %}{{ title }} Partners and Collaborators{% endblocktrans %}</h3>
+          <div class="rdpo-container">
+            <a href="https://rdpo.net/" target="_blank" rel="noopener">
+              <img class="partner-logo" src="{% webpack_static 'build/RDPO-logo.png' %}" alt="Regional Disaster Planning Organization (RDPO)">
             </a>
+            <p>{% trans "RDPO is a partnership of government agencies, non-governmental organizations, and private-sector stakeholders in the Portland Metropolitan Region collaborating to increase the region’s resiliency to disasters. The metropolitan region spans Clackamas, Columbia, Multnomah, and Washington Counties in Oregon and Clark County in Washington." %}</p>
+          </div>
+          <div class="partner-logo-container">
+            <a href="https://www.redcross.org/local/oregon.html" target="_blank" rel="noopener">
+              <img class="partner-logo" src="{% webpack_static 'build/red-cross-logo.png' %}" alt="{% trans 'American Red Cross: Cascades Region' %}">
+            </a>
+            <a href="https://www.mercycorpsnw.org/" target="_blank" rel="noopener">
+              <img class="partner-logo" src="{% webpack_static 'build/logo-mercy-corps.svg' %}" alt="{% trans 'Mercy Corps' %}">
+            </a>
+            <a href="https://www.portlandoregon.gov/pbem/" target="_blank" rel="noopener">
+              <img class="partner-logo" src="{% webpack_static 'build/PBEM-Logo-with-text.jpg' %}" alt="{% trans 'Portland Bureau of Emergency Management' %}">
+            </a>
+            <a href="https://multco.us/em" target="_blank" rel="noopener">
+              <img class="partner-logo" src="{% webpack_static 'build/multnomah_county_logo.png' %}" alt="{% trans 'Multnomah County' %}">
+            </a>
+            <a href="https://www.co.washington.or.us/EmergencyManagement/" target="_blank" rel="noopener">
+              <img class="partner-logo" src="{% webpack_static 'build/WA-county-OR-logo.jpeg' %}" alt="{% trans 'Washington County' %}">
+            </a>
+            <a href="https://www.clark.wa.gov/public-health/emergency-preparedness-and-response" target="_blank" rel="noopener">
+              <img class="partner-logo" src="{% webpack_static 'build/clark county.jpeg' %}" alt="{% trans 'Clark County' %}">
+            </a>
+              <a href="https://www.clackamas.us/dm" target="_blank" rel="noopener">
+                <img class="partner-logo" src="{% webpack_static 'build/clackamas-county.png' %}" alt="{% trans 'Clackamas County' %}">
+              </a>
+        </div>
       </div>
-    </div>
-    <div class="about-container about-container--flex">
-      <div class="about-content__flowchart">
-        <img src="{% webpack_static 'build/flowchart.png' %}">
-        <p class="sr-only">
-          {% blocktrans %}How we build Hazard Ready Sites: 1. Gather data. Locate the most relevant and up-to-date data on natural hazards for your region from trusted sources like FEMA, NOAA, and the USGS. 2. Quality Check. Work with local partners (community groups & emergency managers) to ensure the data and infomration are accurate. 3. Process data. Take in raw data and make it compatible with the backend Hazard Ready framework. 4. Build content. Write the webpage text, gather images and videos, locate local resources for each hazard and region. 5. Feedback and focus groups. Go back and forth on content and designs to ensure the information is location specific and relevant to the community's needs. 6. Revise, revise, revise.{% endblocktrans %}
-        </p>
+      <div class="about-container about-container--flex">
+        <div class="about-content__flowchart">
+          <img src="{% webpack_static 'build/flowchart.png' %}">
+          <p class="sr-only">
+            {% blocktrans %}How we build Hazard Ready Sites: 1. Gather data. Locate the most relevant and up-to-date data on natural hazards for your region from trusted sources like FEMA, NOAA, and the USGS. 2. Quality Check. Work with local partners (community groups & emergency managers) to ensure the data and infomration are accurate. 3. Process data. Take in raw data and make it compatible with the backend Hazard Ready framework. 4. Build content. Write the webpage text, gather images and videos, locate local resources for each hazard and region. 5. Feedback and focus groups. Go back and forth on content and designs to ensure the information is location specific and relevant to the community's needs. 6. Revise, revise, revise.{% endblocktrans %}
+          </p>
+        </div>
+        <div class="about-content__text">
+          <p>
+              {% blocktrans with title=settings.site_title area_name=location.area_name %}{{ title }} is designed to help educate and prepare people for disasters that occur in their area. Disasters don’t strike locations equally so we found it important to give location specific information in order to properly prepare. {{ title }} organizes current information and packages it in a way that makes it accessible for any {{ area_name }} resident.{% endblocktrans %}
+          </p>
+          <p>
+              {% blocktrans with area_name=location.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original data sources. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.{% endblocktrans %}
+          </p>
+        </div>
       </div>
-      <div class="about-content__text">
-        <p>
-            {% blocktrans with title=settings.site_title area_name=location.area_name %}{{ title }} is designed to help educate and prepare people for disasters that occur in their area. Disasters don’t strike locations equally so we found it important to give location specific information in order to properly prepare. {{ title }} organizes current information and packages it in a way that makes it accessible for any {{ area_name }} resident.{% endblocktrans %}
-        </p>
-        <p>
-            {% blocktrans with area_name=location.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original data sources. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.{% endblocktrans %}
-        </p>
-      </div>
-    </div>
     {% if settings.data_download %}
       <div class="about-container">
 
