@@ -4,7 +4,7 @@
   flex-direction: column;
   min-height: 400px;
   padding-bottom: 30px;
-  transition: 0.5s all ease-in-out;
+  transition: 0.5s background-color ease, 0.5s min-height ease;
 
   .survey-link {
     display: none;
