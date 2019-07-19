@@ -162,7 +162,7 @@ function setUpMap() {
 function setStopHeight(mapInfoContainer) {
   var headerHeight = $('header').outerHeight();
   var informationHeight = mapInfoContainer.outerHeight();
-  return headerHeight + informationHeight + 5;
+  return headerHeight + informationHeight - 20;
 };
 
 $(document).ready(function() {
