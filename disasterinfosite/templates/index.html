@@ -1,4 +1,3 @@
-{% load js %}
 {% load i18n %}
 {% load webpack_static from webpack_loader %}
 {% get_current_language as LANGUAGE_CODE %}
@@ -6,9 +5,6 @@
 <!DOCTYPE html>
 <html class="no-js" lang="{{ LANGUAGE_CODE }}">
   {% include "head-meta.html" %}
-  <script type="text/javascript">
-    var mapBounds = {{ data_bounds | js }};
-  </script>
 
   <body>
     {% include "header.html" %}

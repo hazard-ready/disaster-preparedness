@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load js %}
 
 {% load webpack_static from webpack_loader %}
 {% load render_bundle from webpack_loader %}
@@ -23,5 +24,7 @@
   {% render_bundle 'app' 'css' %}
 
   <link rel="shortcut icon" href="{% webpack_static 'build/favicon.ico' %}"/>
-
+  <script type="text/javascript">
+    var mapBounds = {{ data_bounds | js }};
+  </script>
 </head>
