@@ -99,6 +99,10 @@
   }
 }
 
+.prepare-item__image {
+  width: 100%; /* ie11 needs this apparently */
+}
+
 .print-container {
   background-color: $white;
   padding: 5px 10px;

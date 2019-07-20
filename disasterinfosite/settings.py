@@ -21,7 +21,8 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY_PDX']
 DEBUG = False
 
 if DEBUG:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
+    # That last entry is the local access URL for VirtualBox
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '10.0.2.2']
     SITE_URL = "http://127.0.0.1:8000"
     logging.basicConfig(level = logging.DEBUG, format = '%(asctime)s %(levelname)s %(message)s')
 else:

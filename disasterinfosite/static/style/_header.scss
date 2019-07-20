@@ -85,12 +85,12 @@ header {
   margin: 0;
 
   @include breakpoint(medium) {
-    margin: 20px 5px 0 5px;
+    margin: 15px 5px 0 5px;
   }
 
   @include breakpoint(large) {
     font-size: 18px;
-    margin: 20px 0 0 10px;
+    margin: 15px 0 0 10px;
   }
 }
 
@@ -232,6 +232,7 @@ header {
   cursor: pointer;
   font-size: 18px;
   font-weight: $font-weight-bold;
+  line-height: 1.5;
   padding: 5px;
 }
 
