@@ -1,14 +1,14 @@
 /* login and sign in */
 
 #user-interaction-container {
-  background-color: $soft-white;
+  padding-top: 20px;
 }
 
 .user-interaction__buttons {
   text-align: center;
 
   @include breakpoint(medium-and-up) {
-    text-align: right;
+    text-align: left;
   }
 
   .button:not(:last-child) {
