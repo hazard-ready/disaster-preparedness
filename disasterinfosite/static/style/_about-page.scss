@@ -1,24 +1,28 @@
 /* About page */
 .about-container {
   background-color: $white;
-  margin: 0 auto 20px;
-  padding: 5px 10px;
+  margin: 10px 0;
+  padding: 5px 10px 10px;
 
   @include breakpoint(medium) {
-    margin-right: 10px;
-    margin-top: 10px;
-    padding: 5px 20px;
+    margin: 20px 0;
+    padding: 5px 20px 20px;
   }
 
   @include breakpoint(large) {
-    margin-right: 20px;
-    margin-top: 30px;
-    padding: 5px 40px;
+    margin: 40px 0;
+    padding: 5px 40px 40px;
   }
+}
+
+.about--partners {
+  text-align: center;
 }
 
 .rdpo-container {
   text-align: center;
+  margin: 0 auto;
+  max-width: 800px;
 }
 
 .partner-logo-container {
@@ -34,20 +38,13 @@
   width: 100px;
 }
 
-.about-container--flex {
-  display: flex;
-  flex-direction: column;
-
-  @include breakpoint(large) {
-    flex-direction: row;
-  }
+.rdpo-logo {
+  width: 275px;
 }
 
 .about-content__flowchart {
-  flex-shrink: 0;
-  @include breakpoint(large) {
-    flex-basis: 600px;
-  }
+  margin: 0 auto;
+  max-width: 800px;
 }
 
 .about-content__text {
