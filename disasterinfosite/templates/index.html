@@ -26,7 +26,7 @@
       </div>
 
       {% block main-content %}
-      <div class="intro-content">
+      <div class="intro-container">
         <h2 class="caps">{% trans "What are my risks?" %}</h2>
         <h3>{% trans "What to Expect" %}</h3>
         <p>
@@ -42,8 +42,8 @@
         <p>
           {% blocktrans %} Find out which disasters have struck {{ location.area_name }} in the past, what impact they had, and where they happened. {% endblocktrans %}
         </p>
+        {% endblock main-content %} {% include "users/user_interactions.html" %}
       </div>
-      {% endblock main-content %} {% include "users/user_interactions.html" %}
     </div>
 
     {% include "geek_box.html" %}
