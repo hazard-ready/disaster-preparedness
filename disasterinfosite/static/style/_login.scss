@@ -1,10 +1,7 @@
 /* login and sign in */
 
-#user-interaction-container {
-  padding-top: 20px;
-}
-
 .user-interaction__buttons {
+  padding-top: 20px;
   text-align: center;
 
   @include breakpoint(medium-and-up) {
