@@ -22,7 +22,7 @@ require("../img/locate-me.svg");
 require("../img/data-sources.pdf");
 
 // about page images
-require("../img/flowchart.png");
+require("../img/flowchart.jpg");
 require("../img/cmk_headshot.jpg");
 require("../img/rbk_headshot.jpg");
 require("../img/gk_headshot.jpg");
