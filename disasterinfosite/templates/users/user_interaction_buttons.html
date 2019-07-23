@@ -9,7 +9,7 @@
 {% if username %}
     {% csrf_token %}
     <button class="button caps button--logout">{{ log_out }}</button>
-    <button class="button caps button--update" role="button">{{ update_my_info }}</button>
+    <button class="button caps button--update">{{ update_my_info }}</button>
 {% else %}
     <button class="button caps button--login">{{ log_in }}</button>
     <button class="button caps button--signup">{{ sign_up }}</button>

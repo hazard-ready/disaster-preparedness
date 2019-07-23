@@ -4,22 +4,22 @@
 <div id="user-profile-container" tabindex="-1">
   <form id="user-profile__form">
     <label>{% trans "Street Address" %}
-      <input type="text" id="user-profile__address1" value="{{ profile.address1 }}" />
+      <input type="text" id="user-profile__address1" name="address1" value="{{ profile.address1 }}" />
     </label>
     <label>{% trans "Other Address Information" %}
-      <input type="text" id="user-profile__address2" value="{{ profile.address2 }}"/>
+      <input type="text" id="user-profile__address2" name="address2" value="{{ profile.address2 }}"/>
     </label>
     <label>{% trans "City" %}
-      <input type="text" id="user-profile__city" value="{{ profile.city }}"/>
+      <input type="text" id="user-profile__city" name="city" value="{{ profile.city }}"/>
     </label>
     <label>{% trans "State" %}
-      <input type="text" id="user-profile__state" value="{{ profile.state }}" />
+      <input type="text" id="user-profile__state" name="state" value="{{ profile.state }}" />
     </label>
     <label>{% trans "Zip Code" %}
-      <input type="text" id="user-profile__zip" value="{{ profile.zip_code }}" />
+      <input type="text" id="user-profile__zip" name="zip" value="{{ profile.zip_code }}" />
     </label>
     <div class="user-interaction__buttons">
-      <button class="button button--submit caps user-profile__submit">{% trans "Update" %}</button>
+      <button class="button button--submit caps user-profile__submit" type="submit">{% trans "Update" %}</button>
       <button class="button caps button--cancel-update">{% trans "Cancel" %}</button>
     </div>
   </form>
