@@ -1,5 +1,6 @@
 {% extends "index.html" %}
 {% load i18n %}
+{% load l10n %}
 {% load show_snugget %}
 {% load webpack_static from webpack_loader %}
 
@@ -38,8 +39,10 @@
     <div class="disaster-content">
       {% if group.percentage %}
         <div class="intensity-meter">
-          <div class="sr-only">{% blocktrans %}An intensity meter at {{group.percentage}}%{% endblocktrans %}</div>
-          <div class="intensity-marker" style="left: {{group.percentage}}%"></div>
+          <div class="sr-only">{% blocktrans with percentage=group.percentage %}An intensity meter at {{percentage}}%{% endblocktrans %}</div>
+          {% localize off %}
+            <div class="intensity-marker" style="left: {{group.percentage}}%"></div>
+          {% endlocalize %}
         </div>
         <div class="intensity-captions">
           <div class="intensity-caption intensity-caption--low" aria-hidden="”true”">
