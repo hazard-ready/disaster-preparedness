@@ -3,41 +3,36 @@
 {% trans "Sign Up" as sign_up %}
 {% trans "Cancel" as cancel %}
 
-    <div id="user-signup-container" tabindex="-1">
-      {% trans "Sign up" %}
-      <form id="user-signup__form">
-        <label>{% trans "Email address (this will be your username)" %}
-          <input type="email" id="user-signup__username" name="username" required placeholder="{{ required }}"/>
-        </label>
-        <label>{% trans "Password (more than 8 characters long, please)" %}
-          <input type="password" id="user-signup__password" name="password" required pattern=".{8,}" placeholder="{{ required }}" />
-        </label>
-        <label>{% trans "Street Address" %}
-          <input type="text" id="user-signup__address1" name="address1" />
-        </label>
-        <label>{% trans "Other Address Information" %}
-          <input type="text" id="user-signup__address2" name="address2" />
-        </label>
-        <label>{% trans "City" %}
-          <input type="text" id="user-signup__city" name="city" />
-        </label>
-        <label>{% trans "State" %}
-          <input type="text" id="user-signup__state" name="state" />
-        </label>
-        <label>{% trans "Zip Code" %}
-          <input type="text" id="user-signup__zip" name="zip" />
-        </label>
-        <div class="user-interaction__buttons">
-          <button class="button button--submit caps user-signup__submit" type="submit">{{ sign_up }}</button>
-          <button class="button caps button--cancel">{{ cancel }}</button>
-        </div>
-      </form>
-      <div class="user-interactions-help">
-        <p>{% blocktrans %}Need some help? <a href="mailto:help@hazardready.org">Email us.</a>{% endblocktrans %}</p>
-      </div>
+<div id="user-signup-container" class="user--ui hide" tabindex="-1">
+  {% trans "Sign up" %}
+  <form id="user-signup__form">
+    <label>{% trans "Email address (this will be your username)" %}
+      <input type="email" id="user-signup__username" name="username" required placeholder="{{ required }}"/>
+    </label>
+    <label>{% trans "Password (more than 8 characters long, please)" %}
+      <input type="password" id="user-signup__password" name="password" required pattern=".{8,}" placeholder="{{ required }}" />
+    </label>
+    <label>{% trans "Street Address" %}
+      <input type="text" id="user-signup__address1" name="address1" />
+    </label>
+    <label>{% trans "Other Address Information" %}
+      <input type="text" id="user-signup__address2" name="address2" />
+    </label>
+    <label>{% trans "City" %}
+      <input type="text" id="user-signup__city" name="city" />
+    </label>
+    <label>{% trans "State" %}
+      <input type="text" id="user-signup__state" name="state" />
+    </label>
+    <label>{% trans "Zip Code" %}
+      <input type="text" id="user-signup__zip" name="zip" />
+    </label>
+    <div class="user-interaction__buttons">
+      <button class="button button--submit caps user-signup__submit" type="submit">{{ sign_up }}</button>
+      <button class="button caps button--cancel">{{ cancel }}</button>
     </div>
-    <div id="user-signup-result-container" tabindex="-1">
-      <p>
-        {% trans "Thanks for signing up! We'll get ahold of you with relevant news and information. You can come back anytime to update your address." %}
-      </p>
-    </div>
+  </form>
+  <div class="user-interactions-help">
+    <p>{% blocktrans %}Need some help? <a href="mailto:help@hazardready.org">Email us.</a>{% endblocktrans %}</p>
+  </div>
+</div>

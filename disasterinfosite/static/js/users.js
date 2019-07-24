@@ -34,17 +34,6 @@ function sendAjaxAuthRequest(url, data) {
   });
 }
 
-function formInputsAreValid($formSelector) {
-  var inputs = $formSelector.find("input:visible");
-  inputs.forEach(function(input) {
-    if (!input.checkValidity()) {
-      console.log(inputs[i], "invalid");
-      return false;
-    }
-  });
-  return true;
-}
-
 function setValueOnFocus(el, value) {
   el.focus(function() {
     if (el.val() === "") {
@@ -74,45 +63,46 @@ $(document).ready(function() {
 
   var $userButtonContainer = $("#user-button-container");
   var $failureContainer = $("#failure-container");
-  var $userSignupContainer = $("#failure-container");
+  var $userSignupContainer = $("#user-signup-container");
   var $userLoginContainer = $("#user-login-container");
   var $userProfileContainer = $("#user-profile-container");
   var $userInfoContainer = $("#user-info-container");
 
   $(".button--signup").click(function(event) {
     event.preventDefault();
-    $userButtonContainer.hide();
-    $failureContainer.hide();
-    $userSignupContainer.show();
+    $userButtonContainer.addClass('hide');
+    $failureContainer.addClass('hide');
+    $userSignupContainer.removeClass('hide');;
   });
 
   $(".button--login").click(function(event) {
+    console.log("login")
     event.preventDefault();
-    $userButtonContainer.hide();
-    $("#user-info-container--invalid").hide();
-    $failureContainer.hide();
-    $userLoginContainer.show();
+    $userButtonContainer.addClass('hide');
+    $("#user-info-container--invalid").addClass('hide');
+    $failureContainer.addClass('hide');
+    $userLoginContainer.removeClass('hide');;
   });
 
   $(".button--cancel").click(function(event) {
     event.preventDefault();
-    $userSignupContainer.hide();
-    $userLoginContainer.hide();
-    $userButtonContainer.show();
+    $userSignupContainer.addClass('hide');
+    $userLoginContainer.addClass('hide');
+    $userButtonContainer.removeClass('hide');;
   });
 
   $(".button--cancel-update").click(function(event) {
     event.preventDefault();
-    $userProfileContainer.hide();
-    $userInfoContainer.show();
+    $userProfileContainer.addClass('hide');
+    $userInfoContainer.removeClass('hide');;
   });
 
   $(".button--update").click(function(event) {
     event.preventDefault();
-    $userInfoContainer.hide();
-    $("#user-button-container--logged-in").hide();
-    $failureContainer.hide();
-    $userProfileContainer.show();
+    $userInfoContainer.addClass('hide');
+    $("#user-button-container--logged-in").addClass('hide');
+    $failureContainer.addClass('hide');
+    $userProfileContainer.removeClass('hide');;
   });
 
   requiredFocus($("#user-signup__username"));
@@ -127,36 +117,31 @@ $(document).ready(function() {
         location.reload(true);
       })
       .catch(function(error) {
-        $userInfoContainer.hide();
-        $("#user-button-container--logged-in").hide();
-        $failureContainer.show();
+        console.error('Logout error:', error)
+        $userInfoContainer.addClass('hide');
+        $("#user-button-container--logged-in").addClass('hide');
+        $failureContainer.removeClass('hide');
       });
   });
 
   $signupForm.submit(function(event) {
     event.preventDefault();
 
-    if (!formInputsAreValid($signupForm)) {
-      return false;
-    }
-
     sendAjaxAuthRequest("accounts/create_user/", new FormData($signupForm[0]))
     .then(function() {
-      $("#user-signup-result-container").show();
+      $("#user-signup-result-container").removeClass('hide');;
     })
-    .catch(function(err) {
-      $failureContainer.show();
+    .catch(function(error) {
+      console.error("signup form error:", error)
+      $failureContainer.removeClass('hide');
     })
     .always(function() {
-      $userSignupContainer.hide();
+      $userSignupContainer.addClass('hide');
     });
   });
 
   $loginForm.submit(function(event) {
     event.preventDefault();
-    if (!formInputsAreValid($loginForm)) {
-      return false;
-    }
 
     sendAjaxAuthRequest("accounts/login/", new FormData($loginForm[0]))
       .then(function() {
@@ -164,26 +149,25 @@ $(document).ready(function() {
         location.reload(true);
       })
       .catch(function(error) {
-        $userLoginContainer.hide();
-        $("#user-info-container--invalid").show();
+        console.error("login form error:", error)
+        $userLoginContainer.addClass('hide');
+        $("#user-info-container--invalid").removeClass('hide');;
       });
   });
 
   $updateForm.submit(function(event) {
     event.preventDefault();
-    if (!formInputsAreValid($updateForm)) {
-      return false;
-    }
 
     sendAjaxAuthRequest("accounts/update_profile/", new FormData($updateForm[0]))
       .then(function() {
-        $("#user-profile-result-container").show();
+        $("#user-profile-result-container").removeClass('hide');;
       })
-      .catch(function(err) {
-        $failureContainer.show();
+      .catch(function(error) {
+        console.error("update form error:", error)
+        $failureContainer.removeClass('hide');
       })
       .always(function() {
-        $userProfileContainer.hide();
+        $userProfileContainer.addClass('hide');
       });
   });
 });

@@ -1,7 +1,7 @@
 {% load i18n %}
 
 
-<div id="user-profile-container" tabindex="-1">
+<div id="user-profile-container" class="user--ui hide" tabindex="-1">
   <form id="user-profile__form">
     <label>{% trans "Street Address" %}
       <input type="text" id="user-profile__address1" name="address1" value="{{ profile.address1 }}" />
@@ -23,7 +23,4 @@
       <button class="button caps button--cancel-update">{% trans "Cancel" %}</button>
     </div>
   </form>
-</div>
-<div id="user-profile-result-container" tabindex="-1">
-  <p>{% trans "Thanks for keeping us up to date!" %}</p>
 </div>
