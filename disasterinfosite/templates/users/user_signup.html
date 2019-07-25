@@ -6,6 +6,7 @@
 <div id="user-signup-container" class="user--ui hide" tabindex="-1">
   {% trans "Sign up" %}
   <form id="user-signup__form">
+    {% csrf_token %}
     <label>{% trans "Email address (this will be your username)" %}
       <input type="email" id="user-signup__username" name="username" required placeholder="{{ required }}"/>
     </label>

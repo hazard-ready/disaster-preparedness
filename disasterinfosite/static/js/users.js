@@ -1,26 +1,30 @@
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    var cookies = document.cookie.split(";");
+    cookies.forEach(function(cookie) {
+      cookie = cookie.trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) == name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        return cookieValue;
+      }
+    });
+  }
+  return cookieValue;
+};
+
 function sendAjaxAuthRequest(url, data) {
   var object = {
     next: document.location.pathname
   };
-  data.forEach(function(value, key){
-    object[key] = value;
-  });
 
-  var getCookie = function(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-      var cookies = document.cookie.split(";");
-      cookies.forEach(function(cookie) {
-        cookie = cookie.trim();
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, name.length + 1) == name + "=") {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          return cookieValue;
-        }
-      });
-    }
-    return cookieValue;
-  };
+  if(data) {
+    data.forEach(function(value, key){
+      object[key] = value;
+    });
+  }
+
   var csrftoken = getCookie("csrftoken");
 
   return $.ajax({
@@ -30,7 +34,7 @@ function sendAjaxAuthRequest(url, data) {
     },
     type: "POST",
     url: url,
-    data: JSON.stringify(data)
+    data: object
   });
 }
 
@@ -76,7 +80,6 @@ $(document).ready(function() {
   });
 
   $(".button--login").click(function(event) {
-    console.log("login")
     event.preventDefault();
     $userButtonContainer.addClass('hide');
     $("#user-info-container--invalid").addClass('hide');
@@ -113,10 +116,10 @@ $(document).ready(function() {
   $(".button--logout").click(function(event) {
     event.preventDefault();
     sendAjaxAuthRequest("accounts/logout/")
-      .then(function() {
+      .done(function() {
         location.reload(true);
       })
-      .catch(function(error) {
+      .fail(function(error) {
         console.error('Logout error:', error)
         $userInfoContainer.addClass('hide');
         $("#user-button-container--logged-in").addClass('hide');
@@ -128,10 +131,10 @@ $(document).ready(function() {
     event.preventDefault();
 
     sendAjaxAuthRequest("accounts/create_user/", new FormData($signupForm[0]))
-    .then(function() {
+    .done(function() {
       $("#user-signup-result-container").removeClass('hide');;
     })
-    .catch(function(error) {
+    .fail(function(error) {
       console.error("signup form error:", error)
       $failureContainer.removeClass('hide');
     })
@@ -144,11 +147,11 @@ $(document).ready(function() {
     event.preventDefault();
 
     sendAjaxAuthRequest("accounts/login/", new FormData($loginForm[0]))
-      .then(function() {
+      .done(function() {
         location.hash = "user-interaction-container";
         location.reload(true);
       })
-      .catch(function(error) {
+      .fail(function(error) {
         console.error("login form error:", error)
         $userLoginContainer.addClass('hide');
         $("#user-info-container--invalid").removeClass('hide');;
@@ -159,10 +162,10 @@ $(document).ready(function() {
     event.preventDefault();
 
     sendAjaxAuthRequest("accounts/update_profile/", new FormData($updateForm[0]))
-      .then(function() {
+      .done(function() {
         $("#user-profile-result-container").removeClass('hide');;
       })
-      .catch(function(error) {
+      .fail(function(error) {
         console.error("update form error:", error)
         $failureContainer.removeClass('hide');
       })

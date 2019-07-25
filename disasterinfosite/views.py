@@ -11,7 +11,6 @@ import logging
 
 def create_user(request):
     if request.method == 'POST':
-
         try:
             user = User.objects.create_user(
                 username=request.POST.get('username', ''),
@@ -20,7 +19,7 @@ def create_user(request):
             )
         except IntegrityError:
             return HttpResponse(status=409, reason="That user already exists.")
-        except ValueError:
+        except ValueError as error:
             return HttpResponse(status=400)
 
         profile = UserProfile(
@@ -49,6 +48,7 @@ def create_user(request):
     else:
         return HttpResponse(status=403)
 
+
 def login_view(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
@@ -62,9 +62,11 @@ def login_view(request):
         # Show an error page
         return HttpResponse(status=403)
 
+
 def logout_view(request):
     logout(request)
     return HttpResponse(status=201)
+
 
 def update_profile(request):
     if request.method == 'POST' and request.user.is_authenticated:
@@ -85,6 +87,7 @@ def update_profile(request):
     else:
         return HttpResponse(status=403)
 
+
 @ensure_csrf_cookie
 def about_view(request):
     renderData = {
@@ -92,6 +95,7 @@ def about_view(request):
     'settings': SiteSettings.get_solo()
     }
     return render(request, "about.html", renderData)
+
 
 @ensure_csrf_cookie
 def prepare_view(request):
