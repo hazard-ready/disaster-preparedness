@@ -1,19 +1,30 @@
-function sendAjaxAuthRequest(url, data) {
-  var getCookie = function(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-      var cookies = document.cookie.split(";");
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = $.trim(cookies[i]);
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, name.length + 1) == name + "=") {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    var cookies = document.cookie.split(";");
+    cookies.forEach(function(cookie) {
+      cookie = cookie.trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) == name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        return cookieValue;
       }
-    }
-    return cookieValue;
+    });
+  }
+  return cookieValue;
+};
+
+function sendAjaxAuthRequest(url, data) {
+  var object = {
+    next: document.location.pathname
   };
+
+  if(data) {
+    data.forEach(function(value, key){
+      object[key] = value;
+    });
+  }
+
   var csrftoken = getCookie("csrftoken");
 
   return $.ajax({
@@ -23,19 +34,8 @@ function sendAjaxAuthRequest(url, data) {
     },
     type: "POST",
     url: url,
-    data: data
+    data: object
   });
-}
-
-function formInputsAreValid($formSelector) {
-  var inputs = $formSelector.find("input:visible");
-  for (var i = 0; i < inputs.length; i++) {
-    if (!inputs[i].checkValidity()) {
-      console.log(inputs[i], "invalid");
-      return false;
-    }
-  }
-  return true;
 }
 
 function setValueOnFocus(el, value) {
@@ -61,40 +61,51 @@ function requiredBlur(el, text) {
 }
 
 $(document).ready(function() {
+  var $signupForm = $("#user-signup__form");
+  var $loginForm = $("#user-login__form");
+  var $updateForm = $("#user-profile__form");
+
+  var $userButtonContainer = $("#user-button-container");
+  var $failureContainer = $("#failure-container");
+  var $userSignupContainer = $("#user-signup-container");
+  var $userLoginContainer = $("#user-login-container");
+  var $userProfileContainer = $("#user-profile-container");
+  var $userInfoContainer = $("#user-info-container");
+
   $(".button--signup").click(function(event) {
     event.preventDefault();
-    $("#user-button-container").hide();
-    $("#failure-container").hide();
-    $("#user-signup-container").show();
+    $userButtonContainer.addClass('hide');
+    $failureContainer.addClass('hide');
+    $userSignupContainer.removeClass('hide');;
   });
 
   $(".button--login").click(function(event) {
     event.preventDefault();
-    $("#user-button-container").hide();
-    $("#user-info-container--invalid").hide();
-    $("#failure-container").hide();
-    $("#user-login-container").show();
+    $userButtonContainer.addClass('hide');
+    $("#user-info-container--invalid").addClass('hide');
+    $failureContainer.addClass('hide');
+    $userLoginContainer.removeClass('hide');;
   });
 
   $(".button--cancel").click(function(event) {
     event.preventDefault();
-    $("#user-signup-container").hide();
-    $("#user-login-container").hide();
-    $("#user-button-container").show();
+    $userSignupContainer.addClass('hide');
+    $userLoginContainer.addClass('hide');
+    $userButtonContainer.removeClass('hide');;
   });
 
   $(".button--cancel-update").click(function(event) {
     event.preventDefault();
-    $("#user-profile-container").hide();
-    $("#user-info-container").show();
+    $userProfileContainer.addClass('hide');
+    $userInfoContainer.removeClass('hide');;
   });
 
   $(".button--update").click(function(event) {
     event.preventDefault();
-    $("#user-info-container").hide();
-    $("#user-button-container--logged-in").hide();
-    $("#failure-container").hide();
-    $("#user-profile-container").show();
+    $userInfoContainer.addClass('hide');
+    $("#user-button-container--logged-in").addClass('hide');
+    $failureContainer.addClass('hide');
+    $userProfileContainer.removeClass('hide');;
   });
 
   requiredFocus($("#user-signup__username"));
@@ -102,93 +113,64 @@ $(document).ready(function() {
   requiredBlur($("#user-signup__username"), "Valid email address required.");
   requiredBlur($("#user-signup__password"), "Required");
 
-  // You can use these if the area this app covers makes them useful
-  setValueOnFocus($("#user-signup__state"), "MT");
-  setValueOnFocus($("#user-signup__zip"), "598");
-
   $(".button--logout").click(function(event) {
     event.preventDefault();
     sendAjaxAuthRequest("accounts/logout/")
-      .then(function() {
+      .done(function() {
         location.reload(true);
       })
-      .catch(function(error) {
-        $("#user-info-container").hide();
-        $("#user-button-container--logged-in").hide();
-        $("#failure-container").show();
+      .fail(function(error) {
+        console.error('Logout error:', error)
+        $userInfoContainer.addClass('hide');
+        $("#user-button-container--logged-in").addClass('hide');
+        $failureContainer.removeClass('hide');
       });
   });
 
-  $(".user-signup__submit").click(function(event) {
+  $signupForm.submit(function(event) {
     event.preventDefault();
 
-    if (!formInputsAreValid($("#user-signup__form"))) {
-      return false;
-    }
-
-    sendAjaxAuthRequest("accounts/create_user/", {
-      username: $("#user-signup__username").val(),
-      password: $("#user-signup__password").val(),
-      address1: $("#user-signup__address1").val(),
-      address2: $("#user-signup__address2").val(),
-      city: $("#user-signup__city").val(),
-      state: $("#user-signup__state").val(),
-      zip_code: $("#user-signup__zip").val(),
-      next: document.location.pathname
+    sendAjaxAuthRequest("accounts/create_user/", new FormData($signupForm[0]))
+    .done(function() {
+      $("#user-signup-result-container").removeClass('hide');;
     })
-      .then(function() {
-        $("#user-signup-result-container").show();
-      })
-      .catch(function(err) {
-        $("#failure-container").show();
-      })
-      .always(function() {
-        $("#user-signup-container").hide();
-      });
+    .fail(function(error) {
+      console.error("signup form error:", error)
+      $failureContainer.removeClass('hide');
+    })
+    .always(function() {
+      $userSignupContainer.addClass('hide');
+    });
   });
 
-  $(".user-login__submit").click(function(event) {
+  $loginForm.submit(function(event) {
     event.preventDefault();
-    if (!formInputsAreValid($("#user-login__form"))) {
-      return false;
-    }
 
-    sendAjaxAuthRequest("accounts/login/", {
-      username: $("#user-login__username").val(),
-      password: $("#user-login__password").val()
-    })
-      .then(function() {
+    sendAjaxAuthRequest("accounts/login/", new FormData($loginForm[0]))
+      .done(function() {
         location.hash = "user-interaction-container";
         location.reload(true);
       })
-      .catch(function(error) {
-        $("#user-login-container").hide();
-        $("#user-info-container--invalid").show();
+      .fail(function(error) {
+        console.error("login form error:", error)
+        $userLoginContainer.addClass('hide');
+        $("#user-info-container--invalid").removeClass('hide');;
       });
   });
 
-  $(".user-profile__submit").click(function(event) {
+  $updateForm.submit(function(event) {
     event.preventDefault();
-    if (!formInputsAreValid($("#user-profile__form"))) {
-      return false;
-    }
 
-    sendAjaxAuthRequest("accounts/update_profile/", {
-      address1: $("#user-profile__address1").val(),
-      address2: $("#user-profile__address2").val(),
-      city: $("#user-profile__city").val(),
-      state: $("#user-profile__state").val(),
-      zip_code: $("#user-profile__zip").val(),
-      next: document.location.pathname
-    })
-      .then(function() {
-        $("#user-profile-result-container").show();
+    sendAjaxAuthRequest("accounts/update_profile/", new FormData($updateForm[0]))
+      .done(function() {
+        $("#user-profile-result-container").removeClass('hide');;
       })
-      .catch(function(err) {
-        $("#failure-container").show();
+      .fail(function(error) {
+        console.error("update form error:", error)
+        $failureContainer.removeClass('hide');
       })
       .always(function() {
-        $("#user-profile-container").hide();
+        $userProfileContainer.addClass('hide');
       });
   });
 });

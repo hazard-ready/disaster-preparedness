@@ -20,9 +20,24 @@ img {
   max-width: 100%;
 }
 
-.button {
+button {
+  background-color: $dark-accent;
+  border: 1px solid $dark-accent;
+  border-radius: 4px;
+  color: $white;
+  cursor: pointer;
+  flex-grow: 0;
   margin: 0;
   padding: 9px 1em;
+  transition: background-color 1s;
+
+  &:focus,
+  &:focus-within,
+  &:active,
+  &:hover {
+    background-color: $light-accent;
+    border: 1px solid $light-accent;
+  }
 }
 
 input:invalid {
@@ -31,9 +46,16 @@ input:invalid {
 
 form:invalid {
   .button--submit {
-    border-color: $light-grey;
     background-color: $light-grey;
+    border: 1px solid $light-grey;
+    color: $dark-grey;
+    cursor: default;
   }
+}
+
+input {
+  line-height: 2;
+  height: auto;
 }
 
 .select {
