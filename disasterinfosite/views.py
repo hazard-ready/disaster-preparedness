@@ -122,9 +122,9 @@ def prepare_view(request):
     }
     return render(request, "prepare.html", renderData)
 
+
 @ensure_csrf_cookie
 def app_view(request):
-
     username = None
     profile = None
     path = request.path[:-3] # slice off the old language code
@@ -139,7 +139,7 @@ def app_view(request):
 
     if request.user.is_authenticated:
         username = request.user.username
-        profile = UserProfile.objects.get_or_create(user=request.user)
+        profile = UserProfile.objects.get(user=request.user)
 
 
     renderData = {
