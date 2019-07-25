@@ -1,10 +1,32 @@
 /* login and sign in */
 
+.user--form {
+  display: flex;
+  flex-direction: column;
+
+  @include breakpoint(medium-and-up) {
+    flex-direction: row;
+  }
+}
+
 .user-interaction__buttons {
   display: flex;
   flex-direction: row;
+  flex-grow: 1;
+  align-items: center;
   justify-content: space-around;
   padding-top: 10px;
+
+  button {
+    height: 40px;
+  }
+}
+
+.user-interaction__fields {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  padding: 10px;
 }
 
 .user-interactions-help {
@@ -13,7 +35,9 @@
 
 .user--ui {
   input {
-    margin: 10px 0;
+    margin-bottom: 10px;
+    display: block;
+    width: 100%;
   }
 }
 

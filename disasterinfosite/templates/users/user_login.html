@@ -6,14 +6,16 @@
 <div id="user-login-container" class="user--ui hide" tabindex="-1">
   <h4>{{ log_in }}</h4>
   {% trans "Required." as required %}
-  <form id="user-login__form">
+  <form id="user-login__form" class="user--form">
     {% csrf_token %}
-    <label>{% trans "Username (your email address)" %}
-      <input type="text" id="user-login__username" name="username" required placeholder="{{ required }}"/>
-    </label>
-    <label>{% trans "Password" %}
-      <input type="password" id="user-login__password" name="password" required placeholder="{{ required }}" />
-    </label>
+    <div class="user-interaction__fields">
+      <label>{% trans "Username (your email address)" %}
+        <input type="text" id="user-login__username" name="username" required placeholder="{{ required }}"/>
+      </label>
+      <label>{% trans "Password" %}
+        <input type="password" id="user-login__password" name="password" required placeholder="{{ required }}" />
+      </label>
+    </div>
     <div class="user-interaction__buttons">
       <button class="button--submit caps user-login__submit" type="submit">{{ log_in }}</button>
       <button class="caps button--cancel">{{ cancel }}</button>

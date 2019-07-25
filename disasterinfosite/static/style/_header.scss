@@ -223,12 +223,18 @@ header {
 
 .language__button {
   border: none;
-  background-color: white;
+  background-color: $white;
+  color: $soft-black;
   cursor: pointer;
   font-size: 18px;
   font-weight: $font-weight-bold;
   line-height: 1.5;
   padding: 5px;
+
+  &:focus, &:focus-within, &:hover, &:active {
+    background-color: $white;
+    border: none;
+  }
 }
 
 .survey-link {
