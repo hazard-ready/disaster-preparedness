@@ -50,7 +50,6 @@
         {% blocktrans %}If your username isn't {{ username }}, you might want to log out.{% endblocktrans %}
       </p>
       <div class="user-interaction__buttons user--ui">
-        {% csrf_token %}
         <button class="button caps button--logout">{{ log_out }}</button>
         <button class="button caps button--update">{{ update_my_info }}</button>
       </div>

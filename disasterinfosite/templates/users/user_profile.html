@@ -1,8 +1,10 @@
 {% load i18n %}
 
+{{ profile.address1 }}
 
 <div id="user-profile-container" class="user--ui hide" tabindex="-1">
   <form id="user-profile__form">
+    {% csrf_token %}
     <label>{% trans "Street Address" %}
       <input type="text" id="user-profile__address1" name="address1" value="{{ profile.address1 }}" />
     </label>
