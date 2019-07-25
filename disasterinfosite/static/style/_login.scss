@@ -1,25 +1,22 @@
 /* login and sign in */
 
 .user-interaction__buttons {
-  padding-top: 20px;
-  text-align: center;
-
-  @include breakpoint(medium-and-up) {
-    text-align: left;
-  }
-
-  .button:not(:last-child) {
-    margin-right: 1rem;
-    @include breakpoint(medium-and-up) {
-      margin-right: 2rem;
-    }
-
-    @include breakpoint(large) {
-      margin-right: 0.5rem;
-    }
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 10px;
 }
 
 .user-interactions-help {
   padding-top: 1rem;
+}
+
+.user--ui {
+  input {
+    margin: 10px 0;
+  }
+}
+
+.username {
+  font-weight: $font-weight-bold;
 }

@@ -21,6 +21,7 @@ img {
 }
 
 .button {
+  cursor: pointer;
   margin: 0;
   padding: 9px 1em;
 }
@@ -31,9 +32,14 @@ input:invalid {
 
 form:invalid {
   .button--submit {
-    border-color: $light-grey;
-    background-color: $light-grey;
+    color: $light-grey;
+    cursor: default;
   }
+}
+
+input {
+  line-height: 2;
+  height: auto;
 }
 
 .select {

@@ -19,7 +19,7 @@
 
   <div id="user-info-container" class="user--message hide" tabindex="-1">
    {% if username %}
-      <p>{% blocktrans %}Welcome back, {{ username }}!{% endblocktrans %}</p>
+      <p>{% blocktrans %}Welcome back, <span class="username">{{ username }}</span>!{% endblocktrans %}</p>
    {% else %}
      <p>{% trans "We're logging you in. Just a moment..." %}</p>
    {% endif %}
@@ -47,7 +47,7 @@
     <div id="user-button-container--logged-in">
       <p><strong>{% trans "Welcome back!" %}</strong></p>
       <p>
-        {% blocktrans %}If your username isn't {{ username }}, you might want to log out.{% endblocktrans %}
+        {% blocktrans %}If your username isn't <span class="username">{{ username }}</span>, you might want to log out.{% endblocktrans %}
       </p>
       <div class="user-interaction__buttons user--ui">
         <button class="button caps button--logout">{{ log_out }}</button>
@@ -56,7 +56,7 @@
     </div>
   {% else %}
     <div id="user-button-container" tabindex="-1">
-      <p><strong>{% trans "Why should you sign up?" %}</strong></p>
+      <h4>{% trans "Why should you sign up?" %}</h4>
       <p>
         {% trans "Sign up for free to access customized hazard preparedness information. By providing your address, you will get updates about seasonal hazards and ongoing incidents specific to your location. We want you to be better prepared so you can keep your family, friends, and neighbors safe when a disaster strikes! Personal information will be protected and secure." %}
       </p>

@@ -4,7 +4,7 @@
 {% trans "Cancel" as cancel %}
 
 <div id="user-signup-container" class="user--ui hide" tabindex="-1">
-  {% trans "Sign up" %}
+  <h4>{{ sign_up }}</h4>
   <form id="user-signup__form">
     {% csrf_token %}
     <label>{% trans "Email address (this will be your username)" %}

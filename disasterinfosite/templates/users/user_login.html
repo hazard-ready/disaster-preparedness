@@ -4,7 +4,8 @@
 {% trans "Cancel" as cancel %}
 
 <div id="user-login-container" class="user--ui hide" tabindex="-1">
-{% trans "Required." as required %}
+  <h4>{{ log_in }}</h4>
+  {% trans "Required." as required %}
   <form id="user-login__form">
     {% csrf_token %}
     <label>{% trans "Username (your email address)" %}
