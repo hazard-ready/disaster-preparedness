@@ -13,10 +13,10 @@
       <div class="map-info-container">
         {% block info-instructions %}
         <div class="information-container" role="main">
-          <h3>{{ settings.site_description }}</h3>
+          <h2 class="caps">{{ settings.site_description }}</h2>
           <p>{{ settings.intro_text | safe }}</p>
-
-          {% trans "Give a location by typing in the box at the top of the page, clicking on the map, or clicking 'find me'. You'll get a personalized report on your natural hazard risks and steps you can take to prepare." %}
+          <h3>{% trans "A natural disaster could strike your area at any time." %}</h3>
+          {% trans 'Get a personalized report on natural hazards that are likely in your area and steps you can take to prepare. Type your location in the search box at the top of the page, select a location on the map, or click “FIND ME.”' %}
         </div>
         {% endblock info-instructions %}
 
@@ -27,24 +27,6 @@
 
       {% block main-content %}
       <div class="intro-container">
-        <h2 class="caps">{% trans "What are my risks?" %}</h2>
-        <h3>{% trans "What to Expect" %}</h3>
-        <p>
-          {% blocktrans %} {{ settings.site_title }} gives you an idea of which
-          natural disasters you might experience in the future based on a
-          location in {{ location.area_name }}. {% endblocktrans %}
-        </p>
-
-        <h3>{% trans "How to Prepare" %}</h3>
-        <p>
-          {% trans "You have the power to make a difference. Find out how you can protect your loved ones and home before the next disaster hits." %}
-        </p>
-
-        <h3>{% trans "In Recent History" %}</h3>
-        <p>
-          {% blocktrans %} Find out which disasters have struck {{ location.area_name }} in the past, what impact they had, and where
-          they happened. {% endblocktrans %}
-        </p>
         {% endblock main-content %} {% include "users/user_interactions.html" %}
       </div>
     </div>
