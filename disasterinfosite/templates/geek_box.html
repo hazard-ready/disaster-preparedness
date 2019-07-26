@@ -5,11 +5,14 @@
     <img class="geek-box-logo" src="{% webpack_static 'build/logo.png' %}" alt="">
     <div class="geek-text">
         <h3>{% trans "Who made this?" %}</h3>
-        <p>{{ settings.who_made_this | safe}}</p>
         {% if settings.contact_email %}
-          <p>
-            {% blocktrans with email=settings.contact_email %}Have questions? <a href="mailto:{{ email }}">Email the creators</a> for more information.{% endblocktrans %}
-          </p>
+            {% blocktrans with email=settings.contact_email %}
+            <p>
+                Have questions? View the <a href="/about" target="_blank">About</a> page or <a href="mailto:{{ email }}">email the Hazard Ready creators</a> for more information.
+            </p>
+            {% endblocktrans %}
+        {% else %}
+            <p>Have questions? View the <a href="/about" target="_blank">About</a> page for more information.</p>
         {% endif %}
     </div>
 </div>
