@@ -14,11 +14,16 @@
   flex-direction: row;
   flex-grow: 1;
   align-items: center;
-  justify-content: space-around;
+  justify-content: start;
   padding-top: 10px;
+
+  @include breakpoint(medium-and-up) {
+    padding-top: 0;
+  }
 
   button {
     height: 40px;
+    margin-right: 20px;
   }
 }
 
@@ -27,6 +32,10 @@
   flex-direction: column;
   flex-grow: 2;
   padding: 10px;
+
+  @include breakpoint(medium-and-up) {
+    margin-right: 20px;
+  }
 }
 
 .user-interactions-help {
