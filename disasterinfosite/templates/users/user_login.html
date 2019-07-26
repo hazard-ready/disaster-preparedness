@@ -3,18 +3,22 @@
 {% trans "Log In" as log_in %}
 {% trans "Cancel" as cancel %}
 
-<div id="user-login-container" tabindex="-1">
-{% trans "Required." as required %}
-  <form id="user-login__form">
-    <label>{% trans "Username (your email address)" %}
-      <input type="text" id="user-login__username" required placeholder="{{ required }}"/>
-    </label>
-    <label>{% trans "Password" %}
-      <input type="password" id="user-login__password" required placeholder="{{ required }}" />
-    </label>
+<div id="user-login-container" class="user--ui hide" tabindex="-1">
+  <h4>{{ log_in }}</h4>
+  {% trans "Required." as required %}
+  <form id="user-login__form" class="user--form">
+    {% csrf_token %}
+    <div class="user-interaction__fields">
+      <label>{% trans "Username (your email address)" %}
+        <input type="text" id="user-login__username" name="username" required placeholder="{{ required }}"/>
+      </label>
+      <label>{% trans "Password" %}
+        <input type="password" id="user-login__password" name="password" required placeholder="{{ required }}" />
+      </label>
+    </div>
     <div class="user-interaction__buttons">
-      <button class="button button--submit caps user-login__submit">{{ log_in }}</button>
-      <button class="button caps button--cancel">{{ cancel }}</button>
+      <button class="button--submit caps user-login__submit" type="submit">{{ log_in }}</button>
+      <button class="caps button--cancel">{{ cancel }}</button>
     </div>
   </form>
   <div class="user-interactions-help">

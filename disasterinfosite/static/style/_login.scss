@@ -1,39 +1,46 @@
 /* login and sign in */
 
-#user-interaction-container {
-  background-color: $soft-white;
+.user--form {
+  display: flex;
+  flex-direction: column;
+
+  @include breakpoint(medium-and-up) {
+    flex-direction: row;
+  }
 }
 
 .user-interaction__buttons {
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 10px;
 
-  @include breakpoint(medium-and-up) {
-    text-align: right;
+  button {
+    height: 40px;
   }
+}
 
-  .button:not(:last-child) {
-    margin-right: 1rem;
-    @include breakpoint(medium-and-up) {
-      margin-right: 2rem;
-    }
-
-    @include breakpoint(large) {
-      margin-right: 0.5rem;
-    }
-  }
+.user-interaction__fields {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  padding: 10px;
 }
 
 .user-interactions-help {
   padding-top: 1rem;
 }
 
-#user-info-container,
-#user-info-container--invalid,
-#user-signup-result-container,
-#user-login-container,
-#user-signup-container,
-#user-profile-container,
-#user-profile-result-container,
-#failure-container {
-  display: none;
+.user--ui {
+  input {
+    margin-bottom: 10px;
+    display: block;
+    width: 100%;
+  }
+}
+
+.username {
+  font-weight: $font-weight-bold;
 }
