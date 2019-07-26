@@ -15,11 +15,29 @@
   }
 }
 
-.about--partners {
+.about-container--hazardready {
+  background-color: $dark-grey;
+  color: $soft-white;
+
+  a {
+    color: $low-intensity;
+  }
+  a:hover,
+  a:visited,
+  a:active {
+    color: $bright-accent;
+  }
+}
+
+.about--partners, .about--hazardready {
   text-align: center;
 }
 
-.rdpo-container {
+.about--hazardready {
+  color: $soft-white;
+}
+
+.rdpo-container, .hazardready-container {
   text-align: center;
   margin: 0 auto;
   max-width: 800px;
@@ -38,7 +56,7 @@
   width: 100px;
 }
 
-.rdpo-logo {
+.rdpo-logo, .hazardready-logo {
   width: 275px;
 }
 

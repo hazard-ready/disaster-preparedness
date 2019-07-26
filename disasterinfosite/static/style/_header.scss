@@ -17,12 +17,8 @@ header {
 
 .logo__container {
   overflow: auto;
-  margin: 0 0 10px 0;
+  margin: 0;
   position: relative;
-
-  h3 {
-    margin: 0 0 5px 0;
-  }
 
   @include breakpoint(medium) {
     margin: 0 5px 0 0;
@@ -40,7 +36,7 @@ header {
   max-height: 48px;
 
   @include breakpoint(medium) {
-    max-height: 56px;
+    max-height: 60px;
   }
 
   @include breakpoint(large) {
@@ -51,17 +47,16 @@ header {
 .logo__text {
   display: inline-block;
   vertical-align: top;
-}
 
-.project-title {
-  color: $dark-grey;
-  font-family: $sans-serif;
-  font-size: 12px;
-  line-height: 1;
-  margin: 10px 0px 0px;
+  /* Nestle the text a little closer to the logo. */
+  h3 {
+    margin-left: -8px;
+    margin-top: 12px;
 
-  @include breakpoint(large) {
-    font-size: 14px;
+    @include breakpoint(medium-and-up) {
+      margin-left: -13px;
+      margin-top: 20px;
+    }
   }
 }
 
@@ -74,7 +69,7 @@ header {
 .header__about--small {
   position: absolute;
   right: 10px;
-  top: 15px;
+  top: 8px;
 }
 
 .about__link {
@@ -100,7 +95,7 @@ header {
   border: solid 1px $light-grey;
   display: flex;
   flex: 2 1 auto;
-  margin: 0 5px;
+  margin: 10px 5px 0;
   position: relative;
 
   @include breakpoint(medium) {
@@ -117,6 +112,7 @@ header {
 .mq-input {
   border: none;
   flex: 1 1 auto;
+  height: 40px;
   margin: 2px 2px 2px 8px;
   min-width: 170px;
   text-overflow: ellipsis;
