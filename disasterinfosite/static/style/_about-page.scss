@@ -15,6 +15,48 @@
   }
 }
 
+.about-container--hazardready {
+  background-color: $dark-grey;
+  color: $soft-white;
+
+  a {
+    color: $low-intensity;
+  }
+  a:hover,
+  a:visited,
+  a:active {
+    color: $bright-accent;
+  }
+}
+
+.about--hazardready {
+  text-align: center;
+  color: $soft-white;
+}
+
+.hazardready-container {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.partner-logo-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.partner-logo {
+  margin: 10px;
+  vertical-align: middle;
+  width: 100px;
+}
+
+.hazardready-logo {
+  width: 275px;
+}
+
 .about-content__flowchart {
   margin: 0 auto;
   max-width: 800px;

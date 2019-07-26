@@ -20,11 +20,13 @@
     padding-left: 15px;
   }
 
-  a,
+  a {
+    color: $low-intensity;
+  }
   a:hover,
   a:visited,
   a:active {
-    color: $low-intensity;
+    color: $bright-accent;
   }
 }
 
