@@ -21,7 +21,7 @@
   {% trans "Find Me" as find_me %}
     <div class="location-form" role="form" aria-label="location-search">
       <label class="sr-only" for="location-text">Location</label>
-      <input name="location-text" id="location-text" type="text" placeholder="Enter your home address to see your risk" />
+      <input name="location-text" id="location-text" type="text" placeholder="{% trans 'Enter an address.' %}" />
       <button id="auto-location" class="auto-location-submit caps"><img class="icon--locate-me" src="{% webpack_static 'build/locate-me.svg' %}" alt="">{{ find_me }}</button>
       <button id="location-submit"><img class="icon--search" src="{% webpack_static 'build/icon-search.png' %}" alt="search"></button>
       <div class="geocode-error-message hide">
