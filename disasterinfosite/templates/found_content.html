@@ -7,20 +7,15 @@
 
 {% block info-instructions %}
 <div class="information-container information-container--found-content">
-  <h1>
+  <h1 class="info__title">
     <span class="info__header">{% trans "What to expect for" %}</span>
+    <img class="info__pin" src="{% webpack_static 'build/marker-icon.png' %}">
     <span class="info__location">{{ location_name }}</span>
   </h1>
   <div class="info__start-over">
     <a class="link--grey" href="{{ settings.site_url }}">
-      {% trans "Wrong address? Start over" %}
+      {% trans "try a new address" %}
     </a>
-  </div>
-  <div class="info__hazards">
-    {% for group, hazard in data.items %}
-      <a class="hazard-link caps" href="#{{group.name}}">{{group.display_name}}</a><span class="hazard-comma caps">,</span>
-    {% endfor %}
-    <a class="prepare-link caps" href="{% url 'prepare' %}" target="_blank">{% trans "Prepare!" %}</a>
   </div>
 </div>
 {% if surveyHeader %}
@@ -30,6 +25,22 @@
 {% endif %}
 
 {% endblock info-instructions %}
+
+{% block map-container %}
+  <div class="map-container map-container--found-content" role="application">
+    <div id="map"></div>
+  </div>
+{% endblock map-container %}
+
+{% block hazard-menu %}
+  <div class="hazard-container">
+    {% for group, hazard in data.items %}
+      <a class="hazard-link caps" href="#{{group.name}}">{{group.display_name}}</a>
+    {% endfor %}
+    <a class="prepare-link caps" href="{% url 'prepare' %}" target="_blank">{% trans "Prepare!" %}</a>
+  </div>
+{% endblock hazard-menu %}
+
 
 {% block main-content %}
   {% for group, hazard in data.items %}
