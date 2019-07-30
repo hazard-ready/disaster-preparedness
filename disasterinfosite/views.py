@@ -145,7 +145,8 @@ def app_view(request):
 
         if lat and lng:
             snugget_content = Snugget.findSnuggetsForPoint(lat=float(lat), lng=float(lng))
-            data = {el:{'collapsible': {}, 'static': {}} for el in snugget_content.keys()}
+            # python 3.5 does not guarantee the ORDER of keys coming out of an ORDERED DICTIONARY.
+            data = {el:{'collapsible': {}, 'static': {}} for el in sorted(snugget_content.keys(), key=lambda t: t.order_of_appearance)}
 
             if snugget_content is not None:
                 for group, snuggets in snugget_content.items():
