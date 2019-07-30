@@ -16,16 +16,17 @@
 
 .hero-container.sticky {
   background-color: $soft-white;
-  box-shadow: 0 1px 3px;
-  min-height: 136px;
-  padding-left: 20px;
+  box-shadow: 0 2px 12px;
+  min-height: 90px;
+  padding: 10px;
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   z-index: $z-index-top;
 
-  h1 {
+  .info__title {
+    display: inline;
     margin-top: 0;
   }
 
@@ -50,6 +51,17 @@
     }
   }
 
+  .info__start-over {
+    display: inline;
+    line-height: 2.5;
+    margin-left: 20px;
+    vertical-align: top;
+
+    @include breakpoint(large) {
+      line-height: 3.5;
+    }
+  }
+
   .information-container {
     margin: 0;
   }
@@ -65,7 +77,7 @@
 
 .information-container {
   flex-grow: 1;
-  margin: 0 auto 20px;
+  margin: 0 0 20px;
 
   @include breakpoint(medium) {
     margin-right: 10px;
@@ -76,6 +88,10 @@
     margin-right: 20px;
     margin-top: 30px;
   }
+}
+
+.info__title {
+  display: block;
 }
 
 .info__header {
@@ -89,6 +105,7 @@
 
 .info__start-over {
   color: $dark-grey;
+  display: block;
   font-weight: $font-weight-regular;
 }
 
@@ -97,6 +114,7 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: flex-start;
+  margin-top: 10px;
 
   @include breakpoint(medium-and-up) {
     justify-content: space-between;
@@ -105,12 +123,16 @@
 
 .hazard-link, .prepare-link {
   color: $bright-accent;
-  margin: 10px;
+  margin: 5px;
   text-decoration: none;
 
   &:focus, &:hover, &:active {
     border-bottom: 2px solid $dark-accent;
     color: $dark-accent;
+  }
+
+  @include breakpoint(medium-and-up) {
+    margin: 10px;
   }
 }
 
