@@ -19,6 +19,8 @@ class Migration(migrations.Migration):
                 ('display_name', models.CharField(default='', max_length=50)),
                 ('order_of_appearance', models.IntegerField(default=0, help_text='The order, from top to bottom, in which you would like this group to appear, when applicable.')),
                 ('note', models.TextField(blank=True, help_text='A note that appears above all snuggets in this section. Use for data caveats or warnings.')),
+                ('note_en', models.TextField(blank=True, help_text='A note that appears above all snuggets in this section. Use for data caveats or warnings.')),
+                ('note_es', models.TextField(blank=True, help_text='A note that appears above all snuggets in this section. Use for data caveats or warnings.')),
                 ('display_name_es', models.CharField(default='', max_length=50, null=True)),
                 ('display_name_en', models.CharField(default='', max_length=50, null=True)),
             ],
