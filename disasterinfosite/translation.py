@@ -13,7 +13,7 @@
 
 # @register(ShapefileGroup)
 # class ShapefileGroupTranslationOptions(TranslationOptions):
-#   fields = ('display_name',)
+#   fields = ('display_name', 'note')
 
 # @register(PastEventsPhoto)
 # class PastEventsPhotoTranslationOptions(TranslationOptions):
