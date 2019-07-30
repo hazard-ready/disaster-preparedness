@@ -1,22 +1,25 @@
 /* Information and Instructions */
-.map-info-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 400px;
-  padding-bottom: 30px;
+.hero-container {
+  min-height: 300px;
+  padding-bottom: 20px;
   transition: 0.5s background-color ease, 0.5s min-height ease;
 
   .survey-link {
     display: none;
   }
+}
+
+.map-info-container {
+  display: flex;
+  flex-direction: column;
 
   @include breakpoint(medium-and-up) {
     flex-direction: row;
   }
 }
 
-.map-info-container.sticky {
-  background-color: $light-grey;
+.hero-container.sticky {
+  background-color: $soft-white;
   box-shadow: 0 1px 3px;
   min-height: 136px;
   padding: 10px;
@@ -26,15 +29,33 @@
   top: 0;
   z-index: $z-index-top;
 
-  .information-container {
-    margin: 0;
+  h1 {
+    margin-top: 0;
   }
 
-  .info__hazards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
+  .info__header {
+    display: none;
+  }
+
+  .info__pin {
+    display: inline-block;
+    height: 30px;
+
+    @include breakpoint(large) {
+      height: 40px;
+    }
+  }
+
+  .info__location {
+    font-size: 24px;
+
+    @include breakpoint(large) {
+      font-size: 28px;
+    }
+  }
+
+  .information-container {
+    margin: 0;
   }
 
   .map-container {
@@ -43,21 +64,6 @@
 
   .link--grey {
     border-color: $dark-grey;
-  }
-
-  .hazard-link, .prepare-link {
-    color: $dark-accent;
-    border: none;
-    margin: 0 10px;
-
-    &:focus, &:hover, &:active {
-      border-bottom: 2px solid $bright-accent;
-      color: $bright-accent;
-    }
-  }
-
-  .hazard-comma {
-    display: none;
   }
 
   .survey-link {
@@ -87,7 +93,12 @@
 }
 
 .info__header {
+  display: block;
   font-weight: $font-weight-regular;
+}
+
+.info__pin {
+  display: none;
 }
 
 .info__start-over {
@@ -95,19 +106,20 @@
   font-weight: $font-weight-regular;
 }
 
-.info__hazards {
-  display: block;
-  margin-top: 20px;
+.hazard-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
 
   @include breakpoint(medium-and-up) {
-    margin-top: 40px;
+    justify-content: space-between;
   }
 }
 
 .hazard-link, .prepare-link {
   color: $bright-accent;
-  border-bottom: 2px solid $bright-accent;
-  margin: 0;
+  margin: 10px;
   text-decoration: none;
 
   &:focus, &:hover, &:active {
@@ -116,16 +128,16 @@
   }
 }
 
-.hazard-comma {
-  color: $dark-grey;
-  display: inline;
-}
-
 /* Map */
 .map-container {
   flex-grow: 2;
   height: 400px;
   min-width: 50%;
+}
+
+
+.map-container--found-content {
+    height: 300px;
 }
 
 #map {

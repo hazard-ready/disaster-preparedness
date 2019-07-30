@@ -10,20 +10,26 @@
     {% include "header.html" %}
 
     <div class="content-container">
-      <div class="map-info-container">
-        {% block info-instructions %}
-        <div class="information-container" role="main">
-          <h2 class="caps">{{ settings.site_description }}</h2>
-          <p>{{ settings.intro_text | safe }}</p>
-          <h3>{% trans "A natural disaster could strike your area at any time." %}</h3>
-          {% trans 'Get a personalized report on natural hazards that are likely in your area and steps you can take to prepare. Type your location in the search box at the top of the page, select a location on the map, or click “FIND ME.”' %}
-        </div>
-        {% endblock info-instructions %}
+      <div class="hero-container">
+        <div class="map-info-container">
+          {% block info-instructions %}
+          <div class="information-container" role="main">
+            <h2 class="caps">{{ settings.site_description }}</h2>
+            <p>{{ settings.intro_text | safe }}</p>
+            <h3>{% trans "A natural disaster could strike your area at any time." %}</h3>
+            {% trans 'Get a personalized report on natural hazards that are likely in your area and steps you can take to prepare. Type your location in the search box at the top of the page, select a location on the map, or click “FIND ME.”' %}
+          </div>
+          {% endblock info-instructions %}
 
-        <div class="map-container" role="application">
-          <div id="map"></div>
+          {% block map-container %}
+            <div class="map-container" role="application">
+              <div id="map"></div>
+            </div>
+          {% endblock map-container %}
         </div>
-      </div>
+
+        {% block hazard-menu %}{% endblock hazard-menu %}
+    </div>
 
       {% block main-content %}
       <div class="intro-container">
