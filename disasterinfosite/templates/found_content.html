@@ -58,6 +58,11 @@
           </div>
         </div>
       {% endif %}
+      {% if group.note %}
+      <div class="disaster-content__note">
+        {{ group.note | safe }}
+      </div>
+      {% endif %}
       <!-- Non-collapsible snuggets and popouts for large screen sizes -->
         <div class="section-content section-content--static hide-for-medium-down--flex">
           <div class="snugget__content snugget__content---static">

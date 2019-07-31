@@ -70,6 +70,14 @@
   overflow: visible;
 }
 
+.disaster-content__note {
+  background-color: $ghost-grey;
+  border: 2px solid $medium-grey;
+  border-top-width: 6px;
+  margin: 20px 0;
+  padding: 10px;
+}
+
 /* Snugget content */
 .snugget__content {
   flex: 0 1 auto;
