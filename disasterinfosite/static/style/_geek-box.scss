@@ -32,10 +32,21 @@
 
 .geek-box-logo {
   margin: 0 auto;
-  height: 100%;
-  flex: 0 1 200px;
+  flex: 0 1 150px;
+
+  img {
+    height: 150px;
+
+    @include breakpoint(medium-and-up) {
+      height: auto;
+    }
+  }
 }
 
 .geek-text {
   flex: 1 0;
+
+  @include breakpoint(medium-and-up) {
+    margin-left: 10px;
+  }
 }

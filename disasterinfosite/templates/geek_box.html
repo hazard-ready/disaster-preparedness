@@ -2,7 +2,7 @@
 {% load webpack_static from webpack_loader %}
 
 <div role="contentinfo" id="geek-box">
-    <img class="geek-box-logo" src="{% webpack_static 'build/logo.png' %}" alt="">
+    <a href="https://hazardready.org" target="_blank" rel="noopener" class="geek-box-logo"><img src="{% webpack_static 'build/logo.png' %}" alt=""></a>
     <div class="geek-text">
         <h3>{% trans "Who made this?" %}</h3>
         {% if settings.contact_email %}
