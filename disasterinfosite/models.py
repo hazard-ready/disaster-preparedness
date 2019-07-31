@@ -178,8 +178,7 @@ class ShapefileGroup(models.Model):
         default=0,
         help_text="The order, from top to bottom, in which you would like this group to appear, when applicable."
     )
-    likely_scenario_title = models.CharField(max_length=80, blank=True)
-    likely_scenario_text = models.TextField(blank=True)
+    note = models.TextField(blank=True, help_text='A note that appears above all snuggets in this section. Use for data caveats or warnings.')
 
     def __str__(self):
         return self.name
