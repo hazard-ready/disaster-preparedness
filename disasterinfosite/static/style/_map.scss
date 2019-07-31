@@ -80,12 +80,6 @@
 
   .survey-link {
     display: block;
-
-    @include breakpoint(medium) {
-      position: absolute;
-      top: 86px;
-      left: 70%;
-    }
   }
 }
 
