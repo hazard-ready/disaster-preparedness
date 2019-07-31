@@ -5,14 +5,15 @@
     <a href="https://hazardready.org" target="_blank" rel="noopener" class="geek-box-logo"><img src="{% webpack_static 'build/logo.png' %}" alt=""></a>
     <div class="geek-text">
         <h3>{% trans "Who made this?" %}</h3>
+        {% url 'about' as about_url%}
         {% if settings.contact_email %}
             {% blocktrans with email=settings.contact_email %}
             <p>
-                Have questions? View the <a href="/about" target="_blank">About</a> page or <a href="mailto:{{ email }}">email the Hazard Ready creators</a> for more information.
+                Have questions? View the <a href="{{ about_url }}" target="_blank">About</a> page or <a href="mailto:{{ email }}">email the Hazard Ready creators</a> for more information.
             </p>
             {% endblocktrans %}
         {% else %}
-            <p>Have questions? View the <a href="/about" target="_blank">About</a> page for more information.</p>
+            <p>Have questions? View the <a href="{{ about_url }}" target="_blank">About</a> page for more information.</p>
         {% endif %}
     </div>
 </div>
