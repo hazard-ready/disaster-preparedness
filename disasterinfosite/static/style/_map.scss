@@ -80,12 +80,6 @@
 
   .survey-link {
     display: block;
-
-    @include breakpoint(medium) {
-      position: absolute;
-      top: 86px;
-      left: 70%;
-    }
   }
 }
 
@@ -136,6 +130,7 @@
 }
 
 .hazard-link, .prepare-link {
+  border-bottom: 2px solid $soft-white;
   color: $bright-accent;
   margin: 5px;
   text-decoration: none;

@@ -33,6 +33,7 @@
     "webpack-cli": "^3.3.6"
   },
   "dependencies": {
+    "formdata-polyfill": "^3.0.18",
     "jquery": "^3.4.1",
     "leaflet": "^1.5.1",
     "slick-carousel": "^1.8.1"

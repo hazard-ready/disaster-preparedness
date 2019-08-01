@@ -51,6 +51,7 @@ require("slick-carousel");
 // IE11 polyfills
 require("url-polyfill");
 require("native-promise-only");
+require("formdata-polyfill");
 
 if (!String.prototype.includes) {
   String.prototype.includes = function(search, start) {

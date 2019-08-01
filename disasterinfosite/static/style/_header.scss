@@ -237,12 +237,6 @@ header {
   margin: 14px 5px;
   position: relative;
   text-decoration: none;
-
-  @include breakpoint(medium) {
-    position: absolute;
-    top: 60px;
-    left: 5%;
-  }
 }
 
 .survey-button {
