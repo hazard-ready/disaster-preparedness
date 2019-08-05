@@ -167,8 +167,7 @@ def app_view(request):
 
         if lat and lng:
             snugget_content = Snugget.findSnuggetsForPoint(lat=float(lat), lng=float(lng))
-            # python 3.5 does not guarantee the ORDER of keys coming out of an ORDERED DICTIONARY.
-            data = {el:{'collapsible': {}, 'static': {}} for el in sorted(snugget_content.keys(), key=lambda t: t.order_of_appearance)}
+            data = {el:{'collapsible': {}, 'static': {}} for el in snugget_content}
 
             if snugget_content is not None:
                 for group, snuggets in snugget_content.items():
@@ -194,6 +193,8 @@ def app_view(request):
                                     data[group]['static'][snugget.section].append(snugget)
 
                     # Sort the sections by order_of_appearance
+                    # python 3.5 does not guarantee the ORDER of keys coming out of an ORDERED DICTIONARY.
+                    data = OrderedDict(sorted(data.items(), key=lambda t: t[0].order_of_appearance))
                     data[group]['collapsible'] = OrderedDict(sorted(data[group]['collapsible'].items(), key=lambda t: t[0].order_of_appearance))
                     data[group]['static'] = OrderedDict(sorted(data[group]['static'].items(), key=lambda t: t[0].order_of_appearance))
 
