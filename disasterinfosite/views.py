@@ -154,7 +154,7 @@ def app_view(request):
                         template = 'found_content.html'
 
                         for snugget in snuggets:
-                            if snugget.percentage:
+                            if snugget.percentage is not None:
                                 group.percentage = snugget.percentage
                             if snugget.__class__ == SlideshowSnugget:
                                 snugget.photos = PastEventsPhoto.objects.filter(snugget=snugget)
