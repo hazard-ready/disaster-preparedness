@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-19 17:40+0000\n"
+"POT-Creation-Date: 2019-08-06 22:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,19 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: disasterinfosite/settings.py:70
+#: settings.py:71
 msgid "English"
 msgstr "Inglés"
 
-#: disasterinfosite/settings.py:71
+#: settings.py:72
 msgid "Spanish"
 msgstr "Español"
 
-#: disasterinfosite/templates/about.html:16
+#: templates/about.html:16
 msgid "The Hazard Ready Team"
 msgstr ""
 
-#: disasterinfosite/templates/about.html:26
+#: templates/about.html:26
 msgid ""
 "Carson has a B.Sc. and M.Sc. in Geology from Western Washington University "
 "and the University of Montana. She is now working on her PhD at Boise State "
@@ -39,7 +39,7 @@ msgid ""
 "data for each HazardReady site."
 msgstr ""
 
-#: disasterinfosite/templates/about.html:43
+#: templates/about.html:43
 msgid ""
 "Rebecca Bendick has a Ph.D. in geophysics from the University of Colorado. "
 "Her research on tectonics and earthquake mechanics led to an interest in how "
@@ -49,7 +49,7 @@ msgid ""
 "basic geophysical research."
 msgstr ""
 
-#: disasterinfosite/templates/about.html:59
+#: templates/about.html:59
 msgid ""
 "Grant Kier has a M.Sc. in geology from the University of Colorado. He is "
 "broadly interested in community resilience in the context of manmade and "
@@ -58,13 +58,19 @@ msgid ""
 "companies in western Montana."
 msgstr ""
 
-#: disasterinfosite/templates/about.html:67
+#: templates/about.html:66
+msgid "The Hazard Ready Project"
+msgstr ""
+
+#: templates/about.html:77
 #, python-format
 msgid "%(title)s Partners and Collaborators"
 msgstr ""
 
-#: disasterinfosite/templates/about.html:72
+#: templates/about.html:82
 msgid ""
+"The PDX Ready project was funded in part by the Regional Disaster "
+"Preparedness Organization (RDPO) of the Portland Metropolitan Region. The "
 "RDPO is a partnership of government agencies, non-governmental "
 "organizations, and private-sector stakeholders in the Portland Metropolitan "
 "Region collaborating to increase the region’s resiliency to disasters. The "
@@ -72,49 +78,39 @@ msgid ""
 "Counties in Oregon and Clark County in Washington."
 msgstr ""
 
-#: disasterinfosite/templates/about.html:76
-msgid "American Red Cross: Cascades Region"
-msgstr ""
-
-#: disasterinfosite/templates/about.html:79
-msgid "Mercy Corps"
-msgstr ""
-
-#: disasterinfosite/templates/about.html:82
-msgid "Portland Bureau of Emergency Management"
-msgstr ""
-
-#: disasterinfosite/templates/about.html:85
-msgid "Multnomah County"
-msgstr ""
-
-#: disasterinfosite/templates/about.html:88
-msgid "Washington County"
-msgstr ""
-
-#: disasterinfosite/templates/about.html:91
-msgid "Clark County"
-msgstr ""
-
-#: disasterinfosite/templates/about.html:94
+#: templates/about.html:86
 msgid "Clackamas County"
 msgstr ""
 
-#: disasterinfosite/templates/about.html:102
-msgid ""
-"How we build Hazard Ready Sites: 1. Gather data. Locate the most relevant "
-"and up-to-date data on natural hazards for your region from trusted sources "
-"like FEMA, NOAA, and the USGS. 2. Quality Check. Work with local partners "
-"(community groups & emergency managers) to ensure the data and infomration "
-"are accurate. 3. Process data. Take in raw data and make it compatible with "
-"the backend Hazard Ready framework. 4. Build content. Write the webpage "
-"text, gather images and videos, locate local resources for each hazard and "
-"region. 5. Feedback and focus groups. Go back and forth on content and "
-"designs to ensure the information is location specific and relevant to the "
-"community's needs. 6. Revise, revise, revise."
+#: templates/about.html:89
+msgid "Clark County"
 msgstr ""
 
-#: disasterinfosite/templates/about.html:107
+#: templates/about.html:92
+msgid "Columbia County"
+msgstr ""
+
+#: templates/about.html:95
+msgid "Multnomah County"
+msgstr ""
+
+#: templates/about.html:98
+msgid "Washington County"
+msgstr ""
+
+#: templates/about.html:101
+msgid "Portland Bureau of Emergency Management"
+msgstr ""
+
+#: templates/about.html:113
+msgid "American Red Cross: Cascades Region"
+msgstr ""
+
+#: templates/about.html:116
+msgid "Mercy Corps"
+msgstr ""
+
+#: templates/about.html:123
 #, python-format
 msgid ""
 "%(title)s is designed to help educate and prepare people for disasters that "
@@ -130,7 +126,7 @@ msgstr ""
 "información actualizada y la presenta de tal manera que sea accesible para "
 "cualquier residente de %(area_name)s."
 
-#: disasterinfosite/templates/about.html:110
+#: templates/about.html:126 templates/index.html:22
 #, python-format
 msgid ""
 "This site uses the most up-to-date hazard risk data available for "
@@ -149,7 +145,20 @@ msgstr ""
 "cómo prepararse se basan en la mejor información de la Cruz Roja "
 "Estadounidense y la Agencia Federal de Gestión de Emergencias."
 
-#: disasterinfosite/templates/about.html:118
+#: templates/about.html:132
+msgid ""
+"How we build Hazard Ready Sites: 1. Gather data. Locate the most relevant "
+"and up-to-date data on natural hazards for your region from trusted sources "
+"like FEMA, NOAA, and the USGS. 2. Quality Check. Work with local partners "
+"(community groups & emergency managers) to ensure the data and infomration "
+"are accurate. 3. Process data. Make the data compatible with Hazard Ready "
+"software. 4. Build content. Write the webpage text, gather images and "
+"videos, locate local resources for each hazard and region. 5. Feedback and "
+"focus groups. Discuss content and designs to ensure the information fits "
+"each community's needs. 6. Revise, revise, revise and launch site!"
+msgstr ""
+
+#: templates/about.html:140
 #, python-format
 msgid ""
 "Data used for %(title)s is available for download <a href=\"%(download)s\" "
@@ -158,52 +167,60 @@ msgstr ""
 "La información utilizada para %(title)s se puede descargar <a href="
 "\"%(download)s\" target=\"_blank\">aquí</a>"
 
-#: disasterinfosite/templates/about.html:125
+#: templates/about.html:147
 msgid "Quick Data Overview"
 msgstr "Descripción breve de los datos"
 
-#: disasterinfosite/templates/about.html:127
+#: templates/about.html:149
 #, python-format
 msgid "Take a look at some overviews of the data we used for %(area_name)s:"
 msgstr ""
 "Observe algunas descripciones de los datos que utilizamos para %(area_name)s:"
 
-#: disasterinfosite/templates/found_content.html:10
+#: templates/found_content.html:11
 msgid "What to expect for"
 msgstr ""
 
-#: disasterinfosite/templates/found_content.html:15
-#: disasterinfosite/templates/no_content_found.html:9
-msgid "Wrong address? Start over"
+#: templates/found_content.html:17
+msgid "try&nbsp;a&nbsp;new&nbsp;address"
 msgstr ""
 
-#: disasterinfosite/templates/found_content.html:35
+#: templates/found_content.html:40
+#, fuzzy
+#| msgid "How to Prepare"
+msgid "Prepare!"
+msgstr "Cómo prepararse"
+
+#: templates/found_content.html:53
 #, python-format
-msgid "An intensity meter at %(group.percentage)s%%"
+msgid "An intensity meter at %(percentage)s%%"
 msgstr ""
 
-#: disasterinfosite/templates/found_content.html:49
-msgid "Low Risk"
+#: templates/found_content.html:60
+msgid "Very Low Hazard"
 msgstr ""
 
-#: disasterinfosite/templates/found_content.html:55
-msgid "High Risk"
+#: templates/found_content.html:63
+msgid "Very High Hazard"
 msgstr ""
 
-#: disasterinfosite/templates/geek_box.html:7
+#: templates/geek_box.html:7
 msgid "Who made this?"
 msgstr "¿Quién hizo esto?"
 
-#: disasterinfosite/templates/geek_box.html:11
+#: templates/geek_box.html:10
 #, python-format
 msgid ""
-"Have questions? <a href=\"mailto:%(email)s\">Email the creators</a> for more "
-"information."
+"\n"
+"            <p>\n"
+"                Have questions? View the <a href=\"%(about_url)s\" target="
+"\"_blank\">About</a> page or <a href=\"mailto:%(email)s\">email the Hazard "
+"Ready creators</a> for more information.\n"
+"            </p>\n"
+"            "
 msgstr ""
-"¿Desea hacer alguna pregunta? <a href=\"mailto:%(email)s\">Escriba a los "
-"creadores</a> para obtener más información."
 
-#: disasterinfosite/templates/head-meta.html:12
+#: templates/head-meta.html:13
 msgid ""
 "Enter your location for a personalized report on your risks and how to "
 "prepare."
@@ -211,98 +228,59 @@ msgstr ""
 "Ingrese su ubicación para obtener un informe personalizado de sus riesgos y "
 "cómo prepararse."
 
-#: disasterinfosite/templates/header.html:22
+#: templates/header.html:22
+msgid "Feedback Survey"
+msgstr ""
+
+#: templates/header.html:27
 msgid "Find Me"
 msgstr ""
 
-#: disasterinfosite/templates/index.html:23
+#: templates/header.html:30
+msgid "Enter an address."
+msgstr ""
+
+#: templates/header.html:34
+msgid "We had a problem finding that location."
+msgstr ""
+
+#: templates/index.html:19
+msgid "A natural disaster could strike your area at any time."
+msgstr ""
+
+#: templates/index.html:20
 msgid ""
-"Give a location by typing in the box at the top of the page, clicking on the "
-"map, or clicking 'find me'. You'll get a personalized report on your natural "
-"hazard risks and steps you can take to prepare."
-msgstr ""
-"Ingrese una ubicación escribiendo en la siguiente casilla, haciendo clic en "
-"el mapa o haciendo clic en \"Buscar mi ubicación\". Obtendrá un informe "
-"personalizado sobre sus riesgos naturales y los pasos que puede llevar a "
-"cabo para prepararse."
-
-#: disasterinfosite/templates/index.html:34
-msgid "What are my risks?"
+"Get a personalized report on natural hazards that are likely in your area "
+"and steps you can take to prepare. Type your location in the search box at "
+"the top of the page, select a location on the map, or click “FIND ME.”"
 msgstr ""
 
-#: disasterinfosite/templates/index.html:35
-msgid "What to Expect"
-msgstr "Qué esperar"
-
-#: disasterinfosite/templates/index.html:37
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "        %(settings.site_title)s gives you an idea of which natural "
-#| "disasters you might experience in the future based on a location in "
-#| "%(location.area_name)s.\n"
-#| "      "
-msgid ""
-" %(settings.site_title)s gives you an idea of which natural disasters you "
-"might experience in the future based on a location in "
-"%(location.area_name)s. "
-msgstr ""
-"%(title)s le da una idea de los desastres naturales que puede sufrir en el "
-"futuro según la ubicación en %(area_name)s."
-
-#: disasterinfosite/templates/index.html:40
-msgid "How to Prepare"
-msgstr "Cómo prepararse"
-
-#: disasterinfosite/templates/index.html:42
-msgid ""
-"You have the power to make a difference. Find out how you can protect your "
-"loved ones and home before the next disaster hits."
-msgstr ""
-"Usted tiene la capacidad de hacer una diferencia. Descubra cómo puede "
-"proteger a sus seres queridos y su casa antes del próximo desastre."
-
-#: disasterinfosite/templates/index.html:45
-msgid "In Recent History"
-msgstr "En el pasado reciente"
-
-#: disasterinfosite/templates/index.html:47
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "        Find out which disasters have struck %(location.area_name)s in "
-#| "the past, what impact they had, and where they happened.\n"
-#| "      "
-msgid ""
-" Find out which disasters have struck %(location.area_name)s in the past, "
-"what impact they had, and where they happened. "
-msgstr ""
-"Averigüe qué desastres hubo en %(area_name)s en el pasado, qué impacto "
-"tuvieron y dónde ocurrieron.\n"
-"          "
-
-#: disasterinfosite/templates/index.html:57
+#: templates/index.html:47
 msgid "Getting results for your location..."
 msgstr "Obtener resultados para su ubicación…"
 
-#: disasterinfosite/templates/language_selector.html:27
+#: templates/language_selector.html:27
 msgid "Language"
 msgstr "Idioma"
 
-#: disasterinfosite/templates/no_content_found.html:6
+#: templates/no_content_found.html:6
 msgid "No information available for"
 msgstr ""
 
-#: disasterinfosite/templates/no_content_found.html:17
+#: templates/no_content_found.html:9
+msgid "Wrong address? Start over"
+msgstr ""
+
+#: templates/no_content_found.html:19
 msgid "No information available."
 msgstr "No hay información disponible."
 
-#: disasterinfosite/templates/no_content_found.html:19
+#: templates/no_content_found.html:21
 #, python-format
 msgid "It looks like your location is outside of %(area_name)s."
 msgstr "Parece que su ubicación está fuera de %(area_name)s."
 
-#: disasterinfosite/templates/no_content_found.html:20
+#: templates/no_content_found.html:22
 msgid ""
 "While we value and promote resilience everywhere, the data that powers this "
 "site isn't available for other places yet."
@@ -310,197 +288,115 @@ msgstr ""
 "Mientras que valoramos y fomentamos la resiliencia en todos lados, los datos "
 "que impulsan este sitio aún no están disponibles para otros lugares."
 
-#: disasterinfosite/templates/prepare.html:17
+#: templates/prepare.html:17
 msgid "Take the first step toward getting prepared"
 msgstr ""
 
-#: disasterinfosite/templates/prepare.html:82
+#: templates/prepare.html:82
 msgid "Print"
 msgstr ""
 
-#: disasterinfosite/templates/prepare.html:83
+#: templates/prepare.html:83
 msgid "This activity"
 msgstr ""
 
-#: disasterinfosite/templates/prepare.html:87
+#: templates/prepare.html:87
 msgid "Completed?"
 msgstr ""
 
-#: disasterinfosite/templates/prepare.html:88
+#: templates/prepare.html:88
 msgid "Activity"
 msgstr ""
 
-#: disasterinfosite/templates/prepare.html:89
+#: templates/prepare.html:89
 msgid "reduces emotional and physical harm"
 msgstr ""
 
-#: disasterinfosite/templates/prepare.html:91
+#: templates/prepare.html:91
 msgid "is useful for other situations"
 msgstr ""
 
-#: disasterinfosite/templates/prepare.html:93
+#: templates/prepare.html:93
 msgid "helps protect property"
 msgstr ""
 
-#: disasterinfosite/templates/prepare.html:95
+#: templates/prepare.html:95
 msgid "costs"
 msgstr ""
 
-#: disasterinfosite/templates/prepare.html:97
+#: templates/prepare.html:97
 msgid "Resources"
 msgstr ""
 
-#: disasterinfosite/templates/prepare.html:126
+#: templates/prepare.html:126
 msgid "Key:"
 msgstr ""
 
-#: disasterinfosite/templates/prepare.html:135
+#: templates/prepare.html:135
 msgid "or more"
 msgstr ""
 
-#: disasterinfosite/templates/supply-kit.html:3
+#: templates/supply-kit.html:3
 msgid "Experts suggest you have the following:"
 msgstr ""
 
-#: disasterinfosite/templates/supply-kit.html:8
+#: templates/supply-kit.html:8
 msgid "Days of supplies"
 msgstr ""
 
-#: disasterinfosite/templates/supply-kit.html:8
-#: disasterinfosite/templates/supply-kit.html:13
-#: disasterinfosite/templates/supply-kit.html:18
+#: templates/supply-kit.html:8 templates/supply-kit.html:13
+#: templates/supply-kit.html:18
 msgid "per person"
 msgstr ""
 
-#: disasterinfosite/templates/supply-kit.html:13
+#: templates/supply-kit.html:13
 msgid "Gallons of water"
 msgstr ""
 
-#: disasterinfosite/templates/supply-kit.html:18
+#: templates/supply-kit.html:18
 msgid "Meals"
 msgstr ""
 
-#: disasterinfosite/templates/users/user_interaction_buttons.html:3
-msgid "Log Out"
-msgstr "Cerrar sesión"
-
-#: disasterinfosite/templates/users/user_interaction_buttons.html:4
-msgid "Update My Info"
-msgstr "Actualizar mi información"
-
-#: disasterinfosite/templates/users/user_interaction_buttons.html:5
-#: disasterinfosite/templates/users/user_interactions.html:3
-#: disasterinfosite/templates/users/user_login.html:3
+#: templates/users/user_interactions.html:3 templates/users/user_login.html:3
 msgid "Log In"
 msgstr "Iniciar sesión"
 
-#: disasterinfosite/templates/users/user_interaction_buttons.html:6
-#: disasterinfosite/templates/users/user_interactions.html:4
-#: disasterinfosite/templates/users/user_signup.html:3
+#: templates/users/user_interactions.html:4 templates/users/user_signup.html:3
 msgid "Sign Up"
 msgstr "Inscripción"
 
-#: disasterinfosite/templates/users/user_interactions.html:5
-#: disasterinfosite/templates/users/user_login.html:4
-#: disasterinfosite/templates/users/user_profile.html:23
-#: disasterinfosite/templates/users/user_signup.html:4
+#: templates/users/user_interactions.html:5 templates/users/user_login.html:4
+#: templates/users/user_profile.html:26 templates/users/user_signup.html:4
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: disasterinfosite/templates/users/user_interactions.html:10
-msgid "Welcome back!"
-msgstr "Bienvenido"
+#: templates/users/user_interactions.html:6
+msgid "Log Out"
+msgstr "Cerrar sesión"
 
-#: disasterinfosite/templates/users/user_interactions.html:12
-#, python-format
-msgid "If your username isn't %(username)s, you might want to log out."
-msgstr "Si su nombre de usuario no es %(username)s, debe cerrar sesión."
+#: templates/users/user_interactions.html:7
+msgid "Update My Info"
+msgstr "Actualizar mi información"
 
-#: disasterinfosite/templates/users/user_interactions.html:25
-#, python-format
-msgid "Welcome back, %(username)s!"
+#: templates/users/user_interactions.html:22
+#, fuzzy, python-format
+#| msgid "Welcome back, %(username)s!"
+msgid "Welcome back, <span class=\"username\">%(username)s</span>!"
 msgstr "Bienvenido otra vez, %(username)s!"
 
-#: disasterinfosite/templates/users/user_interactions.html:28
+#: templates/users/user_interactions.html:24
 msgid "We're logging you in. Just a moment..."
 msgstr "Estamos iniciando su sesión. Espere un momento..."
 
-#: disasterinfosite/templates/users/user_interactions.html:32
+#: templates/users/user_interactions.html:29
 msgid "Whoops, it looks like that username or password didn't work."
 msgstr "Parece que su nombre de usuario o contraseña no es correcto."
 
-#: disasterinfosite/templates/users/user_interactions.html:39
+#: templates/users/user_interactions.html:33
 msgid "Whoops, we're not sure what happened there. Maybe you should try again."
 msgstr "No estamos seguros de qué sucedió. Quizás deba intentar nuevamente."
 
-#: disasterinfosite/templates/users/user_login.html:7
-msgid "Required."
-msgstr "Obligatorio."
-
-#: disasterinfosite/templates/users/user_login.html:9
-msgid "Username (your email address)"
-msgstr "Nombre de usuario (su dirección de correo electrónico)"
-
-#: disasterinfosite/templates/users/user_login.html:12
-msgid "Password"
-msgstr "Contraseña"
-
-#: disasterinfosite/templates/users/user_login.html:22
-msgid ""
-"Need some help (like a password reset)? <a href=\"mailto:help@hazardready.org"
-"\">Email us.</a>"
-msgstr ""
-"¿Necesita asistencia (como un restablecimiento de contraseña)? <a href="
-"\"mailto:help@hazardready.org\">Envíenos un correo electrónico.</a>"
-
-#: disasterinfosite/templates/users/user_profile.html:6
-#: disasterinfosite/templates/users/user_signup.html:14
-msgid "Street Address"
-msgstr "Dirección"
-
-#: disasterinfosite/templates/users/user_profile.html:9
-#: disasterinfosite/templates/users/user_signup.html:17
-msgid "Other Address Information"
-msgstr "Otra información de dirección"
-
-#: disasterinfosite/templates/users/user_profile.html:12
-#: disasterinfosite/templates/users/user_signup.html:20
-msgid "City"
-msgstr "Ciudad"
-
-#: disasterinfosite/templates/users/user_profile.html:15
-#: disasterinfosite/templates/users/user_signup.html:23
-msgid "State"
-msgstr "Estado"
-
-#: disasterinfosite/templates/users/user_profile.html:18
-#: disasterinfosite/templates/users/user_signup.html:26
-msgid "Zip Code"
-msgstr "Código Postal"
-
-#: disasterinfosite/templates/users/user_profile.html:22
-msgid "Update"
-msgstr "Actualización"
-
-#: disasterinfosite/templates/users/user_profile.html:28
-msgid "Thanks for keeping us up to date!"
-msgstr "Gracias por mantenernos actualizados."
-
-#: disasterinfosite/templates/users/user_signup.html:8
-msgid "Email address (this will be your username)"
-msgstr "Correo electrónico (este será su nombre de usuario)."
-
-#: disasterinfosite/templates/users/user_signup.html:11
-msgid "Password (more than 8 characters long, please)"
-msgstr "Contraseña (de más de ocho caracteres)."
-
-#: disasterinfosite/templates/users/user_signup.html:35
-msgid "Need some help? <a href=\"mailto:help@hazardready.org\">Email us.</a>"
-msgstr ""
-"¿Necesita ayuda? <a href=\"mailto:help@hazardready.org\">Envíenos un correo "
-"electrónico.</a>"
-
-#: disasterinfosite/templates/users/user_signup.html:40
+#: templates/users/user_interactions.html:38
 msgid ""
 "Thanks for signing up! We'll get ahold of you with relevant news and "
 "information. You can come back anytime to update your address."
@@ -509,30 +405,181 @@ msgstr ""
 "información relevantes. Puede volver en cualquier momento para actualizar su "
 "dirección."
 
-#: disasterinfosite/templates/users/user_why_sign_up.html:4
-msgid "Why should you sign up?"
-msgstr "¿Por qué debe inscribirse?"
+#: templates/users/user_interactions.html:43
+msgid "Thanks for keeping us up to date!"
+msgstr "Gracias por mantenernos actualizados."
 
-#: disasterinfosite/templates/users/user_why_sign_up.html:6
+#: templates/users/user_interactions.html:48
+msgid "Welcome back!"
+msgstr "Bienvenido"
+
+#: templates/users/user_interactions.html:50
+#, fuzzy, python-format
+#| msgid "If your username isn't %(username)s, you might want to log out."
 msgid ""
-"Sign up for free to access customized hazard preparedness information. By "
-"providing your address, you will get updates about seasonal hazards and "
-"ongoing incidents specific to your location. We want you to be better "
-"prepared so you can keep your family, friends, and neighbors safe when a "
-"disaster strikes! Personal information will be protected and secure."
-msgstr ""
-"Inscríbase gratis para acceder a información personalizada para estar "
-"preparado en caso de desastres. Al dar su domicilio, obtendrá "
-"actualizaciones acerca de los peligros estacionales y los incidentes que "
-"estén sucediendo en ese momento y que sean específicos de su ubicación. "
-"Queremos que esté mejor preparado para que pueda mantener a su familia, "
-"amigos y vecinos seguros en caso de desastre. La información personal estará "
-"protegida y segura."
+"If your username isn't <span class=\"username\">%(username)s</span>, you "
+"might want to log out."
+msgstr "Si su nombre de usuario no es %(username)s, debe cerrar sesión."
 
-#: disasterinfosite/templatetags/show_cost.py:8
+#: templates/users/user_interactions.html:59
+msgid "Receive Important Updates"
+msgstr ""
+
+#: templates/users/user_interactions.html:61
+msgid ""
+"Keep your family, friends, and neighbors safe. Sign up to get email updates "
+"about seasonal hazards like fires, floods, and snow storms. If a natural "
+"disaster happens in your area, we’ll send you updates so you can stay "
+"informed. We’ll ask for your email address and physical address. Your "
+"information will be secure, and we won’t contact you for any other reason."
+msgstr ""
+
+#: templates/users/user_login.html:8
+msgid "Required."
+msgstr "Obligatorio."
+
+#: templates/users/user_login.html:12
+msgid "Username (your email address)"
+msgstr "Nombre de usuario (su dirección de correo electrónico)"
+
+#: templates/users/user_login.html:15
+msgid "Password"
+msgstr "Contraseña"
+
+#: templates/users/user_login.html:26
+msgid ""
+"Need some help (like a password reset)? <a href=\"mailto:help@hazardready.org"
+"\">Email us.</a>"
+msgstr ""
+"¿Necesita asistencia (como un restablecimiento de contraseña)? <a href="
+"\"mailto:help@hazardready.org\">Envíenos un correo electrónico.</a>"
+
+#: templates/users/user_profile.html:4
+#, fuzzy
+#| msgid "Other Address Information"
+msgid "Update Your Information"
+msgstr "Otra información de dirección"
+
+#: templates/users/user_profile.html:8 templates/users/user_signup.html:17
+msgid "Street Address"
+msgstr "Dirección"
+
+#: templates/users/user_profile.html:11 templates/users/user_signup.html:20
+msgid "Other Address Information"
+msgstr "Otra información de dirección"
+
+#: templates/users/user_profile.html:14 templates/users/user_signup.html:23
+msgid "City"
+msgstr "Ciudad"
+
+#: templates/users/user_profile.html:17 templates/users/user_signup.html:26
+msgid "State"
+msgstr "Estado"
+
+#: templates/users/user_profile.html:20 templates/users/user_signup.html:29
+msgid "Zip Code"
+msgstr "Código Postal"
+
+#: templates/users/user_profile.html:25
+msgid "Update"
+msgstr "Actualización"
+
+#: templates/users/user_signup.html:11
+msgid "Email address (this will be your username)"
+msgstr "Correo electrónico (este será su nombre de usuario)."
+
+#: templates/users/user_signup.html:14
+msgid "Password (more than 8 characters long, please)"
+msgstr "Contraseña (de más de ocho caracteres)."
+
+#: templates/users/user_signup.html:39
+msgid "Need some help? <a href=\"mailto:help@hazardready.org\">Email us.</a>"
+msgstr ""
+"¿Necesita ayuda? <a href=\"mailto:help@hazardready.org\">Envíenos un correo "
+"electrónico.</a>"
+
+#: templatetags/show_cost.py:8
 msgid "Free!"
 msgstr ""
 
-#: disasterinfosite/templatetags/show_cost.py:13
+#: templatetags/show_cost.py:13
 msgid "Unknown"
 msgstr ""
+
+#, python-format
+#~ msgid ""
+#~ "Have questions? <a href=\"mailto:%(email)s\">Email the creators</a> for "
+#~ "more information."
+#~ msgstr ""
+#~ "¿Desea hacer alguna pregunta? <a href=\"mailto:%(email)s\">Escriba a los "
+#~ "creadores</a> para obtener más información."
+
+#~ msgid ""
+#~ "Give a location by typing in the box at the top of the page, clicking on "
+#~ "the map, or clicking 'find me'. You'll get a personalized report on your "
+#~ "natural hazard risks and steps you can take to prepare."
+#~ msgstr ""
+#~ "Ingrese una ubicación escribiendo en la siguiente casilla, haciendo clic "
+#~ "en el mapa o haciendo clic en \"Buscar mi ubicación\". Obtendrá un "
+#~ "informe personalizado sobre sus riesgos naturales y los pasos que puede "
+#~ "llevar a cabo para prepararse."
+
+#~ msgid "What to Expect"
+#~ msgstr "Qué esperar"
+
+#, fuzzy, python-format
+#~| msgid ""
+#~| "\n"
+#~| "        %(settings.site_title)s gives you an idea of which natural "
+#~| "disasters you might experience in the future based on a location in "
+#~| "%(location.area_name)s.\n"
+#~| "      "
+#~ msgid ""
+#~ " %(settings.site_title)s gives you an idea of which natural disasters you "
+#~ "might experience in the future based on a location in "
+#~ "%(location.area_name)s. "
+#~ msgstr ""
+#~ "%(title)s le da una idea de los desastres naturales que puede sufrir en "
+#~ "el futuro según la ubicación en %(area_name)s."
+
+#~ msgid ""
+#~ "You have the power to make a difference. Find out how you can protect "
+#~ "your loved ones and home before the next disaster hits."
+#~ msgstr ""
+#~ "Usted tiene la capacidad de hacer una diferencia. Descubra cómo puede "
+#~ "proteger a sus seres queridos y su casa antes del próximo desastre."
+
+#~ msgid "In Recent History"
+#~ msgstr "En el pasado reciente"
+
+#, fuzzy, python-format
+#~| msgid ""
+#~| "\n"
+#~| "        Find out which disasters have struck %(location.area_name)s in "
+#~| "the past, what impact they had, and where they happened.\n"
+#~| "      "
+#~ msgid ""
+#~ " Find out which disasters have struck %(location.area_name)s in the past, "
+#~ "what impact they had, and where they happened. "
+#~ msgstr ""
+#~ "Averigüe qué desastres hubo en %(area_name)s en el pasado, qué impacto "
+#~ "tuvieron y dónde ocurrieron.\n"
+#~ "          "
+
+#~ msgid "Why should you sign up?"
+#~ msgstr "¿Por qué debe inscribirse?"
+
+#~ msgid ""
+#~ "Sign up for free to access customized hazard preparedness information. By "
+#~ "providing your address, you will get updates about seasonal hazards and "
+#~ "ongoing incidents specific to your location. We want you to be better "
+#~ "prepared so you can keep your family, friends, and neighbors safe when a "
+#~ "disaster strikes! Personal information will be protected and secure."
+#~ msgstr ""
+#~ "Inscríbase gratis para acceder a información personalizada para estar "
+#~ "preparado en caso de desastres. Al dar su domicilio, obtendrá "
+#~ "actualizaciones acerca de los peligros estacionales y los incidentes que "
+#~ "estén sucediendo en ese momento y que sean específicos de su ubicación. "
+#~ "Queremos que esté mejor preparado para que pueda mantener a su familia, "
+#~ "amigos y vecinos seguros en caso de desastre. La información personal "
+#~ "estará protegida y segura."
