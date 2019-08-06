@@ -48,7 +48,7 @@
     <div class="anchor" id="{{group.name}}"></div>
     <h2>{{group.display_name}}</h2>
     <div class="disaster-content">
-      {% if group.percentage %}
+      {% if group.percentage is not None %}
         <div class="intensity-meter">
           <div class="sr-only">{% blocktrans with percentage=group.percentage %}An intensity meter at {{percentage}}%{% endblocktrans %}</div>
           {% localize off %}
@@ -57,10 +57,10 @@
         </div>
         <div class="intensity-captions">
           <div class="intensity-caption intensity-caption--low" aria-hidden="”true”">
-            {% trans "Low Hazard" %}
+            {% trans "Very Low Hazard" %}
           </div>
           <div class="intensity-caption intensity-caption--high" aria-hidden="”true”">
-            {% trans "High Hazard" %}
+            {% trans "Very High Hazard" %}
           </div>
         </div>
       {% endif %}
