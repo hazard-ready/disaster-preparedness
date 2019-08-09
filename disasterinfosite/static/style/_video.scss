@@ -1,0 +1,58 @@
+.video {
+    background-color: $black;
+    cursor: pointer;
+    margin-bottom: 30px;
+    overflow: hidden;
+
+    position: relative;
+    width: 300px;
+    height: 225px;
+
+    max-width: 100%;
+
+    img {
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .play-button {
+        background-color: $deep-grey;
+        border-radius: 6px;
+        box-shadow: 0 0 30px $black-tint;
+        cursor: pointer;
+        width: 90px;
+        height: 60px;
+        z-index: 1;
+        opacity: 0.8;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate3d( -50%, -50%, 0 );
+
+        &:before {
+            content: "";
+            border-style: solid;
+            border-width: 15px 0 15px 26px;
+            border-color: transparent transparent transparent $white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate3d( -50%, -50%, 0 );
+        }
+    }
+
+    iframe {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    @include breakpoint(medium-and-up) {
+        width: 340px;
+        height: 255px;
+    }
+}
