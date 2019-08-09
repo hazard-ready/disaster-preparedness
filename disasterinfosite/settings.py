@@ -51,6 +51,10 @@ INSTALLED_APPS = (
     'webpack_loader'
 )
 
+EMBED_VIDEO_BACKENDS = (
+    'disasterinfosite.backends.LazyLoadBackend',
+)
+
 MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
