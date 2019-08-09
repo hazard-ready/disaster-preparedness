@@ -38,8 +38,8 @@ require("formdata-polyfill");
 
 if (!String.prototype.includes) {
   String.prototype.includes = function(search, start) {
-    'use strict';
-    if (typeof start !== 'number') {
+    "use strict";
+    if (typeof start !== "number") {
       start = 0;
     }
 
@@ -93,11 +93,11 @@ function loadPageWithParameters(lat, lng, queryText) {
 }
 
 function showGeocodeError() {
-  $(".geocode-error-message").removeClass('hide');
+  $(".geocode-error-message").removeClass("hide");
 }
 
 function hideGeocodeError() {
-  $(".geocode-error-message").addClass('hide');
+  $(".geocode-error-message").addClass("hide");
 }
 
 function submitLocation(lat, lng, queryText) {
@@ -182,27 +182,57 @@ function setUpMap() {
 }
 
 function setStopHeight(heroContainer) {
-  var headerHeight = $('header').outerHeight();
+  var headerHeight = $("header").outerHeight();
   var informationHeight = heroContainer.outerHeight();
   return headerHeight + informationHeight - 20;
-};
+}
+
+function lazyLoadVideos() {
+  $(".video").each(function(idx) {
+    var self = $(this);
+    var embedCode = self.data("embed");
+    // Load the video preview thumbnails asynchronously
+    var preview = new Image();
+    preview.src = "https://img.youtube.com/vi/" + embedCode + "/sddefault.jpg";
+    $(preview).on('load', function() {
+      self.append(preview);
+    });
+
+    self.click(function() {
+      var iframe = $(document.createElement("iframe"));
+
+      iframe.attr("frameborder", 0);
+      iframe.attr("allowfullscreen", "");
+      iframe.attr(
+        "src",
+        "https://www.youtube.com/embed/" +
+          embedCode +
+          "?rel=0&showinfo=0&autoplay=1"
+      );
+
+      // Swap out the static image and the play button for the video when someone clicks on it.
+      self.empty();
+      self.append(iframe);
+    });
+  });
+}
 
 $(document).ready(function() {
-  var infoContainer = $('.information-container--found-content');
-  var heroContainer = $('.hero-container');
-  var contentContainer = $('.content-container');
+  var infoContainer = $(".information-container--found-content");
+  var heroContainer = $(".hero-container");
+  var contentContainer = $(".content-container");
 
-  // if we are on the found content page, stick the hero container
-  if(infoContainer.length) {
+  // if we are on the found content page, stick the hero container and lazy load our videos.
+  if (infoContainer.length) {
     var stopHeight = setStopHeight(heroContainer);
 
     var stickMenu = function() {
-      if($(document).scrollTop() >= stopHeight) {
-        heroContainer.addClass('sticky');
-        contentContainer.css({ 'padding-top': stopHeight + 100 + 'px'});
+      if ($(document).scrollTop() >= stopHeight) {
+        heroContainer.addClass("sticky");
+        contentContainer.css({ "padding-top": stopHeight + 100 + "px" });
       } else {
-        heroContainer.removeClass('sticky');
-        contentContainer.css({'padding-top': ''});
+        heroContainer.removeClass("sticky");
+        contentContainer.css({ "padding-top": "" });
       }
     };
 
@@ -211,6 +241,8 @@ $(document).ready(function() {
     $(window).resize(function() {
       stopHeight = setStopHeight(heroContainer);
     });
+
+    lazyLoadVideos();
   }
 
   // Set up input box
@@ -230,7 +262,7 @@ $(document).ready(function() {
   $locationInput.val(location_query_text);
 
   // Hide a geocoding error message every time, if there is one
-  $locationInput.on("click", hideGeocodeError)
+  $locationInput.on("click", hideGeocodeError);
 
   // Set up autocomplete when someone clicks in the input field
   $locationInput.one("click", function() {
@@ -299,13 +331,13 @@ $(document).ready(function() {
 
   // auto location (the Find Me button)
   $autoLocationButton.click(function() {
-    hideGeocodeError()
+    hideGeocodeError();
     disableForm();
 
-    if(!navigator.geolocation) {
+    if (!navigator.geolocation) {
       showGeocodeError();
       enableForm();
-    } else  {
+    } else {
       navigator.geolocation.getCurrentPosition(
         function(position) {
           var lat = position.coords.latitude;
