@@ -18,13 +18,13 @@
   "homepage": "https://github.com/hazard-ready/disaster-preparedness#readme",
   "devDependencies": {
     "ajv": "^6.10.2",
-    "css-loader": "^3.1.0",
-    "file-loader": "^4.1.0",
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
     "mini-css-extract-plugin": "^0.7.0",
     "native-promise-only": "^0.8.1",
     "node-sass": "^4.12.0",
     "normalize.css": "^8.0.1",
-    "sass-loader": "^7.1.0",
+    "sass-loader": "^7.2.0",
     "style-loader": "^0.23.1",
     "url-loader": "^2.1.0",
     "url-polyfill": "^1.1.7",
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "fsevents": "^1.2.9",
-    "formdata-polyfill": "^3.0.18",
+    "formdata-polyfill": "^3.0.19",
     "jquery": "^3.4.1",
     "leaflet": "^1.5.1",
     "slick-carousel": "^1.8.1"
