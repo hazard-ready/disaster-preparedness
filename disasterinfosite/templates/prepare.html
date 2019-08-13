@@ -2,12 +2,13 @@
 {% load i18n %}
 {% load show_cost %}
 
+{% load render_bundle from webpack_loader %}
 {% load webpack_static from webpack_loader %}
 {% get_current_language as SELECTED_LANGUAGE_CODE %}
 
 <!doctype html>
 <html class="no-js" lang="{{ SELECTED_LANGUAGE_CODE }}">
-  {% include "head-meta.html" %}
+  {% include "head-meta.html" with file="prepare" %}
 
   <body>
     {% include "prepare-header.html" %}
@@ -21,7 +22,7 @@
         <div class="prepare-actions">
           {% regroup actions by cost as actions_by_cost %}
           {% for cost, items in actions_by_cost %}
-            <h4 class="{% if forloop.first %}section-title{% else %}section-title section-title--collapse{% endif %}" data-section="cost--{{cost}}">
+            <h4 class="section-title section-title--collapse" data-section="cost--{{cost}}">
               <img class="caret{% if forloop.first %} caret--up{% endif %}" src="{% webpack_static 'build/caret.svg' %}" alt=""/>
               {{ cost | show_cost }}
             </h4>
@@ -138,7 +139,7 @@
       </div>
     </div>
     {% include "geek_box.html" %}
-    {% include "page-end-meta.html" %}
+    {% include "page-end-meta.html" with file="prepare" %}
 
   </body>
 </html>

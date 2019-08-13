@@ -1,7 +1,8 @@
 {% load render_bundle from webpack_loader %}
 
 {% render_bundle 'vendor' 'js' %}
-{% render_bundle 'app' 'js' %}
+
+{% render_bundle file 'js' %}
 
 <!-- script for Google Analytics -->
 <script>
