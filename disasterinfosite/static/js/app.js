@@ -19,6 +19,9 @@ require("../img/locate-me.svg");
 require("./users");
 require("./sections");
 
+// IE11 polyfills
+require("url-polyfill");
+
 if (!String.prototype.includes) {
   String.prototype.includes = function(search, start) {
     "use strict";
