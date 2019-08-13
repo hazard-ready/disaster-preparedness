@@ -8,7 +8,7 @@
 
 <!doctype html>
 <html class="no-js" lang="{{ SELECTED_LANGUAGE_CODE }}">
-  {% include "head-meta.html" %}
+  {% include "head-meta.html" with file="prepare" %}
 
   <body>
     {% include "prepare-header.html" %}
@@ -139,8 +139,7 @@
       </div>
     </div>
     {% include "geek_box.html" %}
-    {% include "page-end-meta.html" %}
-    {% render_bundle 'prepare' 'js' %}
+    {% include "page-end-meta.html" with file="prepare" %}
 
   </body>
 </html>
