@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load render_bundle from webpack_loader %}
 {% load webpack_static from webpack_loader %}
 {% get_current_language as LANGUAGE_CODE %}
 
@@ -53,7 +54,8 @@
     </div>
     <!-- Load MapQuest Places search (for autocomplete) from CDN -->
     <script src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
-
     {% include "page-end-meta.html" %}
+    {% render_bundle 'app' 'js' %}
+
   </body>
 </html>
