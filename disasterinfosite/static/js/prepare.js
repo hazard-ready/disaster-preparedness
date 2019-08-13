@@ -1,4 +1,9 @@
-// prepare page
+require("normalize.css/normalize.css");
+require("../style/prepare.scss");
+
+require("./sections");
+
+// images
 require("../img/basic_kit.jpg");
 require("../img/icon-happy.svg");
 require("../img/icon-useful.svg");

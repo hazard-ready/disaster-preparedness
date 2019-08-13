@@ -21,7 +21,7 @@
  <!-- Load MapQuest Places search styles (for autocomplete) from CDN -->
  <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css"/>
 
-  {% render_bundle 'app' 'css' %}
+  {% render_bundle file 'css' %}
 
   <link rel="shortcut icon" href="{% webpack_static 'build/favicon.ico' %}"/>
   <script type="text/javascript">
