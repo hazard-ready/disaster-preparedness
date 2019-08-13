@@ -1,5 +1,5 @@
 require("normalize.css/normalize.css");
-require("../style/app.scss");
+require("../style/prepare.scss");
 
 require("./sections");
 
