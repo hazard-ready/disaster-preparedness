@@ -41,7 +41,6 @@ def includeTranslatedFields(row, columnName, fieldName, kwargs):
   if translatedField is not None and row[translatedField] != '':
     translatedColumn = fieldName + '_' + translatedField.split('-')[1]
     kwargs[translatedColumn] = row[translatedField]
-    print(kwargs)
 
   return kwargs
 
