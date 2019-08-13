@@ -7,7 +7,7 @@
 
 <!doctype html>
 <html class="no-js" lang="{{ SELECTED_LANGUAGE_CODE }}">
-{% include "head-meta.html" %}
+{% include "head-meta.html" with file="about" %}
 
 <body>
 {% include "about-header.html" %}
@@ -118,8 +118,7 @@
   </div>
 
 {% include "geek_box.html" %}
-{% include "page-end-meta.html" %}
-{% render_bundle 'app' 'js' %}
+{% include "page-end-meta.html" with file="about" %}
 
 </body>
 </html>

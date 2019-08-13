@@ -16,15 +16,6 @@ require("../img/caret.svg");
 require("../img/language.svg");
 require("../img/locate-me.svg");
 
-// about page images
-require("../img/flowchart.jpg");
-require("../img/cmk_headshot.jpg");
-require("../img/rbk_headshot.jpg");
-require("../img/gk_headshot.jpg");
-require("../img/linkedin-logo.png");
-require("../img/linkedin-logo@2x.png");
-require("../img/about-link.svg");
-
 require("./users");
 require("./sections");
 
