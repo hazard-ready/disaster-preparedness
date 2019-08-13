@@ -159,7 +159,6 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
     snugget = TextSnugget.objects.create(**kwargs)
     snugget.pop_out = addPopOutIfExists(row)
     snugget.save()
-    print('Created snugget:', snugget)
 
 
 
@@ -179,7 +178,6 @@ def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
 
   snugget = EmbedSnugget.objects.create(**kwargs)
   snugget.save()
-  print('Created embed snugget:', snugget)
 
 
 
@@ -201,7 +199,6 @@ def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
   snugget.pop_out = addPopOutIfExists(row)
   addSlideshow(os.path.join(dataDir, 'images/', row["image_slideshow_folder"]), snugget)
   snugget.save()
-  print('Created slideshow snugget:', snugget)
 
 
 def addSlideshow(folder, snugget):
@@ -217,7 +214,6 @@ def addSlideshow(folder, snugget):
       with open(imageFile, 'rb') as f:
         data = File(f)
         photo.image.save(row["image"], data, True)
-    print("...... Created", photo)
 
   print("... Image slideshow created from", folder)
 
