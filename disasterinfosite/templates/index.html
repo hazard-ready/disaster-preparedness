@@ -5,7 +5,7 @@
 
 <!DOCTYPE html>
 <html class="no-js" lang="{{ LANGUAGE_CODE }}">
-  {% include "head-meta.html" %}
+  {% include "head-meta.html" with file="app" %}
 
   <body>
     {% include "header.html" %}
@@ -54,8 +54,7 @@
     </div>
     <!-- Load MapQuest Places search (for autocomplete) from CDN -->
     <script src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
-    {% include "page-end-meta.html" %}
-    {% render_bundle 'app' 'js' %}
+    {% include "page-end-meta.html" with file="app" %}
 
   </body>
 </html>
