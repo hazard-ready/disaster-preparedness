@@ -1,7 +1,7 @@
 var path = require("path");
 var webpack = require("webpack");
 var BundleTracker = require("webpack-bundle-tracker");
-var MiniCssExtractPlugin = require('mini-css-extract-plugin');
+var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 var vendorPath = path.join(__dirname, "static/js/vendor/");
 
@@ -25,7 +25,6 @@ module.exports = {
     path: path.resolve("static/build/"),
     filename: "[name].js"
   },
-
   plugins: [
     new BundleTracker({ filename: "./webpack-stats.json" }),
     new webpack.ProvidePlugin({
@@ -55,7 +54,7 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
             query: { sourceMap: true }
           },
-          'css-loader'
+          "css-loader"
         ]
       },
       {

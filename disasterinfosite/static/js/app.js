@@ -22,6 +22,9 @@ require("../img/data-sources.pdf");
 require("./users");
 require("./sections");
 
+// IE11 polyfills
+require("url-polyfill");
+
 if (!String.prototype.includes) {
   String.prototype.includes = function(search, start) {
     "use strict";
