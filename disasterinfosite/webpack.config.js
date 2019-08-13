@@ -16,7 +16,8 @@ module.exports = {
   },
   entry: {
     vendor: ["leaflet", "jquery", "slick-carousel"],
-    app: "./static/js/app"
+    app: "./static/js/app.js",
+    prepare: "./static/js/prepare.js"
   },
 
   output: {

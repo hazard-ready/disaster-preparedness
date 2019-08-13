@@ -1,6 +1,4 @@
 require("normalize.css/normalize.css");
-require("slick-carousel/slick/slick.css");
-require("slick-carousel/slick/slick-theme.css");
 require("leaflet/dist/leaflet.css");
 require("../style/app.scss");
 
@@ -27,14 +25,8 @@ require("../img/linkedin-logo.png");
 require("../img/linkedin-logo@2x.png");
 require("../img/about-link.svg");
 
-require("./prepare");
 require("./users");
-require("slick-carousel");
-
-// IE11 polyfills
-require("url-polyfill");
-require("native-promise-only");
-require("formdata-polyfill");
+require("./sections");
 
 if (!String.prototype.includes) {
   String.prototype.includes = function(search, start) {
@@ -370,37 +362,4 @@ $(document).ready(function() {
     $autoLocationButton.removeClass("disabled");
     $(".loading").hide();
   }
-
-  // Set up expanding and collapsing sections. Set up slideshow
-  // in applicable sections when they are expanded.
-  var collapseSectionClass = "section-content--collapse";
-  var caretUpClass = "caret--up";
-
-  $(".section-title").on("click", function(event) {
-    var $sectionTitle = $(event.delegateTarget);
-    var contentSectionId = $sectionTitle.data("section");
-    if (contentSectionId) {
-      var $contentSection = $("#" + contentSectionId);
-      var $titleCaret = $sectionTitle.find(".caret");
-      var $currentSlideElement = $("#" + contentSectionId + " .past-photos");
-
-      if ($contentSection.hasClass(collapseSectionClass)) {
-        $contentSection.removeClass(collapseSectionClass);
-        $titleCaret.addClass(caretUpClass);
-
-        if ($currentSlideElement) {
-          $currentSlideElement.slick({
-            slidesToShow: 1,
-            variableWidth: false
-          });
-        }
-      } else {
-        $contentSection.addClass(collapseSectionClass);
-        $titleCaret.removeClass(caretUpClass);
-        if ($currentSlideElement) {
-          $currentSlideElement.slick("unslick");
-        }
-      }
-    }
-  });
 });
