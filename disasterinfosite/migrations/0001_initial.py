@@ -122,13 +122,6 @@ class Migration(migrations.Migration):
             name='Location',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('area_name', models.CharField(default='the affected area', help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.", max_length=100)),
-                ('community_leaders', models.TextField(default='Information about community leaders goes here.', help_text='Information about community leaders, how to contact them, and form groups.')),
-                ('area_name_es', models.CharField(default='the affected area', help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.", max_length=100, null=True)),
-                ('community_leaders_es', models.TextField(default='Information about community leaders goes here.', help_text='Information about community leaders, how to contact them, and form groups.', null=True)),
-                ('area_name_en', models.CharField(default='the affected area', help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.", max_length=100, null=True)),
-                ('community_leaders_en', models.TextField(default='Information about community leaders goes here.', help_text='Information about community leaders, how to contact them, and form groups.', null=True)),
-
             ],
             options={
                 'verbose_name': 'Location Information',
@@ -168,6 +161,10 @@ class Migration(migrations.Migration):
                 ('site_description_en', models.CharField(default='A disaster preparedness website', help_text='A small, catchy description for this site.', max_length=200, null=True)),
                 ('site_title_en', models.CharField(default='Your Title Here!', max_length=50, null=True)),
                 ('who_made_this_en', models.TextField(default='Information about the creators and maintainers of this particular site.', help_text='Include information about who you are and how to contact you.', null=True)),
+                ('area_name', models.CharField(default='the affected area', help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.", max_length=100)),
+                ('area_name_es', models.CharField(default='the affected area', help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.", max_length=100, null=True)),
+                ('area_name_en', models.CharField(default='the affected area', help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'.", max_length=100, null=True)),
+
             ],
             options={
                 'verbose_name': 'Site Settings',
