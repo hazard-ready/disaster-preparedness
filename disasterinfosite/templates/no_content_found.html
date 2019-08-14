@@ -18,7 +18,7 @@
   <div class="disaster-container">
     <h2 class="link--grey">{% trans "No information available." %}</h2>
     <p>
-      {% blocktrans with area_name=location.area_name %}It looks like your location is outside of {{ area_name }}.{% endblocktrans %}
+      {% blocktrans with area_name=settings.area_name %}It looks like your location is outside of {{ area_name }}.{% endblocktrans %}
       {% trans "While we value and promote resilience everywhere, the data that powers this site isn't available for other places yet." %}
     </p>
   </div>

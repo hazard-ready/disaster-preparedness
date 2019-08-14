@@ -14,7 +14,6 @@ def main():
   reprojectedDir = os.path.join(dataDir, "reprojected")
   simplifiedDir = os.path.join(dataDir, "simplified")
   modelsFile = os.path.join(appDir, "models.py")
-  adminFile = os.path.join(appDir, "admin.py")
   loadFile = os.path.join(appDir, "load.py")
   viewsFile = os.path.join(appDir, "views.py")
 
@@ -25,9 +24,6 @@ def main():
   modelsFilters = ""
   modelsGeoFilters = ""
   modelsSnuggetRatings = ""
-  adminModelImports = "from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings"
-  adminFilterRefs = ""
-  adminSiteRegistrations = ""
   loadMappings = ""
   loadPaths = ""
   loadImports = ""
@@ -80,12 +76,6 @@ def main():
         loadGroups += "    " + shapefileGroup + " = ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')\n"
       modelsSnuggetRatings += "                '" + stem + "_rating': " + stem + "_rating,\n"
 
-      adminModelImports += ", " + stem
-      if not first:
-        adminFilterRefs += ", "
-      adminFilterRefs += "'" + stem + "_filter'"
-      adminSiteRegistrations += "admin.site.register(" + stem + ", GeoNoEditAdmin)\n"
-
       loadImports += "    print('Loading data for " + stem + "')\n"
       loadImports += "    from .models import " + stem + "\n"
       if shapefileFound:
@@ -106,30 +96,10 @@ def main():
   # clear trailing comma from this one
   modelsLocationsList = modelsLocationsList.strip(",\n") + "\n"
 
-  # make sure this gets its own line of code
-  adminModelImports += "\n"
-
-  # assembling the complete lists for the start of class SnuggetAdmin in admin.py
-  adminLists  = "    list_display = ('shortname', 'section', " + adminFilterRefs + ")\n"
-  adminLists += "    list_filter = ('section', " + adminFilterRefs + ")\n\n"
-  adminLists += "    fieldsets = (\n"
-  adminLists += "        (None, {\n"
-  adminLists += "            'fields': ('section',)\n"
-  adminLists += "        }),\n"
-  adminLists += "        ('Filters', {\n"
-  adminLists += "            'description': 'Choose a filter value this snugget will show up for.  It is recommended you only select a value for one filter and leave the rest empty.',\n"
-  adminLists += "            'fields': ((" + adminFilterRefs + "))\n"
-  adminLists += "        })\n"
-  adminLists += "    )\n"
-
   outputGeneratedCode(modelsLocationsList, modelsFile, "locationsList")
   outputGeneratedCode(modelsClasses, modelsFile, "modelsClasses")
   outputGeneratedCode(modelsFilters, modelsFile, "modelsFilters")
   outputGeneratedCode(modelsGeoFilters, modelsFile, "modelsGeoFilters")
-
-  outputGeneratedCode(adminModelImports, adminFile, "adminModelImports")
-  outputGeneratedCode(adminLists, adminFile, "adminLists")
-  outputGeneratedCode(adminSiteRegistrations, adminFile, "adminSiteRegistrations")
 
   outputGeneratedCode(loadMappings + "\n" + loadPaths, loadFile, "loadMappings")
   outputGeneratedCode(loadGroups, loadFile, "loadGroups")
