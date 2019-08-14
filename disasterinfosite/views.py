@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from .models import Snugget, Location, SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, SlideshowSnugget, PreparednessAction
+from .models import Snugget, SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, SlideshowSnugget, PreparednessAction
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
@@ -91,7 +91,6 @@ def update_profile(request):
 @ensure_csrf_cookie
 def about_view(request):
     renderData = {
-    'location': Location.get_solo(),
     'settings': SiteSettings.get_solo()
     }
     return render(request, "about.html", renderData)
@@ -100,7 +99,6 @@ def about_view(request):
 @ensure_csrf_cookie
 def prepare_view(request):
     renderData = {
-    'location': Location.get_solo(),
     'settings': SiteSettings.get_solo(),
     'actions': PreparednessAction.objects.all().order_by('cost')
     }
@@ -122,7 +120,6 @@ def app_view(request):
 
 
     renderData = {
-        'location': Location.get_solo(),
         'settings': SiteSettings.get_solo(),
         'data_bounds': Location.get_data_bounds(),
         'quick_data_overview': DataOverviewImage.objects.all(),

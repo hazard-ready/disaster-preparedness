@@ -3,16 +3,9 @@ from embed_video.admin import AdminVideoMixin
 from solo.admin import SingletonModelAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-######################################################
-# GENERATED CODE GOES HERE
-# DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
-# adminModelImports
-from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings
-# END OF GENERATED CODE BLOCK
-######################################################
-from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, PreparednessAction
+from .models import EmbedSnugget, TextSnugget, SnuggetSection, SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, PreparednessAction
 from .actions import export_as_csv_action
-# To turn translation on from modeltranslation.admin import TranslationAdmin
+from modeltranslation.admin import TranslationAdmin
 
 # To use translatable models and see them in DjangoAdmin, use the following 5 lines instead.
 # admin.site.register(SnuggetSection, TranslationAdmin)
@@ -90,19 +83,12 @@ admin.site.register(User, UserAdmin)
 class GeoNoEditAdmin(admin.GeoModelAdmin):
     modifiable = False
 
+
 # Uncomment the next lines if you want to translate fields in DjangoAdmin to different languages.
-# class SiteSettingsAdmin(SingletonModelAdmin, TranslationAdmin):
-#     pass
-# admin.site.register(SiteSettings, SiteSettingsAdmin)
+class SiteSettingsAdmin(SingletonModelAdmin, TranslationAdmin):
+    pass
+admin.site.register(SiteSettings, SiteSettingsAdmin)
 
-# class LocationAdmin(SingletonModelAdmin, TranslationAdmin):
-#     pass
-# admin.site.register(Location, LocationAdmin)
-
-
-# Keep this block as-is if you don't want to translate these models into other languages in DjangoAdmin.
-admin.site.register(SiteSettings, SingletonModelAdmin)
-admin.site.register(Location, SingletonModelAdmin)
 
 ######################################################
 # GENERATED CODE GOES HERE

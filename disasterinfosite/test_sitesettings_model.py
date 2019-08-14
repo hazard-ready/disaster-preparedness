@@ -8,6 +8,7 @@ class SiteSettingsModelTestCase(TestCase):
       contact_email="foo@bar.com",
       site_url="http://www.whatever.com:4949/stuff.aspx?whatever",
       site_description="This is an example disaster website",
+      area_name="The affected area"
     )
 
   def testObjectFormation(self):
