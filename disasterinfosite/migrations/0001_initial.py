@@ -98,6 +98,57 @@ class Migration(migrations.Migration):
             bases=('disasterinfosite.snugget',),
         ),
         migrations.CreateModel(
+            name='PreparednessAction',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('title', models.TextField(default='')),
+                ('image', models.ImageField(upload_to='prepare_images')),
+                ('cost', models.IntegerField(default=0, validators=[django.contrib.postgres.validators.RangeMinValueValidator(0), django.contrib.postgres.validators.RangeMaxValueValidator(4)])),
+                ('happy_text', models.TextField(default='')),
+                ('useful_text', models.TextField(default='')),
+                ('property_text', models.TextField(default='')),
+                ('content_text', models.TextField(default='')),
+                ('link_text', models.TextField(default='')),
+                ('link_icon', models.ImageField(upload_to='prepare_images')),
+                ('link', models.URLField(default='')),
+                ('slug', models.TextField(default='')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='UserProfile',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('address1', models.CharField(blank=True, max_length=200)),
+                ('address2', models.CharField(blank=True, max_length=200)),
+                ('city', models.CharField(blank=True, max_length=200)),
+                ('state', models.CharField(blank=True, max_length=50)),
+                ('zip_code', models.CharField(blank=True, max_length=50)),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('actions_taken', models.ManyToManyField(to='disasterinfosite.PreparednessAction')),
+            ],
+            options={
+                'verbose_name': 'User Profile',
+            },
+        ),
+        migrations.CreateModel(
+            name='SnuggetType',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(max_length=50)),
+                ('model_name', models.CharField(choices=[('SNUG_TEXT', 'TextSnugget'), ('SNUG_VIDEO', 'EmbedSnugget'), ('SNUG_SLIDESHOW', 'SlideshowSnugget')], max_length=255)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='DataOverviewImage',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('link_text', models.CharField(default='', max_length=100)),
+                ('image', models.ImageField(storage=disasterinfosite.models.OverwriteStorage(), upload_to='data')),
+                ('link_text_es', models.CharField(default='', max_length=100, null=True)),
+                ('link_text_en', models.CharField(default='', max_length=100, null=True)),
+            ],
+        ),
+        migrations.CreateModel(
             name='EmbedSnugget',
             fields=[
                 ('snugget_ptr', models.OneToOneField(auto_created=True, to='disasterinfosite.Snugget', serialize=False, primary_key=True, parent_link=True, on_delete=models.CASCADE)),
@@ -131,41 +182,9 @@ class Migration(migrations.Migration):
                 ('image', models.ImageField(storage=OverwriteStorage(), upload_to='data')),
             ],
         ),
-         migrations.CreateModel(
-            name='UserProfile',
-            fields=[
-                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
-                ('address1', models.CharField(max_length=200, blank=True)),
-                ('address2', models.CharField(max_length=200, blank=True)),
-                ('city', models.CharField(max_length=200, blank=True)),
-                ('state', models.CharField(max_length=50, blank=True)),
-                ('zip_code', models.CharField(max_length=50, blank=True)),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
-            ],
-            options={
-                'verbose_name': 'User Profile',
-            },
-        ),
         migrations.AlterField(
             model_name='snuggettype',
             name='model_name',
             field=models.CharField(choices=[('SNUG_TEXT', 'TextSnugget'), ('SNUG_VIDEO', 'EmbedSnugget'), ('SNUG_SLIDESHOW', 'SlideshowSnugget')], max_length=255),
-        ),
-        migrations.CreateModel(
-            name='PreparednessAction',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.TextField(default='')),
-                ('image', models.ImageField(upload_to='prepare_images')),
-                ('cost', models.IntegerField(default=0, validators=[django.contrib.postgres.validators.RangeMinValueValidator(0), django.contrib.postgres.validators.RangeMaxValueValidator(4)])),
-                ('happy_text', models.TextField(default='')),
-                ('useful_text', models.TextField(default='')),
-                ('property_text', models.TextField(default='')),
-                ('content_text', models.TextField(default='')),
-                ('link_text', models.TextField(default='')),
-                ('link_icon', models.ImageField(upload_to='prepare_images')),
-                ('link', models.URLField(default='')),
-                ('slug', models.TextField(default='')),
-            ],
         ),
     ]
