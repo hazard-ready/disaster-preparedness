@@ -1,69 +1,15 @@
 from django.contrib.gis import admin
-from embed_video.admin import AdminVideoMixin
 from solo.admin import SingletonModelAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from .models import EmbedSnugget, TextSnugget, SnuggetSection, SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, PreparednessAction
+from .models import SnuggetSection, SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile
 from .actions import export_as_csv_action
 from modeltranslation.admin import TranslationAdmin
 
-# To use translatable models and see them in DjangoAdmin, use the following 5 lines instead.
-# admin.site.register(SnuggetSection, TranslationAdmin)
-# admin.site.register(SnuggetSubSection, TranslationAdmin)
-# admin.site.register(ShapefileGroup, TranslationAdmin)
-# admin.site.register(PastEventsPhoto, TranslationAdmin)
-# admin.site.register(DataOverviewImage, TranslationAdmin)
-
-# Use the next three lines if you don't want to translate these models into other languages in Django Admin.
-admin.site.register(SnuggetSection, admin.ModelAdmin)
-admin.site.register(ShapefileGroup, admin.ModelAdmin)
-admin.site.register(PastEventsPhoto, admin.ModelAdmin)
-admin.site.register(DataOverviewImage, admin.ModelAdmin)
-
-
-class SnuggetAdmin(admin.ModelAdmin):
-######################################################
-# GENERATED CODE GOES HERE
-# DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
-# adminLists
-    fieldsets = (
-        (None, {
-            'fields': ('section', 'sub_section'),
-        }),
-        ('Filters', {
-            'description': 'Choose a filter value this snugget will show up for.',
-            'fields': ((),)
-            }),
-    )
-# END OF GENERATED CODE BLOCK
-######################################################
-
-    def shortname(self, obj):
-        return "Undefined"
-
-
-# if you want to translate text snuggets: class TextAdmin(SnuggetAdmin, TranslationAdmin):
-class TextAdmin(SnuggetAdmin):
-    fieldsets = SnuggetAdmin.fieldsets + ((None, {
-        'fields': ('content',),
-        }),
-    )
-
-    def shortname(self, obj):
-        return 'Text: "' + str(obj) + '"'
-
-
-class EmbedAdmin(AdminVideoMixin, SnuggetAdmin):
-    fieldsets = SnuggetAdmin.fieldsets + ((None, {
-        'fields': ('embed',),
-        }),
-    )
-
-    def shortname(self, obj):
-        return "EmbedSnugget"
-
-admin.site.register(TextSnugget, TextAdmin)
-admin.site.register(EmbedSnugget, EmbedAdmin)
+admin.site.register(SnuggetSection, TranslationAdmin)
+admin.site.register(ShapefileGroup, TranslationAdmin)
+admin.site.register(PastEventsPhoto, TranslationAdmin)
+admin.site.register(DataOverviewImage, TranslationAdmin)
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
@@ -89,10 +35,3 @@ class SiteSettingsAdmin(SingletonModelAdmin, TranslationAdmin):
     pass
 admin.site.register(SiteSettings, SiteSettingsAdmin)
 
-
-######################################################
-# GENERATED CODE GOES HERE
-# DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
-# adminSiteRegistrations
-# END OF GENERATED CODE BLOCK
-######################################################
