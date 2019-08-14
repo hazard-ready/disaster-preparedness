@@ -7,12 +7,12 @@ from django.contrib.auth.models import User
 # GENERATED CODE GOES HERE
 # DO NOT MANUALLY EDIT CODE IN THIS SECTION - IT WILL BE OVERWRITTEN
 # adminModelImports
-from .models import EmbedSnugget, TextSnugget, SnuggetSection, Location, SiteSettings, RDPO_region_quake, RDPO_region_winter, RDPO_Lsd_Clark, RDPO_counties_quake, RDPOflood_OR, RDPO_counties_volcano, RDPO_Lsld_OR, RDPOFire_Clark, RDPO_region_summer, RDPO_region_fire, RDPOCascadiaM9_3_Clark, RDPOFire_OR, RDPO_region_volcano, RDPOLiquefaction_OR, RDPOCascadiaM9_Col, RDPOflood_clark, RDPO_region_flood, RDPOvolcanoes, RDPO_counties_winter, RDPO_counties_fire, RDPO_WA, RDPO_counties_flood, RDPO_OR, RDPOCascadiaM9_3Cnty, RDPO_region_slide, RDPOCascadiaM9_OR, RDPOLiquefact_Clark, RDPO_counties_summer, RDPOhistflood, RDPO_counties_slide
+from .models import EmbedSnugget, TextSnugget, SnuggetSection, SiteSettings, RDPO_region_quake, RDPO_region_winter, RDPO_Lsd_Clark, RDPO_counties_quake, RDPOflood_OR, RDPO_counties_volcano, RDPO_Lsld_OR, RDPOFire_Clark, RDPO_region_summer, RDPO_region_fire, RDPOCascadiaM9_3_Clark, RDPOFire_OR, RDPO_region_volcano, RDPOLiquefaction_OR, RDPOCascadiaM9_Col, RDPOflood_clark, RDPO_region_flood, RDPOvolcanoes, RDPO_counties_winter, RDPO_counties_fire, RDPO_WA, RDPO_counties_flood, RDPO_OR, RDPOCascadiaM9_3Cnty, RDPO_region_slide, RDPOCascadiaM9_OR, RDPOLiquefact_Clark, RDPO_counties_summer, RDPOhistflood, RDPO_counties_slide
 # END OF GENERATED CODE BLOCK
 ######################################################
 from .models import ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile, PreparednessAction, SurveyCode
 from .actions import export_as_csv_action
-# To turn translation on from modeltranslation.admin import TranslationAdmin
+from modeltranslation.admin import TranslationAdmin
 
 # To use translatable models and see them in DjangoAdmin, use the following 5 lines instead.
 # admin.site.register(SnuggetSection, TranslationAdmin)
@@ -100,19 +100,12 @@ admin.site.register(SurveyCode, SurveyCodeAdmin)
 class GeoNoEditAdmin(admin.GeoModelAdmin):
     modifiable = False
 
+
 # Uncomment the next lines if you want to translate fields in DjangoAdmin to different languages.
-# class SiteSettingsAdmin(SingletonModelAdmin, TranslationAdmin):
-#     pass
-# admin.site.register(SiteSettings, SiteSettingsAdmin)
+class SiteSettingsAdmin(SingletonModelAdmin, TranslationAdmin):
+    pass
+admin.site.register(SiteSettings, SiteSettingsAdmin)
 
-# class LocationAdmin(SingletonModelAdmin, TranslationAdmin):
-#     pass
-# admin.site.register(Location, LocationAdmin)
-
-
-# Keep this block as-is if you don't want to translate these models into other languages in DjangoAdmin.
-admin.site.register(SiteSettings, SingletonModelAdmin)
-admin.site.register(Location, SingletonModelAdmin)
 
 ######################################################
 # GENERATED CODE GOES HERE

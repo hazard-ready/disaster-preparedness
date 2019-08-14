@@ -121,10 +121,10 @@
       <div class="about-container">
         <div class="about-content__text">
           <p>
-              {% blocktrans with title=settings.site_title area_name=location.area_name %}{{ title }} is designed to help educate and prepare people for disasters that occur in their area. Disasters don’t strike locations equally so we found it important to give location specific information in order to properly prepare. {{ title }} organizes current information and packages it in a way that makes it accessible for any {{ area_name }} resident.{% endblocktrans %}
+              {% blocktrans with title=settings.site_title area_name=settings.area_name %}{{ title }} is designed to help educate and prepare people for disasters that occur in their area. Disasters don’t strike locations equally so we found it important to give location specific information in order to properly prepare. {{ title }} organizes current information and packages it in a way that makes it accessible for any {{ area_name }} resident.{% endblocktrans %}
           </p>
           <p>
-              {% blocktrans with area_name=location.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original data sources. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.{% endblocktrans %}
+              {% blocktrans with area_name=settings.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original data sources. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.{% endblocktrans %}
           </p>
         </div>
         <div class="about-content__flowchart">
@@ -147,7 +147,7 @@
 
         <h3 class="caps">{% trans "Quick Data Overview" %}</h3>
         <p>
-            {% blocktrans with area_name=location.area_name %}Take a look at some overviews of the data we used for {{ area_name }}:{% endblocktrans %}
+            {% blocktrans with area_name=settings.area_name %}Take a look at some overviews of the data we used for {{ area_name }}:{% endblocktrans %}
         </p>
         <ul>
             {% for item in quick_data_overview %}
