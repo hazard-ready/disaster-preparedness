@@ -23,6 +23,24 @@ SNUGGET_TYPES = (
                  ('SNUG_SLIDESHOW', 'SlideshowSnugget')
                 )
 
+class PreparednessAction(models.Model):
+    title = models.TextField(default="")
+    image = models.ImageField(upload_to="prepare_images")
+    cost = models.IntegerField(default=0,
+        validators=[
+            RangeMinValueValidator(0),
+            RangeMaxValueValidator(4)
+        ])
+    happy_text = models.TextField(default="")
+    useful_text = models.TextField(default="")
+    property_text = models.TextField(default="")
+    content_text = models.TextField(default="")
+    link_text = models.TextField(default="")
+    link_icon = models.ImageField(upload_to="prepare_images")
+    link = models.URLField(default="")
+    slug = models.TextField(default="")
+
+
 class UserProfile(models.Model):
     """ A model representing a user's information that isn't their username, password, or email address """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -31,6 +49,7 @@ class UserProfile(models.Model):
     city = models.CharField(max_length=200, blank=True)
     state = models.CharField(max_length=50, blank=True)
     zip_code = models.CharField(max_length=50, blank=True)
+    actions_taken = models.ManyToManyField(PreparednessAction)
 
     class Meta:
         verbose_name = "User Profile"
@@ -938,10 +957,12 @@ class PastEventsPhoto(models.Model):
     def __str__(self):
         return str(self.image.url) + ' Caption: ' + str(self.caption)
 
+
 class OverwriteStorage(FileSystemStorage):
     def get_available_name(self, name):
         self.delete(name)
         return name
+
 
 class DataOverviewImage(models.Model):
     link_text = models.CharField(default="", max_length=100)
@@ -949,23 +970,6 @@ class DataOverviewImage(models.Model):
 
     def __str__(self):
         return self.image.url
-
-class PreparednessAction(models.Model):
-    title = models.TextField(default="")
-    image = models.ImageField(upload_to="prepare_images")
-    cost = models.IntegerField(default=0,
-        validators=[
-            RangeMinValueValidator(0),
-            RangeMaxValueValidator(4)
-        ])
-    happy_text = models.TextField(default="")
-    useful_text = models.TextField(default="")
-    property_text = models.TextField(default="")
-    content_text = models.TextField(default="")
-    link_text = models.TextField(default="")
-    link_icon = models.ImageField(upload_to="prepare_images")
-    link = models.URLField(default="")
-    slug = models.TextField(default="")
 
 
 class SurveyCode(models.Model):
