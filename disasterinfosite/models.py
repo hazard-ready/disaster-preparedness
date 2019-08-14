@@ -41,6 +41,11 @@ class UserProfile(models.Model):
 
 class SiteSettings(SingletonModel):
     """A singleton model to represent site-wide settings."""
+    area_name = models.CharField(
+        max_length=100,
+        default="the affected area",
+        help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'."
+    )
     about_text = models.TextField(
         default="Information about your organization goes here.",
         help_text="Describe the data and the agencies that it came from."
@@ -84,16 +89,6 @@ class SiteSettings(SingletonModel):
 
 class Location(SingletonModel):
     """A singleton model to represent the location covered by this website's data"""
-    area_name = models.CharField(
-        max_length=100,
-        default="the affected area",
-        help_text="Describe the entire area that this app covers, e.g. 'Oregon' or 'Missoula County'."
-    )
-
-    community_leaders = models.TextField(
-        default="Information about community leaders goes here.",
-        help_text="Information about community leaders, how to contact them, and form groups."
-    )
 
     def __unicode__(self):
         return u"Location Information"
