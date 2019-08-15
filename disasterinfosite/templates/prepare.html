@@ -10,6 +10,10 @@
 <html class="no-js" lang="{{ SELECTED_LANGUAGE_CODE }}">
   {% include "head-meta.html" with file="prepare" %}
 
+    <script type="text/javascript">
+      var loggedIn = {{ logged_in | js }};
+    </script>
+
   <body>
     {% include "prepare-header.html" %}
     <div class="content-container">
@@ -99,7 +103,9 @@
           </tr>
           {% for item in actions %}
             <tr>
-              <td class="center-align"><input type="checkbox"></td>
+              <td class="center-align">
+                <input type="checkbox" class="checkbox--action-taken" value="{{ item.id }}" {% if item.id in actions_taken %}checked{% endif %}>
+              </td>
               <td>{{ item.title }}</td>
               <td class="center-align">{% if item.happy_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
               </td>

@@ -19,7 +19,7 @@ urlpatterns += i18n_patterns(url(r'^accounts/update_profile/$', views.update_pro
 urlpatterns += i18n_patterns(url(r'^$', views.app_view, name='index'))
 urlpatterns += i18n_patterns(url(r'^about/$', views.about_view, name='about'))
 urlpatterns += i18n_patterns(url(r'^prepare/$', views.prepare_view, name='prepare'))
-
+urlpatterns += i18n_patterns(url(r'^prepare-action/$', views.prepare_action_save, name='prepare_action_save'))
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
