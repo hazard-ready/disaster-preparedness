@@ -122,12 +122,12 @@ def prepare_view(request):
 
     if request.user.is_authenticated:
         renderData['logged_in'] = True
-        renderData['actions_taken'] = UserProfile.objects.get(user=request.user).actions_taken.all().values_list('id')
+        renderData['actions_taken'] = UserProfile.objects.get(user=request.user).actions_taken.all().values_list('id', flat=True)
 
     return render(request, "prepare.html", renderData)
 
 @ensure_csrf_cookie
-def prepare_action_save(request):
+def prepare_action_update(request):
     if request.method == 'POST' and request.user.is_authenticated:
         try:
             profile = UserProfile.objects.get(user=request.user)
