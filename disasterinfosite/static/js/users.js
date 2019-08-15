@@ -2,45 +2,7 @@
 require("native-promise-only");
 require("formdata-polyfill");
 
-function getCookie(name) {
-  var cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-    var cookies = document.cookie.split(";");
-    cookies.forEach(function(cookie) {
-      cookie = cookie.trim();
-      // Does this cookie string begin with the name we want?
-      if (cookie.substring(0, name.length + 1) == name + "=") {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        return cookieValue;
-      }
-    });
-  }
-  return cookieValue;
-};
-
-function sendAjaxAuthRequest(url, data) {
-  var object = {
-    next: document.location.pathname
-  };
-
-  if(data) {
-    data.forEach(function(value, key){
-      object[key] = value;
-    });
-  }
-
-  var csrftoken = getCookie("csrftoken");
-
-  return $.ajax({
-    crossDomain: false,
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("X-CSRFToken", csrftoken);
-    },
-    type: "POST",
-    url: url,
-    data: object
-  });
-}
+var utils = require("./utils");
 
 function setValueOnFocus(el, value) {
   el.focus(function() {
@@ -61,6 +23,30 @@ function requiredBlur(el, text) {
     if (el.val() === "") {
       el.attr("placeholder", text);
     }
+  });
+}
+
+function sendAjaxAuthRequest(url, data) {
+  var object = {
+    next: document.location.pathname
+  };
+
+  if (data) {
+    data.forEach(function(value, key) {
+      object[key] = value;
+    });
+  }
+
+  var csrftoken = utils.getCsrfFromCookie();
+
+  return $.ajax({
+    crossDomain: false,
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    },
+    method: "POST",
+    url: url,
+    data: object
   });
 }
 
@@ -119,7 +105,7 @@ $(document).ready(function() {
 
   $(".button--logout").click(function(event) {
     event.preventDefault();
-    sendAjaxAuthRequest("accounts/logout/")
+    sendAjaxAuthRequest("/accounts/logout/")
       .done(function() {
         location.reload(true);
       })
@@ -134,7 +120,7 @@ $(document).ready(function() {
   $signupForm.submit(function(event) {
     event.preventDefault();
 
-    sendAjaxAuthRequest("accounts/create_user/", new FormData($signupForm[0]))
+    sendAjaxAuthRequest("/accounts/create_user/", new FormData($signupForm[0]))
     .done(function() {
       $("#user-signup-result-container").removeClass('hide');;
     })
@@ -150,7 +136,7 @@ $(document).ready(function() {
   $loginForm.submit(function(event) {
     event.preventDefault();
 
-    sendAjaxAuthRequest("accounts/login/", new FormData($loginForm[0]))
+    sendAjaxAuthRequest("/accounts/login/", new FormData($loginForm[0]))
       .done(function() {
         location.hash = "user-interaction-container";
         location.reload(true);
@@ -165,7 +151,7 @@ $(document).ready(function() {
   $updateForm.submit(function(event) {
     event.preventDefault();
 
-    sendAjaxAuthRequest("accounts/update_profile/", new FormData($updateForm[0]))
+    sendAjaxAuthRequest("/accounts/update_profile/", new FormData($updateForm[0]))
       .done(function() {
         $("#user-profile-result-container").removeClass('hide');;
       })
