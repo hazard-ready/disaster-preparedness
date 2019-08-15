@@ -52,13 +52,13 @@ class UserProfile(models.Model):
     city = models.CharField(max_length=200, blank=True)
     state = models.CharField(max_length=50, blank=True)
     zip_code = models.CharField(max_length=50, blank=True)
-    actions_taken = models.ManyToManyField(PreparednessAction)
+    actions_taken = models.ManyToManyField(PreparednessAction, blank=True)
 
     class Meta:
         verbose_name = "User Profile"
 
     def __str__(self):
-        return "{0}: {1}, {2} {3}, {4} {5}".format(self.user, self.address1, self.address2, self.city, self.state, self.zip_code)
+        return "{0}: {1}, {2} {3}, {4} {5}: {6}".format(self.user, self.address1, self.address2, self.city, self.state, self.zip_code, self.actions_taken.all().values_list('title', flat=True))
 
 
 class SiteSettings(SingletonModel):
