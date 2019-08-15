@@ -26,6 +26,30 @@ function requiredBlur(el, text) {
   });
 }
 
+function sendAjaxAuthRequest(url, data) {
+  var object = {
+    next: document.location.pathname
+  };
+
+  if (data) {
+    data.forEach(function(value, key) {
+      object[key] = value;
+    });
+  }
+
+  var csrftoken = utils.getCsrfFromCookie();
+
+  return $.ajax({
+    crossDomain: false,
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    },
+    method: "POST",
+    url: url,
+    data: object
+  });
+}
+
 $(document).ready(function() {
   var $signupForm = $("#user-signup__form");
   var $loginForm = $("#user-login__form");
