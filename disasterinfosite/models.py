@@ -40,6 +40,9 @@ class PreparednessAction(models.Model):
     link = models.URLField(default="")
     slug = models.TextField(default="")
 
+    def __str__(self):
+        return self.title
+
 
 class UserProfile(models.Model):
     """ A model representing a user's information that isn't their username, password, or email address """
