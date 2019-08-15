@@ -32,31 +32,7 @@ function debounce(func, wait, immediate) {
   };
 }
 
-function sendAjaxAuthRequest(url, data) {
-  var object = {
-    next: document.location.pathname
-  };
-
-  if (data) {
-    data.forEach(function(value, key) {
-      object[key] = value;
-    });
-  }
-
-  var csrftoken = getCsrfFromCookie();
-
-  return $.ajax({
-    crossDomain: false,
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("X-CSRFToken", csrftoken);
-    },
-    type: "POST",
-    url: url,
-    data: object
-  });
-}
-
 module.exports = {
-  sendAjaxAuthRequest: sendAjaxAuthRequest,
+  getCsrfFromCookie: getCsrfFromCookie,
   debounce: debounce
 };
