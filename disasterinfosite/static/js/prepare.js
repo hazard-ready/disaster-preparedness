@@ -2,6 +2,7 @@ require("normalize.css/normalize.css");
 require("../style/prepare.scss");
 
 require("./sections");
+var utils = require("./utils");
 
 // images
 require("../img/basic_kit.jpg");
@@ -64,4 +65,22 @@ $(document).ready(function() {
     window.print();
     return false;
   });
+
+  // If there is a current user, when that person clicks the checkboxes, save that state to their profile.
+  if (loggedIn) {
+    $(".checkbox--action-taken").click(
+      utils.debounce(function(event) {
+        var $checkbox = $(event.delegateTarget);
+        utils
+          .sendAjaxAuthRequest("prepare-action/", {
+            action: $checkbox.val,
+            taken: $checkbox.is(":checked")
+          })
+          .done(function() {})
+          .fail(function(error) {
+            console.error("Error saving prepare action to profile:", error);
+          });
+      }, 250)
+    );
+  }
 });
