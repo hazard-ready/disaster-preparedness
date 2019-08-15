@@ -81,7 +81,7 @@ $(document).ready(function() {
 
   $(".button--logout").click(function(event) {
     event.preventDefault();
-    utils.sendAjaxAuthRequest("accounts/logout/")
+    sendAjaxAuthRequest("/accounts/logout/")
       .done(function() {
         location.reload(true);
       })
@@ -96,7 +96,7 @@ $(document).ready(function() {
   $signupForm.submit(function(event) {
     event.preventDefault();
 
-    utils.sendAjaxAuthRequest("accounts/create_user/", new FormData($signupForm[0]))
+    sendAjaxAuthRequest("/accounts/create_user/", new FormData($signupForm[0]))
     .done(function() {
       $("#user-signup-result-container").removeClass('hide');;
     })
@@ -112,7 +112,7 @@ $(document).ready(function() {
   $loginForm.submit(function(event) {
     event.preventDefault();
 
-    utils.sendAjaxAuthRequest("accounts/login/", new FormData($loginForm[0]))
+    sendAjaxAuthRequest("/accounts/login/", new FormData($loginForm[0]))
       .done(function() {
         location.hash = "user-interaction-container";
         location.reload(true);
@@ -127,7 +127,7 @@ $(document).ready(function() {
   $updateForm.submit(function(event) {
     event.preventDefault();
 
-    utils.sendAjaxAuthRequest("accounts/update_profile/", new FormData($updateForm[0]))
+    sendAjaxAuthRequest("/accounts/update_profile/", new FormData($updateForm[0]))
       .done(function() {
         $("#user-profile-result-container").removeClass('hide');;
       })
