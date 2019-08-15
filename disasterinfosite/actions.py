@@ -18,6 +18,7 @@ def export_as_csv_action(description="Export selected objects in a CSV file", fi
         response['Content-Disposition'] = 'attachment; filename=%s.csv' % str(opts).replace('.', '_')
 
         writer = csv.writer(response)
+
         writer.writerow(field_names)
         for obj in queryset:
             queryObject = model_to_export.objects.get(id=obj.id)
@@ -26,7 +27,12 @@ def export_as_csv_action(description="Export selected objects in a CSV file", fi
                 if hasattr(obj, field):
                     row.append(getattr(obj, field))
                 else:
-                    row.append(getattr(queryObject, field))
+                    data = getattr(queryObject, field)
+                    # If a field is a relation to another model, follow it
+                    if hasattr(data, 'all') and callable(getattr(data, 'all',)):
+                        data = ', '.join(list(str(x) for x in data.all()))
+
+                    row.append(data)
             writer.writerow(row)
         return response
     export_as_csv.short_description = description

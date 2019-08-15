@@ -115,11 +115,38 @@ def about_view(request):
 @ensure_csrf_cookie
 def prepare_view(request):
     renderData = {
-    'settings': SiteSettings.get_solo(),
-    'actions': PreparednessAction.objects.all().order_by('cost')
+        'settings': SiteSettings.get_solo(),
+        'actions': PreparednessAction.objects.all().order_by('cost'),
+        'logged_in': False
     }
+
+    if request.user.is_authenticated:
+        renderData['logged_in'] = True
+        renderData['actions_taken'] = UserProfile.objects.get(user=request.user).actions_taken.all().values_list('id', flat=True)
+
     return render(request, "prepare.html", renderData)
 
+@ensure_csrf_cookie
+def prepare_action_update(request):
+    if request.method == 'POST' and request.user.is_authenticated:
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+            action_id = request.POST.get('action', '')
+            action = PreparednessAction.objects.get(id=action_id)
+            taken = request.POST.get('taken', '')
+
+            if taken == 'true':
+                profile.actions_taken.add(action)
+            else:
+                profile.actions_taken.remove(action)
+
+            profile.save()
+        except (ValueError, IntegrityError):
+            return HttpResponse(status=500)
+
+        return HttpResponse(status=201)
+    else:
+        return HttpResponse(status=403)
 
 @ensure_csrf_cookie
 def app_view(request):
