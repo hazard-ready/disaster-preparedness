@@ -100,7 +100,7 @@ class Migration(migrations.Migration):
                 ('state', models.CharField(blank=True, max_length=50)),
                 ('zip_code', models.CharField(blank=True, max_length=50)),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('actions_taken', models.ManyToManyField(to='disasterinfosite.PreparednessAction')),
+                ('actions_taken', models.ManyToManyField(to='disasterinfosite.PreparednessAction', blank=True)),
             ],
             options={
                 'verbose_name': 'User Profile',
