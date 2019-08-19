@@ -20,7 +20,7 @@
 
 .hero-container.sticky {
   background-color: $soft-white;
-  box-shadow: 0 2px 12px;
+  box-shadow: 0 2px 12px $grey-shadow;
   min-height: 90px;
   padding: 10px;
   position: fixed;
