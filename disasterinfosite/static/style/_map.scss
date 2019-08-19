@@ -49,21 +49,21 @@
   }
 
   .info__location {
-    font-size: 24px;
+    font-size: 20px;
 
     @include breakpoint(large) {
-      font-size: 28px;
+      font-size: 24px;
     }
   }
 
   .info__start-over {
     display: inline;
-    line-height: 2.5;
+    line-height: 2;
     margin-left: 20px;
     vertical-align: top;
 
     @include breakpoint(large) {
-      line-height: 3.5;
+      line-height: 2.5;
     }
   }
 
@@ -127,9 +127,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 10px;
   overflow: scroll;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 }
 
 .hazard-link, .prepare-link {
