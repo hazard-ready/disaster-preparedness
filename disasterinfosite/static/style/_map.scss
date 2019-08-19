@@ -1,7 +1,6 @@
 /* Information and Instructions */
 .hero-container {
   min-height: 300px;
-  padding-bottom: 20px;
   transition: 0.5s background-color ease, 0.5s min-height ease;
 
   .survey-link {
@@ -81,6 +80,11 @@
   .survey-link {
     display: block;
   }
+
+  .hazard-link.selected {
+    border-bottom: 2px solid $dark-accent;
+    color: $dark-accent;
+  }
 }
 
 .information-container {
@@ -119,20 +123,17 @@
 
 .hazard-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
   margin-top: 10px;
-
-  @include breakpoint(medium-and-up) {
-    justify-content: space-between;
-  }
+  overflow: scroll;
+  padding-bottom: 10px;
 }
 
 .hazard-link, .prepare-link {
   border-bottom: 2px solid $soft-white;
   color: $bright-accent;
-  margin: 5px;
+  margin: 5px 10px;
   text-decoration: none;
 
   &:focus, &:hover, &:active {

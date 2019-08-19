@@ -211,14 +211,48 @@ $(document).ready(function() {
   var heroContainer = $(".hero-container");
   var contentContainer = $(".content-container");
 
-  // if we are on the found content page, stick the hero container and lazy load our videos.
+  // if we are on the found content page, stick the hero container, set up our tabs and lazy load our videos.
   if (infoContainer.length) {
     var stopHeight = setStopHeight(heroContainer);
 
+    var hazardLinks = $('.hazard-link');
+
+    // get the hash, if there is one, and select the correct tab
+    var anchor = window.location.hash;
+    $('a[href="' + anchor + '"]').addClass('selected');
+
+    // Select the correct tab when we click on one
+    hazardLinks.click(function(event) {
+      hazardLinks.removeClass('selected');
+      $(event.delegateTarget).addClass('selected');
+    });
+
+    // Highlight the correct hazard tabs as we scroll
+    var anchors = $('.anchor');
+    var previousHazard;
+
     var stickMenu = function() {
-      if ($(document).scrollTop() >= stopHeight) {
+      var scrollTop = $(document).scrollTop();
+      if (scrollTop >= stopHeight) {
         heroContainer.addClass("sticky");
         contentContainer.css({ "padding-top": stopHeight + 100 + "px" });
+
+        // Get id of current hazard
+         var currentHazard = anchors.filter(function(){
+          var container = $(this).parent();
+          var top = container.offset().top - 200;
+          return (top <= scrollTop && container.outerHeight() + top >= scrollTop)
+         }).attr('id');
+
+         if(currentHazard !== previousHazard) {
+            previousHazard = currentHazard;
+            hazardLinks.removeClass('selected');
+            var currentTab = $('a[href="#' + currentHazard + '"]');
+            currentTab.addClass('selected');
+            if(currentTab[0]) {
+              currentTab[0].scrollIntoView();
+            }
+         }
       } else {
         heroContainer.removeClass("sticky");
         contentContainer.css({ "padding-top": "" });
