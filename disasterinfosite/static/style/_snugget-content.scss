@@ -53,7 +53,6 @@
   justify-content: space-between;
   max-height: 9000px;
   overflow: hidden;
-  transition: max-height 0.3s ease-out;
 
   @include breakpoint(large) {
     flex-direction: row;
