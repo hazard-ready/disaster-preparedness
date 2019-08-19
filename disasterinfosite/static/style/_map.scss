@@ -1,7 +1,8 @@
 /* Information and Instructions */
 .hero-container {
+  background-color: $soft-white;
   min-height: 300px;
-  transition: 0.5s background-color ease, 0.5s min-height ease;
+  transition: 0.5s min-height ease;
 
   .survey-link {
     display: none;
