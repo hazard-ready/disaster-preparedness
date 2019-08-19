@@ -164,13 +164,21 @@ header {
   &:hover {
     background-color: $light-accent;
     color: $white;
+
+    .target {
+      fill: $white;
+    }
   }
 }
 
 .icon--locate-me {
-  height: 16px;
-  margin: 3px 3px 3px 0;
+  margin: 3px 0;
   vertical-align: top;
+
+  .target {
+    fill: $light-accent;
+    transition: color 1s;
+  }
 
   @include breakpoint(large-and-up) {
     height: 18px;
