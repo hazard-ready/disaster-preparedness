@@ -30,7 +30,7 @@
     "url-polyfill": "^1.1.7",
     "webpack": "^4.39.2",
     "webpack-bundle-tracker": "^0.4.2-beta",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.7"
   },
   "dependencies": {
     "fsevents": "^1.2.9",
