@@ -36,10 +36,11 @@
 
   .info__pin {
     display: inline-block;
-    height: 30px;
+    height: 25px;
+    vertical-align: middle;
 
     @include breakpoint(large) {
-      height: 40px;
+      height: 30px;
     }
   }
 
