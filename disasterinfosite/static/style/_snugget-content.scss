@@ -198,14 +198,15 @@
   bottom: 0;
   top: 0;
   width: 2px;
-  background-color: $dark-accent;
+  background-color: $dark-grey;
 
   &:before {
     color: $dark-grey;
     content: "\25BC";
-    top: -18px;
+    font-size: 36px;
+    top: -40px;
     position: absolute;
-    left: -7px;
+    left: -17px;
     text-align: center;
   }
 }
