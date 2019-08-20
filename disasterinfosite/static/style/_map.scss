@@ -1,7 +1,8 @@
 /* Information and Instructions */
 .hero-container {
+  background-color: $soft-white;
   min-height: 300px;
-  transition: 0.5s background-color ease, 0.5s min-height ease;
+  transition: 0.5s min-height ease;
 
   .survey-link {
     display: none;
@@ -19,7 +20,7 @@
 
 .hero-container.sticky {
   background-color: $soft-white;
-  box-shadow: 0 2px 12px;
+  box-shadow: 0 2px 12px $grey-shadow;
   min-height: 90px;
   padding: 10px;
   position: fixed;
@@ -39,29 +40,30 @@
 
   .info__pin {
     display: inline-block;
-    height: 30px;
+    height: 25px;
+    vertical-align: middle;
 
     @include breakpoint(large) {
-      height: 40px;
+      height: 30px;
     }
   }
 
   .info__location {
-    font-size: 24px;
+    font-size: 20px;
 
     @include breakpoint(large) {
-      font-size: 28px;
+      font-size: 24px;
     }
   }
 
   .info__start-over {
     display: inline;
-    line-height: 2.5;
+    line-height: 2;
     margin-left: 20px;
     vertical-align: top;
 
     @include breakpoint(large) {
-      line-height: 3.5;
+      line-height: 2.5;
     }
   }
 
@@ -125,9 +127,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 10px;
   overflow: scroll;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 }
 
 .hazard-link, .prepare-link {

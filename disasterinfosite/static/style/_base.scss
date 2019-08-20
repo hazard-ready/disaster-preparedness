@@ -146,3 +146,28 @@ h4 {
   letter-spacing: 0.8px;
   font-weight: $font-weight-bold;
 }
+
+@media print {
+  @page :left {
+    margin-left: 0.5cm;
+  }
+
+  @page :right {
+    margin-left: 0.5cm;
+  }
+  header,
+  .prepare-hero,
+  .prepare-container,
+  .print-header,
+  .resources,
+  #user-interaction-container,
+  #geek-box {
+    display: none !important;
+  }
+
+  .content-container {
+    margin: 0;
+    max-width: none;
+    padding: 0 !important;
+  }
+}

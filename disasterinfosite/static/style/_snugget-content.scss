@@ -53,7 +53,6 @@
   justify-content: space-between;
   max-height: 9000px;
   overflow: hidden;
-  transition: max-height 0.3s ease-out;
 
   @include breakpoint(large) {
     flex-direction: row;
@@ -92,6 +91,7 @@
 
   li {
     margin-left: 20px;
+    margin-bottom: 10px;
   }
 
   p {
@@ -199,14 +199,15 @@
   bottom: 0;
   top: 0;
   width: 2px;
-  background-color: $dark-accent;
+  background-color: $dark-grey;
 
   &:before {
     color: $dark-grey;
     content: "\25BC";
-    top: -18px;
+    font-size: 36px;
+    top: -40px;
     position: absolute;
-    left: -7px;
+    left: -17px;
     text-align: center;
   }
 }
@@ -293,5 +294,44 @@
 
   &:hover {
     color: #fff;
+  }
+}
+
+@media print {
+  .info__start-over,
+  .map-container,
+  .hazard-container,
+  .popout-content,
+  .intensity-meter,
+  .intensity-captions {
+    display: none !important;
+  }
+
+  .popout-content {
+    max-height: 500px;
+  }
+
+  .hero-container {
+    min-height: 0;
+  }
+
+  .hero-container.sticky {
+    box-shadow: none;
+    min-height: 0;
+    position: relative
+  }
+
+  .disaster-container {
+    margin: 10px 0;
+    padding: 0;
+
+    h2 {
+      padding: 0;
+      page-break-after: avoid;
+    }
+  }
+
+  .section-content--collapse {
+    max-height: none;
   }
 }
