@@ -187,20 +187,39 @@
 }
 
 @media print {
-  .header__about,
+
+  @page :left {
+    margin-left: 0.5cm;
+  }
+
+  @page :right {
+    margin-left: 0.5cm;
+  }
+  header,
   .prepare-hero,
   .prepare-container,
-  .print-button,
+  .print-header,
   .resources,
   #geek-box {
-    display: none;
+    display: none !important;
   }
 
   .content-container {
+    margin: 0;
+    max-width: none;
     padding: 0;
   }
 
   .print-container {
+    font-size: 14px;
     padding: 0;
+  }
+
+  .print-table td {
+    padding: 2px 0;
+  }
+
+  .print-footer {
+    padding: 10px 0;
   }
 }
