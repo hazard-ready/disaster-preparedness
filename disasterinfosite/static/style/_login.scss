@@ -3,10 +3,6 @@
 .user--form {
   display: flex;
   flex-direction: column;
-
-  @include breakpoint(medium-and-up) {
-    flex-direction: row;
-  }
 }
 
 .user-interaction__buttons {
@@ -44,7 +40,7 @@
 
 .user--ui {
   input {
-    margin-bottom: 10px;
+    margin: 5px 0 10px;
     display: block;
     width: 100%;
   }

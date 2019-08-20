@@ -61,7 +61,7 @@
 
   li {
     cursor: pointer;
-    margin: 20px;
+    margin: 10px 5px;
 
     &:hover, &:focus {
       text-decoration: underline;
@@ -74,14 +74,22 @@
 }
 
 .prepare-detail {
-  padding: 40px 0 40px 40px;
   border-left: 2px solid $light-grey;
+  padding: 10px 0 10px 10px;
+
+  @include breakpoint(medium) {
+    padding: 20px 0 20px 20px;
+  }
+
+  @include breakpoint(large) {
+    padding: 40px 0 40px 40px;
+
+  }
 }
 
 .prepare__icon {
-  margin-right: 20px;
   vertical-align: middle;
-  width: 48px;
+  width: 28px;
 }
 
 .prepare-item__link {
@@ -105,13 +113,16 @@
 
 .print-container {
   background-color: $white;
+  overflow-x: scroll;
   padding: 5px 10px;
 
   @include breakpoint(medium) {
+    overflow-x: scroll;
     padding: 5px 20px;
   }
 
   @include breakpoint(large) {
+    overflow-x: auto;
     padding: 5px 40px;
   }
 }
@@ -124,11 +135,12 @@
 
 .print-button {
   cursor: pointer;
+  margin-top: 12px;
 }
 
 .print-header__activity {
   flex: 1 0 auto;
-  text-align: center;
+  font-size: 20px;
   margin-top: 12px;
 }
 
@@ -139,6 +151,7 @@
     color: $dark-grey;
     padding: 10px;
     text-align: left;
+    vertical-align: bottom;
   }
 
   tr:nth-child(even) {
@@ -146,7 +159,11 @@
   }
 
   td {
-    padding: 10px;
+    padding: 5px;
+
+    @include breakpoint(medium-and-up) {
+      padding: 10px;
+    }
   }
 
   a, a:focus, a:hover {
@@ -156,7 +173,7 @@
 }
 
 .print-table__icon {
-  width: 48px;
+  width: 28px;
 }
 
 .print-footer {
@@ -170,20 +187,29 @@
 }
 
 @media print {
-  .header__about,
-  .prepare-hero,
-  .prepare-container,
-  .print-button,
-  .resources,
-  #geek-box {
-    display: none;
+
+  @page :left {
+    margin-left: 0.5cm;
   }
 
-  .content-container {
-    padding: 0;
+  @page :right {
+    margin-left: 0.5cm;
+  }
+
+  .print-header {
+    display: none !important;
   }
 
   .print-container {
+    font-size: 14px;
     padding: 0;
+  }
+
+  .print-table td {
+    padding: 2px 0;
+  }
+
+  .print-footer {
+    padding: 10px 0;
   }
 }
