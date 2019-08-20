@@ -61,7 +61,7 @@
 
   li {
     cursor: pointer;
-    margin: 20px;
+    margin: 10px 5px;
 
     &:hover, &:focus {
       text-decoration: underline;
@@ -74,14 +74,22 @@
 }
 
 .prepare-detail {
-  padding: 40px 0 40px 40px;
   border-left: 2px solid $light-grey;
+  padding: 10px 0 10px 10px;
+
+  @include breakpoint(medium) {
+    padding: 20px 0 20px 20px;
+  }
+
+  @include breakpoint(large) {
+    padding: 40px 0 40px 40px;
+
+  }
 }
 
 .prepare__icon {
-  margin-right: 20px;
   vertical-align: middle;
-  width: 48px;
+  width: 28px;
 }
 
 .prepare-item__link {
@@ -105,13 +113,16 @@
 
 .print-container {
   background-color: $white;
+  overflow-x: scroll;
   padding: 5px 10px;
 
   @include breakpoint(medium) {
+    overflow-x: scroll;
     padding: 5px 20px;
   }
 
   @include breakpoint(large) {
+    overflow-x: auto;
     padding: 5px 40px;
   }
 }
@@ -156,7 +167,7 @@
 }
 
 .print-table__icon {
-  width: 48px;
+  width: 28px;
 }
 
 .print-footer {
