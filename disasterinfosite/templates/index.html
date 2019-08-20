@@ -19,9 +19,6 @@
             <p>{{ settings.intro_text | safe }}</p>
             <h3>{% trans "A natural disaster could strike your area at any time." %}</h3>
             <p>{% trans 'Get a personalized report on natural hazards that are likely in your area and steps you can take to prepare. Type your location in the search box at the top of the page, select a location on the map, or click “FIND ME.”' %}</p>
-            <p>
-              {% blocktrans with area_name=settings.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original data sources. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.{% endblocktrans %}
-          </p>
           </div>
           {% endblock info-instructions %}
 
@@ -30,6 +27,11 @@
               <div id="map"></div>
             </div>
           {% endblock map-container %}
+        </div>
+        <div class="disclaimer-container">
+           <p>
+              {% blocktrans with area_name=settings.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original data sources. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.{% endblocktrans %}
+          </p>
         </div>
 
         {% block hazard-menu %}{% endblock hazard-menu %}
