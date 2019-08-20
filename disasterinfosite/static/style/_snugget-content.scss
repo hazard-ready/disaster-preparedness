@@ -296,3 +296,42 @@
     color: #fff;
   }
 }
+
+@media print {
+  .info__start-over,
+  .map-container,
+  .hazard-container,
+  .popout-content,
+  .intensity-meter,
+  .intensity-captions {
+    display: none !important;
+  }
+
+  .popout-content {
+    max-height: 500px;
+  }
+
+  .hero-container {
+    min-height: 0;
+  }
+
+  .hero-container.sticky {
+    box-shadow: none;
+    min-height: 0;
+    position: relative
+  }
+
+  .disaster-container {
+    margin: 10px 0;
+    padding: 0;
+
+    h2 {
+      padding: 0;
+      page-break-after: avoid;
+    }
+  }
+
+  .section-content--collapse {
+    max-height: none;
+  }
+}
