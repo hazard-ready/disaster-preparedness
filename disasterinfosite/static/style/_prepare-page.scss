@@ -136,6 +136,7 @@
 .print-button {
   cursor: pointer;
   margin-top: 12px;
+  text-align: right;
 }
 
 .print-header__activity {
@@ -178,8 +179,17 @@
 
 .print-footer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
-  padding: 40px;
+  padding: 5px 10px;
+
+  @include breakpoint(medium) {
+    padding: 5px 20px;
+  }
+
+  @include breakpoint(large) {
+    padding: 5px 40px;
+  }
 }
 
 .print-key {
