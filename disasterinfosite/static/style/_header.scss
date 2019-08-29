@@ -242,8 +242,7 @@ header {
 }
 
 .survey-link {
-  margin: 14px 5px;
-  position: relative;
+  margin: 5px;
   text-decoration: none;
 }
 
@@ -257,6 +256,10 @@ header {
   line-height: $small-header-line-height;
   padding: 8px;
   text-align: center;
+
+  @include breakpoint(medium-and-up) {
+    display: inline-block;
+  }
 
   @include breakpoint(large) {
     font-size: 20px;
