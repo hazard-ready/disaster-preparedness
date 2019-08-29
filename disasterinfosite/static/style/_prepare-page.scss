@@ -197,15 +197,6 @@
 }
 
 @media print {
-
-  @page :left {
-    margin-left: 0.5cm;
-  }
-
-  @page :right {
-    margin-left: 0.5cm;
-  }
-
   .print-header {
     display: none !important;
   }
@@ -213,6 +204,10 @@
   .print-container {
     font-size: 14px;
     padding: 0;
+  }
+
+  .print-table th {
+    padding: 0 5px;
   }
 
   .print-table td {
