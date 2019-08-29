@@ -1,7 +1,7 @@
 # Uncomment if you want to translate Django models.
 
 from modeltranslation.translator import register, translator, TranslationOptions
-from .models import SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, TextSnugget, EmbedSnugget, SlideshowSnugget, SnuggetPopOut, SnuggetSection
+from .models import SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, TextSnugget, EmbedSnugget, SlideshowSnugget, SnuggetPopOut, SnuggetSection, PreparednessAction
 
 @register(SiteSettings)
 class SiteSettingsTranslationOptions(TranslationOptions):
@@ -38,3 +38,7 @@ class SnuggetPopOutTranslationOptions(TranslationOptions):
 @register(SnuggetSection)
 class SnuggetSectionTranslationOptions(TranslationOptions):
   fields = ('display_name',)
+
+@register(PreparednessAction)
+class PreparednessActionTranslationOptions(TranslationOptions):
+  fields = ('title', 'content_text', 'link_text', 'happy_text', 'useful_text', 'property_text')
