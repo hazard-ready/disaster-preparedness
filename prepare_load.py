@@ -2,7 +2,7 @@ import os
 
 from django.core.files import File
 from disasterinfosite.models import PreparednessAction
-from load_helpers import runLoader
+from load_helpers import runLoader, includeTranslatedFields
 
 currentPath = os.path.dirname(__file__)
 appName = "disasterinfosite"
@@ -12,7 +12,7 @@ imagesDir = os.path.join(dataDir, 'images/prepare')
 file = os.path.join(dataDir, "prepare.xlsx")
 
 #All other fields are required
-optionalFields = ['image', 'happy', 'useful', 'property', 'external_icon']
+optionalFields = ['image', 'happy', 'happy-es', 'useful', 'useful-es', 'property', 'property-es', 'external_icon']
 
 
 def run():
@@ -39,6 +39,14 @@ def processRow(row, overwriteAll):
     'link': row['external_link'],
     'slug': row['slug']
   }
+
+  kwargs = includeTranslatedFields(row, 'section', 'title', kwargs)
+  kwargs = includeTranslatedFields(row, 'text', 'content_text', kwargs)
+  kwargs = includeTranslatedFields(row, 'happy', 'happy_text', kwargs)
+  kwargs = includeTranslatedFields(row, 'useful', 'useful_text', kwargs)
+  kwargs = includeTranslatedFields(row, 'property', 'property_text', kwargs)
+  kwargs = includeTranslatedFields(row, 'external_text', 'link_text', kwargs)
+
   pa = PreparednessAction.objects.create(**kwargs)
   pa.save()
 
