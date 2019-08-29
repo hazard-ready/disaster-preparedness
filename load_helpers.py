@@ -1,7 +1,7 @@
 import openpyxl # library to read .xlsx format
 
 def checkHTMLTagClosures(row, rowCount):
-  tags_to_check = ["ol", "ul", "li", "a", "b"]
+  tags_to_check = ["ol", "ul", "li", "a", "b", "i"]
   mismatches = {}
   for key in row.keys():
     if key == 'text' or key.startswith('text-'):

@@ -174,7 +174,7 @@ def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
     'percentage': row["intensity"],
     'order': row['txt_location']
   }
-  kwargs = includeTranslatedFields(row, 'pop_out_txt', 'text', args)
+  kwargs = includeTranslatedFields(row, 'text', 'text', args)
 
   snugget = EmbedSnugget.objects.create(**kwargs)
   snugget.save()
@@ -193,7 +193,7 @@ def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
     'order': row['txt_location']
   }
 
-  kwargs = includeTranslatedFields(row, 'pop_out_txt', 'text', args)
+  kwargs = includeTranslatedFields(row, 'text', 'text', args)
 
   snugget = SlideshowSnugget.objects.create(**kwargs)
   snugget.pop_out = addPopOutIfExists(row)
