@@ -1,36 +1,29 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# Localized strings for PDX Ready, Spanish.
+# Copyright (C) 2019
+
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 22:04+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2019-08-28 22:15+0000\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: settings.py:71
+#: settings.py:75
 msgid "English"
 msgstr "Inglés"
 
-#: settings.py:72
+#: settings.py:76
 msgid "Spanish"
 msgstr "Español"
 
-#: templates/about.html:16
+#: templates/about.html:17
 msgid "The Hazard Ready Team"
-msgstr ""
+msgstr "El equipo de Hazard Ready"
 
-#: templates/about.html:26
+#: templates/about.html:27
 msgid ""
 "Carson has a B.Sc. and M.Sc. in Geology from Western Washington University "
 "and the University of Montana. She is now working on her PhD at Boise State "
@@ -38,8 +31,13 @@ msgid ""
 "information to broad audiences. She writes the content and processes the "
 "data for each HazardReady site."
 msgstr ""
+"Carson tiene un B.Sc. y M.Sc. en Geología de Western Washington University y "
+"la University of Montana. Ahora trabaja en su doctorado en Boise State "
+"University, donde estudia cómo mejorar la información sobre el riesgo de "
+"peligros naturales para un público amplio. Ella escribe el contenido y "
+"procesa los datos para cada sitio de HazardReady."
 
-#: templates/about.html:43
+#: templates/about.html:44
 msgid ""
 "Rebecca Bendick has a Ph.D. in geophysics from the University of Colorado. "
 "Her research on tectonics and earthquake mechanics led to an interest in how "
@@ -48,8 +46,14 @@ msgid ""
 "writes and lectures on the ethics of science communication as well as on her "
 "basic geophysical research."
 msgstr ""
+"Rebecca Bendick tiene un doctorado en geofísica de la University of "
+"Colorado. Su investigación sobre la tectónica y la mecánica de terremotos la "
+"interesó en cómo las comunidades humanas se ven afectadas por los desastres "
+"naturales, e inspira su trabajo para ayudar a las personas a comprender y "
+"prepararse para ellos. Ella escribe y da charlas sobre la ética de la "
+"comunicación científica, así como sobre su investigación geofísica básica."
 
-#: templates/about.html:59
+#: templates/about.html:60
 msgid ""
 "Grant Kier has a M.Sc. in geology from the University of Colorado. He is "
 "broadly interested in community resilience in the context of manmade and "
@@ -57,17 +61,23 @@ msgid ""
 "currently works on economic development, fostering small and startup "
 "companies in western Montana."
 msgstr ""
+"Grant Kier tiene un M.Sc. en geología de la University of Colorado. Tiene "
+"interés generalmente en la resiliencia comunitaria en el contexto de los "
+"cambios naturales, tan como los que estan provocados por el hombre. Tiene "
+"experiencia también en prácticas comerciales y actualmente trabaja en "
+"desarrollo económico, fomentando empresas pequeñas y nuevas en el oeste de "
+"Montana."
 
-#: templates/about.html:66
+#: templates/about.html:67
 msgid "The Hazard Ready Project"
-msgstr ""
+msgstr "The Hazard Ready Project (El Proyecto Preparacion Ciudadana)"
 
-#: templates/about.html:77
+#: templates/about.html:78
 #, python-format
 msgid "%(title)s Partners and Collaborators"
-msgstr ""
+msgstr "%(title)s Socios y Colaboradores"
 
-#: templates/about.html:82
+#: templates/about.html:83
 msgid ""
 "The PDX Ready project was funded in part by the Regional Disaster "
 "Preparedness Organization (RDPO) of the Portland Metropolitan Region. The "
@@ -77,40 +87,48 @@ msgid ""
 "metropolitan region spans Clackamas, Columbia, Multnomah, and Washington "
 "Counties in Oregon and Clark County in Washington."
 msgstr ""
+"El proyecto PDX Ready fue auspiciado en parte por Regional Disaster "
+"Preparedness Organization (RDPO) de la región metropolitana de Portland. El "
+"RDPO es una asociación de agencias gubernamentales, organizaciones no "
+"gubernamentales y socios del sector privado en la región metropolitana de "
+"Portland que colaboran para aumentar la resistencia de la región a los "
+"desastres. La región metropolitana abarca los condados de Clackamas, "
+"Columbia, Multnomah y Washington en Oregon y el condado de Clark en "
+"Washington."
 
-#: templates/about.html:86
+#: templates/about.html:87
 msgid "Clackamas County"
-msgstr ""
+msgstr "Clackamas County"
 
-#: templates/about.html:89
+#: templates/about.html:90
 msgid "Clark County"
-msgstr ""
+msgstr "Clark County"
 
-#: templates/about.html:92
+#: templates/about.html:93
 msgid "Columbia County"
-msgstr ""
+msgstr "Columbia County"
 
-#: templates/about.html:95
+#: templates/about.html:96
 msgid "Multnomah County"
-msgstr ""
+msgstr "Multnomah County"
 
-#: templates/about.html:98
+#: templates/about.html:99
 msgid "Washington County"
-msgstr ""
+msgstr "Washington County"
 
-#: templates/about.html:101
+#: templates/about.html:102
 msgid "Portland Bureau of Emergency Management"
-msgstr ""
+msgstr "Portland Bureau of Emergency Management"
 
-#: templates/about.html:113
+#: templates/about.html:114
 msgid "American Red Cross: Cascades Region"
-msgstr ""
+msgstr "Cruz Roja de Estados Unidos: Cascades Region"
 
-#: templates/about.html:116
+#: templates/about.html:117
 msgid "Mercy Corps"
-msgstr ""
+msgstr "Mercy Corps"
 
-#: templates/about.html:123
+#: templates/about.html:124
 #, python-format
 msgid ""
 "%(title)s is designed to help educate and prepare people for disasters that "
@@ -126,7 +144,7 @@ msgstr ""
 "información actualizada y la presenta de tal manera que sea accesible para "
 "cualquier residente de %(area_name)s."
 
-#: templates/about.html:126 templates/index.html:22
+#: templates/about.html:127 templates/index.html:34
 #, python-format
 msgid ""
 "This site uses the most up-to-date hazard risk data available for "
@@ -137,15 +155,19 @@ msgid ""
 "are based on best information from the American Red Cross and the Federal "
 "Emergency Management Agency."
 msgstr ""
-"Este sitio utiliza la información de riesgos más actualizada para "
-"%(area_name)s. El usuario de este sitio tiene la responsabilidad de "
-"verificar toda información particular con las fuentes de datos originales. A "
-"pesar de que estos datos representan la mejor evaluación actual de los "
-"riesgos, no predicen futuros eventos. Las descripciones de los riesgos y "
-"cómo prepararse se basan en la mejor información de la Cruz Roja "
-"Estadounidense y la Agencia Federal de Gestión de Emergencias."
+"Este sitio utiliza los datos de riesgo más actualizados para %(area_name)s. "
+"El usuario de este sitio es responsable de verificar cualquier información "
+"particular con las fuentes de datos originales. Aunque estos datos "
+"representan la mejor evaluación actual de los peligros, no predicen eventos "
+"futuros. Las descripciones de riesgo y cómo prepararse para esos riesgos se "
+"basan en la mejor información de la Cruz Roja y la Federal Emergency "
+"Management Agency (Agencia Federal para el Manejo de Emergencias)."
 
-#: templates/about.html:132
+#: templates/about.html:131
+msgid "build/flowchart.jpg"
+msgstr "build/flowchart-es.jpg"
+
+#: templates/about.html:134
 msgid ""
 "How we build Hazard Ready Sites: 1. Gather data. Locate the most relevant "
 "and up-to-date data on natural hazards for your region from trusted sources "
@@ -157,21 +179,33 @@ msgid ""
 "focus groups. Discuss content and designs to ensure the information fits "
 "each community's needs. 6. Revise, revise, revise and launch site!"
 msgstr ""
+"Cómo construimos sitios de Hazard Ready: 1. Recopilamos datos. Localizamos "
+"los datos más relevantes y actualizados sobre los peligros naturales para su "
+"región de fuentes confiables como FEMA, NOAA y el USGS. 2. Control de "
+"calidad. Trabajamos con socios locales (grupos comunitarios y "
+"administradores de emergencias) para garantizar que los datos y la "
+"información sean precisos. 3. Procesamos datos. Aseguramos que los datos "
+"sean compatibles con el software de Hazard Ready. 4. Creamos contenido. "
+"Escribimos el texto de la página web, recopilamos imágenes y videos, "
+"localizamos los recursos locales para cada peligro y región. 5. Comentarios "
+"y grupos focales. Discutimos el contenido y los diseños para garantizar que "
+"la información se ajuste a las necesidades de cada comunidad. 6. ¡Revisamos, "
+"revisamos, revisamos y lanzamos el sitio!"
 
-#: templates/about.html:140
+#: templates/about.html:142
 #, python-format
 msgid ""
 "Data used for %(title)s is available for download <a href=\"%(download)s\" "
 "target=\"_blank\" rel=\"noopener\">here</a>."
 msgstr ""
 "La información utilizada para %(title)s se puede descargar <a href="
-"\"%(download)s\" target=\"_blank\">aquí</a>"
+"\"%(download)s\" target=\"_blank\" rel=\"noopener\">aquí</a>"
 
-#: templates/about.html:147
+#: templates/about.html:149
 msgid "Quick Data Overview"
 msgstr "Descripción breve de los datos"
 
-#: templates/about.html:149
+#: templates/about.html:151
 #, python-format
 msgid "Take a look at some overviews of the data we used for %(area_name)s:"
 msgstr ""
@@ -179,85 +213,105 @@ msgstr ""
 
 #: templates/found_content.html:11
 msgid "What to expect for"
-msgstr ""
+msgstr "Qué puede esperar para"
 
 #: templates/found_content.html:17
 msgid "try&nbsp;a&nbsp;new&nbsp;address"
-msgstr ""
+msgstr "intente&nbsp;una&nbsp;nueva&nbsp;dirección"
+
+#: templates/found_content.html:23 templates/header.html:22
+msgid "Feedback Survey"
+msgstr "Encuesta para ofrecer sus reflecciones"
 
 #: templates/found_content.html:40
-#, fuzzy
-#| msgid "How to Prepare"
 msgid "Prepare!"
-msgstr "Cómo prepararse"
+msgstr "¡Prepararse!"
 
 #: templates/found_content.html:53
 #, python-format
 msgid "An intensity meter at %(percentage)s%%"
-msgstr ""
+msgstr "Un medidor de intensidad al %(percentage)s%%"
 
 #: templates/found_content.html:60
 msgid "Very Low Hazard"
-msgstr ""
+msgstr "Peligro muy bajo"
 
 #: templates/found_content.html:63
 msgid "Very High Hazard"
-msgstr ""
+msgstr "Peligro muy alto"
 
 #: templates/geek_box.html:7
 msgid "Who made this?"
 msgstr "¿Quién hizo esto?"
 
-#: templates/geek_box.html:10
+#: templates/geek_box.html:11
 #, python-format
 msgid ""
 "\n"
-"            <p>\n"
 "                Have questions? View the <a href=\"%(about_url)s\" target="
 "\"_blank\">About</a> page or <a href=\"mailto:%(email)s\">email the Hazard "
 "Ready creators</a> for more information.\n"
-"            </p>\n"
 "            "
 msgstr ""
+"\n"
+"               ¿Tiene preguntas? Mire al <a href=\"%(about_url)s\" target="
+"\"_blank\">Sobre</a> pagina o <a href=\"mailto:%(email)s\">mande un email al "
+"creadores de Hazard Ready</a> para mas información.\n"
+"            "
+
+#: templates/geek_box.html:15
+#, python-format
+msgid ""
+"Have questions? View the <a href=\"%(about_url)s\" target=\"_blank\">About</"
+"a> page for more information.\""
+msgstr ""
+"¿Tiene preguntas? Mire al <a href=\"%(about_url)s\" target="
+"\"_blank\">Sobre</a> pagina para mas información.\n"
+"            "
 
 #: templates/head-meta.html:13
 msgid ""
 "Enter your location for a personalized report on your risks and how to "
 "prepare."
 msgstr ""
-"Ingrese su ubicación para obtener un informe personalizado de sus riesgos y "
+"Ingrese su localidad para obtener un informe personalizado de sus riesgos y "
 "cómo prepararse."
 
-#: templates/header.html:22
-msgid "Feedback Survey"
-msgstr ""
+#: templates/header.html:14 templates/header.html:46
+msgid "About"
+msgstr "Sobre"
 
 #: templates/header.html:27
 msgid "Find Me"
-msgstr ""
+msgstr "Busqueme"
 
 #: templates/header.html:30
 msgid "Enter an address."
-msgstr ""
+msgstr "Introduzca una dirección."
 
-#: templates/header.html:34
+#: templates/header.html:40
 msgid "We had a problem finding that location."
-msgstr ""
-
-#: templates/index.html:19
-msgid "A natural disaster could strike your area at any time."
-msgstr ""
+msgstr "Tuvimos un problema en encontrar esa localidad."
 
 #: templates/index.html:20
+msgid "A natural disaster could strike your area at any time."
+msgstr "Un desastre natural podría afectar su área en cualquier momento."
+
+#: templates/index.html:21
 msgid ""
 "Get a personalized report on natural hazards that are likely in your area "
 "and steps you can take to prepare. Type your location in the search box at "
 "the top of the page, select a location on the map, or click “FIND ME.”"
 msgstr ""
+"Obtenga un informe personalizado sobre los peligros naturales que "
+"probablemente se encuentren en su área y los pasos que puede seguir para "
+"prepararse. Escriba su localidad en el cuadro de búsqueda en la parte "
+"superior de la página, seleccione una localidad en el mapa o haga clic en "
+"\"BUSQUEME.\""
 
-#: templates/index.html:47
+#: templates/index.html:52
 msgid "Getting results for your location..."
-msgstr "Obtener resultados para su ubicación…"
+msgstr "Obtener resultados para su localidad..."
 
 #: templates/language_selector.html:27
 msgid "Language"
@@ -265,22 +319,22 @@ msgstr "Idioma"
 
 #: templates/no_content_found.html:6
 msgid "No information available for"
-msgstr ""
+msgstr "No hay información para"
 
 #: templates/no_content_found.html:9
 msgid "Wrong address? Start over"
-msgstr ""
+msgstr "¿Dirección incorrecta? Comience de nuevo"
 
-#: templates/no_content_found.html:19
+#: templates/no_content_found.html:20
 msgid "No information available."
 msgstr "No hay información disponible."
 
-#: templates/no_content_found.html:21
+#: templates/no_content_found.html:22
 #, python-format
 msgid "It looks like your location is outside of %(area_name)s."
-msgstr "Parece que su ubicación está fuera de %(area_name)s."
+msgstr "Parece que su localidad está fuera de %(area_name)s."
 
-#: templates/no_content_found.html:22
+#: templates/no_content_found.html:23
 msgid ""
 "While we value and promote resilience everywhere, the data that powers this "
 "site isn't available for other places yet."
@@ -288,101 +342,79 @@ msgstr ""
 "Mientras que valoramos y fomentamos la resiliencia en todos lados, los datos "
 "que impulsan este sitio aún no están disponibles para otros lugares."
 
-#: templates/prepare.html:17
+#: templates/prepare.html:22
 msgid "Take the first step toward getting prepared"
-msgstr ""
-
-#: templates/prepare.html:82
-msgid "Print"
-msgstr ""
-
-#: templates/prepare.html:83
-msgid "This activity"
-msgstr ""
+msgstr "Haga el primer paso para prepararse"
 
 #: templates/prepare.html:87
-msgid "Completed?"
-msgstr ""
+msgid "This activity"
+msgstr "Esta actividad"
 
 #: templates/prepare.html:88
-msgid "Activity"
-msgstr ""
+msgid "Print Checklist"
+msgstr "Imprima la lista de verificación"
 
-#: templates/prepare.html:89
-msgid "reduces emotional and physical harm"
-msgstr ""
-
-#: templates/prepare.html:91
-msgid "is useful for other situations"
-msgstr ""
+#: templates/prepare.html:92
+msgid "Completed?"
+msgstr "¿Terminado/a?"
 
 #: templates/prepare.html:93
+msgid "Activity"
+msgstr "Actividad"
+
+#: templates/prepare.html:94
+msgid "reduces emotional and physical harm"
+msgstr "reduce el daño emocional y físico"
+
+#: templates/prepare.html:96
+msgid "is useful for other situations"
+msgstr "es útil para otras situaciones"
+
+#: templates/prepare.html:98
 msgid "helps protect property"
-msgstr ""
+msgstr "es útil para otras situaciones"
 
-#: templates/prepare.html:95
+#: templates/prepare.html:100
 msgid "costs"
-msgstr ""
+msgstr "cuesta"
 
-#: templates/prepare.html:97
+#: templates/prepare.html:102
 msgid "Resources"
-msgstr ""
+msgstr "Recursos"
 
-#: templates/prepare.html:126
+#: templates/prepare.html:133
 msgid "Key:"
-msgstr ""
+msgstr "Clave:"
 
-#: templates/prepare.html:135
+#: templates/prepare.html:142
 msgid "or more"
-msgstr ""
-
-#: templates/supply-kit.html:3
-msgid "Experts suggest you have the following:"
-msgstr ""
-
-#: templates/supply-kit.html:8
-msgid "Days of supplies"
-msgstr ""
-
-#: templates/supply-kit.html:8 templates/supply-kit.html:13
-#: templates/supply-kit.html:18
-msgid "per person"
-msgstr ""
-
-#: templates/supply-kit.html:13
-msgid "Gallons of water"
-msgstr ""
-
-#: templates/supply-kit.html:18
-msgid "Meals"
-msgstr ""
+msgstr "o más"
 
 #: templates/users/user_interactions.html:3 templates/users/user_login.html:3
 msgid "Log In"
-msgstr "Iniciar sesión"
+msgstr "Iniciar&nbsp;sesión"
 
 #: templates/users/user_interactions.html:4 templates/users/user_signup.html:3
 msgid "Sign Up"
-msgstr "Inscripción"
+msgstr "Regístrese"
 
 #: templates/users/user_interactions.html:5 templates/users/user_login.html:4
-#: templates/users/user_profile.html:26 templates/users/user_signup.html:4
+#: templates/users/user_profile.html:25 templates/users/user_signup.html:4
 msgid "Cancel"
 msgstr "Cancelar"
 
 #: templates/users/user_interactions.html:6
 msgid "Log Out"
-msgstr "Cerrar sesión"
+msgstr "Cerrar&nbsp;sesión"
 
 #: templates/users/user_interactions.html:7
 msgid "Update My Info"
 msgstr "Actualizar mi información"
 
 #: templates/users/user_interactions.html:22
-#, fuzzy, python-format
-#| msgid "Welcome back, %(username)s!"
+#, python-format
 msgid "Welcome back, <span class=\"username\">%(username)s</span>!"
-msgstr "Bienvenido otra vez, %(username)s!"
+msgstr "Bienvenido otra vez, <span class=\"username\">%(username)s</span>!"
 
 #: templates/users/user_interactions.html:24
 msgid "We're logging you in. Just a moment..."
@@ -414,16 +446,17 @@ msgid "Welcome back!"
 msgstr "Bienvenido"
 
 #: templates/users/user_interactions.html:50
-#, fuzzy, python-format
-#| msgid "If your username isn't %(username)s, you might want to log out."
+#, python-format
 msgid ""
 "If your username isn't <span class=\"username\">%(username)s</span>, you "
 "might want to log out."
-msgstr "Si su nombre de usuario no es %(username)s, debe cerrar sesión."
+msgstr ""
+"Si su nombre de usuario no es <span class=\"username\">%(username)s</span>, "
+"debe cerrar sesión."
 
 #: templates/users/user_interactions.html:59
 msgid "Receive Important Updates"
-msgstr ""
+msgstr "Recibir información importante"
 
 #: templates/users/user_interactions.html:61
 msgid ""
@@ -433,6 +466,12 @@ msgid ""
 "informed. We’ll ask for your email address and physical address. Your "
 "information will be secure, and we won’t contact you for any other reason."
 msgstr ""
+"Mantenga a su familia, amigos y vecinos seguros. Regístrese para recibir "
+"noticias sobre peligros estacionales como incendios, inundaciones y "
+"tormentas de nieve. Si ocurre un desastre natural en su área, le enviaremos "
+"información para que pueda mantenerse informado. Le pediremos su dirección "
+"de correo electrónico y dirección física. Su información estará segura y no "
+"nos pondremos en contacto con usted por ningún otro motivo."
 
 #: templates/users/user_login.html:8
 msgid "Required."
@@ -455,10 +494,8 @@ msgstr ""
 "\"mailto:help@hazardready.org\">Envíenos un correo electrónico.</a>"
 
 #: templates/users/user_profile.html:4
-#, fuzzy
-#| msgid "Other Address Information"
 msgid "Update Your Information"
-msgstr "Otra información de dirección"
+msgstr "Actualizar Su Información"
 
 #: templates/users/user_profile.html:8 templates/users/user_signup.html:17
 msgid "Street Address"
@@ -480,7 +517,7 @@ msgstr "Estado"
 msgid "Zip Code"
 msgstr "Código Postal"
 
-#: templates/users/user_profile.html:25
+#: templates/users/user_profile.html:26
 msgid "Update"
 msgstr "Actualización"
 
@@ -500,86 +537,8 @@ msgstr ""
 
 #: templatetags/show_cost.py:8
 msgid "Free!"
-msgstr ""
+msgstr "¡Gratis!"
 
 #: templatetags/show_cost.py:13
 msgid "Unknown"
-msgstr ""
-
-#, python-format
-#~ msgid ""
-#~ "Have questions? <a href=\"mailto:%(email)s\">Email the creators</a> for "
-#~ "more information."
-#~ msgstr ""
-#~ "¿Desea hacer alguna pregunta? <a href=\"mailto:%(email)s\">Escriba a los "
-#~ "creadores</a> para obtener más información."
-
-#~ msgid ""
-#~ "Give a location by typing in the box at the top of the page, clicking on "
-#~ "the map, or clicking 'find me'. You'll get a personalized report on your "
-#~ "natural hazard risks and steps you can take to prepare."
-#~ msgstr ""
-#~ "Ingrese una ubicación escribiendo en la siguiente casilla, haciendo clic "
-#~ "en el mapa o haciendo clic en \"Buscar mi ubicación\". Obtendrá un "
-#~ "informe personalizado sobre sus riesgos naturales y los pasos que puede "
-#~ "llevar a cabo para prepararse."
-
-#~ msgid "What to Expect"
-#~ msgstr "Qué esperar"
-
-#, fuzzy, python-format
-#~| msgid ""
-#~| "\n"
-#~| "        %(settings.site_title)s gives you an idea of which natural "
-#~| "disasters you might experience in the future based on a location in "
-#~| "%(location.area_name)s.\n"
-#~| "      "
-#~ msgid ""
-#~ " %(settings.site_title)s gives you an idea of which natural disasters you "
-#~ "might experience in the future based on a location in "
-#~ "%(location.area_name)s. "
-#~ msgstr ""
-#~ "%(title)s le da una idea de los desastres naturales que puede sufrir en "
-#~ "el futuro según la ubicación en %(area_name)s."
-
-#~ msgid ""
-#~ "You have the power to make a difference. Find out how you can protect "
-#~ "your loved ones and home before the next disaster hits."
-#~ msgstr ""
-#~ "Usted tiene la capacidad de hacer una diferencia. Descubra cómo puede "
-#~ "proteger a sus seres queridos y su casa antes del próximo desastre."
-
-#~ msgid "In Recent History"
-#~ msgstr "En el pasado reciente"
-
-#, fuzzy, python-format
-#~| msgid ""
-#~| "\n"
-#~| "        Find out which disasters have struck %(location.area_name)s in "
-#~| "the past, what impact they had, and where they happened.\n"
-#~| "      "
-#~ msgid ""
-#~ " Find out which disasters have struck %(location.area_name)s in the past, "
-#~ "what impact they had, and where they happened. "
-#~ msgstr ""
-#~ "Averigüe qué desastres hubo en %(area_name)s en el pasado, qué impacto "
-#~ "tuvieron y dónde ocurrieron.\n"
-#~ "          "
-
-#~ msgid "Why should you sign up?"
-#~ msgstr "¿Por qué debe inscribirse?"
-
-#~ msgid ""
-#~ "Sign up for free to access customized hazard preparedness information. By "
-#~ "providing your address, you will get updates about seasonal hazards and "
-#~ "ongoing incidents specific to your location. We want you to be better "
-#~ "prepared so you can keep your family, friends, and neighbors safe when a "
-#~ "disaster strikes! Personal information will be protected and secure."
-#~ msgstr ""
-#~ "Inscríbase gratis para acceder a información personalizada para estar "
-#~ "preparado en caso de desastres. Al dar su domicilio, obtendrá "
-#~ "actualizaciones acerca de los peligros estacionales y los incidentes que "
-#~ "estén sucediendo en ese momento y que sean específicos de su ubicación. "
-#~ "Queremos que esté mejor preparado para que pueda mantener a su familia, "
-#~ "amigos y vecinos seguros en caso de desastre. La información personal "
-#~ "estará protegida y segura."
+msgstr "Desconocido"

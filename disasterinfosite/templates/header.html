@@ -16,13 +16,11 @@
       {% include "language_selector.html" %}
     </div>
   </div>
-
-  {% if surveyHeader %}
-  <a class="survey-link" href="http://bit.ly/pdx-t2" target="_blank" rel="noopener">
+{% if surveyHeader %}
+  <a class="survey-link hide-for-medium-up" href="http://bit.ly/pdx-t2" target="_blank" rel="noopener">
     <div class="survey-button">{% trans "Feedback Survey" %}</div>
   </a>
-  {% endif %}
-
+{% endif %}
   {% block search %}
   {% trans "Find Me" as find_me %}
     <div class="location-form" role="form" aria-label="location-search">
@@ -48,3 +46,8 @@
     {% include "language_selector.html" %}
   </div>
 </header>
+{% if surveyHeader %}
+  <a class="survey-link hide-for-small" href="http://bit.ly/pdx-t2" target="_blank" rel="noopener">
+    <div class="survey-button">{% trans "Feedback Survey" %}</div>
+  </a>
+{% endif %}
