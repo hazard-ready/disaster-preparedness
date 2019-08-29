@@ -149,12 +149,13 @@ h4 {
 
 @media print {
   @page :left {
-    margin-left: 0.5cm;
+    margin: 0;
   }
 
   @page :right {
-    margin-left: 0.5cm;
+    margin: 0;
   }
+
   header,
   .prepare-hero,
   .prepare-container,

@@ -174,7 +174,7 @@ def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
     'percentage': row["intensity"],
     'order': row['txt_location']
   }
-  kwargs = includeTranslatedFields(row, 'pop_out_txt', 'text', args)
+  kwargs = includeTranslatedFields(row, 'text', 'text', args)
 
   snugget = EmbedSnugget.objects.create(**kwargs)
   snugget.save()
@@ -193,7 +193,7 @@ def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
     'order': row['txt_location']
   }
 
-  kwargs = includeTranslatedFields(row, 'pop_out_txt', 'text', args)
+  kwargs = includeTranslatedFields(row, 'text', 'text', args)
 
   snugget = SlideshowSnugget.objects.create(**kwargs)
   snugget.pop_out = addPopOutIfExists(row)
@@ -208,7 +208,7 @@ def addSlideshow(folder, snugget):
   rowCount = 1 # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
   for row in slides:
     rowCount += 1
-    photo = PastEventsPhoto.objects.create(snugget=snugget, caption=row["caption"])
+    photo = PastEventsPhoto.objects.create(snugget=snugget, caption=row["caption"], caption_es=row["caption-es"])
     if row["image"] != '':
       imageFile = os.path.join(folder, row["image"])
       with open(imageFile, 'rb') as f:
