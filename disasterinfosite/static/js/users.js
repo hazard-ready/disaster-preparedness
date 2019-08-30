@@ -105,7 +105,7 @@ $(document).ready(function() {
 
   $(".button--logout").click(function(event) {
     event.preventDefault();
-    sendAjaxAuthRequest("/accounts/logout/")
+    sendAjaxAuthRequest(logoutApiUrl)
       .done(function() {
         location.reload(true);
       })
@@ -120,7 +120,7 @@ $(document).ready(function() {
   $signupForm.submit(function(event) {
     event.preventDefault();
 
-    sendAjaxAuthRequest("/accounts/create_user/", new FormData($signupForm[0]))
+    sendAjaxAuthRequest(createUserApiUrl, new FormData($signupForm[0]))
     .done(function() {
       $("#user-signup-result-container").removeClass('hide');;
     })
@@ -136,7 +136,7 @@ $(document).ready(function() {
   $loginForm.submit(function(event) {
     event.preventDefault();
 
-    sendAjaxAuthRequest("/accounts/login/", new FormData($loginForm[0]))
+    sendAjaxAuthRequest(loginApiUrl, new FormData($loginForm[0]))
       .done(function() {
         location.hash = "user-interaction-container";
         location.reload(true);
@@ -151,7 +151,7 @@ $(document).ready(function() {
   $updateForm.submit(function(event) {
     event.preventDefault();
 
-    sendAjaxAuthRequest("/accounts/update_profile/", new FormData($updateForm[0]))
+    sendAjaxAuthRequest(updateProfileApiUrl, new FormData($updateForm[0]))
       .done(function() {
         $("#user-profile-result-container").removeClass('hide');;
       })
