@@ -79,7 +79,7 @@ $(document).ready(function() {
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
           },
           method: "POST",
-          url: "/accounts/update_prepare_action/",
+          url: prepareActionApiUrl,
           data: {
             action: $checkbox.val(),
             taken: $checkbox.is(":checked")
