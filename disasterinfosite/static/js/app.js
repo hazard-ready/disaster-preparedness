@@ -220,6 +220,10 @@ $(document).ready(function() {
 
     // Select the correct tab when we click on one
     hazardLinks.click(function(event) {
+      // Clicking one of these from a non-collapsed header makes things weird if we don't compensate for the way the header is going to collapse.
+      if(!heroContainer.hasClass('sticky')) {
+        contentContainer.css({ "padding-top": "150px" });
+      }
       hazardLinks.removeClass('selected');
       $(event.delegateTarget).addClass('selected');
     });
