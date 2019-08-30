@@ -106,5 +106,9 @@
 
 .anchor {
   position: absolute;
-  top: -150px;
+  top: -160px;
+
+  @include breakpoint(large) {
+    top: -100px
+  }
 }
