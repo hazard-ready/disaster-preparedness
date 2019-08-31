@@ -137,6 +137,7 @@
   color: $bright-accent;
   margin: 5px 10px;
   text-decoration: none;
+  white-space: nowrap;
 
   &:focus, &:hover, &:active {
     border-bottom: 2px solid $dark-accent;
