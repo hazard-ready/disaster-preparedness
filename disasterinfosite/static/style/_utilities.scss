@@ -108,3 +108,9 @@
   position: absolute;
   top: -110px;
 }
+
+/* This needs to stay the last piece of css that gets loaded, to prevent a FOUC */
+html {
+  visibility: visible;
+  opacity: 1;
+}
