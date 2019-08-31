@@ -2,6 +2,18 @@
 
 {% render_bundle 'vendor' 'js' %}
 
+<script>
+    // so our js can know what our data bounds are
+  var mapBounds = {{ data_bounds | js }};
+
+  // so our js can know where our api urls are when we run in a subdirectory
+  var loginApiUrl = "{% url "login" %}"
+  var logoutApiUrl = "{% url "logout" %}"
+  var createUserApiUrl = "{% url "create_user" %}"
+  var updateProfileApiUrl = "{% url "update_profile" %}"
+  var prepareActionApiUrl = "{% url "prepare_action_update" %}"
+</script>
+
 {% render_bundle file 'js' %}
 
 <!-- script for Google Analytics -->
