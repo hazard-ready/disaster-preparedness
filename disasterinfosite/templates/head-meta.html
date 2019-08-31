@@ -1,5 +1,4 @@
 {% load i18n %}
-{% load js %}
 
 {% load webpack_static from webpack_loader %}
 {% load render_bundle from webpack_loader %}
@@ -15,24 +14,18 @@
 
   <title>{{ settings.site_title }}</title>
 
+  <style>html{visibility: hidden; opacity:0;}</style>
+
  <!-- Load fonts -->
  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i|Source+Serif+Pro:600,700" rel="stylesheet">
+  {% render_bundle file 'css' %}
 
  <!-- Load MapQuest Places search styles (for autocomplete) from CDN -->
  <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css"/>
 
-  {% render_bundle file 'css' %}
-
   <link rel="shortcut icon" href="{% webpack_static 'build/favicon.ico' %}"/>
   <script type="text/javascript">
-    // so our js can know what our data bounds are
-    var mapBounds = {{ data_bounds | js }};
-
-    // so our js can know where our api urls are when we run in a subdirectory
-    var loginApiUrl = "{% url "login" %}"
-    var logoutApiUrl = "{% url "logout" %}"
-    var createUserApiUrl = "{% url "create_user" %}"
-    var updateProfileApiUrl = "{% url "update_profile" %}"
-    var prepareActionApiUrl = "{% url "prepare_action_update" %}"
+    // So we know whether the user has javascript or not
+    (function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)
   </script>
 </head>
