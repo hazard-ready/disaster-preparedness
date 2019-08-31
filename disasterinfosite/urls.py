@@ -10,10 +10,10 @@ urlpatterns = [
   url(r'^admin/', admin.site.urls),
   url(r'^i18n/', include('django.conf.urls.i18n')),
   # API urls
-  url(r'^accounts/login/$', views.login_view),
-  url(r'^accounts/logout/$', views.logout_view),
-  url(r'^accounts/create_user/$', views.create_user),
-  url(r'^accounts/update_profile/$', views.update_profile),
+  url(r'^accounts/login/$', views.login_view, name="login"),
+  url(r'^accounts/logout/$', views.logout_view, name="logout"),
+  url(r'^accounts/create_user/$', views.create_user, name="create_user"),
+  url(r'^accounts/update_profile/$', views.update_profile, name="update_profile"),
   url(r'^accounts/update_prepare_action/$', views.prepare_action_update, name='prepare_action_update')
 ]
 
