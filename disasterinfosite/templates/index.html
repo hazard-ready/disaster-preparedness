@@ -30,8 +30,9 @@
         </div>
         {% block disclaimer %}
         <div class="disclaimer-container">
+          {% webpack_static 'build/data-sources.pdf' as data_source_link %}
            <p>
-              {% blocktrans with area_name=settings.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original data sources. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.{% endblocktrans %}
+              {% blocktrans with area_name=settings.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original <a href="{{ data_source_link }}" target="_blank">data sources</a>. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.{% endblocktrans %}
           </p>
         </div>
         {% endblock disclaimer %}
