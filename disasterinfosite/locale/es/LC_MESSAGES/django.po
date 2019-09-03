@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-03 22:26+0000\n"
+"POT-Creation-Date: 2019-09-03 23:08+0000\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -152,8 +152,8 @@ msgid ""
 "target=\"_blank\">data sources</a>. Although these data represent the best "
 "current assessment of hazards, they are not predictive of future events. The "
 "descriptions of risk and how to prepare for those risks are based on best "
-"information from the American Red Cross and the Federal Emergency Management "
-"Agency."
+"information from the Regional Disaster Preparedness Organization (RDPO) of "
+"the Portland Metropolitan Region."
 msgstr ""
 "Este sitio utiliza los datos de riesgo más actualizados para %(area_name)s. "
 "El usuario de este sitio es responsable de verificar cualquier información "
@@ -161,8 +161,7 @@ msgstr ""
 "\">fuentes de datos</a> originales. Aunque estos datos representan la mejor "
 "evaluación actual de los peligros, no predicen eventos futuros. Las "
 "descripciones de riesgo y cómo prepararse para esos riesgos se basan en la "
-"mejor información de la Cruz Roja y la Federal Emergency Management Agency "
-"(Agencia Federal para el Manejo de Emergencias)."
+"mejor información de la Regional Disaster Preparedness Organization (RDPO) de la región metropolitana de Portland."
 
 #: templates/about.html:132
 msgid "build/flowchart.jpg"
@@ -374,7 +373,9 @@ msgid "We had a problem finding that location."
 msgstr "Tuvimos un problema en encontrar esa localidad."
 
 #: templates/index.html:20
-msgid "A natural disaster could strike your area at any time."
+#, fuzzy
+#| msgid "A natural disaster could strike your area at any time."
+msgid "Natural disasters can strike at any time."
 msgstr "Un desastre natural podría afectar su área en cualquier momento."
 
 #: templates/index.html:21
@@ -389,7 +390,26 @@ msgstr ""
 "superior de la página, seleccione una localidad en el mapa o haga clic en "
 "\"BUSQUEME.\""
 
-#: templates/index.html:53
+#: templates/index.html:47
+msgid "Sign up for PublicAlerts"
+msgstr ""
+
+#: templates/index.html:49
+msgid ""
+"PublicAlerts is a free service that sends emergency alerts via text, email, "
+"or voice message. It’s for anyone who lives, works, or visits the Portland-"
+"Vancouver Region (which includes Clackamas, Clark, Columbia, Multnomah, and "
+"Washington Counties). Sign up now so you can get info when an emergency is "
+"happening. Getting info quickly gives you power to take action. It could "
+"save your life and the lives of your loved ones."
+msgstr ""
+
+#: templates/index.html:51 templates/users/user_interactions.html:4
+#: templates/users/user_signup.html:3
+msgid "Sign Up"
+msgstr "Regístrese"
+
+#: templates/index.html:61
 msgid "Getting results for your location..."
 msgstr "Obtener resultados para su localidad..."
 
@@ -474,10 +494,6 @@ msgstr "o más"
 msgid "Log In"
 msgstr "Iniciar&nbsp;sesión"
 
-#: templates/users/user_interactions.html:4 templates/users/user_signup.html:3
-msgid "Sign Up"
-msgstr "Regístrese"
-
 #: templates/users/user_interactions.html:5 templates/users/user_login.html:4
 #: templates/users/user_profile.html:25 templates/users/user_signup.html:4
 msgid "Cancel"
@@ -535,23 +551,18 @@ msgstr ""
 "debe cerrar sesión."
 
 #: templates/users/user_interactions.html:59
-msgid "Receive Important Updates"
-msgstr "Recibir información importante"
+msgid "Receive Preparedness Reminders"
+msgstr ""
 
 #: templates/users/user_interactions.html:61
 msgid ""
-"Keep your family, friends, and neighbors safe. Sign up to get email updates "
-"about seasonal hazards like fires, floods, and snow storms. If a natural "
-"disaster happens in your area, we’ll send you updates so you can stay "
-"informed. We’ll ask for your email address and physical address. Your "
-"information will be secure, and we won’t contact you for any other reason."
+"Sign up to receive email reminders 2-3 times per year about seasonal hazards "
+"like fires, floods, and snow storms. You can also fill out and save which "
+"preparedness steps you've taken using our printable checklist. We’ll ask for "
+"your email address and physical address so we can send you customized info. "
+"Your personal information kept secure, and we won’t contact you for any "
+"other reason."
 msgstr ""
-"Mantenga a su familia, amigos y vecinos seguros. Regístrese para recibir "
-"noticias sobre peligros estacionales como incendios, inundaciones y "
-"tormentas de nieve. Si ocurre un desastre natural en su área, le enviaremos "
-"información para que pueda mantenerse informado. Le pediremos su dirección "
-"de correo electrónico y dirección física. Su información estará segura y no "
-"nos pondremos en contacto con usted por ningún otro motivo."
 
 #: templates/users/user_login.html:8
 msgid "Required."
@@ -622,3 +633,4 @@ msgstr "¡Gratis!"
 #: templatetags/show_cost.py:13
 msgid "Unknown"
 msgstr "Desconocido"
+
