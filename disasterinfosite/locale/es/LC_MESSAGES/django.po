@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-03 16:52+0000\n"
+"POT-Creation-Date: 2019-09-03 22:26+0000\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -157,12 +157,12 @@ msgid ""
 msgstr ""
 "Este sitio utiliza los datos de riesgo más actualizados para %(area_name)s. "
 "El usuario de este sitio es responsable de verificar cualquier información "
-"particular con las <a href=\"%(data_source_link)s\" "
-"target=\"_blank\">fuentes de datos</a> originales. Aunque estos datos "
-"representan la mejor evaluación actual de los peligros, no predicen eventos "
-"futuros. Las descripciones de riesgo y cómo prepararse para esos riesgos se "
-"basan en la mejor información de la Cruz Roja y la Federal Emergency "
-"Management Agency (Agencia Federal para el Manejo de Emergencias)."
+"particular con las <a href=\"%(data_source_link)s\" target=\"_blank"
+"\">fuentes de datos</a> originales. Aunque estos datos representan la mejor "
+"evaluación actual de los peligros, no predicen eventos futuros. Las "
+"descripciones de riesgo y cómo prepararse para esos riesgos se basan en la "
+"mejor información de la Cruz Roja y la Federal Emergency Management Agency "
+"(Agencia Federal para el Manejo de Emergencias)."
 
 #: templates/about.html:132
 msgid "build/flowchart.jpg"
@@ -211,6 +211,84 @@ msgstr "Descripción breve de los datos"
 msgid "Take a look at some overviews of the data we used for %(area_name)s:"
 msgstr ""
 "Observe algunas descripciones de los datos que utilizamos para %(area_name)s:"
+
+#: templates/data.html:16
+msgid "Data sources for PDX Ready"
+msgstr "Fuentes de datos para PDX Lista"
+
+#: templates/data.html:18
+msgid "Clackamas, Columbia, Multnomah, and Washington Counties, Oregon"
+msgstr ""
+
+#: templates/data.html:20 templates/data.html:49
+msgid "Earthquake"
+msgstr "Terremoto"
+
+#: templates/data.html:21 templates/data.html:22 templates/data.html:26
+#: templates/data.html:27 templates/data.html:28 templates/data.html:29
+#: templates/data.html:30 templates/data.html:34 templates/data.html:38
+#: templates/data.html:39 templates/data.html:43 templates/data.html:50
+#: templates/data.html:51 templates/data.html:55 templates/data.html:59
+#: templates/data.html:63 templates/data.html:67
+msgid "accessed"
+msgstr ""
+
+#: templates/data.html:21 templates/data.html:22 templates/data.html:26
+#: templates/data.html:27 templates/data.html:28 templates/data.html:29
+#: templates/data.html:30 templates/data.html:34 templates/data.html:38
+#: templates/data.html:43 templates/data.html:50 templates/data.html:51
+#: templates/data.html:55 templates/data.html:59 templates/data.html:63
+#: templates/data.html:67
+msgid "June"
+msgstr "junio"
+
+#: templates/data.html:25 templates/data.html:54
+msgid "Volcano"
+msgstr "Volcán"
+
+#: templates/data.html:33 templates/data.html:58
+msgid "Landslide"
+msgstr "Derrumbes"
+
+#: templates/data.html:37 templates/data.html:62
+msgid "Flood"
+msgstr "Inundacion"
+
+#: templates/data.html:39
+msgid "August"
+msgstr "agosto"
+
+#: templates/data.html:42 templates/data.html:66
+msgid "Wildfire"
+msgstr "Incendio Forestal"
+
+#: templates/data.html:47
+msgid "Clark County, Washington"
+msgstr "Clark County, Washington"
+
+#: templates/data.html:71
+msgid "Questions or concerns about the data? Contact:"
+msgstr ""
+
+#: templates/data.html:73 templates/data.html:74
+msgid "flood"
+msgstr "inundacion"
+
+#: templates/data.html:74 templates/data.html:75 templates/data.html:77
+msgid "earthquake"
+msgstr "terremoto"
+
+#: templates/data.html:74 templates/data.html:77
+msgid "landslide"
+msgstr "derrumbes"
+
+#: templates/data.html:75
+msgid "volcano"
+msgstr "volcán"
+
+#: templates/data.html:76
+msgid "wildfire"
+msgstr "incendio forestal"
 
 #: templates/found_content.html:11
 msgid "What to expect for"
