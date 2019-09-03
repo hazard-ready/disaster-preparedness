@@ -18,7 +18,8 @@ module.exports = {
     vendor: ["leaflet", "jquery", "slick-carousel"],
     app: "./static/js/app.js",
     prepare: "./static/js/prepare.js",
-    about: "./static/js/about.js"
+    about: "./static/js/about.js",
+    data: "./static/js/data.js"
   },
 
   output: {

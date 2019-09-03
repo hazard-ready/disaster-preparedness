@@ -111,6 +111,13 @@ def about_view(request):
     }
     return render(request, "about.html", renderData)
 
+@ensure_csrf_cookie
+def data_view(request):
+    renderData = {
+    'settings': SiteSettings.get_solo()
+    }
+    return render(request, "data.html", renderData)
+
 
 @ensure_csrf_cookie
 def prepare_view(request):
