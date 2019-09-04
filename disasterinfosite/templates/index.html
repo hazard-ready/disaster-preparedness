@@ -17,7 +17,7 @@
           <div class="information-container" role="main">
             <h2 class="caps">{{ settings.site_description }}</h2>
             <p>{{ settings.intro_text | safe }}</p>
-            <h3>{% trans "A natural disaster could strike your area at any time." %}</h3>
+            <h3>{% trans "Natural disasters can strike at any time." %}</h3>
             <p>{% trans 'Get a personalized report on natural hazards that are likely in your area and steps you can take to prepare. Type your location in the search box at the top of the page, select a location on the map, or click “FIND ME.”' %}</p>
           </div>
           {% endblock info-instructions %}
@@ -32,7 +32,7 @@
         <div class="disclaimer-container">
           {% url 'data' as data_source_link %}
            <p>
-              {% blocktrans with area_name=settings.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original <a href="{{ data_source_link }}" target="_blank">data sources</a>. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the American Red Cross and the Federal Emergency Management Agency.{% endblocktrans %}
+              {% blocktrans with area_name=settings.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original <a href="{{ data_source_link }}" target="_blank">data sources</a>. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the Regional Disaster Preparedness Organization (RDPO) of the Portland Metropolitan Region.{% endblocktrans %}
           </p>
         </div>
         {% endblock disclaimer %}
@@ -42,7 +42,15 @@
 
       {% block main-content %}
       <div class="intro-container">
-        {% endblock main-content %} {% include "users/user_interactions.html" %}
+        {% endblock main-content %}
+        <div class="public-alerts-container" tabindex="-1">
+          <h4>{% trans "Sign up for PublicAlerts" %}</h4>
+          <p>
+            {% trans "PublicAlerts is a free service that sends emergency alerts via text, email, or voice message. It’s for anyone who lives, works, or visits the Portland-Vancouver Region (which includes Clackamas, Clark, Columbia, Multnomah, and Washington Counties). Sign up now so you can get info when an emergency is happening. Getting info quickly gives you power to take action. It could save your life and the lives of your loved ones." %}
+          </p>
+            <a href="https://sites.google.com/view/publicalerts/sign-up" target="_blank" rel="noopener"><button class="caps">{% trans "Sign Up" %}</button></a>
+        </div>
+        {% include "users/user_interactions.html" %}
       </div>
     </div>
 
