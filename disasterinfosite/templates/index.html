@@ -41,8 +41,9 @@
 
       {% block main-content %}
       <div class="intro-container">
-        {% endblock main-content %} {% include "users/user_interactions.html" %}
+        {% include "users/user_interactions.html" %}
       </div>
+      {% endblock main-content %}
     </div>
 
     {% include "geek_box.html" %}
@@ -51,10 +52,7 @@
       <h1 class="loading-text caps">
         {% trans "Getting results for your location..." %}
       </h1>
-      <img
-        class="loading-spinner"
-        src="{% webpack_static 'build/thinking.gif' %}"
-      />
+      <img class="loading-spinner" src="{% webpack_static 'build/thinking.gif' %}">
     </div>
     <!-- Load MapQuest Places search (for autocomplete) from CDN -->
     <script src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
