@@ -10,10 +10,6 @@
 <html class="no-js" lang="{{ SELECTED_LANGUAGE_CODE }}">
   {% include "head-meta.html" with file="prepare" %}
 
-    <script type="text/javascript">
-      var loggedIn = {{ logged_in | js }};
-    </script>
-
   <body>
     {% include "prepare-header.html" %}
     <div class="content-container">
@@ -145,6 +141,9 @@
       </div>
     </div>
     {% include "geek_box.html" %}
+    <script type="text/javascript">
+      var loggedIn = {{ logged_in | js }};
+    </script>
     {% include "page-end-meta.html" with file="prepare" %}
 
   </body>
