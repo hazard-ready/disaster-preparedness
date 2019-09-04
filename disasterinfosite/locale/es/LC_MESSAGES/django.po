@@ -1,10 +1,9 @@
 # Localized strings for PDX Ready, Spanish.
 # Copyright (C) 2019
-
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-28 22:15+0000\n"
+"POT-Creation-Date: 2019-09-03 22:26+0000\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -144,30 +143,32 @@ msgstr ""
 "información actualizada y la presenta de tal manera que sea accesible para "
 "cualquier residente de %(area_name)s."
 
-#: templates/about.html:127 templates/index.html:34
+#: templates/about.html:128 templates/index.html:35
 #, python-format
 msgid ""
 "This site uses the most up-to-date hazard risk data available for "
 "%(area_name)s. The user of this site is responsible for verifying any "
-"particular information with the original data sources. Although these data "
-"represent the best current assessment of hazards, they are not predictive of "
-"future events. The descriptions of risk and how to prepare for those risks "
-"are based on best information from the American Red Cross and the Federal "
-"Emergency Management Agency."
+"particular information with the original <a href=\"%(data_source_link)s\" "
+"target=\"_blank\">data sources</a>. Although these data represent the best "
+"current assessment of hazards, they are not predictive of future events. The "
+"descriptions of risk and how to prepare for those risks are based on best "
+"information from the American Red Cross and the Federal Emergency Management "
+"Agency."
 msgstr ""
 "Este sitio utiliza los datos de riesgo más actualizados para %(area_name)s. "
 "El usuario de este sitio es responsable de verificar cualquier información "
-"particular con las fuentes de datos originales. Aunque estos datos "
-"representan la mejor evaluación actual de los peligros, no predicen eventos "
-"futuros. Las descripciones de riesgo y cómo prepararse para esos riesgos se "
-"basan en la mejor información de la Cruz Roja y la Federal Emergency "
-"Management Agency (Agencia Federal para el Manejo de Emergencias)."
+"particular con las <a href=\"%(data_source_link)s\" target=\"_blank"
+"\">fuentes de datos</a> originales. Aunque estos datos representan la mejor "
+"evaluación actual de los peligros, no predicen eventos futuros. Las "
+"descripciones de riesgo y cómo prepararse para esos riesgos se basan en la "
+"mejor información de la Cruz Roja y la Federal Emergency Management Agency "
+"(Agencia Federal para el Manejo de Emergencias)."
 
-#: templates/about.html:131
+#: templates/about.html:132
 msgid "build/flowchart.jpg"
 msgstr "build/flowchart-es.jpg"
 
-#: templates/about.html:134
+#: templates/about.html:135
 msgid ""
 "How we build Hazard Ready Sites: 1. Gather data. Locate the most relevant "
 "and up-to-date data on natural hazards for your region from trusted sources "
@@ -192,7 +193,7 @@ msgstr ""
 "la información se ajuste a las necesidades de cada comunidad. 6. ¡Revisamos, "
 "revisamos, revisamos y lanzamos el sitio!"
 
-#: templates/about.html:142
+#: templates/about.html:143
 #, python-format
 msgid ""
 "Data used for %(title)s is available for download <a href=\"%(download)s\" "
@@ -201,15 +202,93 @@ msgstr ""
 "La información utilizada para %(title)s se puede descargar <a href="
 "\"%(download)s\" target=\"_blank\" rel=\"noopener\">aquí</a>"
 
-#: templates/about.html:149
+#: templates/about.html:150
 msgid "Quick Data Overview"
 msgstr "Descripción breve de los datos"
 
-#: templates/about.html:151
+#: templates/about.html:152
 #, python-format
 msgid "Take a look at some overviews of the data we used for %(area_name)s:"
 msgstr ""
 "Observe algunas descripciones de los datos que utilizamos para %(area_name)s:"
+
+#: templates/data.html:16
+msgid "Data sources for PDX Ready"
+msgstr "Fuentes de datos para PDX Lista"
+
+#: templates/data.html:18
+msgid "Clackamas, Columbia, Multnomah, and Washington Counties, Oregon"
+msgstr ""
+
+#: templates/data.html:20 templates/data.html:49
+msgid "Earthquake"
+msgstr "Terremoto"
+
+#: templates/data.html:21 templates/data.html:22 templates/data.html:26
+#: templates/data.html:27 templates/data.html:28 templates/data.html:29
+#: templates/data.html:30 templates/data.html:34 templates/data.html:38
+#: templates/data.html:39 templates/data.html:43 templates/data.html:50
+#: templates/data.html:51 templates/data.html:55 templates/data.html:59
+#: templates/data.html:63 templates/data.html:67
+msgid "accessed"
+msgstr ""
+
+#: templates/data.html:21 templates/data.html:22 templates/data.html:26
+#: templates/data.html:27 templates/data.html:28 templates/data.html:29
+#: templates/data.html:30 templates/data.html:34 templates/data.html:38
+#: templates/data.html:43 templates/data.html:50 templates/data.html:51
+#: templates/data.html:55 templates/data.html:59 templates/data.html:63
+#: templates/data.html:67
+msgid "June"
+msgstr "junio"
+
+#: templates/data.html:25 templates/data.html:54
+msgid "Volcano"
+msgstr "Volcán"
+
+#: templates/data.html:33 templates/data.html:58
+msgid "Landslide"
+msgstr "Derrumbes"
+
+#: templates/data.html:37 templates/data.html:62
+msgid "Flood"
+msgstr "Inundacion"
+
+#: templates/data.html:39
+msgid "August"
+msgstr "agosto"
+
+#: templates/data.html:42 templates/data.html:66
+msgid "Wildfire"
+msgstr "Incendio Forestal"
+
+#: templates/data.html:47
+msgid "Clark County, Washington"
+msgstr "Clark County, Washington"
+
+#: templates/data.html:71
+msgid "Questions or concerns about the data? Contact:"
+msgstr ""
+
+#: templates/data.html:73 templates/data.html:74
+msgid "flood"
+msgstr "inundacion"
+
+#: templates/data.html:74 templates/data.html:75 templates/data.html:77
+msgid "earthquake"
+msgstr "terremoto"
+
+#: templates/data.html:74 templates/data.html:77
+msgid "landslide"
+msgstr "derrumbes"
+
+#: templates/data.html:75
+msgid "volcano"
+msgstr "volcán"
+
+#: templates/data.html:76
+msgid "wildfire"
+msgstr "incendio forestal"
 
 #: templates/found_content.html:11
 msgid "What to expect for"
@@ -219,7 +298,8 @@ msgstr "Qué puede esperar para"
 msgid "try&nbsp;a&nbsp;new&nbsp;address"
 msgstr "intente&nbsp;una&nbsp;nueva&nbsp;dirección"
 
-#: templates/found_content.html:23 templates/header.html:22
+#: templates/found_content.html:23 templates/header.html:21
+#: templates/header.html:51
 msgid "Feedback Survey"
 msgstr "Encuesta para ofrecer sus reflecciones"
 
@@ -265,11 +345,11 @@ msgid ""
 "Have questions? View the <a href=\"%(about_url)s\" target=\"_blank\">About</"
 "a> page for more information.\""
 msgstr ""
-"¿Tiene preguntas? Mire al <a href=\"%(about_url)s\" target="
-"\"_blank\">Sobre</a> pagina para mas información.\n"
+"¿Tiene preguntas? Mire al <a href=\"%(about_url)s\" target=\"_blank\">Sobre</"
+"a> pagina para mas información.\n"
 "            "
 
-#: templates/head-meta.html:13
+#: templates/head-meta.html:12
 msgid ""
 "Enter your location for a personalized report on your risks and how to "
 "prepare."
@@ -277,19 +357,19 @@ msgstr ""
 "Ingrese su localidad para obtener un informe personalizado de sus riesgos y "
 "cómo prepararse."
 
-#: templates/header.html:14 templates/header.html:46
+#: templates/header.html:14 templates/header.html:44
 msgid "About"
 msgstr "Sobre"
 
-#: templates/header.html:27
+#: templates/header.html:25
 msgid "Find Me"
 msgstr "Busqueme"
 
-#: templates/header.html:30
+#: templates/header.html:28
 msgid "Enter an address."
 msgstr "Introduzca una dirección."
 
-#: templates/header.html:40
+#: templates/header.html:38
 msgid "We had a problem finding that location."
 msgstr "Tuvimos un problema en encontrar esa localidad."
 
@@ -309,7 +389,7 @@ msgstr ""
 "superior de la página, seleccione una localidad en el mapa o haga clic en "
 "\"BUSQUEME.\""
 
-#: templates/index.html:52
+#: templates/index.html:53
 msgid "Getting results for your location..."
 msgstr "Obtener resultados para su localidad..."
 
