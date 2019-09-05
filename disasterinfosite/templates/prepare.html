@@ -100,7 +100,7 @@
           {% for item in actions %}
             <tr>
               <td class="center-align">
-                <input type="checkbox" class="checkbox--action-taken" value="{{ item.id }}" {% if item.id in actions_taken %}checked{% endif %}>
+                <input type="checkbox" aria-label="completed" class="checkbox--action-taken" value="{{ item.id }}" {% if item.id in actions_taken %}checked{% endif %}>
               </td>
               <td>{{ item.title }}</td>
               <td class="center-align">{% if item.happy_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
