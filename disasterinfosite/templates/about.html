@@ -28,7 +28,7 @@
               </p>
             </div>
             <p class="bio__links">
-              <a href="https://www.linkedin.com/in/carsonmk/" target="_blank" rel="noopener"><img src="{% webpack_static 'build/linkedin-logo.png' %}"></a> <a href="https://sites.google.com/view/carsonmk/about" target="_blank" rel="noopener"><img class="link-icon" src="{% webpack_static 'build/about-link.svg' %}"></a>
+              <a href="https://www.linkedin.com/in/carsonmk/" target="_blank" rel="noopener"><img src="{% webpack_static 'build/linkedin-logo.png' %}" alt="LinkedIn"></a> <a href="https://sites.google.com/view/carsonmk/about" target="_blank" rel="noopener"><img class="link-icon" src="{% webpack_static 'build/about-link.svg' %}" alt="Personal Website"></a>
             </p>
             </div>
           </div>
@@ -45,7 +45,7 @@
               </p>
             </div>
             <p class="bio__links bio__links--reverse">
-              <a href="https://hs.umt.edu/geosciences/faculty/bendick/" target="_blank" rel="noopener"><img class="link-icon" src="{% webpack_static 'build/about-link.svg' %}"></a>
+              <a href="https://hs.umt.edu/geosciences/faculty/bendick/" target="_blank" rel="noopener"><img class="link-icon" src="{% webpack_static 'build/about-link.svg' %}" alt="Personal Website"></a>
             </p>
           </div>
         </div>
@@ -66,7 +66,7 @@
       <div class="about-container about-container--hazardready">
         <h3 class="caps about--hazardready">{% trans "The Hazard Ready Project" %}</h3>
         <div class="hazardready-container">
-          <a href="https://hazardready.org" target="_blank" rel="noopener">
+          <a href="https://hazardready.org" target="_blank" rel="noopener" aria-label="Visit the Hazard Ready homepage to learn more.">
             <img class="hazardready-logo" src="{% webpack_static 'build/logo.png' %}" alt="">
           </a>
           {{ settings.about_text | safe }}
@@ -100,13 +100,13 @@
               <img class="partner-logo" src="{% webpack_static 'build/PBEM-Logo-with-text.jpg' %}" alt="{% trans 'Portland Bureau of Emergency Management' %}">
             </a>
             <a href="https://www.oregonmetro.gov/" target="_blank" rel="noopener">
-              <img class="partner-logo" src="{% webpack_static 'build/metro_oregon_logo.jpg' %}">
+              <img class="partner-logo" src="{% webpack_static 'build/metro_oregon_logo.jpg' %}" alt="Oregon Metro">
             </a>
             <a href="https://www.portofportland.com/" target="_blank" rel="noopener">
-              <img class="partner-logo" src="{% webpack_static 'build/port-of-portland-logo.jpg' %}">
+              <img class="partner-logo" src="{% webpack_static 'build/port-of-portland-logo.jpg' %}" alt="Port of Portland">
             </a>
             <a href="https://trimet.org/" target="_blank" rel="noopener">
-              <img class="partner-logo" src="{% webpack_static 'build/trimet-logo.jpg' %}">
+              <img class="partner-logo" src="{% webpack_static 'build/trimet-logo.jpg' %}" alt="Trimet">
             </a>
             <a href="https://www.redcross.org/local/oregon.html" target="_blank" rel="noopener">
               <img class="partner-logo" src="{% webpack_static 'build/red-cross-logo.png' %}" alt="{% trans 'American Red Cross: Cascades Region' %}">
@@ -128,7 +128,7 @@
         </div>
         <div class="about-content__flowchart">
           {% trans 'build/flowchart.jpg' as flowchart %}
-          <img src="{% webpack_static flowchart %}">
+          <img src="{% webpack_static flowchart %}" alt="">
           <p class="sr-only">
             {% blocktrans %}How we build Hazard Ready Sites: 1. Gather data. Locate the most relevant and up-to-date data on natural hazards for your region from trusted sources like FEMA, NOAA, and the USGS. 2. Quality Check. Work with local partners (community groups & emergency managers) to ensure the data and infomration are accurate. 3. Process data. Make the data compatible with Hazard Ready software. 4. Build content. Write the webpage text, gather images and videos, locate local resources for each hazard and region. 5. Feedback and focus groups. Discuss content and designs to ensure the information fits each community's needs. 6. Revise, revise, revise and launch site!{% endblocktrans %}
           </p>
