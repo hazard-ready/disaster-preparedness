@@ -28,12 +28,12 @@
 
 {% block map-container %}
   <div class="map-container map-container--found-content" role="application">
-    <div id="map"></div>
+    <div id="map" aria-hidden="true"></div>
   </div>
 {% endblock map-container %}
 {% block disclaimer %}{% endblock disclaimer %}
 {% block hazard-menu %}
-  <div class="hazard-container">
+  <div class="hazard-container" role="navigation">
     {% for group, hazard in data.items %}
       <a class="hazard-link caps" href="#{{group.name}}">{{group.display_name}}</a>
     {% endfor %}
