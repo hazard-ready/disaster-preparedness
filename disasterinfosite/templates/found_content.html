@@ -27,8 +27,8 @@
 {% endblock info-instructions %}
 
 {% block map-container %}
-  <div class="map-container map-container--found-content" role="application">
-    <div id="map" aria-hidden="true"></div>
+  <div class="map-container map-container--found-content" aria-hidden="true">
+    <div id="map"></div>
   </div>
 {% endblock map-container %}
 {% block disclaimer %}{% endblock disclaimer %}
@@ -44,7 +44,7 @@
 
 {% block main-content %}
   {% for group, hazard in data.items %}
-  <div class="disaster-container">
+  <div class="disaster-container" role="region">
     <div class="anchor" id="{{group.name}}"></div>
     <h2>{{group.display_name}}</h2>
     <div class="disaster-content">
@@ -81,7 +81,7 @@
               {% endwith %}
             {% endfor %}
           </div>
-          <div class="snugget__popout snugget__popout--static">
+          <div class="snugget__popout snugget__popout--static" role="complementary">
             {% for section, snuggets in hazard.static.items %}
               {% with snuggets|dictsort:"order" as sorted_snuggets %}
                 {% for snugget in sorted_snuggets %}
@@ -103,7 +103,7 @@
                 {% show_snugget snugget %}
               {% endfor %}
             </div>
-            <div class="snugget__popout">
+            <div class="snugget__popout" role="complementary">
               {% for snugget in sorted_snuggets %}
                 {% if snugget.photos or snugget.pop_out.has_content %}
                   {% include "pop_out.html" %}
@@ -114,7 +114,8 @@
         </div>
       {% endfor %}
       {% for section, snuggets in hazard.collapsible.items %}
-        <h4 class="section-title section-title--collapse" data-section="{{group.name}}-{{section.name|slugify}}">
+        <h4 class="section-title section-title--collapse" data-section="{{group.name}}-{{section.name|slugify}}" role="button">
+          <div class="sr-only">click to display more information</div>
           <img class="caret" src="{% webpack_static 'build/caret.svg' %}" alt=""/>{{ section.display_name }}
         </h4>
         <div class="section-content section-content--collapse" id="{{group.name}}-{{section.name|slugify}}">
