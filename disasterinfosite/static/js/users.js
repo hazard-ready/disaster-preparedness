@@ -66,7 +66,8 @@ $(document).ready(function() {
     event.preventDefault();
     $userButtonContainer.addClass('hide');
     $failureContainer.addClass('hide');
-    $userSignupContainer.removeClass('hide');;
+    $userSignupContainer.removeClass('hide');
+    $('#user-signup__username').focus();
   });
 
   $(".button--login").click(function(event) {
@@ -75,6 +76,7 @@ $(document).ready(function() {
     $("#user-info-container--invalid").addClass('hide');
     $failureContainer.addClass('hide');
     $userLoginContainer.removeClass('hide');;
+    $('#user-login__username').focus();
   });
 
   $(".button--cancel").click(function(event) {
@@ -95,7 +97,8 @@ $(document).ready(function() {
     $userInfoContainer.addClass('hide');
     $("#user-button-container--logged-in").addClass('hide');
     $failureContainer.addClass('hide');
-    $userProfileContainer.removeClass('hide');;
+    $userProfileContainer.removeClass('hide');
+    $('#user-profile__address1').focus();
   });
 
   requiredFocus($("#user-signup__username"));
@@ -122,7 +125,7 @@ $(document).ready(function() {
 
     sendAjaxAuthRequest(createUserApiUrl, new FormData($signupForm[0]))
     .done(function() {
-      $("#user-signup-result-container").removeClass('hide');;
+      $("#user-signup-result-container").removeClass('hide').focus();
     })
     .fail(function(error) {
       console.error("signup form error:", error)
@@ -153,7 +156,7 @@ $(document).ready(function() {
 
     sendAjaxAuthRequest(updateProfileApiUrl, new FormData($updateForm[0]))
       .done(function() {
-        $("#user-profile-result-container").removeClass('hide');;
+        $("#user-profile-result-container").removeClass('hide').focus();
       })
       .fail(function(error) {
         console.error("update form error:", error)
