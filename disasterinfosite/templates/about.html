@@ -28,7 +28,7 @@
               </p>
             </div>
             <p class="bio__links">
-              <a href="https://www.linkedin.com/in/carsonmk/" target="_blank" rel="noopener"><img src="{% webpack_static 'build/linkedin-logo.png' %}" alt="LinkedIn"></a> <a href="https://sites.google.com/view/carsonmk/about" target="_blank" rel="noopener"><img class="link-icon" src="{% webpack_static 'build/about-link.svg' %}" alt="Personal Website"></a>
+              <a href="https://www.linkedin.com/in/carsonmk/" target="_blank" rel="noopener"><img src="{% webpack_static 'build/linkedin-logo.png' %}" alt=""><span class="sr-only">LinkedIn Profile</span></a> <a href="https://sites.google.com/view/carsonmk/about" target="_blank" rel="noopener"><img class="link-icon" src="{% webpack_static 'build/about-link.svg' %}" alt=""><span class="sr-only">personal website</span></a>
             </p>
             </div>
           </div>
@@ -45,7 +45,7 @@
               </p>
             </div>
             <p class="bio__links bio__links--reverse">
-              <a href="https://hs.umt.edu/geosciences/faculty/bendick/" target="_blank" rel="noopener"><img class="link-icon" src="{% webpack_static 'build/about-link.svg' %}" alt="Personal Website"></a>
+              <a href="https://hs.umt.edu/geosciences/faculty/bendick/" target="_blank" rel="noopener"><img class="link-icon" src="{% webpack_static 'build/about-link.svg' %}" alt=""><span class="sr-only">personal website</span></a>
             </p>
           </div>
         </div>
@@ -66,8 +66,8 @@
       <div class="about-container about-container--hazardready">
         <h3 class="caps about--hazardready">{% trans "The Hazard Ready Project" %}</h3>
         <div class="hazardready-container">
-          <a href="https://hazardready.org" target="_blank" rel="noopener" aria-label="Visit the Hazard Ready homepage to learn more.">
-            <img class="hazardready-logo" src="{% webpack_static 'build/logo.png' %}" alt="">
+          <a href="https://hazardready.org" target="_blank" rel="noopener">
+            <img class="hazardready-logo" src="{% webpack_static 'build/logo.png' %}" alt=""><span class="sr-only">Hazard Ready homepage</span>
           </a>
           {{ settings.about_text | safe }}
         </div>
