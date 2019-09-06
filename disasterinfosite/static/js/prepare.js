@@ -21,7 +21,9 @@ var $prepareContentItems = $(".prepare-content__item");
 
 function highlightMenu($itemTitle) {
   $prepareContentItems.removeClass("prepare-content__item--active");
+  $prepareContentItems.attr('aria-expanded', false);
   $itemTitle.addClass("prepare-content__item--active");
+  $itemTitle.attr('aria-expanded', true);
 }
 
 function showItemDetail(detailId) {
