@@ -22,14 +22,14 @@
         <div class="prepare-actions">
           {% regroup actions by cost as actions_by_cost %}
           {% for cost, items in actions_by_cost %}
-            <h4 class="section-title section-title--collapse" data-section="cost--{{cost}}">
+            <h4 class="section-title section-title--collapse" data-section="cost--{{cost}}" role="button">
               <img class="caret{% if forloop.first %} caret--up{% endif %}" src="{% webpack_static 'build/caret.svg' %}" alt=""/>
               {{ cost | show_cost }}
             </h4>
             <div class="{% if forloop.first %}section-content{% else %}section-content section-content--collapse{% endif %} prepare-content" id="cost--{{cost}}">
                 <ul class="prepare-content__list">
                   {% for item in items %}
-                    <li class="prepare-content__item{% if forloop.first %} prepare-content__item--active{% endif %}" data-item="{{ item.slug }}">{{ item.title }}</li>
+                    <li class="prepare-content__item{% if forloop.first %} prepare-content__item--active{% endif %}" role="button" aria-controls="{{ item.slug }}" data-item="{{ item.slug }}" id="{{ item.slug }}-control">{{ item.title }}</li>
                   {% endfor %}
                 </ul>
             </div>
@@ -37,7 +37,7 @@
         </div>
         <div class="prepare-detail">
           {% for item in actions %}
-            <div class="{% if forloop.first %}prepare-item{% else %}prepare-item hide{% endif %}" id="{{ item.slug }}" data-section="cost--{{item.cost}}">
+            <div class="{% if forloop.first %}prepare-item{% else %}prepare-item hide{% endif %}" id="{{ item.slug }}" data-section="cost--{{item.cost}}" role="region"  aria-labelledby="{{ item.slug }}-control">
               {% if item.image %}
                 <img class="prepare-item__image" alt="" src="{{ item.image.url }}">
               {% endif %}
@@ -103,11 +103,11 @@
                 <input type="checkbox" aria-label="completed" class="checkbox--action-taken" value="{{ item.id }}" {% if item.id in actions_taken %}checked{% endif %}>
               </td>
               <td>{{ item.title }}</td>
-              <td class="center-align">{% if item.happy_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
+              <td class="center-align">{% if item.happy_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="{% trans 'reduces emotional and physical harm' %}">{% endif %}
               </td>
-              <td class="center-align">{% if item.useful_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
+              <td class="center-align">{% if item.useful_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="{% trans 'is useful for other situations' %}">{% endif %}
               </td>
-              <td class="center-align">{% if item.property_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="yes!">{% endif %}
+              <td class="center-align">{% if item.property_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="{% trans 'helps protect property' %}">{% endif %}
               </td>
               <td class="center-align">{{ item.cost | show_cost }}</td>
               <td class="resources">{% if item.link %}
