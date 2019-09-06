@@ -8,7 +8,7 @@
 
 
 
-<div role="form" id="user-interaction-container" tabindex="-1" aria-label="signup-login">
+<div role="form" id="user-interaction-container" aria-label="signup-login">
   {% include "users/user_login.html" %}
 
   {% include "users/user_signup.html" %}
@@ -17,7 +17,7 @@
     {% include "users/user_profile.html" %}
   {% endif %}
 
-  <div id="user-info-container" class="user--message hide" tabindex="-1">
+  <div id="user-info-container" class="user--message hide">
    {% if username %}
       <p>{% blocktrans %}Welcome back, <span class="username">{{ username }}</span>!{% endblocktrans %}</p>
    {% else %}
@@ -25,21 +25,21 @@
    {% endif %}
   </div>
 
-  <div id="user-info-container--invalid" class="user--message hide" tabindex="-1">
+  <div id="user-info-container--invalid" class="user--message hide">
     <p>{% trans "Whoops, it looks like that username or password didn't work." %}</p>
   </div>
 
-  <div id="failure-container" class="user--message hide" tabindex="-1">
+  <div id="failure-container" class="user--message hide">
     <p>{% trans "Whoops, we're not sure what happened there. Maybe you should try again." %}</p>
   </div>
 
-  <div id="user-signup-result-container" class="user--message hide" tabindex="-1">
+  <div id="user-signup-result-container" class="user--message hide">
     <p>
       {% trans "Thanks for signing up! We'll get ahold of you with relevant news and information. You can come back anytime to update your address." %}
     </p>
   </div>
 
-  <div id="user-profile-result-container" class="user--message hide" tabindex="-1">
+  <div id="user-profile-result-container" class="user--message hide">
     <p>{% trans "Thanks for keeping us up to date!" %}</p>
   </div>
 
@@ -55,7 +55,7 @@
       </div>
     </div>
   {% else %}
-    <div id="user-button-container" tabindex="-1">
+    <div id="user-button-container">
       <h4>{% trans "Receive Preparedness Reminders" %}</h4>
       <p>
         {% trans "Sign up to receive email reminders 2-3 times per year about seasonal hazards like fires, floods, and snow storms. You can also fill out and save which preparedness steps you've taken using our printable checklist. We’ll ask for your email address and physical address so we can send you customized info. Your personal information kept secure, and we won’t contact you for any other reason." %}

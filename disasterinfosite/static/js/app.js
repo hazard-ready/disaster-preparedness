@@ -183,6 +183,7 @@ function lazyLoadVideos() {
     // Load the video preview thumbnails asynchronously
     var preview = new Image();
     preview.src = "https://img.youtube.com/vi/" + embedCode + "/sddefault.jpg";
+    preview.alt = "";
     $(preview).on('load', function() {
       self.append(preview);
     });

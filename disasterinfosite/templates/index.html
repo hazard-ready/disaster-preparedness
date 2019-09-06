@@ -10,11 +10,11 @@
   <body>
     {% include "header.html" %}
 
-    <div class="content-container">
+    <div class="content-container" role="main">
       <div class="hero-container">
         <div class="map-info-container">
           {% block info-instructions %}
-          <div class="information-container" role="main">
+          <div class="information-container">
             <h2 class="caps">{{ settings.site_description }}</h2>
             <p>{{ settings.intro_text | safe }}</p>
             <h3>{% trans "Natural disasters can strike at any time." %}</h3>
@@ -23,13 +23,13 @@
           {% endblock info-instructions %}
 
           {% block map-container %}
-            <div class="map-container" role="application">
+            <div class="map-container" aria-hidden="true">
               <div id="map"></div>
             </div>
           {% endblock map-container %}
         </div>
         {% block disclaimer %}
-        <div class="disclaimer-container">
+        <div class="disclaimer-container" role="region" aria-label="disclaimer">
           {% url 'data' as data_source_link %}
            <p>
               {% blocktrans with area_name=settings.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original <a href="{{ data_source_link }}" target="_blank">data sources</a>. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the Regional Disaster Preparedness Organization (RDPO) of the Portland Metropolitan Region.{% endblocktrans %}
@@ -41,8 +41,8 @@
     </div>
 
       {% block main-content %}
-        <div class="intro-container">
-          <div class="public-alerts-container" tabindex="-1">
+        <div class="intro-container" role="region">
+          <div class="public-alerts-container">
             <h4>{% trans "Sign up for PublicAlerts" %}</h4>
             <p>
               {% trans "PublicAlerts is a free service that sends emergency alerts via text, email, or voice message. It’s for anyone who lives, works, or visits the Portland-Vancouver Region (which includes Clackamas, Clark, Columbia, Multnomah, and Washington Counties). Sign up now so you can get info when an emergency is happening. Getting info quickly gives you power to take action. It could save your life and the lives of your loved ones." %}
