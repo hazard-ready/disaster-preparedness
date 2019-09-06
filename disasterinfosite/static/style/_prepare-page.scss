@@ -167,7 +167,12 @@
     }
   }
 
-  a, a:focus, a:hover {
+  a {
+    color: $light-accent;
+    text-decoration: none;
+  }
+
+  a:focus, a:hover {
     color: $bright-accent;
     text-decoration: none;
   }
@@ -193,7 +198,7 @@
 }
 
 .print-key {
-  color: $medium-grey;
+  color: $dark-grey;
 }
 
 @media print {

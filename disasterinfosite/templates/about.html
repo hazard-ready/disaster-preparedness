@@ -28,7 +28,7 @@
               </p>
             </div>
             <p class="bio__links">
-              <a href="https://www.linkedin.com/in/carsonmk/" target="_blank" rel="noopener"><img src="{% webpack_static 'build/linkedin-logo.png' %}"></a> <a href="https://sites.google.com/view/carsonmk/about" target="_blank" rel="noopener"><img class="link-icon" src="{% webpack_static 'build/about-link.svg' %}"></a>
+              <a href="https://www.linkedin.com/in/carsonmk/" target="_blank" rel="noopener"><img src="{% webpack_static 'build/linkedin-logo.png' %}" alt=""><span class="sr-only">LinkedIn Profile</span></a> <a href="https://sites.google.com/view/carsonmk/about" target="_blank" rel="noopener"><img class="link-icon" src="{% webpack_static 'build/about-link.svg' %}" alt=""><span class="sr-only">personal website</span></a>
             </p>
             </div>
           </div>
@@ -45,7 +45,7 @@
               </p>
             </div>
             <p class="bio__links bio__links--reverse">
-              <a href="https://hs.umt.edu/geosciences/faculty/bendick/" target="_blank" rel="noopener"><img class="link-icon" src="{% webpack_static 'build/about-link.svg' %}"></a>
+              <a href="https://hs.umt.edu/geosciences/faculty/bendick/" target="_blank" rel="noopener"><img class="link-icon" src="{% webpack_static 'build/about-link.svg' %}" alt=""><span class="sr-only">personal website</span></a>
             </p>
           </div>
         </div>
@@ -67,7 +67,7 @@
         <h3 class="caps about--hazardready">{% trans "The Hazard Ready Project" %}</h3>
         <div class="hazardready-container">
           <a href="https://hazardready.org" target="_blank" rel="noopener">
-            <img class="hazardready-logo" src="{% webpack_static 'build/logo.png' %}" alt="">
+            <img class="hazardready-logo" src="{% webpack_static 'build/logo.png' %}" alt=""><span class="sr-only">Hazard Ready homepage</span>
           </a>
           {{ settings.about_text | safe }}
         </div>
@@ -86,7 +86,7 @@
         </div>
         <div class="about-content__flowchart">
           {% trans 'build/flowchart.jpg' as flowchart %}
-          <img src="{% webpack_static flowchart %}">
+          <img src="{% webpack_static flowchart %}" alt="">
           <p class="sr-only">
             {% blocktrans %}How we build Hazard Ready Sites: 1. Gather data. Locate the most relevant and up-to-date data on natural hazards for your region from trusted sources like FEMA, NOAA, and the USGS. 2. Quality Check. Work with local partners (community groups & emergency managers) to ensure the data and infomration are accurate. 3. Process data. Make the data compatible with Hazard Ready software. 4. Build content. Write the webpage text, gather images and videos, locate local resources for each hazard and region. 5. Feedback and focus groups. Discuss content and designs to ensure the information fits each community's needs. 6. Revise, revise, revise and launch site!{% endblocktrans %}
           </p>
