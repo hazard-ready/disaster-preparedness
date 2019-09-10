@@ -2,7 +2,7 @@
 
 {% block snugget-content %}
   {{ snugget.text | safe }}
-  {% video snugget.embed as my_video %}
+  {% video snugget.video as my_video %}
     {% video my_video "large" %}
   {% endvideo %}
 {% endblock %}
