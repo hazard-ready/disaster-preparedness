@@ -6,19 +6,27 @@ from django.db.utils import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
+from django.views.decorators.http import require_http_methods
 
 import logging
+import json
 
 # Remove this method when the survey is over
 @csrf_exempt
+@require_http_methods(["POST"])
 def add_survey_code(request):
     response = HttpResponse(status=403)
     if request.method == 'POST':
         try:
-            code = request.POST.get('code', '')
-            SurveyCode.objects.create(code=code)
-            response.set_cookie('survey', code)
-            response.status_code = 201
+            body_unicode = request.body.decode('utf-8')
+            body = json.loads(body_unicode)
+            code = body['code']
+            if code is not None:
+                SurveyCode.objects.create(code=code)
+                response.set_cookie('survey', code)
+                response.status_code = 201
+            else:
+                response.status_code = 400
         except ValueError:
             response.status_code = 400
 
