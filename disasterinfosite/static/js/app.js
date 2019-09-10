@@ -212,6 +212,12 @@ $(document).ready(function() {
   var heroContainer = $(".hero-container");
   var contentContainer = $(".content-container");
 
+  $('a').on('click', function(e) {
+    if(e.currentTarget.hostname !== location.hostname) {
+      return trackOutboundLink(e.currentTarget.href, e.currentTarget.target === "_blank");
+    }
+  });
+
   // if we are on the found content page, stick the hero container, set up our tabs and lazy load our videos.
   if (infoContainer.length) {
     var stopHeight = setStopHeight(heroContainer);

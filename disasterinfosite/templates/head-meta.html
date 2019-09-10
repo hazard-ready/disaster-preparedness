@@ -24,8 +24,17 @@
  <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css"/>
 
   <link rel="shortcut icon" href="{% webpack_static 'build/favicon.ico' %}"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74680572-3"></script>
+
   <script type="text/javascript">
     // So we know whether the user has javascript or not
     (function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)
+
+    // Global site tag (gtag.js) - Google Analytics
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-74680572-3', {'custom_map': {'dimension1': 'surveyCode'}});
   </script>
 </head>
