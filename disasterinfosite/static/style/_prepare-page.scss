@@ -32,17 +32,25 @@
   }
 }
 
+.prepare-intro {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
 .prepare-container {
   background-color: $white;
   display: flex;
   flex-direction: row;
+  margin-top: 20px;
   padding: 5px 10px;
 
   @include breakpoint(medium) {
+    margin-top: 30px;
     padding: 5px 20px;
   }
 
   @include breakpoint(large) {
+    margin-top: 50px;
     padding: 5px 40px;
   }
 }
