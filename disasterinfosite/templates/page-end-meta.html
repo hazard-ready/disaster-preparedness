@@ -15,16 +15,11 @@
   var updateProfileApiUrl = "{% url "update_profile" %}"
   var prepareActionApiUrl = "{% url "prepare_action_update" %}"
 
-  // This line and the function after it grabs the survey code out of the user's cookie
+  // Grabs the survey code out of the user's cookie and sends it to Google Analytics
   var surveyRegex = new RegExp('survey=([^;]+)');
-  window.getSurveyCookie = function() {
-    match = document.cookie.match(surveyRegex);
-    if (match) return match[1];
-  };
-
-  var code = getSurveyCookie();
-  if(code) {
-    gtag('event','surveyUser', {'code': code});
+  match = document.cookie.match(surveyRegex);
+  if (match) {
+    gtag('event','surveyUser', {'surveyCode': match[1], 'non_interaction': true});
   }
 
   /**
