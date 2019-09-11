@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-03 23:08+0000\n"
+"POT-Creation-Date: 2019-09-11 19:17+0000\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,12 +71,12 @@ msgstr ""
 msgid "The Hazard Ready Project"
 msgstr "The Hazard Ready Project (El Proyecto Preparacion Ciudadana)"
 
-#: templates/about.html:78
+#: templates/about.html:76
 #, python-format
 msgid "%(title)s Partners and Collaborators"
 msgstr "%(title)s Socios y Colaboradores"
 
-#: templates/about.html:83
+#: templates/about.html:81
 msgid ""
 "The PDX Ready project was funded in part by the Regional Disaster "
 "Preparedness Organization (RDPO) of the Portland Metropolitan Region. The "
@@ -95,39 +95,39 @@ msgstr ""
 "Columbia, Multnomah y Washington en Oregon y el condado de Clark en "
 "Washington."
 
-#: templates/about.html:87
+#: templates/about.html:85
 msgid "Clackamas County"
 msgstr "Clackamas County"
 
-#: templates/about.html:90
+#: templates/about.html:88
 msgid "Clark County"
 msgstr "Clark County"
 
-#: templates/about.html:93
+#: templates/about.html:91
 msgid "Columbia County"
 msgstr "Columbia County"
 
-#: templates/about.html:96
+#: templates/about.html:94
 msgid "Multnomah County"
 msgstr "Multnomah County"
 
-#: templates/about.html:99
+#: templates/about.html:97
 msgid "Washington County"
 msgstr "Washington County"
 
-#: templates/about.html:102
+#: templates/about.html:100
 msgid "Portland Bureau of Emergency Management"
 msgstr "Portland Bureau of Emergency Management"
 
-#: templates/about.html:114
+#: templates/about.html:112
 msgid "American Red Cross: Cascades Region"
 msgstr "Cruz Roja de Estados Unidos: Cascades Region"
 
-#: templates/about.html:117
+#: templates/about.html:115
 msgid "Mercy Corps"
 msgstr "Mercy Corps"
 
-#: templates/about.html:124
+#: templates/about.html:122
 #, python-format
 msgid ""
 "%(title)s is designed to help educate and prepare people for disasters that "
@@ -143,7 +143,7 @@ msgstr ""
 "información actualizada y la presenta de tal manera que sea accesible para "
 "cualquier residente de %(area_name)s."
 
-#: templates/about.html:128 templates/index.html:35
+#: templates/about.html:126 templates/index.html:38
 #, python-format
 msgid ""
 "This site uses the most up-to-date hazard risk data available for "
@@ -161,13 +161,14 @@ msgstr ""
 "\">fuentes de datos</a> originales. Aunque estos datos representan la mejor "
 "evaluación actual de los peligros, no predicen eventos futuros. Las "
 "descripciones de riesgo y cómo prepararse para esos riesgos se basan en la "
-"mejor información de la Regional Disaster Preparedness Organization (RDPO) de la región metropolitana de Portland."
+"mejor información de la Regional Disaster Preparedness Organization (RDPO) "
+"de la región metropolitana de Portland."
 
-#: templates/about.html:132
+#: templates/about.html:130
 msgid "build/flowchart.jpg"
 msgstr "build/flowchart-es.jpg"
 
-#: templates/about.html:135
+#: templates/about.html:133
 msgid ""
 "How we build Hazard Ready Sites: 1. Gather data. Locate the most relevant "
 "and up-to-date data on natural hazards for your region from trusted sources "
@@ -192,7 +193,7 @@ msgstr ""
 "la información se ajuste a las necesidades de cada comunidad. 6. ¡Revisamos, "
 "revisamos, revisamos y lanzamos el sitio!"
 
-#: templates/about.html:143
+#: templates/about.html:141
 #, python-format
 msgid ""
 "Data used for %(title)s is available for download <a href=\"%(download)s\" "
@@ -201,11 +202,11 @@ msgstr ""
 "La información utilizada para %(title)s se puede descargar <a href="
 "\"%(download)s\" target=\"_blank\" rel=\"noopener\">aquí</a>"
 
-#: templates/about.html:150
+#: templates/about.html:148
 msgid "Quick Data Overview"
 msgstr "Descripción breve de los datos"
 
-#: templates/about.html:152
+#: templates/about.html:150
 #, python-format
 msgid "Take a look at some overviews of the data we used for %(area_name)s:"
 msgstr ""
@@ -348,7 +349,7 @@ msgstr ""
 "a> pagina para mas información.\n"
 "            "
 
-#: templates/head-meta.html:12
+#: templates/head-meta.html:12 templates/header.html:27
 msgid ""
 "Enter your location for a personalized report on your risks and how to "
 "prepare."
@@ -378,17 +379,34 @@ msgstr "Los peligros naturales pueden ocurrir en cualquier momento."
 
 #: templates/index.html:21
 msgid ""
+"The more you know about the hazards that are likely in your area, the better "
+"you'll be able to understand your risks and prepare."
+msgstr "Cuanto más sepa sobre los peligros que sean tipicos en su área, mejor podrá comprender sus riesgos y prepararse."
+
+#: templates/index.html:22
+msgid "Get a personalized report"
+msgstr "Obtenga un informe personalizado"
+
+#: templates/index.html:23
+msgid ""
 "Get a personalized report on natural hazards that are likely in your area "
 "and steps you can take to prepare. Type your location in the search box at "
 "the top of the page, select a location on the map, or click “FIND ME.”"
 msgstr ""
-"Escriba su localidad en el cuadro de búsqueda en la parte superior de la página, seleccione una localidad en el mapa o haga clic en \"BUSQUEME\". Recibirá un informe personalizado sobre los peligros naturales que podrá encontrar en su área y los pasos que puede seguir para prepararse."
+"Escriba su localidad en el cuadro de búsqueda en la parte superior de la "
+"página, seleccione una localidad en el mapa o haga clic en \"BUSQUEME\". "
+"Recibirá un informe personalizado sobre los peligros naturales que podrá "
+"encontrar en su área y los pasos que puede seguir para prepararse."
 
-#: templates/index.html:47
+#: templates/index.html:35
+msgid "About the Data"
+msgstr "Sobre los datos"
+
+#: templates/index.html:49
 msgid "Sign up for PublicAlerts"
 msgstr "Regístrese para recibir PublicAlerts"
 
-#: templates/index.html:49
+#: templates/index.html:51
 msgid ""
 "PublicAlerts is a free service that sends emergency alerts via text, email, "
 "or voice message. It’s for anyone who lives, works, or visits the Portland-"
@@ -396,14 +414,21 @@ msgid ""
 "Washington Counties). Sign up now so you can get info when an emergency is "
 "happening. Getting info quickly gives you power to take action. It could "
 "save your life and the lives of your loved ones."
-msgstr "PublicAlerts es un servicio gratuito que envía alertas de emergencia por mensaje de texto, correo electrónico o voz. Es para cualquier persona que viva, trabaje o visite la región de Portland-Vancouver (que incluye los condados de Clackamas, Clark, Columbia, Multnomah y Washington). Regístrese ahora para obtener información cuando ocurra una emergencia. Obtener información rápidamente le da poder para actuar. Podría salvar su vida y la vida de sus seres queridos."
+msgstr ""
+"PublicAlerts es un servicio gratuito que envía alertas de emergencia por "
+"mensaje de texto, correo electrónico o voz. Es para cualquier persona que "
+"viva, trabaje o visite la región de Portland-Vancouver (que incluye los "
+"condados de Clackamas, Clark, Columbia, Multnomah y Washington). Regístrese "
+"ahora para obtener información cuando ocurra una emergencia. Obtener "
+"información rápidamente le da poder para actuar. Podría salvar su vida y la "
+"vida de sus seres queridos."
 
-#: templates/index.html:51 templates/users/user_interactions.html:4
+#: templates/index.html:53 templates/users/user_interactions.html:4
 #: templates/users/user_signup.html:3
 msgid "Sign Up"
 msgstr "Regístrese"
 
-#: templates/index.html:61
+#: templates/index.html:64
 msgid "Getting results for your location..."
 msgstr "Obtener resultados para su localidad..."
 
@@ -436,51 +461,51 @@ msgstr ""
 "Mientras que valoramos y fomentamos la resiliencia en todos lados, los datos "
 "que impulsan este sitio aún no están disponibles para otros lugares."
 
-#: templates/prepare.html:22
+#: templates/prepare.html:18
 msgid "Take the first step toward getting prepared"
 msgstr "Haga el primer paso para prepararse"
 
-#: templates/prepare.html:87
+#: templates/prepare.html:83
 msgid "This activity"
 msgstr "Esta actividad"
 
-#: templates/prepare.html:88
+#: templates/prepare.html:84
 msgid "Print Checklist"
 msgstr "Imprima la lista de verificación"
 
-#: templates/prepare.html:92
+#: templates/prepare.html:88
 msgid "Completed?"
 msgstr "¿Terminado/a?"
 
-#: templates/prepare.html:93
+#: templates/prepare.html:89
 msgid "Activity"
 msgstr "Actividad"
 
-#: templates/prepare.html:94
+#: templates/prepare.html:90 templates/prepare.html:106
 msgid "reduces emotional and physical harm"
 msgstr "reduce el daño emocional y físico"
 
-#: templates/prepare.html:96
+#: templates/prepare.html:92 templates/prepare.html:108
 msgid "is useful for other situations"
 msgstr "es útil para otras situaciones"
 
-#: templates/prepare.html:98
+#: templates/prepare.html:94 templates/prepare.html:110
 msgid "helps protect property"
 msgstr "es útil para otras situaciones"
 
-#: templates/prepare.html:100
+#: templates/prepare.html:96
 msgid "costs"
 msgstr "cuesta"
 
-#: templates/prepare.html:102
+#: templates/prepare.html:98
 msgid "Resources"
 msgstr "Recursos"
 
-#: templates/prepare.html:133
+#: templates/prepare.html:129
 msgid "Key:"
 msgstr "Clave:"
 
-#: templates/prepare.html:142
+#: templates/prepare.html:138
 msgid "or more"
 msgstr "o más"
 
@@ -556,7 +581,14 @@ msgid ""
 "your email address and physical address so we can send you customized info. "
 "Your personal information kept secure, and we won’t contact you for any "
 "other reason."
-msgstr "Regístrese para recibir avisos por correo electrónico 2-3 veces al año sobre peligros estacionales como incendios, inundaciones y tormentas de nieve. También puede marcar los pasos de preparación que ha tomado en nuestra lista de verificación imprimible. Le pediremos su dirección de correo electrónico y dirección física para enviarle información personalizada. Su información personal se mantiene segura y no nos pondremos en contacto con usted por ningún otro motivo."
+msgstr ""
+"Regístrese para recibir avisos por correo electrónico 2-3 veces al año sobre "
+"peligros estacionales como incendios, inundaciones y tormentas de nieve. "
+"También puede marcar los pasos de preparación que ha tomado en nuestra lista "
+"de verificación imprimible. Le pediremos su dirección de correo electrónico "
+"y dirección física para enviarle información personalizada. Su información "
+"personal se mantiene segura y no nos pondremos en contacto con usted por "
+"ningún otro motivo."
 
 #: templates/users/user_login.html:8
 msgid "Required."
@@ -627,4 +659,3 @@ msgstr "¡Gratis!"
 #: templatetags/show_cost.py:13
 msgid "Unknown"
 msgstr "Desconocido"
-
