@@ -1,5 +1,10 @@
 .hazard-header {
   color: $soft-black;
+  padding: 5px;
+
+  @include breakpoint(medium-and-up) {
+    padding-left: 20px;
+  }
 }
 
 .quake {

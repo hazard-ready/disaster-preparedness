@@ -977,6 +977,7 @@ class DataOverviewImage(models.Model):
 
 class SurveyCode(models.Model):
     code = models.TextField(default="")
+    dateEntered = models.DateField(null=True)
 
     def __str__(self):
         return self.code

@@ -29,7 +29,7 @@ admin.site.register(User, UserAdmin)
 # Make the entered survey codes exportable as a CSV
 class SurveyCodeAdmin(admin.ModelAdmin):
     model = SurveyCode
-    actions = [export_as_csv_action("CSV Export", fields=('code',))]
+    actions = [export_as_csv_action("CSV Export", fields=('code', 'dateEntered'))]
 
 admin.site.register(SurveyCode, SurveyCodeAdmin)
 

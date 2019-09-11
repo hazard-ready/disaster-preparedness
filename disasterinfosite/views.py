@@ -10,6 +10,7 @@ from django.views.decorators.http import require_http_methods
 
 import logging
 import json
+import datetime
 
 # Remove this method when the survey is over
 @csrf_exempt
@@ -22,7 +23,7 @@ def add_survey_code(request):
             body = json.loads(body_unicode)
             code = body['code']
             if code is not None:
-                SurveyCode.objects.create(code=code)
+                SurveyCode.objects.create(code=code, dateEntered=datetime.datetime.now())
                 response.set_cookie('survey', code)
                 response.status_code = 201
             else:
