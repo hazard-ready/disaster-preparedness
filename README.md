@@ -55,9 +55,9 @@ This assumes `python` is the command configured to run the correct python versio
 
 ### Set up the "secret key" used by Django to secure forms.
 
-- Set up an environment variable `DJANGO_SECRET_KEY` to whatever you want to set it to.
+- Set up an environment variable `DJANGO_SECRET_KEY_PDX` to whatever you want to set it to.
   - See http://techblog.leosoto.com/django-secretkey-generation/ for an example approach.
-  - On Mac/Linux: `export DJANGO_SECRET_KEY="gibberishrandomstring"`
+  - On Mac/Linux: `export DJANGO_SECRET_KEY_PDX="gibberishrandomstring"`
 
 ### Set up the database
 
@@ -79,9 +79,9 @@ This assumes `python` is the command configured to run the correct python versio
 
 4. In order to run unit tests, your user will need to be able to create and delete databases, since the test framework creates (and destroys) a new test DB for each test run. You can accomplish this using `psql -d [DBNAME] -c "ALTER USER [USERNAME] SUPERUSER;`"
    _[detailed instructions for reference](http://postgis.net/docs/manual-2.1/postgis_installation.html#create_new_db_extensions)_
-5. Set up an environment variable `DATABASE_URL` that will be used by the Django Database URL app to load our database.
+5. Set up an environment variable `DATABASE_URL_PDX` that will be used by the Django Database URL app to load our database.
 
-- example on Mac/Linux: `export DATABASE_URL="postgres://USER:PASSWORD@HOST:PORT/DBNAME"` where the USER & PASSWORD are the django account you created above in postgres, and the default HOST:PORT is localhost:5432 .
+- example on Mac/Linux: `export DATABASE_URL_PDX="postgres://USER:PASSWORD@HOST:PORT/DBNAME"` where the USER & PASSWORD are the django account you created above in postgres, and the default HOST:PORT is localhost:5432 .
 
 6. `source venv/bin/activate` or `. venv/bin/activate` if you haven't already activated the virtualenv this session.
 7. Run `python manage.py migrate` to initialize the database's structure.
@@ -127,10 +127,10 @@ Save them to your `.bash_profile` or equivalent.
 1. `python manage.py createsuperuser`
 2. `python manage.py runserver` to run a development server on localhost:8000 or see below for how to deploy via Apache.
 3. Visit http://server.ip/admin and log in with new user.
-4. You should see a list of content. _Don't try to directly edit data that came from the shapefiles/rasters - they are liable to be so complex with so many points that attempting this freezes or crashes the browser._ **TODO: Do those shapefiles need to show up in here at all?**
-5. There are other pieces of content that you can and should edit, though! They are bits of text and other information that show up on this site.
-6. **Important Links** - Add as many of these as you want. They show up under 'Important Links' when location-specific information is found. You can put any text in the 'link' field and web addresses are turned into links automatically. The title shows up in bold over each link.
-8. **Site Settings** - Basic information about this site and who created it. This stuff shows up in the page headers and footers, as well as in the introductory text on the landing page. The 'who made this' section especially deserves lots of details, and the Data Download link is if you'd like to share the data that you used to create this site. The site title is the big text at the top.
+4. You should see two lists: `Authentication and Authorization` and `Disasterinfosite`. The first one contains information about the Django superuser, as well as users who sign up for this site.
+5. If you have a problem loading the site while logged in as a superuser, it may be because the app is looking for additional information that it usually stores when it creates a user - but Hazard Ready didn't create that user, Django did. To fix that, go to http://server.ip/admin/auth/user/ and select that user, then click 'Save'. You don't have to change anything.
+5. `Disasterinfosite` has content that you can and should edit! They are bits of text and other information that show up on this site, as well as information about how to display certain things on the site. See the [Django Admin Settings](#django-admin-settings-and-what-they-mean) section for more details.
+
 
 ### Deploying to the web via Apache
 
@@ -141,7 +141,7 @@ Save them to your `.bash_profile` or equivalent.
    3. You'll need to set up a `/static/` alias pointing to `disasterinfosite/static`
    4. Depending on your server configuration, you _may_ also need to set up a redirect rule to add trailing slashes to URLs, to get the static files (CSS, images etc) included.
    5. You may also need to alter the `STATIC_URL` constant in `settings.py` based on your server setup.
-3. Set up the environment values from above (`DJANGO_SECRET_KEY` and `DATABASE_URL`) for all users by putting their declarations in `/etc/apache2/envvars` and restarting Apache.
+3. Set up the environment values from above (`DJANGO_SECRET_KEY_PDX` and `DATABASE_URL_PDX`) for all users by putting their declarations in `/etc/apache2/envvars` and restarting Apache.
 4. Don't forget to run python manage.py collectstatic to get your static files where we expect them to be!
 5. There should be directories called 'photos' and 'data' in disasterinfosite/staticfiles/img. This is where images go when you upload them via Django Admin, under 'Photos of Past Events' and 'Data Overview Images'. In order for that upload to work, you need to create them if they aren't present, and change the owner (chown) those directories to whatever user Apache is running as (www-data, perhaps).
 
@@ -237,6 +237,7 @@ This is the content that shows up on the Prepare page. The concept is similar to
 - `external_text` The text to display for the link
 - `external_icon` An icon or image to display for the link
 
+
 #### Updating existing data
 
 If you make changes to `snuggets.xlsx` you should only need to re-run `python snugget_load.py` and restart your web server.
@@ -270,14 +271,41 @@ If you have some data that fits that automated import model and some that does n
 
 ## Django Admin settings and what they mean
 
-+###### Past Events Photos
+###### Past Events Photos
 Upload photos to show in a photo gallery in the search results, under Past Events. Make sure that the heading you enter here matches the heading that the photos will appear under.
 
-+###### Data Overview Images
+###### Data Overview Images
 In the box at the bottom of every page, there's a section called 'Quick Data Overview'. That's where these will show up, as links that open in a new tab or window. The link_text field is what the link says, like 'Earthquakes: Distance from a Fault', and you can upload the appropriate image here.
+
+###### Shapefile Groups
+When you imported data, you were asked for a group name for your shapefiles, so that you can present, say, all your earthquake data togther, all your volcano data together, and so on. This is the place where you can choose display names for those groups that show up on the site, and configure the order in which they will appear on the page with all the content. You can also add a note at the top of the section that they appear in.
+
+###### Site Settings
+Basic information about this site and who created it. This stuff shows up in the page headers and footers, as well as in the introductory text on the landing page. The `about text` and 'who made this' sections especially deserve lots of details, and the Data Download link is if you'd like to share the data that you used to create this site. The site title is the big text at the top.
+
+###### Snugget Sections
+Inside shapefile groups, [snuggets](#importing-snuggets) are also in groups by section name. Here, you can choose a display name for those sections, an order in which it will appear inside the shapefile group, and whether it is always shown, or collapsed into a header that just shows the display name.
 
 # Supporting multiple languages
 
+## The app
 To support a multi-language site, you need to provide message files for the Django views, by the usual means of `makemessages` and `compilemessages`.
 In addition, there are many bits of text that are configurable through Django Admin. To translate those, uncomment the relevant lines in settings.py, admin.py and translation.py. Then run `makemigrations` and `migrate`. You should then have fields for multiple languages exposed in Django Admin.
 For more information, see the [Django-ModelTranslation docs](http://django-modeltranslation.readthedocs.io/en/latest/index.html)
+
+## Snuggets and Preparedness Actions
+When you uncommented the relevant lines of code in the previous section, you enabled translating snuggets and preparedness actions. That means that if you put some specially named columns in your snugget and prepare spreadsheets, Hazard Ready will read in those translations as well during the load process. To translate a column, make another column with the same name, `-`, and then the relevant language code. So the Spanish translations for the `text` column in the `snuggets.xlsx` will be `text-es`, and it will be automatically associated with the correct snugget. You can have as many languages as you want for each column.
+
+The following columns will be automatically translated in this way:
+- `snuggets.xlsx`
+  - `text`
+  - `pop_out_txt`
+
+- `prepare.xlsx`
+  - `section`
+  - `text`
+  - `happy`
+  - `useful`
+  - `property`
+  - `external_text`
+
