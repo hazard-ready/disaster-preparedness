@@ -2,7 +2,7 @@
 
 .prepare-hero {
   background-position: bottom center;
-  height: 250px;
+  height: 200px;
   margin-bottom: 30px;
   position: relative;
 }
@@ -34,7 +34,7 @@
 
 .prepare-intro {
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 975px;
 }
 
 .prepare-container {
@@ -50,7 +50,7 @@
   }
 
   @include breakpoint(large) {
-    margin-top: 50px;
+    margin-top: 30px;
     padding: 5px 40px;
   }
 }
