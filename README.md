@@ -127,10 +127,12 @@ Save them to your `.bash_profile` or equivalent.
 1. `python manage.py createsuperuser`
 2. `python manage.py runserver` to run a development server on localhost:8000 or see below for how to deploy via Apache.
 3. Visit http://server.ip/admin and log in with new user.
-4. You should see a list of content. _Don't try to directly edit data that came from the shapefiles/rasters - they are liable to be so complex with so many points that attempting this freezes or crashes the browser._ **TODO: Do those shapefiles need to show up in here at all?**
-5. There are other pieces of content that you can and should edit, though! They are bits of text and other information that show up on this site.
-6. **Important Links** - Add as many of these as you want. They show up under 'Important Links' when location-specific information is found. You can put any text in the 'link' field and web addresses are turned into links automatically. The title shows up in bold over each link.
-8. **Site Settings** - Basic information about this site and who created it. This stuff shows up in the page headers and footers, as well as in the introductory text on the landing page. The 'who made this' section especially deserves lots of details, and the Data Download link is if you'd like to share the data that you used to create this site. The site title is the big text at the top.
+4. You should see two lists: `Authentication and Authorization` and `Disasterinfosite`. The first one contains information about the Django superuser, as well as users who sign up for this site.
+5. If you have a problem loading the site while logged in as a superuser, it may be because the app is looking for additional information that it usually stores when it creates a user - but Hazard Ready didn't create that user, Django did. To fix that, go to http://server.ip/admin/auth/user/ and select that user, then click 'Save'. You don't have to change anything.
+5. `Disasterinfosite` has content that you can and should edit! They are bits of text and other information that show up on this site, as well as information about how to display certain things on the site..
+  1. **Shapefile Groups** - When you imported data, you were asked for a group name for your shapefiles, so that you can present, say, all your earthquake data togther, all your volcano data together, and so on. This is the place where you can choose display names for those groups that show up on the site, and configure the order in which they will appear on the page with all the content. You can also add a note at the top of the section that they appear in.
+  1. **Site Settings** - Basic information about this site and who created it. This stuff shows up in the page headers and footers, as well as in the introductory text on the landing page. The `about text` and 'who made this' sections especially deserve lots of details, and the Data Download link is if you'd like to share the data that you used to create this site. The site title is the big text at the top.
+  1. **Snugget Sections** - Inside shapefile groups, [snuggets](#importing-snuggets) are also in groups by section name. Here, you can choose a display name for those sections, an order in which it will appear inside the shapefile group, and whether it is always shown, or collapsed into a header that just shows the display name.
 
 ### Deploying to the web via Apache
 
@@ -237,6 +239,7 @@ This is the content that shows up on the Prepare page. The concept is similar to
 - `external_text` The text to display for the link
 - `external_icon` An icon or image to display for the link
 
+
 #### Updating existing data
 
 If you make changes to `snuggets.xlsx` you should only need to re-run `python snugget_load.py` and restart your web server.
@@ -278,6 +281,24 @@ In the box at the bottom of every page, there's a section called 'Quick Data Ove
 
 # Supporting multiple languages
 
+## The app
 To support a multi-language site, you need to provide message files for the Django views, by the usual means of `makemessages` and `compilemessages`.
 In addition, there are many bits of text that are configurable through Django Admin. To translate those, uncomment the relevant lines in settings.py, admin.py and translation.py. Then run `makemigrations` and `migrate`. You should then have fields for multiple languages exposed in Django Admin.
 For more information, see the [Django-ModelTranslation docs](http://django-modeltranslation.readthedocs.io/en/latest/index.html)
+
+## Snuggets and Preparedness Actions
+When you uncommented the relevant lines of code in the previous section, you enabled translating snuggets and preparedness actions. That means that if you put some specially named columns in your snugget and prepare spreadsheets, Hazard Ready will read in those translations as well during the load process. To translate a column, make another column with the same name, `-`, and then the relevant language code. So the Spanish translations for the `text` column in the `snuggets.xlsx` will be `text-es`, and it will be automatically associated with the correct snugget. You can have as many languages as you want for each column.
+
+The following columns will be automatically translated in this way:
+- `snuggets.xlsx`
+  - `text`
+  - `pop_out_txt`
+
+- `prepare.xlsx`
+  - `section`
+  - `text`
+  - `happy`
+  - `useful`
+  - `property`
+  - `external_text`
+
