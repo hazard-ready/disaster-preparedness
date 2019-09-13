@@ -17,10 +17,10 @@
           <div class="information-container">
             <h2 class="caps">{{ settings.site_description }}</h2>
             <p>{{ settings.intro_text | safe }}</p>
-            <h3>{% trans "Natural disasters can strike at any time." %}</h3>
-            <p>{% trans "The more you know about the hazards that are likely in your area, the better you'll be able to understand your risks and prepare." %}</p>
-            <h3>{% trans 'Get a personalized report' %}</h3>
-            <p>{% trans 'Get a personalized report on natural hazards that are likely in your area and steps you can take to prepare. Type your location in the search box at the top of the page, select a location on the map, or click “FIND ME.”' %}</p>
+            <h3 class="information-header">{% trans "Natural disasters can strike at any time." %}</h3>
+            {% trans "The more you know about the hazards that are likely in your area, the better you'll be able to understand your risks and prepare." %}
+            <h3 class="information-header">{% trans 'Get a personalized report' %}</h3>
+            {% trans 'Find out which natural hazards are likely in your area and steps you can take to prepare. Type your location in the search box at the top of the page, select a location on the map, or click “FIND ME.”' %}
           </div>
           {% endblock info-instructions %}
 
@@ -32,11 +32,11 @@
         </div>
         {% block disclaimer %}
         <div class="disclaimer-container" role="region" aria-label="disclaimer">
-          <h3>{% trans 'About the Data' %}</h3>
+          <h3 class="information-header">{% trans 'About the Data' %}</h3>
           {% url 'data' as data_source_link %}
-           <p>
+
               {% blocktrans with area_name=settings.area_name %}This site uses the most up-to-date hazard risk data available for {{ area_name }}. The user of this site is responsible for verifying any particular information with the original <a href="{{ data_source_link }}" target="_blank">data sources</a>. Although these data represent the best current assessment of hazards, they are not predictive of future events. The descriptions of risk and how to prepare for those risks are based on best information from the Regional Disaster Preparedness Organization (RDPO) of the Portland Metropolitan Region.{% endblocktrans %}
-          </p>
+
         </div>
         {% endblock disclaimer %}
 
