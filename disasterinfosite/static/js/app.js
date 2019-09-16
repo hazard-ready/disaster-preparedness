@@ -85,41 +85,41 @@ function hideGeocodeError() {
   $(".geocode-error-message").addClass("hide");
 }
 
-function submitLocation(lat, lng, queryText) {
-  if (!queryText) {
-    // if we don't have text for the location, reverse geocode to get it
-    $.ajax({
-      type: "GET",
-      url: "https://www.mapquestapi.com/geocoding/v1/reverse",
-      data: {
-        key: MAPQUEST_KEY,
-        location: lat + "," + lng,
-        outFormat: "json",
-        thumbMaps: false
+function reverseGeocodeLocation(lat, lng) {
+  // if we don't have text for the location, reverse geocode to get it
+  return $.ajax({
+    type: "GET",
+    url: "https://www.mapquestapi.com/geocoding/v1/reverse",
+    data: {
+      key: MAPQUEST_KEY,
+      location: lat + "," + lng,
+      outFormat: "json",
+      thumbMaps: false
+    }
+  })
+    .then(function(result) {
+      // We have at least one result and nothing went wrong
+      if (result.info.statuscode === 0 && result.results.length > 0) {
+        var address = result.results[0].locations[0];
+        return address.street +
+          ", " +
+          address.adminArea5 +
+          ", " +
+          address.adminArea3 +
+          " " +
+          address.postalCode;
+      } else {
+        console.log("Reverse geocoding error messages", result.info.messages);
       }
     })
-      .then(function(result) {
-        // We have at least one result and nothing went wrong
-        if (result.info.statuscode === 0 && result.results.length > 0) {
-          var address = result.results[0].locations[0];
-          queryText =
-            address.street +
-            ", " +
-            address.adminArea5 +
-            ", " +
-            address.adminArea3 +
-            " " +
-            address.postalCode;
-        } else {
-          console.log("Reverse geocoding error messages", result.info.messages);
-        }
-      })
-      .catch(function(error) {
-        console.log("reverse geocoding error", error);
-      })
-      .always(function() {
-        loadPageWithParameters(lat, lng, queryText);
-      });
+    .catch(function(error) {
+      console.log("reverse geocoding error", error);
+    });
+}
+
+function submitLocation(lat, lng, queryText) {
+  if (!queryText) {
+    reverseGeocodeLocation(lat, lng).then(queryText => loadPageWithParameters(lat, lng, queryText))
   } else {
     loadPageWithParameters(lat, lng, queryText);
   }
@@ -285,11 +285,15 @@ $(document).ready(function() {
 
   // grab and set any previously entered query text
   var loc = getURLParameter("loc");
-  var location_query_text = loc
-    ? decodeURIComponent(loc)
-    : query_lat + "," + query_lng;
-  if (!query_lat || !query_lng) location_query_text = "";
-  $locationInput.val(location_query_text);
+  if(loc) {
+    $locationInput.val(decodeURIComponent(loc));
+  } else if(query_lat && query_lng) {
+    // or if there isn't any, and we have a lat and lng, reverse geocode our lat and lng, and set it in the UI.
+    reverseGeocodeLocation(query_lat, query_lng).then(queryText => {
+      $locationInput.val(queryText);
+      $('.info__location').text(queryText);
+    });
+  }
 
   // Hide a geocoding error message every time, if there is one
   $locationInput.on("click", hideGeocodeError);
