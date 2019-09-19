@@ -6,8 +6,15 @@ from django.db.utils import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.urls import reverse
 
 import logging
+import re
+
+def reverse_no_i18n(viewname, *args, **kwargs):
+    result = reverse(viewname, *args, **kwargs)
+    m = re.match(r'(/[^/]*)(/.*$)', result)
+    return m.groups()[1]
 
 def create_user(request):
     if request.method == 'POST':
@@ -91,7 +98,8 @@ def update_profile(request):
 @ensure_csrf_cookie
 def about_view(request):
     renderData = {
-    'settings': SiteSettings.get_solo()
+        'settings': SiteSettings.get_solo(),
+        'nextPath': reverse_no_i18n('about')
     }
     return render(request, "about.html", renderData)
 
@@ -101,7 +109,8 @@ def prepare_view(request):
     renderData = {
         'settings': SiteSettings.get_solo(),
         'actions': PreparednessAction.objects.all().order_by('cost'),
-        'logged_in': False
+        'logged_in': False,
+        'nextPath': reverse_no_i18n('prepare')
     }
 
     if request.user.is_authenticated:
@@ -136,7 +145,7 @@ def prepare_action_update(request):
 def app_view(request):
     username = None
     profile = None
-    path = request.path[:-3] # slice off the old language code
+    path = reverse_no_i18n('index')
 
     if 'QUERY_STRING' in request.META:
         path = path + '?' + request.META['QUERY_STRING']
