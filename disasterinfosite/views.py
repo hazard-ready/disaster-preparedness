@@ -9,6 +9,12 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.urls import reverse
 
 import logging
+import re
+
+def reverse_no_i18n(viewname, *args, **kwargs):
+    result = reverse(viewname, *args, **kwargs)
+    m = re.match(r'(/[^/]*)(/.*$)', result)
+    return m.groups()[1]
 
 def create_user(request):
     if request.method == 'POST':
@@ -93,22 +99,10 @@ def update_profile(request):
 def about_view(request):
     renderData = {
         'settings': SiteSettings.get_solo(),
-        'nextPath': reverse('about')
+        'nextPath': reverse_no_i18n('about')
     }
     return render(request, "about.html", renderData)
 
-<<<<<<< HEAD
-=======
-@ensure_csrf_cookie
-def data_view(request):
-    renderData = {
-        'settings': SiteSettings.get_solo(),
-        'nextPath': reverse('data')
-
-    }
-    return render(request, "data.html", renderData)
-
->>>>>>> 4176b52... Reverse urls instead of munging them so they can work everywhere
 
 @ensure_csrf_cookie
 def prepare_view(request):
@@ -116,7 +110,7 @@ def prepare_view(request):
         'settings': SiteSettings.get_solo(),
         'actions': PreparednessAction.objects.all().order_by('cost'),
         'logged_in': False,
-        'nextPath': reverse('prepare')
+        'nextPath': reverse_no_i18n('prepare')
     }
 
     if request.user.is_authenticated:
@@ -151,7 +145,7 @@ def prepare_action_update(request):
 def app_view(request):
     username = None
     profile = None
-    path = reverse('index')
+    path = reverse_no_i18n('index')
 
     if 'QUERY_STRING' in request.META:
         path = path + '?' + request.META['QUERY_STRING']
