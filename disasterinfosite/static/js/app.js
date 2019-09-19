@@ -5,7 +5,8 @@ require("../style/app.scss");
 var boundaryShape = require("./boundary.json");
 
 require("../img/favicon.ico");
-require("../img/marker-icon-2x.png");
+require("../img/marker_icon.png");
+require("../img/marker_icon-2x.png");
 require("../img/marker-shadow.png");
 require("../img/thinking.gif");
 require("../img/logo.png");
@@ -151,7 +152,7 @@ function setUpMap() {
   if (query_lat && query_lng) {
     var icon = new L.Icon.Default();
     // these may be in ../static/img if you translate/localize, due to the URL language prefix.
-    icon.options.iconUrl = "marker-icon.png";
+    icon.options.iconUrl = "marker_icon.png";
     icon.options.shadowUrl = "marker-shadow.png";
     var marker = L.marker([query_lat, query_lng], {
       icon: icon,
