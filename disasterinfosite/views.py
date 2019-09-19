@@ -13,6 +13,13 @@ import logging
 import json
 import datetime
 
+import re
+
+def reverse_no_i18n(viewname, *args, **kwargs):
+    result = reverse(viewname, *args, **kwargs)
+    m = re.match(r'(/[^/]*)(/.*$)', result)
+    return m.groups()[1]
+
 # Remove this method when the survey is over
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -118,7 +125,7 @@ def update_profile(request):
 def about_view(request):
     renderData = {
         'settings': SiteSettings.get_solo(),
-        'nextPath': reverse('about')
+        'nextPath': reverse_no_i18n('about')
     }
     return render(request, "about.html", renderData)
 
@@ -126,7 +133,7 @@ def about_view(request):
 def data_view(request):
     renderData = {
         'settings': SiteSettings.get_solo(),
-        'nextPath': reverse('data')
+        'nextPath': reverse_no_i18n('data')
 
     }
     return render(request, "data.html", renderData)
@@ -138,7 +145,7 @@ def prepare_view(request):
         'settings': SiteSettings.get_solo(),
         'actions': PreparednessAction.objects.all().order_by('cost'),
         'logged_in': False,
-        'nextPath': reverse('prepare')
+        'nextPath': reverse_no_i18n('prepare')
     }
 
     if request.user.is_authenticated:
@@ -173,7 +180,7 @@ def prepare_action_update(request):
 def app_view(request):
     username = None
     profile = None
-    path = reverse('index')
+    path = reverse_no_i18n('index')
 
     #Remove this when the survey is over
     showSurveyButton = False
