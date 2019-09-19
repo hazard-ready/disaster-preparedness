@@ -6,6 +6,7 @@ from django.db.utils import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.urls import reverse
 
 import logging
 
@@ -91,17 +92,31 @@ def update_profile(request):
 @ensure_csrf_cookie
 def about_view(request):
     renderData = {
-    'settings': SiteSettings.get_solo()
+        'settings': SiteSettings.get_solo(),
+        'nextPath': reverse('about')
     }
     return render(request, "about.html", renderData)
 
+<<<<<<< HEAD
+=======
+@ensure_csrf_cookie
+def data_view(request):
+    renderData = {
+        'settings': SiteSettings.get_solo(),
+        'nextPath': reverse('data')
+
+    }
+    return render(request, "data.html", renderData)
+
+>>>>>>> 4176b52... Reverse urls instead of munging them so they can work everywhere
 
 @ensure_csrf_cookie
 def prepare_view(request):
     renderData = {
         'settings': SiteSettings.get_solo(),
         'actions': PreparednessAction.objects.all().order_by('cost'),
-        'logged_in': False
+        'logged_in': False,
+        'nextPath': reverse('prepare')
     }
 
     if request.user.is_authenticated:
@@ -136,7 +151,7 @@ def prepare_action_update(request):
 def app_view(request):
     username = None
     profile = None
-    path = request.path[:-3] # slice off the old language code
+    path = reverse('index')
 
     if 'QUERY_STRING' in request.META:
         path = path + '?' + request.META['QUERY_STRING']
