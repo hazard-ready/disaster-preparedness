@@ -474,6 +474,7 @@ msgid ""
 "You may have already done some of it! You can use the checklist at the "
 "bottom of this page to keep track of how much you've done."
 msgstr ""
+" "
 
 #: templates/prepare.html:84
 msgid "This activity"
