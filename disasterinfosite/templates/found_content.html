@@ -57,10 +57,18 @@
         </div>
         <div class="intensity-captions">
           <div class="intensity-caption intensity-caption--low" aria-hidden="true">
-            {% trans "Very Low Hazard" %}
+            {% if group.name == 'quake' %}
+              {% trans "Light shaking&nbsp;&mdash; No damage" %}
+            {% else %}
+              {% trans "Very Low Hazard" %}
+            {% endif %}
           </div>
           <div class="intensity-caption intensity-caption--high" aria-hidden="true">
-            {% trans "Very High Hazard" %}
+            {% if group.name == 'quake' %}
+              {% trans "Violent shaking&nbsp;&mdash; Heavy damage" %}
+            {% else %}
+              {% trans "Very High Hazard" %}
+            {% endif %}
           </div>
         </div>
       {% endif %}

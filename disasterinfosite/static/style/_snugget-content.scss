@@ -230,7 +230,7 @@
   font-size: 14px;
   font-style: italic;
   position: absolute;
-  width: 100px;
+  width: 32%;
 
   @include breakpoint(medium-and-up) {
     width: auto;
@@ -243,6 +243,7 @@
 
 .intensity-caption--high {
   right: 0;
+  text-align: right;
 }
 
 /* Historical photos */
