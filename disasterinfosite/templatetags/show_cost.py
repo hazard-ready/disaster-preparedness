@@ -11,3 +11,13 @@ def show_cost(cost):
         3: '$$$',
         4: '$$$$'
     }.get(cost, gettext('Unknown'))
+
+@register.filter()
+def show_cost_header(cost):
+  return {
+        0: gettext('Get Started - It’s Free!'),
+        1: gettext('Next Steps'),
+        2: gettext('Keep Going'),
+        3: '$$$',
+        4: '$$$$'
+    }.get(cost, gettext('Unknown'))
