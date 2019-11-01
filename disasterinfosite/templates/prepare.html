@@ -1,6 +1,7 @@
 {% load js %}
 {% load i18n %}
 {% load show_cost %}
+{% load show_cost_header %}
 
 {% load render_bundle from webpack_loader %}
 {% load webpack_static from webpack_loader %}
@@ -25,7 +26,7 @@
           {% for cost, items in actions_by_cost %}
             <h4 class="section-title section-title--collapse" data-section="cost--{{cost}}" role="button">
               <img class="caret{% if forloop.first %} caret--up{% endif %}" src="{% webpack_static 'build/caret.svg' %}" alt=""/>
-              {{ cost | show_cost }}
+              {{ cost | show_cost_header }}
             </h4>
             <div class="{% if forloop.first %}section-content{% else %}section-content section-content--collapse{% endif %} prepare-content" id="cost--{{cost}}">
                 <ul class="prepare-content__list">
