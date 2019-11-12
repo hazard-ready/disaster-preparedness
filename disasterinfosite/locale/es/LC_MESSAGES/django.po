@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-13 20:17+0000\n"
+"POT-Creation-Date: 2019-11-01 00:25+0000\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -463,11 +463,11 @@ msgstr ""
 "Mientras que valoramos y fomentamos la resiliencia en todos lados, los datos "
 "que impulsan este sitio aún no están disponibles para otros lugares."
 
-#: templates/prepare.html:18
+#: templates/prepare.html:19
 msgid "Take the first step toward getting prepared"
 msgstr "Haga el primer paso para prepararse"
 
-#: templates/prepare.html:21
+#: templates/prepare.html:22
 msgid ""
 "There are a few simple steps we can take to make our families and community "
 "more prepared for emergencies. It doesn't have to be expensive or difficult. "
@@ -475,47 +475,47 @@ msgid ""
 "bottom of this page to keep track of how much you've done."
 msgstr ""
 
-#: templates/prepare.html:84
+#: templates/prepare.html:85
 msgid "This activity"
 msgstr "Esta actividad"
 
-#: templates/prepare.html:85
+#: templates/prepare.html:86
 msgid "Print Checklist"
 msgstr "Imprima la lista de verificación"
 
-#: templates/prepare.html:89
+#: templates/prepare.html:90
 msgid "Completed?"
 msgstr "¿Terminado/a?"
 
-#: templates/prepare.html:90
+#: templates/prepare.html:91
 msgid "Activity"
 msgstr "Actividad"
 
-#: templates/prepare.html:91 templates/prepare.html:107
+#: templates/prepare.html:92 templates/prepare.html:108
 msgid "reduces emotional and physical harm"
 msgstr "reduce el daño emocional y físico"
 
-#: templates/prepare.html:93 templates/prepare.html:109
+#: templates/prepare.html:94 templates/prepare.html:110
 msgid "is useful for other situations"
 msgstr "es útil para otras situaciones"
 
-#: templates/prepare.html:95 templates/prepare.html:111
+#: templates/prepare.html:96 templates/prepare.html:112
 msgid "helps protect property"
 msgstr "es útil para otras situaciones"
 
-#: templates/prepare.html:97
+#: templates/prepare.html:98
 msgid "costs"
 msgstr "cuesta"
 
-#: templates/prepare.html:99
+#: templates/prepare.html:100
 msgid "Resources"
 msgstr "Recursos"
 
-#: templates/prepare.html:130
+#: templates/prepare.html:131
 msgid "Key:"
 msgstr "Clave:"
 
-#: templates/prepare.html:139
+#: templates/prepare.html:140
 msgid "or more"
 msgstr "o más"
 
@@ -666,6 +666,19 @@ msgstr ""
 msgid "Free!"
 msgstr "¡Gratis!"
 
-#: templatetags/show_cost.py:13
+#: templatetags/show_cost.py:13 templatetags/show_cost.py:23
+#: templatetags/show_cost_header.py:13
 msgid "Unknown"
 msgstr "Desconocido"
+
+#: templatetags/show_cost.py:18 templatetags/show_cost_header.py:8
+msgid "Get Started - It’s Free!"
+msgstr ""
+
+#: templatetags/show_cost.py:19 templatetags/show_cost_header.py:9
+msgid "Next Steps"
+msgstr ""
+
+#: templatetags/show_cost.py:20 templatetags/show_cost_header.py:10
+msgid "Keep Going"
+msgstr ""
