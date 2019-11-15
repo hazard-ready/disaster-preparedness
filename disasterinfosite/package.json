@@ -30,7 +30,7 @@
     "url-polyfill": "^1.1.7",
     "webpack": "^4.41.2",
     "webpack-bundle-tracker": "^0.4.3",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.10"
   },
   "dependencies": {
     "formdata-polyfill": "^3.0.19",

@@ -122,7 +122,7 @@ function reverseGeocodeLocation(lat, lng) {
 
 function submitLocation(lat, lng, queryText) {
   if (!queryText) {
-    reverseGeocodeLocation(lat, lng).then(queryText => loadPageWithParameters(lat, lng, queryText))
+    reverseGeocodeLocation(lat, lng).then(function(queryText) {return loadPageWithParameters(lat, lng, queryText);})
   } else {
     loadPageWithParameters(lat, lng, queryText);
   }
@@ -292,7 +292,7 @@ $(document).ready(function() {
     $locationInput.val(decodeURIComponent(loc));
   } else if(query_lat && query_lng) {
     // or if there isn't any, and we have a lat and lng, reverse geocode our lat and lng, and set it in the UI.
-    reverseGeocodeLocation(query_lat, query_lng).then(queryText => {
+    reverseGeocodeLocation(query_lat, query_lng).then(function(queryText) {
       $locationInput.val(queryText);
       $('.info__location').text(queryText);
     });
