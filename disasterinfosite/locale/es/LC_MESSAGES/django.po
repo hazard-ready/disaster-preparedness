@@ -314,7 +314,7 @@ msgstr "Un medidor de intensidad al %(percentage)s%%"
 
 #: templates/found_content.html:61
 msgid "Light shaking&nbsp;&mdash; No damage"
-msgstr "Peligro muy bajo"
+msgstr "Temblor leve - Sin daños"
 
 #: templates/found_content.html:63
 msgid "Very Low Hazard"
@@ -322,7 +322,7 @@ msgstr "Peligro muy bajo"
 
 #: templates/found_content.html:68
 msgid "Violent shaking&nbsp;&mdash; Heavy damage"
-msgstr "Peligro muy alto"
+msgstr "Temblor severo - Gran daño"
 
 #: templates/found_content.html:70
 msgid "Very High Hazard"
@@ -681,12 +681,12 @@ msgstr "Desconocido"
 
 #: templatetags/show_cost.py:18 templatetags/show_cost_header.py:8
 msgid "Get Started - It’s Free!"
-msgstr ""
+msgstr "Comience, ¡es gratis!"
 
 #: templatetags/show_cost.py:19 templatetags/show_cost_header.py:9
 msgid "Next Steps"
-msgstr ""
+msgstr "Proximos pasos"
 
 #: templatetags/show_cost.py:20 templatetags/show_cost_header.py:10
 msgid "Keep Going"
-msgstr ""
+msgstr "¡Sigue adelante!"
