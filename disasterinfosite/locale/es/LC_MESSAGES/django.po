@@ -473,7 +473,7 @@ msgid ""
 "more prepared for emergencies. It doesn't have to be expensive or difficult. "
 "You may have already done some of it! You can use the checklist at the "
 "bottom of this page to keep track of how much you've done."
-msgstr ""
+msgstr "Hay algunos simples pasos que podemos tomar para que nuestras familias y comunidad estén más preparadas en caso de emergencias. No tiene que ser costoso o difícil. ¡Es posible que ya hayas hecho alguno de estos! Puedes usar la lista de verificación en la parte inferior de esta página para realizar un seguimiento de cuánto has hecho."
 
 #: templates/prepare.html:85
 msgid "This activity"
@@ -581,7 +581,7 @@ msgstr ""
 
 #: templates/users/user_interactions.html:59
 msgid "Receive Preparedness Reminders"
-msgstr ""
+msgstr "Reciba Recordatorios de Preparación"
 
 #: templates/users/user_interactions.html:61
 msgid ""
