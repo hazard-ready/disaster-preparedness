@@ -182,9 +182,21 @@ def app_view(request):
     profile = None
     path = reverse_no_i18n('index')
 
-    #Remove this when the survey is over
     showSurveyButton = False
+
+    # Remove this when we no longer want to use the sogo survey
+    surveyUrl = 'https://survey.sogosurvey.com/r/LVjc0E'
+    surveyClass = 'sogoSurvey'
+
+    # Remove this when the research survey is over
     if 'survey' in request.COOKIES:
+        showSurveyButton = True
+        # The research survey
+        surveyUrl = 'http://bit.ly/pdx-t2'
+        surveyClass = 'researchSurvey'
+
+    # Remove this when we no longer want to use the sogo survey
+    elif 'sogoSurvey' not in request.COOKIES:
         showSurveyButton = True
 
     if 'QUERY_STRING' in request.META:
@@ -202,7 +214,9 @@ def app_view(request):
         'username': username,
         'profile': profile,
         'nextPath': path,
-        'surveyHeader': showSurveyButton
+        'surveyHeader': showSurveyButton,
+        'surveyUrl': surveyUrl,
+        'surveyClass': surveyClass
     }
 
     template = "index.html"

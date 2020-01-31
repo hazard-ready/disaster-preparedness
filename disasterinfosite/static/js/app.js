@@ -217,6 +217,10 @@ $(document).ready(function() {
     }
   });
 
+$('.sogoSurvey').click(function() {
+  document.cookie = "sogoSurvey=true; expires=Fri, 31 Dec 9999 23:59:59 GMT;"
+  });
+
   // if we are on the found content page, stick the hero container, set up our tabs and lazy load our videos.
   if (infoContainer.length) {
     var stopHeight = setStopHeight(heroContainer);
