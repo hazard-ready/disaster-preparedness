@@ -17,8 +17,8 @@
     </div>
   </div>
 {% if surveyHeader %}
-  <a class="survey-link hide-for-medium-up" href="http://bit.ly/pdx-t2" target="_blank" rel="noopener">
-    <div class="survey-button">{% trans "Feedback Survey" %}</div>
+  <a class="survey-link hide-for-medium-up" href="{{ surveyUrl }}" target="_blank" rel="noopener">
+    <div class="survey-button {{ surveyClass }}">{% trans "Feedback Survey" %}</div>
   </a>
 {% endif %}
   {% block search %}
@@ -47,7 +47,7 @@
   </div>
 </header>
 {% if surveyHeader %}
-  <a class="survey-link hide-for-small" href="http://bit.ly/pdx-t2" target="_blank" rel="noopener">
-    <div class="survey-button">{% trans "Feedback Survey" %}</div>
+  <a class="survey-link hide-for-small" href="{{ surveyUrl }}" target="_blank" rel="noopener">
+    <div class="survey-button {{ surveyClass }}">{% trans "Feedback Survey" %}</div>
   </a>
 {% endif %}
