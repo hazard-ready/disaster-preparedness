@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "formdata-polyfill": "^3.0.19",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "leaflet": "^1.6.0",
     "slick-carousel": "^1.8.1"
   }
