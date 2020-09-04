@@ -22,7 +22,7 @@
     "file-loader": "^4.3.0",
     "mini-css-extract-plugin": "^0.8.0",
     "native-promise-only": "^0.8.1",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "normalize.css": "^8.0.1",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.1",
