@@ -52,7 +52,7 @@ def processRow(row, overwriteAll):
 
   # check if a snugget for this data already exists
   # if we have a lookup value then deal with this value specifically:
-  if row["lookup_value"] is not '':  # if it is blank, we'll treat it as matching all existing values
+  if row["lookup_value"] != '':  # if it is blank, we'll treat it as matching all existing values
     filterVal = getShapefileFilter(shapefile, row["lookup_value"])
     oldSnugget = checkForSnugget(shapefile, section, order, filterColumn, filterVal)
     overwriteAll = askUserAboutOverwriting(row, oldSnugget, overwriteAll)
@@ -72,9 +72,9 @@ def processRow(row, overwriteAll):
 
 def processSnugget(row, shapefile, section, order, filterColumn, filterVal):
   removeOldSnugget(shapefile, section, order, filterColumn, filterVal)
-  if row["image_slideshow_folder"] is not '':
+  if row["image_slideshow_folder"] != '':
     addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal)
-  elif row["video"] is not '':
+  elif row["video"] != '':
     addVideoSnugget(row, shapefile, section, filterColumn, filterVal)
   else:
     addTextSnugget(row, shapefile, section, filterColumn, filterVal)
