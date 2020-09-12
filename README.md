@@ -74,7 +74,7 @@ This assumes `python` is the command configured to run the correct python versio
 
    ```shell
    createdb [DBNAME]
-   psql -d [DBNAME] -c "CREATE EXTENSION postgis;"
+   psql -d [DBNAME] -c "CREATE EXTENSION postgis; CREATE EXTENSION postgis_raster;"
    ```
 
 4. In order to run unit tests, your user will need to be able to create and delete databases, since the test framework creates (and destroys) a new test DB for each test run. You can accomplish this using `psql -d [DBNAME] -c "ALTER USER [USERNAME] SUPERUSER;`"
@@ -93,9 +93,9 @@ This assumes `python` is the command configured to run the correct python versio
 ### Load some data
 
 0. `source venv/bin/activate` or `. venv/bin/activate` if you haven't already activated the virtualenv this session.
-1. Unzip `data.zip` inside disasterinfosite, so that the data is in `disasterinfosite/data`. This data includes some sample shapefiles and related data for Missoula County, Montana, USA, to get you started. See below for instructions on replacing this with your own data.
+1. Unzip `data.zip` inside disasterinfosite, so that the data is in `disasterinfosite/data`. This data includes everything that is on the PDX Ready site. See below for instructions on replacing this with your own data.
 1. `python import.py` to process the data and update some Django code to fit. For each data source, the script will prompt you for two things:
-   - Which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition). If there is a field named `lookup_val`, that will be used by default. If you use the example `data.zip` provided in this project, use the field name `FEMADES` for `Flood_FEMA_DFRIM_2015`.
+   - Which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition). If there is a field named `lookup_val`, that will be used by default
    - Whether you want to group the content from this data source in a tab with content from any others. If you want a dataset to have its own unique tab, just press return at this prompt. If you want to group 2 or more datasets together under 1 tab (e.g. if you have a shapefile for wildfire probability and another with historical wildfire information), just enter the same group name for both at this prompt. Note that these group names are only used in the code--headings displayed to the user come from the "snugget" file loaded in step 6 below--and should contain only letters, no spaces or punctuation.
 1. `python manage.py makemigrations` - this and the next 2 steps combined load the new data into the database.
 1. `python manage.py migrate`
@@ -246,7 +246,7 @@ If you make changes to the shapefiles/rasters, or change which field from the sh
 
 If you have existing data that needs to be removed—perhaps because you are replacing our sample data, or retiring a dataset you previously used—you may have to clear the database first. To do this:
 
-1. `psql -d [DBNAME] -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public; CREATE EXTENSION postgis;"`
+1. `psql -d [DBNAME] -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public; CREATE EXTENSION postgis; CREATE EXTENSION postgis_raster;`
 2. `python manage.py migrate` - if this step throws errors, delete all the .py files in `disasterinfosite/migrations` **except** `__init__.py` and `0001_initial.py`, and try again.
 
 Then continue with the instructions in [Load Some Data](#load-some-data) above.
