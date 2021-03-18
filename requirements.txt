@@ -9,6 +9,6 @@ psycopg2==2.8.4
 pyshp==2.1.0
 requests==2.22.0
 django-solo==1.1.3
-Pillow==6.2.0
+Pillow==8.1.1
 django-modeltranslation==0.13.4
 django-webpack-loader==0.6.0
