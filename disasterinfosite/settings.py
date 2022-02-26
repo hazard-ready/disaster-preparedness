@@ -31,7 +31,7 @@ else:
     logging.basicConfig(
         level = logging.WARNING,
         format = '%(asctime)s %(levelname)s %(message)s',
-        filename = '/my_log_file.log',
+        filename = 'django.log',
         filemode = 'a'
     )
 
@@ -166,4 +166,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'img')
 if DEBUG:
     MEDIA_URL = '/media/img/'
 else:
-    STATIC_URL = 'disaster-preparedness/media/img'
+    STATIC_URL = 'disaster-preparedness/media/img/'

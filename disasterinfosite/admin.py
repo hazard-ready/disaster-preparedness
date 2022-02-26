@@ -19,7 +19,7 @@ class UserProfileInline(admin.StackedInline):
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
     inlines = (UserProfileInline, )
-    actions = [export_as_csv_action("CSV Export", fields=('username','address1','address2','city','state','zip_code', 'actions_taken'), model=UserProfile)]
+    actions = [export_as_csv_action("CSV Export", fields=('username','address1','address2','city','state','zip_code', 'actions_taken'))]
 
 # Re-register UserAdmin
 admin.site.unregister(User)
