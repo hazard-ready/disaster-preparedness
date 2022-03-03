@@ -143,7 +143,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('link_text', models.CharField(default='', max_length=100)),
-                ('image', models.ImageField(storage=disasterinfosite.models.OverwriteStorage(), upload_to='data')),
+                ('image', models.ImageField(storage=OverwriteStorage(), upload_to='data')),
             ],
         ),
         migrations.CreateModel(
