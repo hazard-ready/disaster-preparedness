@@ -51,6 +51,8 @@ def main():
       #TODO: if there's already a reprojected shapefile, use the field in that instead of prompting the user.
       sf = shapefile.Reader(os.path.join(dataDir, f))
       keyField = askUserForFieldNames(sf, stem)
+      # Naming a model field 'id' now requires it to be a primary key in Django, and we can't guarantee that.
+      modelAttributeKeyField = keyField.lower() if keyField.lower() != 'id' else 'shape_id'
       reprojected = processShapefile(f, stem, dataDir, reprojectedDir, SRIDNamespace+":"+desiredSRID, keyField)
       simplified = simplifyShapefile(reprojected, simplifiedDir, simplificationTolerance)
       sf = shapefile.Reader(simplified)
@@ -63,9 +65,9 @@ def main():
       shapefileGroup = askUserForShapefileGroup(stem, existingShapefileGroups)
       modelsLocationsList += "            '" + stem + "': " + stem + ".objects.data_bounds(),\n"
       if shapefileFound:
-        modelsClasses += modelClassGen(stem, sf, keyField, desiredSRID, shapeType, shapefileGroup)
+        modelsClasses += modelClassGen(stem, sf, modelAttributeKeyField, keyField, desiredSRID, shapeType, shapefileGroup)
         modelsFilters += "    " + stem + "_filter = models.ForeignKey(" + stem + ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
-        modelsGeoFilters += modelsGeoFilterGen(stem, keyField)
+        modelsGeoFilters += modelsGeoFilterGen(stem, modelAttributeKeyField)
       elif rasterFound:
         # Note that for now we just automatically use band 0 of any raster.
         modelsClasses += modelClassGenRaster(stem, rst, 0, shapefileGroup)
@@ -82,7 +84,7 @@ def main():
         loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
         loadImports += "    lm_" + stem + ".save()\n\n"
         loadMappings += stem + "_mapping = {\n"
-        loadMappings += "    '" + keyField.lower() + "': '" + keyField + "',\n"
+        loadMappings += "    '" + modelAttributeKeyField + "': '" + keyField + "',\n"
         loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
         loadMappings += "}\n\n"
         loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(__file__)," + " '../" + simplified + "'))\n"
@@ -311,16 +313,16 @@ def findFieldType(sf, fieldName):
 
 
 
-def modelClassGen(stem, sf, keyField, srs, shapeType, shapefileGroup):
+def modelClassGen(stem, sf, modelAttributeKeyField, keyField, srs, shapeType, shapefileGroup):
   text  = "class " + stem + "(models.Model):\n"
   text += "    def getGroup():\n"
   text += "        return ShapefileGroup.objects.get_or_create(name='" + shapefileGroup + "')[0]\n\n"
-  text += "    " + keyField.lower() + " = models." + findFieldType(sf, keyField) + "\n"
+  text += "    " + modelAttributeKeyField + " = models." + findFieldType(sf, keyField) + "\n"
   text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
   text += "    objects = ShapeManager()\n\n"
   text += "    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)\n"
   text += "    def __str__(self):\n"
-  text += "        return str(self." + keyField.lower() + ")\n\n"
+  text += "        return str(self." + modelAttributeKeyField + ")\n\n"
 
   return text
 
@@ -342,9 +344,9 @@ def modelClassGenRaster(stem, rst, bandNumber, shapefileGroup):
 
 def modelsGeoFilterGen(stem, keyField):
   text  = "        qs_" + stem + " = " + stem + ".objects.filter(geom__contains=pnt)\n"
-  text += "        " + stem + "_rating = " + "qs_" + stem + ".values_list('" + keyField.lower() + "', flat=True)\n"
+  text += "        " + stem + "_rating = " + "qs_" + stem + ".values_list('" + keyField + "', flat=True)\n"
   text += "        for rating in " + stem + "_rating:\n"
-  text += "            " + stem + "_snugget = Snugget.objects.filter(" + stem + "_filter__" + keyField.lower() + "__exact=rating).order_by('order').select_subclasses()\n"
+  text += "            " + stem + "_snugget = Snugget.objects.filter(" + stem + "_filter__" + keyField + "__exact=rating).order_by('order').select_subclasses()\n"
   text += "            if " + stem + "_snugget:\n"
   text += "                groupsDict[" + stem +".getGroup()].extend(" + stem + "_snugget)\n\n"
   return text
