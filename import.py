@@ -81,7 +81,7 @@ def main():
       loadImports += "    print('Loading data for " + stem + "')\n"
       loadImports += "    from .models import " + stem + "\n"
       if shapefileFound:
-        loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + keyField.lower() + "'])\n"
+        loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + "_mapping, transform=True, " + "encoding='" + encoding + "', unique=['" + modelAttributeKeyField + "'])\n"
         loadImports += "    lm_" + stem + ".save()\n\n"
         loadMappings += stem + "_mapping = {\n"
         loadMappings += "    '" + modelAttributeKeyField + "': '" + keyField + "',\n"
