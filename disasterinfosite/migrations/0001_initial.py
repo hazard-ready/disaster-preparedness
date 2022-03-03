@@ -50,14 +50,6 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='SnuggetType',
-            fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('name', models.CharField(max_length=50)),
-                ('model_name', models.CharField(choices=[('SNUG_TEXT', 'TextSnugget')], max_length=255)),
-            ],
-        ),
-        migrations.CreateModel(
             name='SnuggetSection',
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
@@ -170,14 +162,6 @@ class Migration(migrations.Migration):
                 ('snugget', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='disasterinfosite.SlideshowSnugget')),
                 ('image', models.ImageField(upload_to='photos')),
                 ('caption', models.TextField(default="", max_length=200))
-            ],
-        ),
-         migrations.CreateModel(
-            name='DataOverviewImage',
-            fields=[
-                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
-                ('link_text', models.CharField(max_length=100, default='')),
-                ('image', models.ImageField(storage=OverwriteStorage(), upload_to='data')),
             ],
         ),
         migrations.AlterField(
