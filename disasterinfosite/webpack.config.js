@@ -32,8 +32,7 @@ module.exports = {
       jQuery: "jquery"
     }),
     new MiniCssExtractPlugin({
-      filename: "[name].css",
-      allChunks: true
+      filename: "[name].css"
     })
   ],
   devtool: "eval-source-map",
@@ -52,14 +51,17 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            query: { sourceMap: true }
           },
           "css-loader"
         ]
       },
       {
         test: /\.(png|gif|jpe?g|svg|ttf|eot|ico)(\?v=\d+\.\d+\.\d+)?$/i,
-        loader: "file-loader?name=[name].[ext],limit=1000"
+        loader: "file-loader",
+        options: {
+          name: "[name].[ext]",
+          limit: 1000
+        }
       },
       {
         test: /\.html(\?v=\d+\.\d+\.\d+)?$/i,
@@ -67,7 +69,11 @@ module.exports = {
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "url-loader?limit=10000&minetype=application/font-woff"
+        loader: "url-loader",
+        options: {
+          limit: 10000,
+          mimetype: "application/font-woff"
+        }
       }
     ]
   }

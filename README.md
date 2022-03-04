@@ -76,9 +76,9 @@ This assumes `python` is the command configured to run the correct python versio
    createdb [DBNAME]
    psql -d [DBNAME] -c "CREATE EXTENSION postgis;"
    ```
+    _[detailed instructions for reference](http://postgis.net/docs/manual-2.1/postgis_installation.html#create_new_db_extensions)_
 
 4. In order to run unit tests, your user will need to be able to create and delete databases, since the test framework creates (and destroys) a new test DB for each test run. You can accomplish this using `psql -d [DBNAME] -c "ALTER USER [USERNAME] SUPERUSER;`"
-   _[detailed instructions for reference](http://postgis.net/docs/manual-2.1/postgis_installation.html#create_new_db_extensions)_
 5. Set up an environment variable `DATABASE_URL` that will be used by the Django Database URL app to load our database.
 
 - example on Mac/Linux: `export DATABASE_URL="postgres://USER:PASSWORD@HOST:PORT/DBNAME"` where the USER & PASSWORD are the django account you created above in postgres, and the default HOST:PORT is localhost:5432 .

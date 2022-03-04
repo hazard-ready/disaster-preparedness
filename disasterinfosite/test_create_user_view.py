@@ -13,7 +13,7 @@ request_url = '/accounts/create_user/'
 class CreateUserViewTestCase(TestCase):
   def makeRequest(self, body):
     request = self.request_factory.post(request_url, body)
-    middleware = SessionMiddleware()
+    middleware = SessionMiddleware(request)
     middleware.process_request(request)
     request.session.save()
     return request
