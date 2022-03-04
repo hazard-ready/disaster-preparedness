@@ -23,7 +23,7 @@ def export_as_csv_action(description="Export selected users as CSV file", fields
                 if hasattr(obj, field):
                     row.append(getattr(obj, field))
                 else:
-                    data = getattr(queryObject, field)
+                    data = getattr(user, field)
                     # If a field is a relation to another model, follow it
                     if hasattr(data, 'all') and callable(getattr(data, 'all',)):
                         data = ', '.join(list(str(x) for x in data.all()))
