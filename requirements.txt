@@ -6,6 +6,7 @@ django-model-utils==4.2.0
 gunicorn==20.1.0
 openpyxl==3.0.9
 psycopg==3.0.9
+psycopg2==2.9.3
 pyshp==2.2.0
 requests==2.27.1
 django-solo==2.0.0
