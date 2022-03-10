@@ -74,7 +74,7 @@ This assumes `python` is the command configured to run the correct python versio
 
    ```shell
    createdb [DBNAME]
-   psql -d [DBNAME] -c "CREATE EXTENSION postgis;"
+   psql -d [DBNAME] -c "CREATE EXTENSION postgis; CREATE EXTENSION postgis_raster;"
    ```
     _[detailed instructions for reference](http://postgis.net/docs/manual-2.1/postgis_installation.html#create_new_db_extensions)_
 
