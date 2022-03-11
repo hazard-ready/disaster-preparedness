@@ -16,11 +16,7 @@
       {% include "language_selector.html" %}
     </div>
   </div>
-{% if surveyHeader %}
-  <a class="survey-link hide-for-medium-up" href="{{ surveyUrl }}" target="_blank" rel="noopener">
-    <div class="survey-button {{ surveyClass }}">{% trans "Feedback Survey" %}</div>
-  </a>
-{% endif %}
+
   {% block search %}
   {% trans "Find Me" as find_me %}
     <div class="location-form" role="search" aria-label="location-search">
@@ -46,8 +42,3 @@
     {% include "language_selector.html" %}
   </div>
 </header>
-{% if surveyHeader %}
-  <a class="survey-link hide-for-small" href="{{ surveyUrl }}" target="_blank" rel="noopener">
-    <div class="survey-button {{ surveyClass }}">{% trans "Feedback Survey" %}</div>
-  </a>
-{% endif %}

@@ -18,11 +18,6 @@
     </a>
   </div>
 </div>
-{% if surveyHeader %}
-  <a class="survey-link" href="http://bit.ly/pdx-t2" target="_blank" rel="noopener">
-    <div class="survey-button">{% trans "Feedback Survey" %}</div>
-  </a>
-{% endif %}
 
 {% endblock info-instructions %}
 
@@ -37,7 +32,6 @@
     {% for group, hazard in data.items %}
       <a class="hazard-link caps" href="#{{group.name}}">{{group.display_name}}</a>
     {% endfor %}
-    <a class="prepare-link caps" href="{% url 'prepare' %}" target="_blank">{% trans "Prepare!" %}</a>
   </div>
 {% endblock hazard-menu %}
 
