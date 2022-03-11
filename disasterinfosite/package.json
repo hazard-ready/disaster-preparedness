@@ -1,6 +1,6 @@
 {
   "name": "pdx-ready",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "The Portland version of Hazard Ready",
   "main": "app.js",
   "scripts": {
@@ -17,25 +17,26 @@
   },
   "homepage": "https://github.com/hazard-ready/pdx-ready#readme",
   "devDependencies": {
-    "ajv": "^6.11.0",
-    "css-loader": "^3.4.2",
-    "file-loader": "^4.3.0",
-    "mini-css-extract-plugin": "^0.8.2",
+    "ajv": "^8.10.0",
+    "css-loader": "^6.6.0",
+    "file-loader": "^6.2.0",
+    "mini-css-extract-plugin": "^2.5.3",
     "native-promise-only": "^0.8.1",
-    "node-sass": "^7.0.0",
+    "node-sass": "^7.0.1",
     "normalize.css": "^8.0.1",
-    "sass-loader": "^8.0.2",
-    "style-loader": "^1.1.3",
-    "url-loader": "^2.3.0",
-    "url-polyfill": "^1.1.8",
-    "webpack": "^4.41.5",
-    "webpack-bundle-tracker": "^0.4.3",
-    "webpack-cli": "^3.3.10"
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
+    "url-loader": "^4.1.1",
+    "url-polyfill": "^1.1.12",
+    "webpack": "^5.69.1",
+    "webpack-bundle-tracker": "^1.4.0",
+    "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "formdata-polyfill": "^3.0.19",
-    "jquery": "^3.5.0",
-    "leaflet": "^1.6.0",
+    "fsevents": "^2.3.2",
+    "formdata-polyfill": "^4.0.10",
+    "jquery": "^3.6.0",
+    "leaflet": "^1.7.1",
     "slick-carousel": "^1.8.1"
   }
 }

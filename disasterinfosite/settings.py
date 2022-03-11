@@ -4,9 +4,9 @@ import logging
 Django settings for disasterinfosite project.
 """
 
-ADMINS = (
+ADMINS = [
           ('Melinda Minch', 'melinda@melindaminch.com')
-         )
+         ]
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'embed_video',
-    'disasterinfosite',
+    'disasterinfosite.apps.DisasterInfoConfig',
     'solo',
     'webpack_loader'
 )
@@ -108,6 +108,8 @@ import dj_database_url
 DATABASES = {}
 DATABASES['default'] = dj_database_url.parse(os.environ["DATABASE_URL_PDX"])
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Allow database connections to persist
 CONN_MAX_AGE = environ.get('CONN_MAX_AGE') or 0
