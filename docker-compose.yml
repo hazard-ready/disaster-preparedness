@@ -1,0 +1,31 @@
+version: '3.1' 
+
+services:
+
+  django:
+    build:
+      context: .
+      args:
+        DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
+        DATABASE_URL: $DATABASE_URL
+    ports:
+      - 8080:80
+    depends_on:
+    - postgres
+    environment:
+      DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
+      DATABASE_URL: $DATABASE_URL
+    image: ${TAG}:${VERSION}
+    ports:
+      - 8000:8000
+
+  postgres:
+    image: postgres:13.6-bullseye
+    volumes:
+    - postgres_db_data:/var/lib/postgresql
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+volumes:
+  postgres_db_data: {}
+

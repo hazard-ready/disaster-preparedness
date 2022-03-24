@@ -1,10 +1,4 @@
-# FROM python:3.5-slim-buster
-# FROM python:3.6-slim-buster
-# FROM python:3.7-slim-bullseye
-# FROM python:3.8-slim-bullseye
 FROM python:3.9-slim-bullseye
-# FROM python:3.10-slim-bullseye
-# FROM python:3.11-rc-slim
 
 ARG DJANGO_SECRET_KEY
 ARG DATABASE_URL
@@ -17,8 +11,9 @@ RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Install GDAL dependencies
-RUN apt-get update &&\
+RUN apt-get update && \
     apt-get install -y libgdal-dev g++ --no-install-recommends && \
+    apt-get install -y postgresql-client && \
     apt-get clean -y
 
 # Update C env vars so compiler can find gdal
@@ -28,13 +23,17 @@ ENV C_INCLUDE_PATH=/usr/include/gdal
 RUN apt-get install -y binutils libproj-dev gdal-bin libjpeg-dev
 
 # Run the application:
-COPY disasterinfosite /disasterinfosite
-WORKDIR /disasterinfosite
+COPY . /app
+WORKDIR /app
 
-# Install dependencies - added the ignore:DEPRECATION for python 3.5:
+# Install dependencies:
 COPY requirements.txt .
-RUN PYTHONWARNINGS="ignore:DEPRECATION" pip install --upgrade pip
-RUN PYTHONWARNINGS="ignore:DEPRECATION" pip install --no-cache-dir -r requirements.txt
+RUN /opt/venv/bin/pip install --upgrade pip
+RUN /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
 
-CMD ["python", "manage.py", "migrate"]
-CMD ["python", "wsgi.py"]
+# verify pip install
+RUN /opt/venv/bin/pip list
+
+EXPOSE 8000
+
+CMD ["/opt/venv/bin/python", "manage.py", "runserver", "0.0.0.0:8000"]
