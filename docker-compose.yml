@@ -1,15 +1,12 @@
-version: '3.1' 
+version: "3.9"
 
 services:
-
   django:
     build:
       context: .
       args:
         DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
         DATABASE_URL: $DATABASE_URL
-    ports:
-      - 8080:80
     depends_on:
     - postgres
     environment:
@@ -18,14 +15,16 @@ services:
     image: ${TAG}:${VERSION}
     ports:
       - 8000:8000
-
+    depends_on:
+      - postgres
   postgres:
-    image: postgres:13.6-bullseye
+    build:
+      dockerfile: Dockerfile-postgres
     volumes:
-    - postgres_db_data:/var/lib/postgresql
+    - postgres_db_data_volume_01:/var/lib/postgresql
     restart: always
     environment:
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
 volumes:
-  postgres_db_data: {}
+  postgres_db_data_volume_01: {}
 
