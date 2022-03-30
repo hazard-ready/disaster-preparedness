@@ -1,7 +1,55 @@
 version: "3.9"
 
 services:
-  django:
+  seattle:
+    build:
+      context: .
+      args:
+        DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
+        DATABASE_URL: $DATABASE_URL_SEATTLE
+    depends_on:
+    - postgres
+    environment:
+      DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
+      DATABASE_URL: $DATABASE_URL_SEATTLE
+    image: ${TAG}:${VERSION}
+    ports:
+      - 8001:8000
+    depends_on:
+      - init
+  portland:
+    build:
+      context: .
+      args:
+        DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
+        DATABASE_URL: $DATABASE_URL_PORTLAND
+    depends_on:
+    - postgres
+    environment:
+      DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
+      DATABASE_URL: $DATABASE_URL_PORTLAND
+    image: ${TAG}:${VERSION}
+    ports:
+      - 8002:8000
+    depends_on:
+      - init
+  missoula:
+    build:
+      context: .
+      args:
+        DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
+        DATABASE_URL: $DATABASE_URL_MISSOULA
+    depends_on:
+    - postgres
+    environment:
+      DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
+      DATABASE_URL: $DATABASE_URL_MISSOULA
+    image: ${TAG}:${VERSION}
+    ports:
+      - 8003:8000
+    depends_on:
+      - init
+  init:
     build:
       context: .
       args:
