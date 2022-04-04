@@ -19,16 +19,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     g++               \
     libgdal-dev       \
     postgresql-client \
+    unzip             \
+    zip               \
     && rm -rf /var/lib/apt/lists/*
 
 RUN groupadd -r django && useradd --no-log-init -r -g django django
 RUN mkdir /home/django && chown -R django:django /home/django
-RUN mkdir /app && chown -R django:django /app
-USER django
+RUN mkdir /app
 
 # Run the application:
 COPY . /app
+RUN chown -R django:django /app
 WORKDIR /app
+
+USER django
 
 # Install dependencies:
 COPY requirements.txt .

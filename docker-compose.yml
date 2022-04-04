@@ -1,6 +1,26 @@
-version: "3.9"
+version: "3.3"
 
 services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy:1.0.0
+    ports:
+      - "8888:80"
+      - "8448:443"
+    volumes:
+      - certs:/etc/nginx/certs:ro
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+  acme-companion:
+    image: nginxproxy/acme-companion:2.2.0
+    environment:
+      DEFAULT_EMAIL: $DEFAULT_EMAIL
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - acme:/etc/acme.sh
   seattle:
     build:
       context: .
@@ -12,6 +32,10 @@ services:
     environment:
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       DATABASE_URL: $DATABASE_URL_SEATTLE
+      VIRTUAL_HOST: $VIRTUAL_HOST
+      VIRTUAL_PORT: 8001
+      LETSENCRYPT_HOST: $VIRTUAL_HOST
+      LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
     ports:
       - 8001:8000
@@ -28,6 +52,10 @@ services:
     environment:
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       DATABASE_URL: $DATABASE_URL_PORTLAND
+      VIRTUAL_HOST: $VIRTUAL_HOST
+      VIRTUAL_PORT: 8002
+      LETSENCRYPT_HOST: $VIRTUAL_HOST
+      LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
     ports:
       - 8002:8000
@@ -44,6 +72,10 @@ services:
     environment:
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       DATABASE_URL: $DATABASE_URL_MISSOULA
+      VIRTUAL_HOST: $VIRTUAL_HOST
+      VIRTUAL_PORT: 8003
+      LETSENCRYPT_HOST: $VIRTUAL_HOST
+      LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
     ports:
       - 8003:8000
@@ -67,6 +99,7 @@ services:
       - postgres
   postgres:
     build:
+      context: .
       dockerfile: Dockerfile-postgres
     volumes:
     - postgres_db_data_volume_01:/var/lib/postgresql
@@ -75,4 +108,7 @@ services:
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
 volumes:
   postgres_db_data_volume_01: {}
-
+  certs: {}
+  vhost: {}
+  html: {}
+  acme: {}
