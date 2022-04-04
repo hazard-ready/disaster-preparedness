@@ -11,6 +11,7 @@ services:
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
   acme-companion:
     image: nginxproxy/acme-companion:2.2.0
     environment:
@@ -21,6 +22,7 @@ services:
       - certs:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - acme:/etc/acme.sh
+    restart: always
   seattle:
     build:
       context: .
@@ -29,6 +31,7 @@ services:
         DATABASE_URL: $DATABASE_URL_SEATTLE
     depends_on:
     - postgres
+    restart: always
     environment:
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       DATABASE_URL: $DATABASE_URL_SEATTLE
@@ -49,6 +52,7 @@ services:
         DATABASE_URL: $DATABASE_URL_PORTLAND
     depends_on:
     - postgres
+    restart: always
     environment:
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       DATABASE_URL: $DATABASE_URL_PORTLAND
@@ -69,6 +73,7 @@ services:
         DATABASE_URL: $DATABASE_URL_MISSOULA
     depends_on:
     - postgres
+    restart: always
     environment:
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       DATABASE_URL: $DATABASE_URL_MISSOULA
