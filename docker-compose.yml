@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.7"
 
 services:
   nginx-proxy:
@@ -16,10 +16,10 @@ services:
     image: nginxproxy/acme-companion:2.2.0
     environment:
       DEFAULT_EMAIL: $DEFAULT_EMAIL
-    volumes_from:
-      - nginx-proxy
     volumes:
       - certs:/etc/nginx/certs:rw
+      - vhost:/etc/nginx/vhost.d:ro
+      - html:/usr/share/nginx/html:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - acme:/etc/acme.sh
     restart: always
