@@ -4,25 +4,29 @@ services:
   nginx-proxy:
     image: jwilder/nginx-proxy:1.0.0
     ports:
-      - "8888:80"
-      - "8448:443"
+      - "80:80"
+      - "443:443"
     volumes:
       - certs:/etc/nginx/certs:ro
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: always
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
   acme-companion:
     image: nginxproxy/acme-companion:2.2.0
     environment:
       DEFAULT_EMAIL: $DEFAULT_EMAIL
     volumes:
       - certs:/etc/nginx/certs:rw
-      - vhost:/etc/nginx/vhost.d:ro
-      - html:/usr/share/nginx/html:ro
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - acme:/etc/acme.sh
     restart: always
+    depends_on:
+      - nginx-proxy
   seattle:
     build:
       context: .
@@ -106,8 +110,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-postgres
+    image: hazardready-postgres:${VERSION}
     volumes:
-    - postgres_db_data_volume_01:/var/lib/postgresql
+    - postgres_db_data_volume_01:/var/lib/postgresql/data
     restart: always
     environment:
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
