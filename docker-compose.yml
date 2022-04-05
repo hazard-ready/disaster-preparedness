@@ -44,8 +44,8 @@ services:
       LETSENCRYPT_HOST: $VIRTUAL_HOST
       LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
-    ports:
-      - 8001:8000
+    expose:
+      - 80
     depends_on:
       - init
   portland:
@@ -65,8 +65,8 @@ services:
       LETSENCRYPT_HOST: $VIRTUAL_HOST
       LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
-    ports:
-      - 8002:8000
+    expose:
+      - 80
     depends_on:
       - init
   missoula:
@@ -86,8 +86,8 @@ services:
       LETSENCRYPT_HOST: $VIRTUAL_HOST
       LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
-    ports:
-      - 8003:8000
+    expose:
+      - 80
     depends_on:
       - init
   init:
