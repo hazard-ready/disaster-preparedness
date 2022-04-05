@@ -116,9 +116,16 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+
 volumes:
   postgres_db_data_volume_01: {}
   certs: {}
   vhost: {}
   html: {}
   acme: {}
+
+networks:
+  proxy:
+    external:
+      name: nginx-proxy
+
