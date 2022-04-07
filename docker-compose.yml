@@ -33,14 +33,13 @@ services:
       args:
         DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
         DATABASE_URL: $DATABASE_URL_SEATTLE
-    depends_on:
-    - postgres
     restart: always
     environment:
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       DATABASE_URL: $DATABASE_URL_SEATTLE
       VIRTUAL_HOST: $VIRTUAL_HOST
-      VIRTUAL_PORT: 8001
+      VIRTUAL_PORT: 8000
+      VIRTUAL_PATH: /seattle/
       LETSENCRYPT_HOST: $VIRTUAL_HOST
       LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
@@ -48,20 +47,20 @@ services:
       - 80
     depends_on:
       - init
+      - postgres
   portland:
     build:
       context: .
       args:
         DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
         DATABASE_URL: $DATABASE_URL_PORTLAND
-    depends_on:
-    - postgres
     restart: always
     environment:
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       DATABASE_URL: $DATABASE_URL_PORTLAND
       VIRTUAL_HOST: $VIRTUAL_HOST
-      VIRTUAL_PORT: 8002
+      VIRTUAL_PORT: 8000
+      VIRTUAL_PATH: /pdx/
       LETSENCRYPT_HOST: $VIRTUAL_HOST
       LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
@@ -69,20 +68,20 @@ services:
       - 80
     depends_on:
       - init
+      - postgres
   missoula:
     build:
       context: .
       args:
         DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
         DATABASE_URL: $DATABASE_URL_MISSOULA
-    depends_on:
-    - postgres
     restart: always
     environment:
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       DATABASE_URL: $DATABASE_URL_MISSOULA
       VIRTUAL_HOST: $VIRTUAL_HOST
-      VIRTUAL_PORT: 8003
+      VIRTUAL_PORT: 8000
+      VIRTUAL_PATH: /missoula/
       LETSENCRYPT_HOST: $VIRTUAL_HOST
       LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
@@ -90,14 +89,13 @@ services:
       - 80
     depends_on:
       - init
+      - postgres
   init:
     build:
       context: .
       args:
         DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
         DATABASE_URL: $DATABASE_URL
-    depends_on:
-    - postgres
     environment:
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       DATABASE_URL: $DATABASE_URL
