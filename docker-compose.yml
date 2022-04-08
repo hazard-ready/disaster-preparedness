@@ -32,13 +32,10 @@ services:
   seattle:
     build:
       context: .
-      args:
-        DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
-        DATABASE_URL: $DATABASE_URL_SEATTLE
     restart: always
     environment:
       DJANGO_SECRET_KEY_SEATTLE: $DJANGO_SECRET_KEY_SEATTLE
-      DATABASE_URL: $DATABASE_URL_SEATTLE
+      DATABASE_URL_SEATTLE: $DATABASE_URL_SEATTLE
       VIRTUAL_HOST: $VIRTUAL_HOST
       VIRTUAL_PORT: 8000
       VIRTUAL_PATH: $VIRTUAL_PATH_SEATTLE
@@ -50,12 +47,12 @@ services:
     depends_on:
       - init
       - postgres
-  portland:
+  pdx:
     image: pdx-ready:latest
     restart: always
     environment:
       DJANGO_SECRET_KEY_PDX: $DJANGO_SECRET_KEY_PDX
-      DATABASE_URL: $DATABASE_URL_PORTLAND
+      DATABASE_URL_PDX: $DATABASE_URL_PDX
       VIRTUAL_HOST: $VIRTUAL_HOST
       VIRTUAL_PORT: 8000
       VIRTUAL_PATH: $VIRTUAL_PATH_PORTLAND
@@ -69,13 +66,10 @@ services:
   missoula:
     build:
       context: .
-      args:
-        DJANGO_SECRET_KEY_MISSOULA: $DJANGO_SECRET_KEY_MISSOULA
-        DATABASE_URL: $DATABASE_URL_MISSOULA
     restart: always
     environment:
-      DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
-      DATABASE_URL: $DATABASE_URL_MISSOULA
+      DJANGO_SECRET_KEY_MISSOULA: $DJANGO_SECRET_KEY_MISSOULA
+      DATABASE_URL_MISSOULA: $DATABASE_URL_MISSOULA
       VIRTUAL_HOST: $VIRTUAL_HOST
       VIRTUAL_PORT: 8000
       VIRTUAL_PATH: $VIRTUAL_PATH_MISSOULA
@@ -90,9 +84,6 @@ services:
   init:
     build:
       context: .
-      args:
-        DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
-        DATABASE_URL: $DATABASE_URL
     environment:
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       DATABASE_URL: $DATABASE_URL
