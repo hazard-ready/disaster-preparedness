@@ -14,7 +14,7 @@ services:
     restart: always
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
-   networks:
+    networks:
       - proxy
   acme-companion:
     image: nginxproxy/acme-companion:2.2.0
