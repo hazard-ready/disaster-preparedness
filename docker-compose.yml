@@ -46,7 +46,7 @@ services:
       LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
     expose:
-      - 80
+      - 8000
     depends_on:
       - init
       - postgres
@@ -67,7 +67,7 @@ services:
       LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
     expose:
-      - 80
+      - 8000
     depends_on:
       - init
       - postgres
@@ -88,7 +88,7 @@ services:
       LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
     expose:
-      - 80
+      - 8000
     depends_on:
       - init
       - postgres
@@ -102,8 +102,6 @@ services:
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       DATABASE_URL: $DATABASE_URL
     image: ${TAG}:${VERSION}
-    ports:
-      - 8000:8000
     depends_on:
       - postgres
   postgres:
