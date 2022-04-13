@@ -14,8 +14,6 @@ services:
     restart: always
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
-    networks:
-      - proxy
   acme-companion:
     image: nginxproxy/acme-companion:2.2.0
     environment:
@@ -34,16 +32,16 @@ services:
       context: .
     restart: always
     environment:
-      DJANGO_SECRET_KEY_SEATTLE: $DJANGO_SECRET_KEY_SEATTLE
-      DATABASE_URL_SEATTLE: $DATABASE_URL_SEATTLE
-      VIRTUAL_HOST: $VIRTUAL_HOST
-      VIRTUAL_PORT: 8000
-      VIRTUAL_PATH: $VIRTUAL_PATH_SEATTLE
-      LETSENCRYPT_HOST: $VIRTUAL_HOST
-      LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
+      - DJANGO_SECRET_KEY_SEATTLE=$DJANGO_SECRET_KEY_SEATTLE
+      - DATABASE_URL_SEATTLE=$DATABASE_URL_SEATTLE
+      - VIRTUAL_HOST=$VIRTUAL_HOST
+      - VIRTUAL_PORT=8000
+      - VIRTUAL_PATH=$VIRTUAL_PATH_SEATTLE
+      - LETSENCRYPT_HOST=$VIRTUAL_HOST
+      - LETSENCRYPT_EMAIL=$DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
     expose:
-      - 8000
+      - "8000"
     depends_on:
       - init
       - postgres
@@ -51,15 +49,15 @@ services:
     image: pdx-ready:latest
     restart: always
     environment:
-      DJANGO_SECRET_KEY_PDX: $DJANGO_SECRET_KEY_PDX
-      DATABASE_URL_PDX: $DATABASE_URL_PDX
-      VIRTUAL_HOST: $VIRTUAL_HOST
-      VIRTUAL_PORT: 8000
-      VIRTUAL_PATH: $VIRTUAL_PATH_PORTLAND
-      LETSENCRYPT_HOST: $VIRTUAL_HOST
-      LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
+      - DJANGO_SECRET_KEY_PDX=$DJANGO_SECRET_KEY_PDX
+      - DATABASE_URL_PDX=$DATABASE_URL_PDX
+      - VIRTUAL_HOST=$VIRTUAL_HOST
+      - VIRTUAL_PORT=8000
+      - VIRTUAL_PATH=$VIRTUAL_PATH_PORTLAND
+      - LETSENCRYPT_HOST=$VIRTUAL_HOST
+      - LETSENCRYPT_EMAIL=$DEFAULT_EMAIL
     expose:
-      - 8000
+      - "8000"
     depends_on:
       - init
       - postgres
@@ -68,13 +66,13 @@ services:
       context: .
     restart: always
     environment:
-      DJANGO_SECRET_KEY_MISSOULA: $DJANGO_SECRET_KEY_MISSOULA
-      DATABASE_URL_MISSOULA: $DATABASE_URL_MISSOULA
-      VIRTUAL_HOST: $VIRTUAL_HOST
-      VIRTUAL_PORT: 8000
-      VIRTUAL_PATH: $VIRTUAL_PATH_MISSOULA
-      LETSENCRYPT_HOST: $VIRTUAL_HOST
-      LETSENCRYPT_EMAIL: $DEFAULT_EMAIL
+      - DJANGO_SECRET_KEY_MISSOULA=$DJANGO_SECRET_KEY_MISSOULA
+      - DATABASE_URL_MISSOULA=$DATABASE_URL_MISSOULA
+      - VIRTUAL_HOST=$VIRTUAL_HOST
+      - VIRTUAL_PORT=8000
+      - VIRTUAL_PATH=$VIRTUAL_PATH_MISSOULA
+      - LETSENCRYPT_HOST=$VIRTUAL_HOST
+      - LETSENCRYPT_EMAIL=$DEFAULT_EMAIL
     image: ${TAG}:${VERSION}
     expose:
       - 8000
@@ -107,9 +105,4 @@ volumes:
   vhost: {}
   html: {}
   acme: {}
-
-networks:
-  proxy:
-    external:
-      name: nginx-proxy
 
