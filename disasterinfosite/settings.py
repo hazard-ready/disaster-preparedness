@@ -133,6 +133,7 @@ WEBPACK_LOADER = {
     }
 }
 
+FORCE_SCRIPT_NAME='/pdx/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'media')
 
 if DEBUG:

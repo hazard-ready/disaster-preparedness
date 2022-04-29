@@ -27,7 +27,7 @@ RUN groupadd -r django && useradd --no-log-init -r -g django django
 RUN mkdir /home/django && chown -R django:django /home/django
 RUN mkdir /app
 
-# Run the application:
+
 COPY . /app
 RUN chown -R django:django /app
 WORKDIR /app
