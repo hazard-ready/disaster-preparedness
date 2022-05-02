@@ -27,6 +27,20 @@ services:
     restart: always
     depends_on:
       - nginx-proxy
+  hazardready:
+    restart: always
+    environment:
+      - VIRTUAL_HOST=$VIRTUAL_HOST
+      - VIRTUAL_PORT=80
+      - VIRTUAL_PATH=/
+    image: hazardready:${VERSION}
+    expose:
+      - "80"
+    depends_on:
+      - init
+      - nginx-proxy
+      - acme-companion
+      - postgres
   seattle:
     build:
       context: .
