@@ -90,3 +90,5 @@ webpack-stats.json
 
 # Auto-assembled media folder
 disasterinfosite/media/*
+
+*__MACOSX*
