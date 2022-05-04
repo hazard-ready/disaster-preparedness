@@ -42,7 +42,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # verify pip install
 RUN pip list
 
+# unzip and load data
+RUN python manage.py migrate
+
 EXPOSE 8000
 
+# Run the application:
 ENTRYPOINT ["python"]
 CMD ["manage.py", "runserver", "0.0.0.0:8000"]
