@@ -1,10 +1,10 @@
 FROM python:3.9-slim-bullseye
 
-#ARG DJANGO_SECRET_KEY_PDX
-#ARG DATABASE_URL_PDX
+ARG DJANGO_SECRET_KEY
+ARG DATABASE_URL
 
-#ENV DJANGO_SECRET_KEY_PDX=${DJANGO_SECRET_KEY_PDX:-"dummykeyforbuild"}
-#ENV DATABASE_URL_PDX=${DATABASE_URL_PDX:-postgres://postgres:postgres@localhost:5432/pdxready}
+ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-"dummykeyforbuild"}
+ENV DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@localhost:5432/pdxready}
 
 # Update C env vars so compiler can find gdal
 ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
