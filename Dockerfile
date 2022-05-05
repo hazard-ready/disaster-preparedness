@@ -44,9 +44,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # verify pip install
 RUN pip list
 
-# unzip and load data
-RUN python manage.py migrate
-
 # build front-end code
 WORKDIR /app/disasterinfosite
 RUN npm install && npm run webpack
