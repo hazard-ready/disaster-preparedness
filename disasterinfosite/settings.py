@@ -14,7 +14,7 @@ from os import environ
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['DJANGO_SECRET_KEY_PDX']
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -26,8 +26,7 @@ if DEBUG:
     SITE_URL = "http://127.0.0.1:8000"
     logging.basicConfig(level = logging.DEBUG, format = '%(asctime)s %(levelname)s %(message)s')
 else:
-    # hazardready.org is the current production server. 23.92.25.126 is its numeric address. eldang.eldan.co.uk is our demo/test server
-    ALLOWED_HOSTS = ['.hazardready.org', '23.92.25.126']
+    ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = (
@@ -106,7 +105,7 @@ TEMPLATES = [
 import dj_database_url
 
 DATABASES = {}
-DATABASES['default'] = dj_database_url.parse(os.environ["DATABASE_URL_PDX"])
+DATABASES['default'] = dj_database_url.parse(os.environ["DATABASE_URL"])
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
