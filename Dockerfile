@@ -18,6 +18,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libjpeg-dev       \
     g++               \
     libgdal-dev       \
+    nodejs            \
+    npm               \
     postgresql-client \
     unzip             \
     zip               \
@@ -27,7 +29,7 @@ RUN groupadd -r django && useradd --no-log-init -r -g django django
 RUN mkdir /home/django && chown -R django:django /home/django
 RUN mkdir /app
 
-
+# copy the application to the container:
 COPY . /app
 RUN chown -R django:django /app
 WORKDIR /app
@@ -45,8 +47,17 @@ RUN pip list
 # unzip and load data
 RUN python manage.py migrate
 
+# build front-end code
+WORKDIR /app/disasterinfosite
+RUN npm install && npm run webpack
+
+WORKDIR /app
+
 EXPOSE 8000
 
 # Run the application:
-ENTRYPOINT ["python"]
-CMD ["manage.py", "runserver", "0.0.0.0:8000"]
+# ENTRYPOINT ["python"]
+# CMD ["manage.py", "runserver", "0.0.0.0:8000"]
+# ENTRYPOINT ["/usr/local/bin/gunicorn"]
+ENTRYPOINT ["/home/django/.local/bin/gunicorn"]
+CMD ["--log-file=-", "--bind", ":8000", "--workers", "3", "disasterinfosite.wsgi.py:application"]
