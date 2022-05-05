@@ -57,4 +57,4 @@ EXPOSE 8000
 # CMD ["manage.py", "runserver", "0.0.0.0:8000"]
 # ENTRYPOINT ["/usr/local/bin/gunicorn"]
 ENTRYPOINT ["/home/django/.local/bin/gunicorn"]
-CMD ["--log-file=-", "--bind", ":8000", "--workers", "3", "disasterinfosite.wsgi.py:application"]
+CMD ["--log-file=-", "--bind", ":8000", "--workers", "3", "disasterinfosite.wsgi:application"]
