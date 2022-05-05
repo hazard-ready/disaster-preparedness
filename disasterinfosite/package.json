@@ -33,7 +33,6 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "fsevents": "^2.3.2",
     "formdata-polyfill": "^4.0.10",
     "jquery": "^3.6.0",
     "leaflet": "^1.7.1",
