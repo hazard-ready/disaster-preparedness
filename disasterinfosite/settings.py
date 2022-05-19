@@ -50,6 +50,7 @@ EMBED_VIDEO_BACKENDS = (
 )
 
 MIDDLEWARE = (
+    "whitenoise.middleware.WhiteNoiseMiddleware"
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -145,6 +146,8 @@ else:
     # So for our current test server, eldang.eldan.co.uk/zr/ , we need:
     # STATIC_URL = '/zr/static/'
     STATIC_URL = '/pdx/static/'
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Specially for GeoDjango on Heroku
 GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
