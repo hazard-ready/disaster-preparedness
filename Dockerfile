@@ -51,6 +51,8 @@ RUN npm install && npm run webpack
 
 WORKDIR /app
 
+RUN python manage.py collectstatic
+
 EXPOSE 8000
 
 # Run the application:
