@@ -46,6 +46,7 @@ RUN pip list
 
 # build front-end code
 WORKDIR /app/disasterinfosite
+RUN mkdir media
 RUN npm install && npm run webpack
 
 WORKDIR /app
