@@ -50,7 +50,7 @@ EMBED_VIDEO_BACKENDS = (
 )
 
 MIDDLEWARE = (
-    "whitenoise.middleware.WhiteNoiseMiddleware"
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
