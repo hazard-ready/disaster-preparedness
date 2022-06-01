@@ -14,7 +14,7 @@ from os import environ
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['DJANGO_SECRET_KEY_PDX']
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -26,8 +26,7 @@ if DEBUG:
     SITE_URL = "http://127.0.0.1:8000"
     logging.basicConfig(level = logging.DEBUG, format = '%(asctime)s %(levelname)s %(message)s')
 else:
-    # hazardready.org is the current production server. 23.92.25.126 is its numeric address. eldang.eldan.co.uk is our demo/test server
-    ALLOWED_HOSTS = ['.hazardready.org', '23.92.25.126']
+    ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = (
@@ -50,6 +49,8 @@ EMBED_VIDEO_BACKENDS = (
 )
 
 MIDDLEWARE = (
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -106,7 +107,7 @@ TEMPLATES = [
 import dj_database_url
 
 DATABASES = {}
-DATABASES['default'] = dj_database_url.parse(os.environ["DATABASE_URL_PDX"])
+DATABASES['default'] = dj_database_url.parse(os.environ["DATABASE_URL"])
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -133,6 +134,7 @@ WEBPACK_LOADER = {
     }
 }
 
+FORCE_SCRIPT_NAME='/pdx/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'media')
 
 if DEBUG:
@@ -145,6 +147,9 @@ else:
     # STATIC_URL = '/zr/static/'
     STATIC_URL = '/pdx/static/'
 
+WHITENOISE_STATIC_PREFIX='/static/'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 # Specially for GeoDjango on Heroku
 GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
 GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
@@ -155,4 +160,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'img')
 if DEBUG:
     MEDIA_URL = '/media/img/'
 else:
-    MEDIA_URL = '/pdx/static/img/'
+    MEDIA_URL = '/static/img/'
