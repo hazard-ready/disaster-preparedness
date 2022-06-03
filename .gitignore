@@ -79,6 +79,7 @@ staticfiles
 
 .DS_Store
 myenv/
+__MACOSX
 
 # Node Modules
 node_modules/
