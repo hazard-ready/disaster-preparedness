@@ -58,6 +58,7 @@ module.exports = {
       },
       {
         test: /\.(png|gif|jpe?g|svg|ttf|eot|ico|pdf)(\?v=\d+\.\d+\.\d+)?$/i,
+        exclude: path.join(__dirname, "node_modules/leaflet/"), // Leaflet default marker icons
         loader: "file-loader",
         options: {
           name: "[name].[ext]",
