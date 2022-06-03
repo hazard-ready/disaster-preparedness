@@ -150,9 +150,6 @@ function setUpMap() {
   document.getElementById("map").style.cursor = "default";
   if (query_lat && query_lng) {
     var icon = new L.Icon.Default();
-    // these may be in ../static/img if you translate/localize, due to the URL language prefix.
-    icon.options.iconUrl = "marker-icon.png";
-    icon.options.shadowUrl = "marker-shadow.png";
     var marker = L.marker([query_lat, query_lng], {
       icon: icon,
       clickable: false,
