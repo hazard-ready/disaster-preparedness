@@ -61,7 +61,7 @@ module.exports = {
         exclude: path.join(__dirname, "node_modules/leaflet/"), // Leaflet default marker icons
         type: 'asset/resource',
         generator : {
-          filename : '[name].[ext]',
+          filename : '[name][ext]',
         }
       },
       {
@@ -72,7 +72,7 @@ module.exports = {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         type: 'asset/resource',
         generator : {
-          filename : '[name].[ext]',
+          filename : '[name][ext]',
         }
       }
     ]
