@@ -1,13 +1,12 @@
 require("normalize.css/normalize.css");
 require("leaflet/dist/leaflet.css");
-require('leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css');
 require("../style/app.scss");
 
 var boundaryShape = require("./boundary.json");
 
 require("../img/favicon.ico");
-require("../img/marker-icon.png");
-require("../img/marker-shadow.png");
+var markerIcon = require("../img/marker-icon.png");
+var markerShadow = require("../img/marker-shadow.png");
 require("../img/thinking.gif");
 require("../img/logo.png");
 require("../img/logo-no-text.png");
@@ -129,8 +128,6 @@ function submitLocation(lat, lng, queryText) {
 }
 
 function setUpMap() {
-  require('leaflet-defaulticon-compatibility');
-
   // set up the map
   var map = new L.Map("map", {
     scrollWheelZoom: false
@@ -153,6 +150,9 @@ function setUpMap() {
   document.getElementById("map").style.cursor = "default";
   if (query_lat && query_lng) {
     var icon = new L.Icon.Default();
+    // these may be in ../static/img if you translate/localize, due to the URL language prefix.
+    icon.options.iconUrl = markerIcon,
+    icon.options.shadowUrl = markerShadow
     var marker = L.marker([query_lat, query_lng], {
       icon: icon,
       clickable: false,
