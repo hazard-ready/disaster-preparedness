@@ -149,8 +149,8 @@ function setUpMap() {
 
   if (query_lat && query_lng) {
     var icon = L.icon({
-      iconUrl: require("../img/marker-icon.png"),
-      shadowUrl: require("../img/marker-shadow.png"),
+      iconUrl: { require("../img/marker-icon.png") },
+      shadowUrl: { require("../img/marker-shadow.png") },
       iconSize: [25, 41],
       iconAnchor: [25, 41],
     });
