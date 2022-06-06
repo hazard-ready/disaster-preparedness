@@ -151,8 +151,8 @@ function setUpMap() {
   if (query_lat && query_lng) {
     var icon = new L.Icon.Default();
     // these may be in ../static/img if you translate/localize, due to the URL language prefix.
-    icon.options.iconUrl = { markerIcon },
-    icon.options.shadowUrl = { markerShadow }
+    icon.options.iconUrl = markerIcon,
+    icon.options.shadowUrl = markerShadow
     var marker = L.marker([query_lat, query_lng], {
       icon: icon,
       clickable: false,
