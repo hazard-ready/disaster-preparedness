@@ -7,6 +7,7 @@ var boundaryShape = require("./boundary.json");
 require("../img/favicon.ico");
 var markerIcon = require("../img/marker-icon.png");
 var markerShadow = require("../img/marker-shadow.png");
+
 require("../img/thinking.gif");
 require("../img/logo.png");
 require("../img/logo-no-text.png");
@@ -148,9 +149,11 @@ function setUpMap() {
   }).addTo(map);
 
   document.getElementById("map").style.cursor = "default";
+  console.log(markerIcon);
+  console.log(markerShadow);
+
   if (query_lat && query_lng) {
     var icon = new L.Icon.Default();
-    // these may be in ../static/img if you translate/localize, due to the URL language prefix.
     icon.options.iconUrl = markerIcon,
     icon.options.shadowUrl = markerShadow
     var marker = L.marker([query_lat, query_lng], {
