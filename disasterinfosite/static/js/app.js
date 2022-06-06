@@ -128,6 +128,8 @@ function submitLocation(lat, lng, queryText) {
 }
 
 function setUpMap() {
+  require('leaflet-defaulticon-compatibility');
+
   // set up the map
   var map = new L.Map("map", {
     scrollWheelZoom: false
