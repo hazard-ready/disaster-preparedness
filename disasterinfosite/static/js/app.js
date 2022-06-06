@@ -1,5 +1,6 @@
 require("normalize.css/normalize.css");
 require("leaflet/dist/leaflet.css");
+require('leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css');
 require("../style/app.scss");
 
 var boundaryShape = require("./boundary.json");
