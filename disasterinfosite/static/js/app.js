@@ -146,8 +146,6 @@ function setUpMap() {
   }).addTo(map);
 
   document.getElementById("map").style.cursor = "default";
-  console.log(markerIcon);
-  console.log(markerShadow);
 
   if (query_lat && query_lng) {
     var icon = L.icon({
