@@ -5,9 +5,6 @@ require("../style/app.scss");
 var boundaryShape = require("./boundary.json");
 
 require("../img/favicon.ico");
-var markerIcon = require("../img/marker-icon.png");
-var markerShadow = require("../img/marker-shadow.png");
-
 require("../img/thinking.gif");
 require("../img/logo.png");
 require("../img/logo-no-text.png");
@@ -153,9 +150,11 @@ function setUpMap() {
   console.log(markerShadow);
 
   if (query_lat && query_lng) {
-    var icon = new L.Icon.Default();
-    icon.options.iconUrl = markerIcon,
-    icon.options.shadowUrl = markerShadow
+    var icon = L.icon({
+      iconUrl: require("../img/marker-icon.png"),
+      shadowUrl: require("../img/marker-shadow.png"),
+    });
+
     var marker = L.marker([query_lat, query_lng], {
       icon: icon,
       clickable: false,
