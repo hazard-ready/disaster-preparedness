@@ -3,6 +3,8 @@ require("leaflet/dist/leaflet.css");
 require("../style/app.scss");
 
 var boundaryShape = require("./boundary.json");
+var markerIcon = require("../img/marker-icon.png");
+var markerShadow = require("../img/marker-shadow.png");
 
 require("../img/favicon.ico");
 require("../img/thinking.gif");
@@ -149,8 +151,8 @@ function setUpMap() {
 
   if (query_lat && query_lng) {
     var icon = L.icon({
-      iconUrl: { require("../img/marker-icon.png") },
-      shadowUrl: { require("../img/marker-shadow.png") },
+      iconUrl: { markerIcon },
+      shadowUrl: { markerShadow },
       iconSize: [25, 41],
       iconAnchor: [25, 41],
     });
