@@ -1,10 +1,4 @@
-# FROM python:3.5-slim-buster
-# FROM python:3.6-slim-buster
-# FROM python:3.7-slim-bullseye
-# FROM python:3.8-slim-bullseye
 FROM python:3.9-slim-bullseye
-# FROM python:3.10-slim-bullseye
-# FROM python:3.11-rc-slim
 
 ARG DJANGO_SECRET_KEY
 ARG DATABASE_URL
@@ -12,29 +6,43 @@ ARG DATABASE_URL
 ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
 ENV DATABASE_URL=${DATABASE_URL}
 
-ENV VIRTUAL_ENV=/opt/venv
-RUN python3 -m venv $VIRTUAL_ENV
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-# Install GDAL dependencies
-RUN apt-get update &&\
-    apt-get install -y libgdal-dev g++ --no-install-recommends && \
-    apt-get clean -y
-
 # Update C env vars so compiler can find gdal
 ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
 ENV C_INCLUDE_PATH=/usr/include/gdal
 
-RUN apt-get install -y binutils libproj-dev gdal-bin libjpeg-dev
+# Install GDAL dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    binutils          \
+    libproj-dev       \
+    gdal-bin          \
+    libjpeg-dev       \
+    g++               \
+    libgdal-dev       \
+    postgresql-client \
+    unzip             \
+    zip               \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN groupadd -r django && useradd --no-log-init -r -g django django
+RUN mkdir /home/django && chown -R django:django /home/django
+RUN mkdir /app
 
 # Run the application:
-COPY disasterinfosite /disasterinfosite
-WORKDIR /disasterinfosite
+COPY . /app
+RUN chown -R django:django /app
+WORKDIR /app
 
-# Install dependencies - added the ignore:DEPRECATION for python 3.5:
+USER django
+
+# Install dependencies:
 COPY requirements.txt .
-RUN PYTHONWARNINGS="ignore:DEPRECATION" pip install --upgrade pip
-RUN PYTHONWARNINGS="ignore:DEPRECATION" pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python", "manage.py", "migrate"]
-CMD ["python", "wsgi.py"]
+# verify pip install
+RUN pip list
+
+EXPOSE 8000
+
+ENTRYPOINT ["python"]
+CMD ["manage.py", "runserver", "0.0.0.0:8000"]

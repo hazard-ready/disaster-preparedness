@@ -1,0 +1,125 @@
+version: "3.7"
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy:1.0.0
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - certs:/etc/nginx/certs:ro
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+  acme-companion:
+    image: nginxproxy/acme-companion:2.2.0
+    environment:
+      DEFAULT_EMAIL: $DEFAULT_EMAIL
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - acme:/etc/acme.sh
+    restart: always
+    depends_on:
+      - nginx-proxy
+  hazardready:
+    build: ../hazard-ready.github.io
+    restart: always
+    environment:
+      - VIRTUAL_HOST=$VIRTUAL_HOST
+      - VIRTUAL_PORT=80
+      - VIRTUAL_PATH=/
+    image: hazardready:${VERSION}
+    expose:
+      - "80"
+    depends_on:
+      - init
+      - nginx-proxy
+      - acme-companion
+      - postgres
+  seattle:
+    build: ../seattle-ready
+    restart: always
+    environment:
+      - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY_SEATTLE
+      - DATABASE_URL=$DATABASE_URL_SEATTLE
+      - VIRTUAL_HOST=$VIRTUAL_HOST
+      - VIRTUAL_PORT=8000
+      - VIRTUAL_PATH=$VIRTUAL_PATH_SEATTLE
+      - VIRTUAL_DEST=/
+      - LETSENCRYPT_HOST=$VIRTUAL_HOST
+      - LETSENCRYPT_EMAIL=$DEFAULT_EMAIL
+    image: seattle-ready:${VERSION}
+    expose:
+     - "8000"
+    depends_on:
+      - init
+      - postgres
+  pdx:
+    build: ../pdx-ready
+    image: pdx-ready:${VERSION}
+    restart: always
+    environment:
+      - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY_PDX
+      - DATABASE_URL=$DATABASE_URL_PDX
+      - VIRTUAL_HOST=$VIRTUAL_HOST
+      - VIRTUAL_PORT=8000
+      - VIRTUAL_PATH=$VIRTUAL_PATH_PORTLAND
+      - VIRTUAL_DEST=/
+      - LETSENCRYPT_HOST=$VIRTUAL_HOST
+      - LETSENCRYPT_EMAIL=$DEFAULT_EMAIL
+    expose:
+     - "8000"
+    depends_on:
+      - init
+      - postgres
+  missoula:
+    build: ../missoula-ready
+    restart: always
+    environment:
+      - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY_MISSOULA
+      - DATABASE_URL=$DATABASE_URL_MISSOULA
+      - VIRTUAL_HOST=$VIRTUAL_HOST
+      - VIRTUAL_PORT=8000
+      - VIRTUAL_PATH=$VIRTUAL_PATH_MISSOULA
+      - VIRTUAL_DEST=/
+      - LETSENCRYPT_HOST=$VIRTUAL_HOST
+      - LETSENCRYPT_EMAIL=$DEFAULT_EMAIL
+    image: missoula-ready:${VERSION}
+    expose:
+     - 8000
+    depends_on:
+      - init
+      - postgres
+  init:
+    build:
+      context: .
+    environment:
+      DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
+      DATABASE_URL: $DATABASE_URL
+    image: disaster-preparedness:${VERSION}
+    depends_on:
+      - postgres
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile-postgres
+    image: hazardready-postgres:${VERSION}
+    volumes:
+    - postgres_db_data_volume_01:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+
+volumes:
+  postgres_db_data_volume_01: {}
+  certs: {}
+  vhost: {}
+  html: {}
+  acme: {}
+
