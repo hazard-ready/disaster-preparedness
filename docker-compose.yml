@@ -28,6 +28,7 @@ services:
     depends_on:
       - nginx-proxy
   hazardready:
+    build: ../hazard-ready.github.io
     restart: always
     environment:
       - VIRTUAL_HOST=$VIRTUAL_HOST
@@ -101,7 +102,6 @@ services:
     environment:
       DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
       DATABASE_URL: $DATABASE_URL
-    # image: ${TAG}:${VERSION}
     image: disaster-preparedness:${VERSION}
     depends_on:
       - postgres
