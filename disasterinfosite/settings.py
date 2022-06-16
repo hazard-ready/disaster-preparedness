@@ -137,15 +137,7 @@ WEBPACK_LOADER = {
 FORCE_SCRIPT_NAME='/pdx/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'media')
 
-if DEBUG:
-    # Use this setting if the app is being served at the domain root (e.g. hazardready.org/ )
-    STATIC_URL = '/static/'
-else:
-    # If the app is being served in a subdirectory of the domain (e.g. foo.com/SUBDIR/ ) then use a variant of:
-    # STATIC_URL = '/SUBDIR/static/'
-    # So for our current test server, eldang.eldan.co.uk/zr/ , we need:
-    # STATIC_URL = '/zr/static/'
-    STATIC_URL = '/pdx/static/'
+STATIC_URL = 'static/'
 
 WHITENOISE_STATIC_PREFIX='/static/'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
@@ -160,4 +152,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'img')
 if DEBUG:
     MEDIA_URL = '/media/img/'
 else:
-    MEDIA_URL = '/static/img/'
+    MEDIA_URL = 'static/img/'
