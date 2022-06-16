@@ -1,0 +1,10 @@
+FROM postgres:13.6-bullseye
+
+# build postgres DB container image
+RUN apt-get update && apt-get -y install \
+    postgis                         \
+    postgresql-13-postgis-3         \
+    postgresql-13-postgis-3-scripts \
+    && rm -rf /var/lib/apt/lists/*
+
+USER postgres

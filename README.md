@@ -143,13 +143,6 @@ Save them to your `.bash_profile` or equivalent.
 4. Don't forget to run python manage.py collectstatic to get your static files where we expect them to be!
 5. There should be directories called 'photos' and 'data' in disasterinfosite/staticfiles/img. This is where images go when you upload them via Django Admin, under 'Photos of Past Events' and 'Data Overview Images'. In order for that upload to work, you need to create them if they aren't present, and change the owner (chown) those directories to whatever user Apache is running as (www-data, perhaps).
 
-### Use foreman to run the server Heroku-style
-
-_Not tested by the current maintainers_
-
-- `foreman start`
-  - Any errors that pop up are probably from missing modules or missing environmental variables. Read the errors!
-
 ## Adding new data
 
 ### What you need
@@ -306,4 +299,31 @@ The following columns will be automatically translated in this way:
   - `useful`
   - `property`
   - `external_text`
+
+# Deploying to the web via Docker
+Cloning this repo and the appropriate child repos alongside it will give you the structure that docker-compose expects to be present. If you have this right, running `ls` should look something like
+
+```
+disaster-preparedness   missoula-ready  seattle-ready
+hazard-ready.github.io  pdx-ready
+```
+
+Then you can run `docker-compose up -d --build` and voila, you're in business - but you won't have any data on your sites yet.
+
+The actual Dockerfile in this repo is a template - identical ones appear in the child repos, and that is what actually builds them.
+
+## Using data from production
+1. Dump and restore the database
+   1. On production, for each of the databases, do the equivalent of `pg_dump --column-inserts --verbose -a -t "^auth*" -t "disasterinfosite_userprofile" -Fc -f missoula_ready_users.sql aftershock`
+   1. Copy that file to your test instance using `scp`
+   1. On each of the child images (currently Seattle, Missoula and Portland), create the database and the extensions as the instructions state above. You can get on them using `docker-compose exec {name} /bin/bash`
+   1. Make and run migrations
+   1. Exit the child image and use `pg_restore` to restore each database, for example `docker-compose exec -T postgres pg_restore --verbose --clean -U postgres -d aftershock < ~/missoula.sql`
+1. Copying Past Events Photos from production
+   1. Use `scp` or `docker cp` to copy the photos from production to your test instance. They are in either `disasterinfosite/media/img/photos` or `disasterinfosite/static/img/photos`. Put them in the corresponding directory in the *child repos* on the server you are setting up.
+   1. redo `docker-compose up -d --build`. The files will be copied over. If you have dumped and restored the database from production, you should have nothing more to do.
+1. Copying Data Overview Images
+   1. Use `scp` or `docker cp` to copy the photos from production to your test instance. They are in either `disasterinfosite/media/img/data` or `disasterinfosite/static/img/data`. Put them in the corresponding directory in the *child repos* on the server you are setting up.
+   1. redo `docker-compose up -d --build`. The files will be copied over. If you have dumped and restored the database from production, you should have nothing more to do.
+
 
