@@ -51,7 +51,7 @@ RUN npm install && npm run webpack
 
 WORKDIR /app
 
-RUN python manage.py collectstatic
+RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 

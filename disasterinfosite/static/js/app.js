@@ -5,9 +5,6 @@ require("../style/app.scss");
 var boundaryShape = require("./boundary.json");
 
 require("../img/favicon.ico");
-require("../img/marker_icon.png");
-require("../img/marker_icon-2x.png");
-require("../img/marker-shadow.png");
 require("../img/thinking.gif");
 require("../img/logo.png");
 require("../img/logo-no-text.png");
@@ -149,11 +146,15 @@ function setUpMap() {
   }).addTo(map);
 
   document.getElementById("map").style.cursor = "default";
+
   if (query_lat && query_lng) {
-    var icon = new L.Icon.Default();
-    // these may be in ../static/img if you translate/localize, due to the URL language prefix.
-    icon.options.iconUrl = "marker_icon.png";
-    icon.options.shadowUrl = "marker-shadow.png";
+    var icon = L.icon({
+      iconUrl: require("../img/marker-icon.png"),
+      shadowUrl: require("../img/marker-shadow.png"),
+      iconSize: [25, 41],
+      iconAnchor: [25, 41],
+    });
+
     var marker = L.marker([query_lat, query_lng], {
       icon: icon,
       clickable: false,
