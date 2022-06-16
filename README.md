@@ -310,6 +310,8 @@ hazard-ready.github.io  pdx-ready
 
 Then you can run `docker-compose up -d --build` and voila, you're in business - but you won't have any data on your sites yet.
 
+The actual Dockerfile in this repo is a template - identical ones appear in the child repos, and that is what actually builds them.
+
 ## Using data from production
 1. Dump and restore the database
    1. On production, for each of the databases, do the equivalent of `pg_dump --column-inserts --verbose -a -t "^auth*" -t "disasterinfosite_userprofile" -Fc -f missoula_ready_users.sql aftershock`
