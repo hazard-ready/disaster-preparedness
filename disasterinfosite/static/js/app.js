@@ -37,7 +37,9 @@ if (!String.prototype.includes) {
   };
 }
 
-var MAPQUEST_KEY = "A9Gb8A4unNhqO7swd5fIWenUbvH2UALV";
+// This is the base repository Mapquest key. Get your own
+// Mapquest key for a new app!
+var MAPQUEST_KEY = "b3ZxSWOID7jOlLLGb8KvPxbF4DGBMEHy";
 var osmUrl =
   "//{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=3a70462b44dd431586870baee15607e4";
 var osmAttrib =
