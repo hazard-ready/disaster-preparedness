@@ -308,9 +308,13 @@ disaster-preparedness   missoula-ready  seattle-ready
 hazard-ready.github.io  pdx-ready
 ```
 
+See `docker.env` for a full list of values that you need to set for the child repositories and other setup; you'll need to supply those yourself and source them on your server to get started.
+
 Then you can run `docker-compose up -d --build` and voila, you're in business - but you won't have any data on your sites yet.
 
 The actual Dockerfile in this repo is a template - identical ones appear in the child repos, and that is what actually builds them.
+
+In order to load data on your sites, you can follow the setup instructions for each of the child repos. You can get a shell on them from the server you're setting them up on using `docker-compose exec missoula /bin/bash` - substitute the relevant child installation for `missoula` as appropriate.
 
 ## Using data from production
 1. Dump and restore the database
