@@ -308,6 +308,8 @@ disaster-preparedness   missoula-ready  seattle-ready
 hazard-ready.github.io  pdx-ready
 ```
 
+See `docker.env` for a full list of values that you need to set for the child repositories and other setup; you'll need to supply those yourself and source them on your server to get started.
+
 Then you can run `docker-compose up -d --build` and voila, you're in business - but you won't have any data on your sites yet.
 
 The actual Dockerfile in this repo is a template - identical ones appear in the child repos, and that is what actually builds them.

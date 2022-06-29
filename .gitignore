@@ -92,3 +92,6 @@ webpack-stats.json
 disasterinfosite/media/*
 
 *__MACOSX*
+
+# The actual keys to our test environment
+docker-test.env
