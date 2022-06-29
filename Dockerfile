@@ -29,11 +29,7 @@ RUN groupadd -r django && useradd --no-log-init -r -g django django
 RUN mkdir /home/django && chown -R django:django /home/django
 RUN mkdir /app
 
-<<<<<<< HEAD
-# Run the application:
-=======
 # copy the application to the container:
->>>>>>> pdx/master
 COPY . /app
 RUN chown -R django:django /app
 WORKDIR /app
