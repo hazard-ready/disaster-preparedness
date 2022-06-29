@@ -1,0 +1,37 @@
+{% load js %}
+{% load i18n %}
+
+{% load render_bundle from webpack_loader %}
+{% load webpack_static from webpack_loader %}
+{% get_current_language as SELECTED_LANGUAGE_CODE %}
+
+<!doctype html>
+<html class="no-js" lang="{{ SELECTED_LANGUAGE_CODE }}">
+{% include "head-meta.html" with file="data" %}
+
+<body>
+{% include "about-header.html" %}
+
+  <div class="content-container">
+    <h2>{% trans "Data sources for Hazard Ready" %}</h2>
+    <div class="data-source-container">
+      <h3 class="county-header">{% trans 'your region here' %}</h3>
+      <div class="hazard-sources">
+        <h4 class="hazard-header quake">{% trans 'Earthquake' %}</h4>
+        <p>Bauer, J.M., Burns, W.J., Madin, I.P., 2018, Open-File Report O-18-02, Earthquake regional impact analysis for Clackamas, Multnomah, and Washington counties, Oregon, Oregon Department of Geology and Mining Industries: <a href="https://www.oregongeology.org/pubs/ofr/p-O-18-02.htm" target="_blank" rel="noopener">https://www.oregongeology.org/pubs/ofr/p-O-18-02.htm</a>, {% trans 'accessed' %}: {% trans 'June' %} 17, 2019 .</p>
+      </div>
+    </div>
+
+    <div class="data-source-container">
+      {% trans 'Questions or concerns about the data? Contact:' %}
+      <ul>
+        <li><a href="https://msc.fema.gov/portal/resources/contact" target="_blank" rel="noopener">Federal Emergency Management Agency (FEMA)</a> - <i>{% trans 'flood' %}</i></li>
+      </ul>
+    </div>
+  </div>
+
+{% include "geek_box.html" %}
+{% include "page-end-meta.html" with file="data" %}
+
+</body>
+</html>

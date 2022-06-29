@@ -5,9 +5,6 @@ require("../style/app.scss");
 var boundaryShape = require("./boundary.json");
 
 require("../img/favicon.ico");
-require("../img/marker_icon.png");
-require("../img/marker_icon-2x.png");
-require("../img/marker-shadow.png");
 require("../img/thinking.gif");
 require("../img/logo.png");
 require("../img/logo-no-text.png");
@@ -15,6 +12,9 @@ require("../img/icon-search.png");
 require("../img/caret.svg");
 require("../img/language.svg");
 require("../img/locate-me.svg");
+
+// Our Data Sources pdf that gets linked to in several snuggets
+// require("../img/data-sources.pdf");
 
 require("./users");
 require("./sections");
@@ -37,8 +37,7 @@ if (!String.prototype.includes) {
   };
 }
 
-// This is the base repository Mapquest key. Get your own Mapquest key for a new app!
-var MAPQUEST_KEY = "b3ZxSWOID7jOlLLGb8KvPxbF4DGBMEHy";
+var MAPQUEST_KEY = "A9Gb8A4unNhqO7swd5fIWenUbvH2UALV";
 var osmUrl =
   "//{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=3a70462b44dd431586870baee15607e4";
 var osmAttrib =
@@ -147,11 +146,16 @@ function setUpMap() {
   }).addTo(map);
 
   document.getElementById("map").style.cursor = "default";
+
   if (query_lat && query_lng) {
-    var icon = new L.Icon.Default();
-    // these may be in ../static/img if you translate/localize, due to the URL language prefix.
-    icon.options.iconUrl = "marker_icon.png";
-    icon.options.shadowUrl = "marker-shadow.png";
+
+    var icon = L.icon({
+      iconUrl: require("../img/marker-icon.png"),
+      shadowUrl: require("../img/marker-shadow.png"),
+      iconSize: [25, 41],
+      iconAnchor: [25, 41],
+    });
+
     var marker = L.marker([query_lat, query_lng], {
       icon: icon,
       clickable: false,

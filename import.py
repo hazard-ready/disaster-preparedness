@@ -361,6 +361,15 @@ def modelsGeoFilterGenRaster(stem):
   return text
 
 
+def modelsGeoFilterGenRaster(stem):
+  text  = "        " + stem + "_rating = " + "rasterPointLookup(" + stem + ", lng, lat)\n"
+  text += "        if " + stem + "_rating is not None:\n"
+  text += "            " + stem + "_snugget = Snugget.objects.filter(" + stem + "_filter__exact=" + stem + "_rating).order_by('order').select_subclasses()\n"
+  text += "            if " + stem + "_snugget:\n"
+  text += "                groupsDict[" + stem +".getGroup()].extend(" + stem + "_snugget)\n\n"
+  return text
+
+
 
 def outputGeneratedCode(code, destFile, anchor):
   linesWanted = True

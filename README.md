@@ -37,8 +37,8 @@ While management and data loading files are in this project's root directory, ev
 
 ## Written using:
 
-- Postgres version: 9.4
-- Python version: 3.5
+- Postgres version: 13.6
+- Python version: 3.9
 
 ## File structure
 
@@ -93,9 +93,9 @@ This assumes `python` is the command configured to run the correct python versio
 ### Load some data
 
 0. `source venv/bin/activate` or `. venv/bin/activate` if you haven't already activated the virtualenv this session.
-1. Unzip `data.zip` inside disasterinfosite, so that the data is in `disasterinfosite/data`. This data includes some sample shapefiles and related data for Missoula County, Montana, USA, to get you started. See below for instructions on replacing this with your own data.
+1. Unzip `data.zip` inside disasterinfosite, so that the data is in `disasterinfosite/data`. This data includes some sample shapefiles and related data for Portland, Oregon, USA, to get you started. See below for instructions on replacing this with your own data.
 1. `python import.py` to process the data and update some Django code to fit. For each data source, the script will prompt you for two things:
-   - Which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition). If there is a field named `lookup_val`, that will be used by default. If you use the example `data.zip` provided in this project, use the field name `FEMADES` for `Flood_FEMA_DFRIM_2015`.
+   - Which field to use to look up snuggets (see [Adding New Data](#adding-new-data) below for definition). If there is a field named `lookup_val`, that will be used by default
    - Whether you want to group the content from this data source in a tab with content from any others. If you want a dataset to have its own unique tab, just press return at this prompt. If you want to group 2 or more datasets together under 1 tab (e.g. if you have a shapefile for wildfire probability and another with historical wildfire information), just enter the same group name for both at this prompt. Note that these group names are only used in the code--headings displayed to the user come from the "snugget" file loaded in step 6 below--and should contain only letters, no spaces or punctuation.
 1. `python manage.py makemigrations` - this and the next 2 steps combined load the new data into the database.
 1. `python manage.py migrate`
@@ -130,6 +130,7 @@ Save them to your `.bash_profile` or equivalent.
 4. You should see two lists: `Authentication and Authorization` and `Disasterinfosite`. The first one contains information about the Django superuser, as well as users who sign up for this site.
 5. If you have a problem loading the site while logged in as a superuser, it may be because the app is looking for additional information that it usually stores when it creates a user - but Hazard Ready didn't create that user, Django did. To fix that, go to http://server.ip/admin/auth/user/ and select that user, then click 'Save'. You don't have to change anything.
 5. `Disasterinfosite` has content that you can and should edit! They are bits of text and other information that show up on this site, as well as information about how to display certain things on the site. See the [Django Admin Settings](#django-admin-settings-and-what-they-mean) section for more details.
+
 ### Deploying to the web via Apache
 
 1. Install a version of `mod_wsgi` that is compiled for Python 3. On Debian/Ubuntu you can do this with `aptitude install libapache2-mod-wsgi-py3`. On other systems it may be easier to use `pip` as per [these instructions](https://pypi.python.org/pypi/mod_wsgi).
@@ -237,7 +238,7 @@ If you make changes to the shapefiles/rasters, or change which field from the sh
 
 If you have existing data that needs to be removed—perhaps because you are replacing our sample data, or retiring a dataset you previously used—you may have to clear the database first. To do this:
 
-1. `psql -d [DBNAME] -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public; CREATE EXTENSION postgis;"`
+1. `psql -d [DBNAME] -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public; CREATE EXTENSION postgis; CREATE EXTENSION postgis_raster;`
 2. `python manage.py migrate` - if this step throws errors, delete all the .py files in `disasterinfosite/migrations` **except** `__init__.py` and `0001_initial.py`, and try again.
 
 Then continue with the instructions in [Load Some Data](#load-some-data) above.
@@ -329,5 +330,4 @@ In order to load data on your sites, you can follow the setup instructions for e
 1. Copying Data Overview Images
    1. Use `scp` or `docker cp` to copy the photos from production to your test instance. They are in either `disasterinfosite/media/img/data` or `disasterinfosite/static/img/data`. Put them in the corresponding directory in the *child repos* on the server you are setting up.
    1. redo `docker-compose up -d --build`. The files will be copied over. If you have dumped and restored the database from production, you should have nothing more to do.
-
 

@@ -179,11 +179,11 @@
 .intensity-meter {
   background: linear-gradient(
     to right,
-    $low-intensity,
-    $moderate-intensity,
+    $low-intensity 1%,
+    $moderate-intensity 10%,
     $high-intensity,
-    $very-high-intensity,
-    $extreme-intensity
+    $very-high-intensity 90%,
+    $extreme-intensity 99%
   );
   margin-top: 40px;
   position: relative;
@@ -231,7 +231,7 @@
   font-size: 14px;
   font-style: italic;
   position: absolute;
-  width: 100px;
+  width: 32%;
 
   @include breakpoint(medium-and-up) {
     width: auto;
@@ -244,6 +244,7 @@
 
 .intensity-caption--high {
   right: 0;
+  text-align: right;
 }
 
 /* Historical photos */
