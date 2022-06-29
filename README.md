@@ -314,6 +314,8 @@ Then you can run `docker-compose up -d --build` and voila, you're in business - 
 
 The actual Dockerfile in this repo is a template - identical ones appear in the child repos, and that is what actually builds them.
 
+In order to load data on your sites, you can follow the setup instructions for each of the child repos. You can get a shell on them from the server you're setting them up on using `docker-compose exec missoula /bin/bash` - substitute the relevant child installation for `missoula` as appropriate.
+
 ## Using data from production
 1. Dump and restore the database
    1. On production, for each of the databases, do the equivalent of `pg_dump --column-inserts --verbose -a -t "^auth*" -t "disasterinfosite_userprofile" -Fc -f missoula_ready_users.sql aftershock`
