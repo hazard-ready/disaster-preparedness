@@ -6,6 +6,7 @@ from .models import SnuggetSection, SiteSettings, ShapefileGroup, PastEventsPhot
 from .actions import export_as_csv_action
 from modeltranslation.admin import TranslationAdmin
 
+
 admin.site.register(SnuggetSection, TranslationAdmin)
 admin.site.register(ShapefileGroup, TranslationAdmin)
 admin.site.register(PastEventsPhoto, TranslationAdmin)
@@ -19,18 +20,15 @@ class UserProfileInline(admin.StackedInline):
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
     inlines = (UserProfileInline, )
-    actions = [export_as_csv_action("CSV Export", fields=('username','address1','address2','city','state','zip_code', 'actions_taken'))]
+    actions = [export_as_csv_action("CSV Export", fields=('username','address1','address2','city','state','zip_code', 'actions_taken'), model=UserProfile)]
 
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
-
 class GeoNoEditAdmin(admin.GeoModelAdmin):
     modifiable = False
 
-
-# Uncomment the next lines if you want to translate fields in DjangoAdmin to different languages.
 class SiteSettingsAdmin(SingletonModelAdmin, TranslationAdmin):
     pass
 admin.site.register(SiteSettings, SiteSettingsAdmin)

@@ -1,6 +1,3 @@
-# Uncomment if you want to translate Django models. You will need to make migrations and migrate after doing this.
-
-
 from modeltranslation.translator import register, translator, TranslationOptions
 from .models import SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, TextSnugget, EmbedSnugget, SlideshowSnugget, SnuggetPopOut, SnuggetSection, PreparednessAction
 
@@ -43,4 +40,3 @@ class SnuggetSectionTranslationOptions(TranslationOptions):
 @register(PreparednessAction)
 class PreparednessActionTranslationOptions(TranslationOptions):
   fields = ('title', 'content_text', 'link_text', 'happy_text', 'useful_text', 'property_text')
-

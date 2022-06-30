@@ -1,0 +1,28 @@
+.hazard-header {
+  color: $soft-black;
+  padding: 5px;
+
+  @include breakpoint(medium-and-up) {
+    padding-left: 20px;
+  }
+}
+
+.quake {
+  background-color: $bright-accent;
+}
+
+.volcano {
+  background-color: $low-intensity;
+}
+
+.landslide {
+  background-color: $moderate-intensity;
+}
+
+.flood {
+ background-color: $high-intensity;
+}
+
+.wildfire {
+  background-color: $extreme-intensity;
+}

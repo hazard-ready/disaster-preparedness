@@ -10,6 +10,7 @@ from .models import (
     Snugget,
     UserProfile
 )
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
@@ -26,7 +27,6 @@ def reverse_no_i18n(viewname, *args, **kwargs):
     result = reverse(viewname, *args, **kwargs)
     m = re.match(r'(/[^/]*)(/.*$)', result)
     return m.groups()[1]
-
 
 def create_user(request):
     if request.method == 'POST':
@@ -117,6 +117,16 @@ def about_view(request):
 
 
 @ensure_csrf_cookie
+def data_view(request):
+    renderData = {
+        'settings': SiteSettings.get_solo(),
+        'nextPath': reverse_no_i18n('data')
+
+    }
+    return render(request, "data.html", renderData)
+
+
+@ensure_csrf_cookie
 def prepare_view(request):
     renderData = {
         'settings': SiteSettings.get_solo(),
@@ -127,11 +137,9 @@ def prepare_view(request):
 
     if request.user.is_authenticated:
         renderData['logged_in'] = True
-        renderData['actions_taken'] = UserProfile.objects.get(
-            user=request.user).actions_taken.all().values_list('id', flat=True)
+        renderData['actions_taken'] = UserProfile.objects.get(user=request.user).actions_taken.all().values_list('id', flat=True)
 
     return render(request, "prepare.html", renderData)
-
 
 @ensure_csrf_cookie
 def prepare_action_update(request):
@@ -155,7 +163,6 @@ def prepare_action_update(request):
     else:
         return HttpResponse(status=403)
 
-
 @ensure_csrf_cookie
 def app_view(request):
     username = None
@@ -176,6 +183,7 @@ def app_view(request):
         'username': username,
         'profile': profile,
         'nextPath': path
+
     }
 
     template = "index.html"
@@ -191,10 +199,8 @@ def app_view(request):
         template = "no_content_found.html"
 
         if lat and lng:
-            snugget_content = Snugget.findSnuggetsForPoint(
-                lat=float(lat), lng=float(lng))
-            data = {el: {'collapsible': {}, 'static': {}}
-                    for el in snugget_content}
+            snugget_content = Snugget.findSnuggetsForPoint(lat=float(lat), lng=float(lng))
+            data = {el:{'collapsible': {}, 'static': {}} for el in snugget_content}
 
             if snugget_content is not None:
                 for group, snuggets in snugget_content.items():
@@ -211,27 +217,20 @@ def app_view(request):
 
                             if snugget.section.collapsible:
                                 if not snugget.section in data[group]['collapsible']:
-                                    data[group]['collapsible'][snugget.section] = [
-                                        snugget]
+                                    data[group]['collapsible'][snugget.section] = [snugget]
                                 else:
-                                    data[group]['collapsible'][snugget.section].append(
-                                        snugget)
+                                    data[group]['collapsible'][snugget.section].append(snugget)
                             else:
                                 if not snugget.section in data[group]['static']:
-                                    data[group]['static'][snugget.section] = [
-                                        snugget]
+                                    data[group]['static'][snugget.section] = [snugget]
                                 else:
-                                    data[group]['static'][snugget.section].append(
-                                        snugget)
+                                    data[group]['static'][snugget.section].append(snugget)
 
                     # Sort the sections by order_of_appearance
                     # python 3.5 does not guarantee the ORDER of keys coming out of an ORDERED DICTIONARY.
-                    data = OrderedDict(
-                        sorted(data.items(), key=lambda t: t[0].order_of_appearance))
-                    data[group]['collapsible'] = OrderedDict(sorted(
-                        data[group]['collapsible'].items(), key=lambda t: t[0].order_of_appearance))
-                    data[group]['static'] = OrderedDict(
-                        sorted(data[group]['static'].items(), key=lambda t: t[0].order_of_appearance))
+                    data = OrderedDict(sorted(data.items(), key=lambda t: t[0].order_of_appearance))
+                    data[group]['collapsible'] = OrderedDict(sorted(data[group]['collapsible'].items(), key=lambda t: t[0].order_of_appearance))
+                    data[group]['static'] = OrderedDict(sorted(data[group]['static'].items(), key=lambda t: t[0].order_of_appearance))
 
             renderData['data'] = data
 

@@ -10,3 +10,4 @@ require("../img/gk_headshot.jpg");
 require("../img/linkedin-logo.png");
 require("../img/linkedin-logo@2x.png");
 require("../img/about-link.svg");
+

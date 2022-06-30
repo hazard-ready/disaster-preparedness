@@ -26,14 +26,7 @@ if DEBUG:
     SITE_URL = "http://127.0.0.1:8000"
     logging.basicConfig(level = logging.DEBUG, format = '%(asctime)s %(levelname)s %(message)s')
 else:
-    # hazardready.org is the current production server. 23.92.25.126 is its numeric address. eldang.eldan.co.uk is our demo/test server
-    ALLOWED_HOSTS = ['hazardready.org', '.hazardready.org', '23.92.25.126', 'eldang.eldan.co.uk']
-    logging.basicConfig(
-        level = logging.WARNING,
-        format = '%(asctime)s %(levelname)s %(message)s',
-        filename = 'django.log',
-        filemode = 'a'
-    )
+    ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = (
@@ -56,6 +49,8 @@ EMBED_VIDEO_BACKENDS = (
 )
 
 MIDDLEWARE = (
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -77,12 +72,11 @@ USE_L10N = True
 
 # If you're translating this site, add the languages you're translating to here.
 gettext = lambda s: s
-LANGUAGES = (
+LANGUAGES = [
     ('en', gettext('English')),
-    ('es', gettext('Spanish'))
-)
+]
 
-MODELTRANSLATION_LANGUAGES = ('es', 'en')
+MODELTRANSLATION_LANGUAGES = ('en',)
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 
 USE_I18N = True
@@ -108,15 +102,11 @@ TEMPLATES = [
     },
 ]
 
-
-### HEROKU CONFIGURATIONS ###
-# Added per instructions at https://devcenter.heroku.com/articles/getting-started-with-django
-
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
 
 DATABASES = {}
-DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] = dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -143,7 +133,8 @@ WEBPACK_LOADER = {
     }
 }
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+FORCE_SCRIPT_NAME='/region/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'media')
 
 if DEBUG:
     # Use this setting if the app is being served at the domain root (e.g. hazardready.org/ )
@@ -151,16 +142,14 @@ if DEBUG:
 else:
     # If the app is being served in a subdirectory of the domain (e.g. foo.com/SUBDIR/ ) then use a variant of:
     # STATIC_URL = '/SUBDIR/static/'
-    # So for our current test server, eldang.eldan.co.uk/zr/ , we need:
-    # STATIC_URL = '/zr/static/'
-    STATIC_URL = '/disaster-preparedness/static/'
+    STATIC_URL = '/region/static/'
+
+WHITENOISE_STATIC_PREFIX='/static/'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Specially for GeoDjango on Heroku
 GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
 GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
-
-### ^^^^^^^^^^^^^^^^^^^^^^^^^ ###
-### END HEROKU CONFIGURATIONS ###
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'img')
@@ -168,4 +157,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'img')
 if DEBUG:
     MEDIA_URL = '/media/img/'
 else:
-    STATIC_URL = 'disaster-preparedness/media/img/'
+    MEDIA_URL = '/region/static/img/'
