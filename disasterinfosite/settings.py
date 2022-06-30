@@ -72,12 +72,12 @@ USE_L10N = True
 
 # If you're translating this site, add the languages you're translating to here.
 gettext = lambda s: s
-LANGUAGES = (
+LANGUAGES = [
     ('en', gettext('English')),
-)
+]
 
 MODELTRANSLATION_LANGUAGES = ('en')
-MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+# MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 
 USE_I18N = True
 TIME_ZONE = 'UTC'
