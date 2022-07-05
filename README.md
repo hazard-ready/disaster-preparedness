@@ -197,9 +197,9 @@ To do this, you will need a `snuggets.xlsx` file with the same columns as the ex
 
 -`text` : The explanatory text to be displayed in the relevant section and subsection when the user chooses a location that matches this row's criteria. If you put a url in the snugget text, like `http://www.github.com`, we'll automatically make it into a link for you.
 
--`image_slideshow_folder` : If this is present, the snugget loader will look for a folder inside an `images` folder at the same level as `snuggets.xlsx` (example: if `snuggets.xlsx` is in `data` and you set this value to `earthquake_photos`, the loader will look for images in `data\images\earthquake_photos`). The loader expects to find two things in that folder: images, and a file called `slideshow.csv`.
+-`image_slideshow_folder` : If this is present, the snugget loader will look for a folder inside an `images` folder at the same level as `snuggets.xlsx` (example: if `snuggets.xlsx` is in `data` and you set this value to `earthquake_photos`, the loader will look for images in `data\images\earthquake_photos`). The loader expects to find two things in that folder: images, and a file called `slideshow.xlsx`.
 
-`slideshow.csv` should have two columns: `image` and `caption`. `image` is the filename of the image, and `caption` is whatever you would like the caption for that image to be.
+`slideshow.xlsx` should have two (or more) columns: `image` and `caption`. `image` is the filename of the image, and `caption` is whatever you would like the caption for that image to be. If you have multiple languages, add columns for each, e.g. the column for Spanish captions would be named `caption-es`.
 
 -`video` is the url of a YouTube video that you would like to embed in this snugget.
 
