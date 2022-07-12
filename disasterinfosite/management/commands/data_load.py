@@ -5,6 +5,7 @@ from django.contrib.gis.gdal import GDALRaster
 from django.contrib.gis.geos import Polygon
 from django.contrib.gis.utils import LayerMapping
 from django.core.management.base import BaseCommand
+from disasterinfosite.settings import BASE_DIR
 
 # The width & height to tile rasters to.
 # Empirically, tile sizes as large as 8053 work, while 10000 hits a memory overflow bug in either Django or GDAL and crashes.

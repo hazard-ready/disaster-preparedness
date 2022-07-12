@@ -87,10 +87,10 @@ def main():
         loadMappings += "    '" + modelAttributeKeyField + "': '" + keyField + "',\n"
         loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
         loadMappings += "}\n\n"
-        loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(BASE_DIR)," + " '../" + simplified + "'))\n"
+        loadPaths += stem + "_shp = " + "os.path.abspath(os.path.join(os.path.dirname(BASE_DIR)," + simplified + "'))\n"
       elif rasterFound:
         loadImports += "    tileLoadRaster(" + stem + ", " + stem + "_tif)\n\n"
-        loadPaths += stem + "_tif = " + "os.path.abspath(os.path.join(os.path.dirname(BASE_DIR)," + " '../" + reprojected + "'))\n"
+        loadPaths += stem + "_tif = " + "os.path.abspath(os.path.join(os.path.dirname(BASE_DIR)," + reprojected + "'))\n"
 
       print("")
       first = False
