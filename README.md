@@ -99,6 +99,7 @@ This assumes `python` is the command configured to run the correct python versio
    - Whether you want to group the content from this data source in a tab with content from any others. If you want a dataset to have its own unique tab, just press return at this prompt. If you want to group 2 or more datasets together under 1 tab (e.g. if you have a shapefile for wildfire probability and another with historical wildfire information), just enter the same group name for both at this prompt. Note that these group names are only used in the code--headings displayed to the user come from the "snugget" file loaded in step 6 below--and should contain only letters, no spaces or punctuation.
 1. `python manage.py makemigrations` - this and the next 2 steps combined load the new data into the database.
 1. `python manage.py migrate`
+1. `python manage.py data_load`
 1. `python manage.py snugget_load`
 1. `python manage.py prepare_load`
 

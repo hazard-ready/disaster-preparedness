@@ -76,7 +76,7 @@ def removeOld(section):
 
 
 class Command(BaseCommand):
-    help = """ Load snuggets found in data/snuggets.xlsx """
+    help = """ Load preparation information found in data/prepare.xlsx """
 
     def handle(self, *args, **options):
         run()
