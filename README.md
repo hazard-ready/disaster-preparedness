@@ -99,15 +99,11 @@ This assumes `python` is the command configured to run the correct python versio
    - Whether you want to group the content from this data source in a tab with content from any others. If you want a dataset to have its own unique tab, just press return at this prompt. If you want to group 2 or more datasets together under 1 tab (e.g. if you have a shapefile for wildfire probability and another with historical wildfire information), just enter the same group name for both at this prompt. Note that these group names are only used in the code--headings displayed to the user come from the "snugget" file loaded in step 6 below--and should contain only letters, no spaces or punctuation.
 1. `python manage.py makemigrations` - this and the next 2 steps combined load the new data into the database.
 1. `python manage.py migrate`
-1. `python manage.py shell`
-   1. [inside the shell that this opens] `from disasterinfosite import load`
-   2. `load.run()`
-   3. `import snugget_load`
-   4. `snugget_load.run()`
-   5. `import prepare_load`
-   6. `prepare_load.run()`
-   7. `exit()` [to go back to the normal command line]
-      The parts that have `snugget_load` and `prepare_load` are to import text that will be displayed in the site. See [Adding New Data](#adding-new-data) below for an explanation of "snuggets" and the format of this file.
+1. `python manage.py snugget_load`
+1. `python manage.py prepare_load`
+
+The parts that have `snugget_load` and `prepare_load` are to import text that will be displayed in the site. See [Adding New Data](#adding-new-data) below for an explanation of "snuggets" and the format of this file.
+
 1. If this is your first time through, or you emptied the database before loading new data: `python manage.py createsuperuser` and follow the instructions to add a Django admin user
 1. If you don't already have web hosting set up, you can test your work on localhost:8000 with `python manage.py runserver`
 
