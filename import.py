@@ -14,7 +14,7 @@ def main():
   reprojectedDir = os.path.join(dataDir, "reprojected")
   simplifiedDir = os.path.join(dataDir, "simplified")
   modelsFile = os.path.join(appDir, "models.py")
-  loadFile = os.path.join(appDir, "load.py")
+  loadFile = os.path.join(appDir, "management/commands/data_load.py")
   viewsFile = os.path.join(appDir, "views.py")
 
   existingShapefileGroups = []
