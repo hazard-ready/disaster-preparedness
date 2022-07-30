@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 from django.contrib.contenttypes.models import ContentType
 from disasterinfosite.models import *
 from disasterinfosite.settings import BASE_DIR
-from disasterinfosite.management.commands.load_helpers import (
+from disasterinfosite.management.commands._load_helpers import (
     XLSXDictReader,
     runLoader,
     includeTranslatedFields
