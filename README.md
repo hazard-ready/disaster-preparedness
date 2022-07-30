@@ -312,7 +312,7 @@ Then you can run `docker-compose up -d --build` and voila, you're in business - 
 
 The actual Dockerfile in this repo is a template - identical ones appear in the child repos, and that is what actually builds them.
 
-In order to load data on your sites, you can follow the setup instructions for each of the child repos. You can get a shell on them from the server you're setting them up on using `docker-compose exec missoula /bin/bash` - substitute the relevant child installation for `missoula` as appropriate.
+In order to load data on your sites, you can follow the setup instructions for each of the child repos. You can get a shell on them from the server you're setting them up on using `docker-compose exec missoula /bin/bash`, and run the relevant management tasks on them like `docker-compose exec missoula python manage.py makemigrations`  - substitute the relevant child installation for `missoula` as appropriate, and the relevant management task as well.
 
 ## Using data from production
 1. Dump and restore the database
