@@ -4,7 +4,7 @@ from django.core.files import File
 from django.core.management.base import BaseCommand
 
 from disasterinfosite.models import PreparednessAction
-from disasterinfosite.management.commands.load_helpers import (
+from disasterinfosite.management.commands._load_helpers import (
     runLoader,
     includeTranslatedFields
 )
