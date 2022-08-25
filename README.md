@@ -324,6 +324,9 @@ In order to load data on your sites, you can follow the setup instructions for e
 1. Copying Past Events Photos from production
    1. Use `scp` or `docker cp` to copy the photos from production to your test instance. They are in either `disasterinfosite/media/img/photos` or `disasterinfosite/static/img/photos`. Put them in the corresponding directory in the *child repos* on the server you are setting up.
    1. redo `docker-compose up -d --build`. The files will be copied over. If you have dumped and restored the database from production, you should have nothing more to do.
+1. Copying Popout Images from production
+   1. Use `scp` or `docker cp` to copy the photos from production to your test instance. They are in `disasterinfosite/media/img/popout_images`. Put them in the corresponding directory in the *child repos* on the server you are setting up.
+   1. redo `docker-compose up -d --build`. The files will be copied over. If you have dumped and restored the database from production, you should have nothing more to do.
 1. Copying Data Overview Images
    1. Use `scp` or `docker cp` to copy the photos from production to your test instance. They are in either `disasterinfosite/media/img/data` or `disasterinfosite/static/img/data`. Put them in the corresponding directory in the *child repos* on the server you are setting up.
    1. redo `docker-compose up -d --build`. The files will be copied over. If you have dumped and restored the database from production, you should have nothing more to do.
