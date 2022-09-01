@@ -331,3 +331,5 @@ In order to load data on your sites, you can follow the setup instructions for e
    1. Use `scp` or `docker cp` to copy the photos from production to your test instance. They are in either `disasterinfosite/media/img/data` or `disasterinfosite/static/img/data`. Put them in the corresponding directory in the *child repos* on the server you are setting up.
    1. redo `docker-compose up -d --build`. The files will be copied over. If you have dumped and restored the database from production, you should have nothing more to do.
 
+## Getting data off your postgres docker container
+You can do something like `docker-compose exec postgres /bin/bash -c "PGPASSWORD=password pg_dump --column-inserts --verbose -a -t "^disasterinfosite_pasteventsphoto" -Fc -f -h localhost -U postgres seattleready" > seattle_ready_photos.sql`
