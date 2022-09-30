@@ -47,7 +47,10 @@ RUN pip list
 
 # build front-end code
 WORKDIR /app/disasterinfosite
-RUN mkdir -p media
+RUN mkdir -p media/img/photos
+RUN mkdir -p media/img/data
+RUN unzip data.zip
+
 RUN npm install && npm run webpack
 
 WORKDIR /app
