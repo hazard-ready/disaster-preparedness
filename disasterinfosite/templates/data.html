@@ -15,12 +15,24 @@
   <div class="content-container">
     <h2>{% trans "Data sources for Hazard Ready" %}</h2>
     <div class="data-source-container">
-      <h3 class="county-header">{% trans 'your region here' %}</h3>
-      <div class="hazard-sources">
-        <h4 class="hazard-header quake">{% trans 'Earthquake' %}</h4>
-        <p>Bauer, J.M., Burns, W.J., Madin, I.P., 2018, Open-File Report O-18-02, Earthquake regional impact analysis for Clackamas, Multnomah, and Washington counties, Oregon, Oregon Department of Geology and Mining Industries: <a href="https://www.oregongeology.org/pubs/ofr/p-O-18-02.htm" target="_blank" rel="noopener">https://www.oregongeology.org/pubs/ofr/p-O-18-02.htm</a>, {% trans 'accessed' %}: {% trans 'June' %} 17, 2019 .</p>
+      {% if quick_data_overview %}
+        <div class="hazard-sources">
+        <h3 class="hazard-source">{% trans "Quick Data Overview" %}</h3>
+        <p>
+            {% blocktrans with area_name=settings.area_name %}Take a look at some overviews of the data we used for {{ area_name }}:{% endblocktrans %}
+        </p>
+        <div class="data__list">
+            {% for item in quick_data_overview %}
+                <div class="data__image">
+                  <a target="_blank" rel="noopener" href="{{ item }}">
+                    {{ item.link_text }}
+                    <img class="data__thumbnail" src="{{ item }}" alt="A map of King County, Washington, indicating hazard intensity">
+                  </a>
+                </div>
+            {% endfor %}
+        </div>
       </div>
-    </div>
+    {% endif %}
 
     <div class="data-source-container">
       {% trans 'Questions or concerns about the data? Contact:' %}
