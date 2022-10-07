@@ -120,7 +120,8 @@ def about_view(request):
 def data_view(request):
     renderData = {
         'settings': SiteSettings.get_solo(),
-        'nextPath': reverse_no_i18n('data')
+        'nextPath': reverse_no_i18n('data'),
+        'quick_data_overview': DataOverviewImage.objects.all()
 
     }
     return render(request, "data.html", renderData)
@@ -179,7 +180,6 @@ def app_view(request):
     renderData = {
         'settings': SiteSettings.get_solo(),
         'data_bounds': Location.get_data_bounds(),
-        'quick_data_overview': DataOverviewImage.objects.all(),
         'username': username,
         'profile': profile,
         'nextPath': path

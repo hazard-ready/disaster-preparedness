@@ -100,19 +100,6 @@
           </p>
         </div>
       {% endif %}
-      {% if quick_data_overview %}
-        <div class="about-container">
-        <h3 class="caps">{% trans "Quick Data Overview" %}</h3>
-        <p>
-            {% blocktrans with area_name=settings.area_name %}Take a look at some overviews of the data we used for {{ area_name }}:{% endblocktrans %}
-        </p>
-        <ul>
-            {% for item in quick_data_overview %}
-                <li><a  target="_blank" rel="noopener" href="{{ item }}">{{ item.link_text }}</a></li>
-            {% endfor %}
-        </ul>
-      </div>
-    {% endif %}
   </div>
 
 {% include "geek_box.html" %}

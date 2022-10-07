@@ -327,19 +327,20 @@ class SlideshowSnugget(Snugget):
         return "Slideshow Snugget: " + str(self.text)
 
 
+class OverwriteStorage(FileSystemStorage):
+    def get_available_name(self, name, max_length=None):
+        self.delete(name)
+        return name
+
+
 class PastEventsPhoto(models.Model):
-    snugget = models.ForeignKey(SlideshowSnugget, on_delete=models.CASCADE, default=None)
-    image = models.ImageField(upload_to="photos")
+    snugget = models.ForeignKey(
+        SlideshowSnugget, on_delete=models.CASCADE, default=None)
+    image = models.ImageField(upload_to="photos", storage=OverwriteStorage())
     caption = models.TextField(default="", max_length=200)
 
     def __str__(self):
         return str(self.image.url) + ' Caption: ' + str(self.caption)
-
-
-class OverwriteStorage(FileSystemStorage):
-    def get_available_name(self, name):
-        self.delete(name)
-        return name
 
 
 class DataOverviewImage(models.Model):

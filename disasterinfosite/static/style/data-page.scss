@@ -26,3 +26,29 @@
 .wildfire {
   background-color: $extreme-intensity;
 }
+
+.data__list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.data__image {
+  padding: 0.5rem;
+  text-align: center;
+
+  a {
+    color: $light-accent;
+    text-decoration: none;
+  }
+
+  a:focus, a:hover {
+    color: $bright-accent;
+    text-decoration: none;
+  }
+}
+
+
+.data__thumbnail {
+  max-width: 200px;
+  display: block;
+}
