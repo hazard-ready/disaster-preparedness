@@ -15,6 +15,12 @@
   <div class="content-container">
     <h2>{% trans "Data sources for Hazard Ready" %}</h2>
     <div class="data-source-container">
+      <h3 class="county-header">{% trans 'example counties' %}</h3>
+      <div class="hazard-sources">
+        <h4 class="hazard-header quake">{% trans 'Earthquake' %}</h4>
+        <p>Bauer, J.M., Burns, W.J., Madin, I.P., 2018, Open-File Report O-18-02, Earthquake regional impact analysis for Clackamas, Multnomah, and Washington counties, Oregon, Oregon Department of Geology and Mining Industries: <a href="https://www.oregongeology.org/pubs/ofr/p-O-18-02.htm" target="_blank" rel="noopener">https://www.oregongeology.org/pubs/ofr/p-O-18-02.htm</a>, {% trans 'accessed' %}: {% trans 'June' %} 17, 2019 .</p>
+        <p>Madin, I.P. and Burns, W.J., 2013, Open-File Report O-13-06, Ground motion, ground deformation, tsunami inundation, coseismic subsidence, and damage potential maps for the 2012 Oregon Resilience Plan for Cascadia Subduction Zone Earthquakes, Oregon Department of Geology and Mining Industries: <a href="https://www.oregongeology.org/pubs/ofr/p-O-13-06.htm" target="_blank" rel="noopener">https://www.oregongeology.org/pubs/ofr/p-O-13-06.htm</a>, {% trans 'accessed' %}: {% trans 'June' %} 17, 2019.</p>
+      </div>
       {% if quick_data_overview %}
         <div class="hazard-sources">
         <h3 class="hazard-source">{% trans "Quick Data Overview" %}</h3>
