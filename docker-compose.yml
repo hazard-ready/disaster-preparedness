@@ -54,6 +54,9 @@ services:
       - VIRTUAL_DEST=/
       - LETSENCRYPT_HOST=$VIRTUAL_HOST
       - LETSENCRYPT_EMAIL=$DEFAULT_EMAIL
+      - EMAIL_HOST=$EMAIL_HOST
+      - EMAIL_HOST_USER=$EMAIL_HOST_USER
+      - EMAIL_HOST_PASSWORD=$EMAIL_HOST_PASSWORD
     image: seattle-ready:${VERSION}
     expose:
      - "8000"
@@ -73,6 +76,9 @@ services:
       - VIRTUAL_DEST=/
       - LETSENCRYPT_HOST=$VIRTUAL_HOST
       - LETSENCRYPT_EMAIL=$DEFAULT_EMAIL
+      - EMAIL_HOST=$EMAIL_HOST
+      - EMAIL_HOST_USER=$EMAIL_HOST_USER
+      - EMAIL_HOST_PASSWORD=$EMAIL_HOST_PASSWORD
     expose:
      - "8000"
     depends_on:
@@ -90,6 +96,9 @@ services:
       - VIRTUAL_DEST=/
       - LETSENCRYPT_HOST=$VIRTUAL_HOST
       - LETSENCRYPT_EMAIL=$DEFAULT_EMAIL
+      - EMAIL_HOST=$EMAIL_HOST
+      - EMAIL_HOST_USER=$EMAIL_HOST_USER
+      - EMAIL_HOST_PASSWORD=$EMAIL_HOST_PASSWORD
     image: missoula-ready:${VERSION}
     expose:
      - 8000
