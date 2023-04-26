@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   nginx-proxy:
-    image: jwilder/nginx-proxy:1.2
+    image: jwilder/nginx-proxy:1.3
     ports:
       - "80:80"
       - "443:443"
@@ -15,7 +15,7 @@ services:
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
   acme-companion:
-    image: nginxproxy/acme-companion:2.2.4
+    image: nginxproxy/acme-companion:2.2.8
     environment:
       DEFAULT_EMAIL: $DEFAULT_EMAIL
     volumes:
