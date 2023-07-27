@@ -315,7 +315,8 @@ In order to load data on your sites, you can follow the setup instructions for e
 
 ## Using data from production
 1. Dump and restore the database
-   1. On production, for each of the databases, do the equivalent of `pg_dump --column-inserts --verbose -a -t "^auth*" -t "disasterinfosite_userprofile" -Fc -f missoula_ready_users.sql aftershock`
+   1. User data: On production, for each of the databases, do the equivalent of `pg_dump --column-inserts --verbose -a -t "^auth*" -t "disasterinfosite_userprofile" -Fc -f missoula_ready_users.sql aftershock`
+   1. Site settings, snugget sections, and shapefile groups (aka all of the things you would otherwise have to enter manually): `pg_dump --column-inserts --verbose -a -t "disasterinfosite_sitesettings" -t "disasterinfosite_shapefilegroup" -t "disasterinfosite_snuggetsection" -Fc -f missoula_ready_users.sql aftershock`
    1. Copy that file to your test instance using `scp`
    1. On each of the child images (currently Seattle, Missoula and Portland), create the database and the extensions as the instructions state above. You can get on them using `docker-compose exec {name} /bin/bash`
    1. Make and run migrations
