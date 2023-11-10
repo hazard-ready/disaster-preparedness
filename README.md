@@ -101,8 +101,9 @@ This assumes `python` is the command configured to run the correct python versio
 1. `python manage.py data_load`
 1. `python manage.py snugget_load`
 1. `python manage.py prepare_load`
+1. `python manage.py data_overview_load`
 
-The parts that have `snugget_load` and `prepare_load` are to import text that will be displayed in the site. See [Adding New Data](#adding-new-data) below for an explanation of "snuggets" and the format of this file.
+The parts that have `snugget_load` and `prepare_load` are to import text that will be displayed in the site. See [Adding New Data](#adding-new-data) below for an explanation of "snuggets" and the format of this file. The `data_overview_load` step loads the information and images shown on the /data page.
 
 1. If this is your first time through, or you emptied the database before loading new data: `python manage.py createsuperuser` and follow the instructions to add a Django admin user
 1. If you don't already have web hosting set up, you can test your work on localhost:8000 with `python manage.py runserver`
