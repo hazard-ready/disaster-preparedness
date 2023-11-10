@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libproj-dev       \
     gdal-bin          \
     libjpeg-dev       \
+    gettext           \
     g++               \
     libgdal-dev       \
     nodejs            \
