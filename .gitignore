@@ -96,3 +96,6 @@ disasterinfosite/media/*
 
 # The actual keys to our test environment
 docker-test.env
+
+# the actual keys to our prod environment
+docker-prod.env

@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   nginx-proxy:
-    image: jwilder/nginx-proxy:1.3
+    image: jwilder/nginx-proxy:1.4
     ports:
       - "80:80"
       - "443:443"
@@ -13,9 +13,9 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: always
     labels:
-      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: true
   acme-companion:
-    image: nginxproxy/acme-companion:2.2.8
+    image: nginxproxy/acme-companion:2.2.9
     environment:
       DEFAULT_EMAIL: $DEFAULT_EMAIL
     volumes:
