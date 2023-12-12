@@ -1,4 +1,4 @@
-FROM python:3.11.3-slim-bullseye
+FROM python:3.12.1-slim-bookworm
 
 ARG DJANGO_SECRET_KEY
 ARG DATABASE_URL
