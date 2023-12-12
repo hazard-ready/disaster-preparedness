@@ -299,9 +299,9 @@ The following columns will be automatically translated in this way:
   - `external_text`
 
 # Deploying to the web via Docker
-First, make sure you have `docker`, `git`, and `git-lfs` installed on the machine that you will be deploying this from. You may need to use ` git lfs fetch --all` if you forgot the `git-lfs` part of this.
+First, make sure you have `docker`, `git`, and `git-lfs` installed on the machine that you will be deploying this from. 
 Cloning this repo and the appropriate child repos alongside it will give you the structure that docker compose expects to be present. If you have this right, running `ls` should look something like
-
+You may need to use ` git lfs pull` in order to get the data zipfiles if you forgot the `git-lfs` part of this.
 ```
 disaster-preparedness   missoula-ready  seattle-ready
 hazard-ready.github.io  pdx-ready
