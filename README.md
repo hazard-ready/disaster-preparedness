@@ -308,11 +308,11 @@ hazard-ready.github.io  pdx-ready
 
 See `docker.env` for a full list of values that you need to set for the child repositories and other setup; you'll need to supply those yourself and source them on your server to get started.
 
-Then you can run `docker-compose up -d --build` and voila, you're in business - but you won't have any data on your sites yet.
+Then you can run `docker compose up -d --build` and voila, you're in business - but you won't have any data on your sites yet.
 
 The actual Dockerfile in this repo is a template - identical ones appear in the child repos, and that is what actually builds them.
 
-In order to load data on your sites, you can follow the setup instructions for each of the child repos. You can get a shell on them from the server you're setting them up on using `docker-compose exec pdx /bin/bash`, and run the relevant management tasks on them like `docker-compose exec pdx python manage.py makemigrations`  - substitute the relevant child installation for `pdx` as appropriate, and the relevant management task as well.
+In order to load data on your sites, you can follow the setup instructions for each of the child repos. You can get a shell on them from the server you're setting them up on using `docker compose exec pdx /bin/bash`, and run the relevant management tasks on them like `docker compose exec pdx python manage.py makemigrations`  - substitute the relevant child installation for `pdx` as appropriate, and the relevant management task as well.
 
 ## Using data from production
 1. Dump and restore the database
@@ -327,9 +327,9 @@ In order to load data on your sites, you can follow the setup instructions for e
    1. redo `docker-compose up -d --build`. The files will be copied over. If you have dumped and restored the database from production, you should have nothing more to do.
 1. Copying Popout Images from production
    1. Use `scp` or `docker cp` to copy the photos from production to your test instance. They are in `disasterinfosite/media/img/popout_images`. Put them in the corresponding directory in the *child repos* on the server you are setting up.
-   1. redo `docker-compose up -d --build`. The files will be copied over. If you have dumped and restored the database from production, you should have nothing more to do.
+   1. redo `docker compose up -d --build`. The files will be copied over. If you have dumped and restored the database from production, you should have nothing more to do.
 1. Copying Data Overview Images
    1. Use `scp` or `docker cp` to copy the photos from production to your test instance. They are in either `disasterinfosite/media/img/data` or `disasterinfosite/static/img/data`. Put them in the corresponding directory in the *child repos* on the server you are setting up.
-   1. redo `docker-compose up -d --build`. The files will be copied over. If you have dumped and restored the database from production, you should have nothing more to do.
+   1. redo `docker compose up -d --build`. The files will be copied over. If you have dumped and restored the database from production, you should have nothing more to do.
    
 You may need to do `docker compose restart` to get media images to show up.
