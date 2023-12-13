@@ -315,6 +315,8 @@ The actual Dockerfile in this repo is a template - identical ones appear in the 
 
 In order to load data on your sites, you can follow the setup instructions for each of the child repos. You can get a shell on them from the server you're setting them up on using `docker compose exec pdx /bin/bash`, and run the relevant management tasks on them like `docker compose exec pdx python manage.py makemigrations`  - substitute the relevant child installation for `pdx` as appropriate, and the relevant management task as well.
 
+You can set up the databases for them by running commands using `docker compose exec postgres...` as well.
+
 ## Using data from production
 1. Dump and restore the database
    1. User data: On production, for each of the databases, do the equivalent of `pg_dump --column-inserts --verbose -a -t "^auth*" -t "disasterinfosite_userprofile" -Fc -f missoula_ready_users.sql aftershock`
