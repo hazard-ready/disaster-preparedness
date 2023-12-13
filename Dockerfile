@@ -45,13 +45,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 # verify pip install
 RUN pip list
 
+# unzip data
+WORKDIR /app/disasterinfosite
+RUN rm -rf data && unzip -o data.zip
 
 # build front-end code
-WORKDIR /app/disasterinfosite
 RUN mkdir -p media/img/photos
 RUN mkdir -p media/img/data
-RUN unzip data.zip
-
+RUN npm rebuild node-sass
 RUN npm install && npm run webpack
 
 # build translated files
