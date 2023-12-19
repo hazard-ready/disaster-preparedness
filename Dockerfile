@@ -20,7 +20,7 @@ ENV C_INCLUDE_PATH=/usr/include/gdal
 RUN apt-get update && apt-get upgrade -yqq && apt-get install -yqq wget gnupg
 
 # Include PPA for latest Node version, then install GDAL and front-end dependencies
-RUN echo "deb https://deb.nodesource.com/node_19.x bullseye main" > /etc/apt/sources.list.d/nodesource.list && \
+RUN echo "deb https://deb.nodesource.com/node_19.x bookworm main" > /etc/apt/sources.list.d/nodesource.list && \
   wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
   apt-get update && apt-get upgrade -yqq && \
   apt-get install -y --no-install-recommends \
