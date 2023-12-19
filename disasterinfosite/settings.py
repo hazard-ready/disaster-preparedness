@@ -73,39 +73,9 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 LANGUAGE_CODE = 'en'
 USE_L10N = True
 
-# Somali is not an officially supported language in Django,
-# so this is a patch to add it.
-django.conf.locale.LANG_INFO['so'] = {
-    'bidi': False,
-    'code': 'so',
-    'name': 'Somali',
-    'name_local': u'af Soomaali',
-}
-
-# Add an alias for Chinese = cn, as well, for neatness.
-# In our app, this is the same as traditional Chinese.
-# The usual code for this is `zh-hant`.
-django.conf.locale.LANG_INFO['cn'] = {
-    'bidi': False,
-    'code': 'cn',
-    'name': 'Chinese',
-    'name_local': '繁體中文',
-}
-
-
 def gettext(s): return s
 
-
-LANGUAGES = (
-    ("ar", gettext("Arabic")),
-    ('cn', gettext('Chinese')),  # Traditional Chinese
-    ('en', gettext('English')),
-    ("ko", gettext("Korean")),
-    ('ru', gettext('Russian')),
-    ('so', gettext('Somali')),
-    ('es', gettext('Spanish')),
-    ('vi', gettext('Vietnamese'))
-)
+LANGUAGES = ()
 
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 
