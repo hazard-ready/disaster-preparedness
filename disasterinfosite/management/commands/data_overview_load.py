@@ -15,15 +15,8 @@ dataDir = os.path.join(BASE_DIR, "data")
 imagesDir = os.path.join(dataDir, 'images/data_overview')
 file = os.path.join(imagesDir, "data_overview.xlsx")
 
-optionalFields = [
-    'caption-es',
-    'caption-cn',
-    'caption-ru',
-    'caption-so',
-    'caption-vi',
-    'caption-ar',
-    'caption-ko'
-]
+# put translated fields, like caption-es, here
+optionalFields = []
 def run():
     print("Deleting old Data Overview Images first.")
     DataOverviewImage.objects.all().delete()
