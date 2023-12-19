@@ -7,7 +7,7 @@ ARG EMAIL_HOST_USER
 ARG EMAIL_HOST_PASSWORD
 
 ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-"dummykeyforbuild"}
-ENV DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@localhost:5432/seattleready}
+ENV DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@localhost:5432/disasterpreparedness}
 ENV EMAIL_HOST=${EMAIL_HOST}
 ENV EMAIL_HOST_USER=${EMAIL_HOST_USER}
 ENV EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
