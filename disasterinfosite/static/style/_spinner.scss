@@ -6,6 +6,7 @@
   width: 100%;
   top: 0;
   left: 0;
+  right: 0;
   background-color: $black-tint;
   text-align: center;
 }
@@ -22,7 +23,7 @@
     margin: 30px 0 10px;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     margin: 200px 0 50px;
   }
 }

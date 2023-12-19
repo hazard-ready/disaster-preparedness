@@ -3,73 +3,101 @@ header {
   display: flex;
   background-color: $white;
   flex-direction: column;
-  padding: 2px 2px 10px 2px;
+  padding: 2px 2px 10px;
 
   @include breakpoint(medium-and-up) {
-    flex-direction: row;
     padding: 5px;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
+    padding: 5px 10px;
+  }
+
+  @include breakpoint(xlarge) {
+    flex-direction: row;
     padding: 5px 20px;
   }
 }
 
-.logo__container {
+.small-header__container {
   overflow: auto;
   margin: 0;
   position: relative;
 
-  @include breakpoint(medium) {
-    margin: 0 5px 0 0;
+  @include breakpoint(medium-and-up) {
+    display: flex;
+    margin-inline-end: 5px;
     min-width: 195px;
   }
 
-  @include breakpoint(large) {
-    margin: 0 10px 0 0;
-    min-width: 228px;
+  @include breakpoint(large-and-up) {
+    min-width: unset
   }
+}
+
+.logo__container {
+  display: flex;
 }
 
 .logo--header {
   display: inline-block;
+  /* Nestle the text a little closer to the logo. */
+  margin-inline-end: -20px;
   max-height: 48px;
 
   @include breakpoint(medium) {
+    margin-inline-end: -13px;
     max-height: 60px;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
+    margin-inline-end: -13px;
     max-height: 65px;
+  }
+
+  @include breakpoint(xlarge) {
+    margin-inline-end: -15px;
   }
 }
 
 .logo__text {
-  display: inline-block;
-  vertical-align: top;
+  display: inline;
 
-  /* Nestle the text a little closer to the logo. */
   h3 {
-    margin-left: -8px;
-    margin-top: 12px;
+    margin: 0.75rem;
 
-    @include breakpoint(medium-and-up) {
-      margin-left: -13px;
-      margin-top: 20px;
+    @include breakpoint(medium) {
+      font-size: 21px;
+    }
+
+    @include breakpoint(large-and-up) {
+      margin-inline-end: 0.25rem;
+    }
+
+    @include breakpoint(xlarge) {
+      margin-inline-end: 0.75rem;
     }
   }
+
 }
 
 .header__about {
   align-items: baseline;
   flex-shrink: 0;
-  margin-left: auto;
+  margin: 0;
+  margin-top: 0.25rem;
+  margin-inline-start: auto;
 }
 
 .header__about--small {
-  position: absolute;
-  right: 10px;
-  top: 8px;
+  justify-content: flex-end;
+  margin: 0;
+  margin-inline-end: 0.5rem;
+  margin-inline-start: auto;
+
+  @include breakpoint(medium-and-up) {
+    margin-inline-end: 0;
+  }
 }
 
 .about__link {
@@ -77,15 +105,18 @@ header {
   font-family: $sans-serif;
   font-size: 16px;
   line-height: $small-header-line-height;
-  margin: 0;
+  margin: 0 5px;
 
   @include breakpoint(medium) {
-    margin: 15px 5px 0 5px;
+    margin: 15px 5px 0;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     font-size: 18px;
-    margin: 15px 0 0 10px;
+    margin: 0;
+    margin-top: 18px;
+    margin-inline-start: 10px;
+    margin-inline-end: 5px;
   }
 }
 
@@ -98,24 +129,29 @@ header {
   margin: 10px 5px 0;
   position: relative;
 
-  @include breakpoint(medium) {
-    margin: 14px 5px 14px auto;
+  @include breakpoint(xlarge) {
+    margin: 0 4px auto;
+    max-width: 800px;
+    flex: 1 0 auto;
   }
+}
 
-  @include breakpoint(large) {
-    margin: 14px 30px 14px auto;
-    max-width: 600px;
-  }
+.location-text__container {
+    flex: 1 1 auto;
 }
 
 #location-text,
 .mq-input {
   border: none;
-  flex: 1 1 auto;
-  height: 40px;
-  margin: 2px 2px 2px 8px;
-  min-width: 170px;
-  text-overflow: ellipsis;
+  height: 50px;
+  margin-top: 0;
+  margin-bottom: 2px;
+  margin-inline-end: 2px;
+  margin-inline-start: 8px;
+  outline: none;
+  padding-inline-start: 0;
+  padding-inline-end: 35px;
+  width: 100%;
   z-index: $z-index-bottom;
 
   &:focus {
@@ -128,14 +164,22 @@ header {
 }
 
 .mq-input-icon {
-  right: 0;
+  inset-inline-end: 4px;
+
+  &:focus,
+  &:focus-within,
+  &:active,
+  &:hover {
+    background: transparent;
+    border: none
+  }
 }
 
 #location-submit {
   background-color: $light-accent;
   border: 1px solid $light-accent;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
+  border-end-start-radius: 0;
+  border-start-start-radius: 0;
   flex-shrink: 0;
   padding: 4px 8px;
 
@@ -152,12 +196,14 @@ header {
   background-color: $white;
   border: none;
   color: $light-accent;
-  flex: 0 0 120px;
+  flex: 0 1 140px;
   font-weight: 600;
   line-height: 1.4;
-  margin-left: auto;
+  margin-inline-start: auto;
   padding: 0;
+  padding-inline-end: 4px;
   transition: color 1s;
+  width: min-content;
   z-index: $z-index-next;
 
   &:focus,
@@ -168,6 +214,10 @@ header {
     .target {
       fill: $white;
     }
+  }
+
+  @include breakpoint(xlarge) {
+    flex: 0 1 120px;
   }
 }
 
@@ -191,38 +241,36 @@ header {
   padding-top: 4px;
 }
 
-.geocode-error-message {
+.geocode-error-message,
+.geocode-disabled-message {
   color: $error-red;
-  position: absolute;
-  bottom: -38px;
-  left: 5px;
+  inset-inline-start: 5px;
 }
 
 /* Language Picker */
 
 .language__form {
   width: auto;
-  margin-left: 10px;
+  margin-inline-start: 10px;
 
   @include breakpoint(medium) {
-    margin-left: 15px;
+    margin-inline-start: 15px;
     margin-top: 15px;
   }
 
-  @include breakpoint(large) {
-    margin-left: 30px;
-    margin-top: 15px;
+  @include breakpoint(large-and-up) {
+    margin-inline-start: 0;
   }
 }
 
 .language-icon {
-  margin-right: 5px;
+  margin-inline-end: 5px;
   vertical-align: top;
 }
 
 .language-icon--select {
   vertical-align: middle;
-  margin-left: 10px;
+  margin-inline-start: 10px;
 }
 
 .language__button {

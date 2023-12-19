@@ -1,3 +1,7 @@
+import dj_database_url
+import django.conf.locale
+from os import environ
+import os
 import logging
 
 """
@@ -5,13 +9,10 @@ Django settings for disasterinfosite project.
 """
 
 ADMINS = [
-          ('Melinda Minch', 'melinda@melindaminch.com')
-         ]
+    ('Melinda Minch', 'melinda@melindaminch.com')
+]
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
-from os import environ
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
@@ -21,16 +22,17 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 DEBUG = False
 
 if DEBUG:
-    # That last entry is the local access URL for VirtualBox
     ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '10.0.2.2']
     SITE_URL = "http://127.0.0.1:8000"
-    logging.basicConfig(level = logging.DEBUG, format = '%(asctime)s %(levelname)s %(message)s')
+    logging.basicConfig(level=logging.DEBUG,
+                        format='%(asctime)s %(levelname)s %(message)s')
 else:
     ALLOWED_HOSTS = ['*']
     logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
 
 # Application definition
 INSTALLED_APPS = (
+    'disasterinfosite.apps.DisasterInfoConfig',
     'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,10 +42,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'embed_video',
-    'disasterinfosite.apps.DisasterInfoConfig',
     'solo',
     'webpack_loader'
 )
+
 
 EMBED_VIDEO_BACKENDS = (
     'disasterinfosite.backends.LazyLoadBackend',
@@ -71,13 +73,10 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 LANGUAGE_CODE = 'en'
 USE_L10N = True
 
-# If you're translating this site, add the languages you're translating to here.
-gettext = lambda s: s
-LANGUAGES = [
-    ('en', gettext('English')),
-]
+def gettext(s): return s
 
-MODELTRANSLATION_LANGUAGES = ('en',)
+LANGUAGES = ()
+
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 
 USE_I18N = True
@@ -87,6 +86,7 @@ USE_TZ = True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -97,15 +97,28 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.request'
+                'django.template.context_processors.request',
+                'disasterinfosite.context_processors.global_site_settings'
             ]
         },
     },
 ]
 
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
 
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    # Send emails through MailChimp, for password resets,
+    # with some backup env values
+    EMAIL_HOST = os.environ.get('EMAIL_HOST', 'http://localhost')
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', "default_email_user")
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', "default_email_password")
+    EMAIL_USE_TLS = True
+    EMAIL_PORT = 587
+
+DEFAULT_FROM_EMAIL = 'help@hazardready.org'
+
+# Parse database configuration from $DATABASE_URL
 DATABASES = {}
 DATABASES['default'] = dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
@@ -121,12 +134,10 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Static asset configuration
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'build/', # must end with slash
+        'BUNDLE_DIR_NAME': 'build/',  # must end with slash
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
@@ -134,28 +145,41 @@ WEBPACK_LOADER = {
     }
 }
 
-FORCE_SCRIPT_NAME='/region/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'media')
 
 if DEBUG:
-    # Use this setting if the app is being served at the domain root (e.g. hazardready.org/ )
+    # Use this setting if the app is being served at the domain root
+    # (e.g. hazardready.org/ )
     STATIC_URL = '/static/'
 else:
-    # If the app is being served in a subdirectory of the domain (e.g. foo.com/SUBDIR/ ) then use a variant of:
+    # If the app is being served in a subdirectory of the domain
+    # (e.g. foo.com/SUBDIR/ ) then use a variant of:
     # STATIC_URL = '/SUBDIR/static/'
+    # So for our current test server,
+    # testing.hazardready.org/region/ , we need:
+    # STATIC_URL = '/region/static/'
+    FORCE_SCRIPT_NAME = '/region/'
     STATIC_URL = '/region/static/'
 
-WHITENOISE_STATIC_PREFIX='/static/'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+WHITENOISE_STATIC_PREFIX = '/static/'
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 
 # Specially for GeoDjango on Heroku
 GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
 GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
 
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'img')
 
 if DEBUG:
     MEDIA_URL = '/media/img/'
+
 else:
     MEDIA_URL = '/region/static/img/'

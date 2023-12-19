@@ -5,7 +5,6 @@ from .models import (
     PastEventsPhoto,
     PreparednessAction,
     ShapefileGroup,
-    SiteSettings,
     SlideshowSnugget,
     Snugget,
     UserProfile
@@ -16,11 +15,16 @@ from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.template.response import TemplateResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.http import require_http_methods
+from django.utils.translation import gettext as _
 from django.urls import reverse
 
 import logging
 import re
+
+logger = logging.getLogger(__name__)
 
 
 def reverse_no_i18n(viewname, *args, **kwargs):
@@ -28,67 +32,70 @@ def reverse_no_i18n(viewname, *args, **kwargs):
     m = re.match(r'(/[^/]*)(/.*$)', result)
     return m.groups()[1]
 
+
+@require_http_methods(["POST"])
 def create_user(request):
-    if request.method == 'POST':
-        try:
-            user = User.objects.create_user(
-                username=request.POST.get('username', ''),
-                email=request.POST.get('username', ''),
-                password=request.POST.get('password', '')
-            )
-        except IntegrityError:
-            return HttpResponse(status=409, reason="That user already exists.")
-        except ValueError as error:
-            return HttpResponse(status=400)
-
-        profile = UserProfile(
-            user=user,
-            address1=request.POST.get('address1', ''),
-            address2=request.POST.get('address2', ''),
-            city=request.POST.get('city', ''),
-            state=request.POST.get('state', ''),
-            zip_code=request.POST.get('zip_code', '')
-        )
-        try:
-            profile.save()
-        except (ValueError, IntegrityError):
-            return HttpResponse(status=500)
-
-        user = authenticate(
+    try:
+        user = User.objects.create_user(
             username=request.POST.get('username', ''),
+            email=request.POST.get('username', ''),
             password=request.POST.get('password', '')
         )
-        if user is None:
-            return HttpResponse(status=500)
+    except IntegrityError:
+        return TemplateResponse(
+            request,
+            "registration/simple_message.html",
+            {
+                'message': _("That email address has already been used. Try logging in instead."),
+                'error': True
+            },
+            status=409
+        )
+    except ValueError as error:
+        logger.error("Unable to create a user")
+        return TemplateResponse(request, "registration/simple_message.html", {
+            'message': _("Whoops, we're not sure what happened there. Maybe you should try again."),
+            'error': True
+        }, status=400)
 
-        login(request, user)
+    profile = UserProfile(
+        user=user,
+        address1=request.POST.get('address1', ''),
+        address2=request.POST.get('address2', ''),
+        city=request.POST.get('city', ''),
+        state=request.POST.get('state', ''),
+        zip_code=request.POST.get('zip_code', '')
+    )
+    try:
+        profile.save()
+    except (ValueError, IntegrityError):
+        logger.error("Unable to save a user profile")
+        return TemplateResponse(request, "registration/simple_message.html", {
+            'message': _("Whoops, we're not sure what happened there. Maybe you should try again."),
+            'error': True
+        }, status=500)
 
-        return HttpResponse(status=201)
-    else:
-        return HttpResponse(status=403)
+    user = authenticate(
+        username=request.POST.get('username', ''),
+        password=request.POST.get('password', '')
+    )
+    if user is None:
+        logger.error("Unable to authenticate a newly created user")
+        return TemplateResponse(request, "registration/simple_message.html", {
+            'message': _("Whoops, we're not sure what happened there. Maybe you should try again."),
+            'error': True
+        }, status=500)
+
+    login(request, user)
+    return render(request, "registration/simple_message.html", {
+        'message': _("Thanks for signing up! We'll get ahold of you with relevant news and information. You can come back anytime to update your address."),
+        'error': True
+    })
 
 
-def login_view(request):
-    username = request.POST.get('username', '')
-    password = request.POST.get('password', '')
-    user = authenticate(username=username, password=password)
-    if user is not None and user.is_active:
-        # Correct password, and the user is marked "active"
-        login(request, user)
-        # Redirect to a success page.
-        return HttpResponse(status=201)
-    else:
-        # Show an error page
-        return HttpResponse(status=403)
-
-
-def logout_view(request):
-    logout(request)
-    return HttpResponse(status=201)
-
-
+@require_http_methods(["POST"])
 def update_profile(request):
-    if request.method == 'POST' and request.user.is_authenticated:
+    if request.user.is_authenticated:
         username = request.user.username
         profile = UserProfile.objects.get(user=request.user)
         profile.address1 = request.POST.get('address1', '')
@@ -100,9 +107,15 @@ def update_profile(request):
         try:
             profile.save()
         except (ValueError, IntegrityError):
-            return HttpResponse(status=500)
+            logger.error("Unable to save a user profile")
+            return TemplateResponse(request, "registration/simple_message.html", {
+                'message': _("Whoops, we're not sure what happened there. Maybe you should try again."),
+                'error': True
+            }, status=500)
 
-        return HttpResponse(status=201)
+        return render(request, "registration/simple_message.html", {
+            'message': _("Thanks for keeping us up to date!")})
+
     else:
         return HttpResponse(status=403)
 
@@ -110,7 +123,6 @@ def update_profile(request):
 @ensure_csrf_cookie
 def about_view(request):
     renderData = {
-        'settings': SiteSettings.get_solo(),
         'nextPath': reverse_no_i18n('about')
     }
     return render(request, "about.html", renderData)
@@ -119,7 +131,6 @@ def about_view(request):
 @ensure_csrf_cookie
 def data_view(request):
     renderData = {
-        'settings': SiteSettings.get_solo(),
         'nextPath': reverse_no_i18n('data'),
         'quick_data_overview': DataOverviewImage.objects.all()
 
@@ -130,7 +141,6 @@ def data_view(request):
 @ensure_csrf_cookie
 def prepare_view(request):
     renderData = {
-        'settings': SiteSettings.get_solo(),
         'actions': PreparednessAction.objects.all().order_by('cost'),
         'logged_in': False,
         'nextPath': reverse_no_i18n('prepare')
@@ -138,9 +148,11 @@ def prepare_view(request):
 
     if request.user.is_authenticated:
         renderData['logged_in'] = True
-        renderData['actions_taken'] = UserProfile.objects.get(user=request.user).actions_taken.all().values_list('id', flat=True)
+        renderData['actions_taken'] = UserProfile.objects.get(
+            user=request.user).actions_taken.all().values_list('id', flat=True)
 
     return render(request, "prepare.html", renderData)
+
 
 @ensure_csrf_cookie
 def prepare_action_update(request):
@@ -164,6 +176,7 @@ def prepare_action_update(request):
     else:
         return HttpResponse(status=403)
 
+
 @ensure_csrf_cookie
 def app_view(request):
     username = None
@@ -178,7 +191,6 @@ def app_view(request):
         profile = UserProfile.objects.get(user=request.user)
 
     renderData = {
-        'settings': SiteSettings.get_solo(),
         'data_bounds': Location.get_data_bounds(),
         'username': username,
         'profile': profile,
@@ -199,8 +211,10 @@ def app_view(request):
         template = "no_content_found.html"
 
         if lat and lng:
-            snugget_content = Snugget.findSnuggetsForPoint(lat=float(lat), lng=float(lng))
-            data = {el:{'collapsible': {}, 'static': {}} for el in snugget_content}
+            snugget_content = Snugget.findSnuggetsForPoint(
+                lat=float(lat), lng=float(lng))
+            data = {el: {'collapsible': {}, 'static': {}}
+                    for el in snugget_content}
 
             if snugget_content is not None:
                 for group, snuggets in snugget_content.items():
@@ -212,25 +226,32 @@ def app_view(request):
                             if snugget.percentage is not None:
                                 group.percentage = snugget.percentage
                             if snugget.__class__ == SlideshowSnugget:
-                                snugget.photos = PastEventsPhoto.objects.filter(
-                                    snugget=snugget)
+                                snugget.photos = sorted(PastEventsPhoto.objects.filter(
+                                    snugget=snugget), key=lambda p: (p.image.height / p.image.width) + len(p.caption), reverse=True)
 
                             if snugget.section.collapsible:
                                 if not snugget.section in data[group]['collapsible']:
-                                    data[group]['collapsible'][snugget.section] = [snugget]
+                                    data[group]['collapsible'][snugget.section] = [
+                                        snugget]
                                 else:
-                                    data[group]['collapsible'][snugget.section].append(snugget)
+                                    data[group]['collapsible'][snugget.section].append(
+                                        snugget)
                             else:
                                 if not snugget.section in data[group]['static']:
-                                    data[group]['static'][snugget.section] = [snugget]
+                                    data[group]['static'][snugget.section] = [
+                                        snugget]
                                 else:
-                                    data[group]['static'][snugget.section].append(snugget)
+                                    data[group]['static'][snugget.section].append(
+                                        snugget)
 
                     # Sort the sections by order_of_appearance
                     # python 3.5 does not guarantee the ORDER of keys coming out of an ORDERED DICTIONARY.
-                    data = OrderedDict(sorted(data.items(), key=lambda t: t[0].order_of_appearance))
-                    data[group]['collapsible'] = OrderedDict(sorted(data[group]['collapsible'].items(), key=lambda t: t[0].order_of_appearance))
-                    data[group]['static'] = OrderedDict(sorted(data[group]['static'].items(), key=lambda t: t[0].order_of_appearance))
+                    data = OrderedDict(
+                        sorted(data.items(), key=lambda t: t[0].order_of_appearance))
+                    data[group]['collapsible'] = OrderedDict(sorted(
+                        data[group]['collapsible'].items(), key=lambda t: t[0].order_of_appearance))
+                    data[group]['static'] = OrderedDict(
+                        sorted(data[group]['static'].items(), key=lambda t: t[0].order_of_appearance))
 
             renderData['data'] = data
 

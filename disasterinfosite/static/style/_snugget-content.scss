@@ -11,7 +11,7 @@
     padding: 5px 20px 20px;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     margin: 40px 0;
     padding: 5px 40px 40px;
   }
@@ -20,10 +20,10 @@
 /* Sections */
 .section-title--static {
   color: $soft-black;
-  margin: 20px 0 5px 0;
+  margin: 20px 0 5px;
 
-  @include breakpoint(large) {
-    margin: 20px 0 10px 0;
+  @include breakpoint(large-and-up) {
+    margin: 20px 0 10px;
   }
 }
 
@@ -31,12 +31,12 @@
   display: flex; // Fold caret aside wrapped text nicely on smaller sizes
   border-bottom: 2px solid $light-grey;
   cursor: pointer;
-  margin-left: 5px;
+  margin-inline-start: 5px;
 }
 
 .caret {
   vertical-align: middle;
-  margin-right: 10px;
+  margin-inline-end: 10px;
 }
 
 .caret--up {
@@ -55,7 +55,7 @@
   max-height: 9000px;
   overflow: hidden;
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     flex-direction: row;
   }
 }
@@ -84,21 +84,21 @@
   ul {
     margin: 5px 0;
 
-    @include breakpoint(large) {
+    @include breakpoint(large-and-up) {
       margin: 10px 0;
     }
-    padding-left: 0;
+    padding-inline-start: 0;
   }
 
   li {
-    margin-left: 20px;
+    margin-inline-start: 20px;
     margin-bottom: 10px;
   }
 
   p {
     margin: 5px 0;
 
-    @include breakpoint(large) {
+    @include breakpoint(large-and-up) {
       margin: 10px 0;
     }
   }
@@ -110,7 +110,7 @@
   flex: 0 0 auto;
   justify-content: space-between;
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     /* width is to accommodate the youtube embed */
     width: 380px;
   }
@@ -133,16 +133,24 @@
   border: 2px solid $bright-accent;
   border-top-width: 6px;
   flex: 0 0 auto;
-  margin: 10px 0 0 0;
+  margin: 0;
+  margin-top: 10px;
   max-width: 100%;
   padding: 10px;
+
+  @include breakpoint(large-and-up) {
+    margin-top: 0;
+    margin-bottom: 20px;
+    margin-inline-start: 10px;
+  }
 
   h3, h4 {
     color: $dark-accent;
     font-size: 16px;
-    margin: 10px 0 0 0;
+    margin: 0;
+    margin-top: 10px;
 
-    @include breakpoint(large) {
+    @include breakpoint(large-and-up) {
       font-size: 18px;
     }
   }
@@ -150,13 +158,9 @@
     margin: 0;
     text-align: center;
 
-    @include breakpoint(large) {
-      text-align: left;
+    @include breakpoint(large-and-up) {
+      text-align: start;
     }
-  }
-
-  @include breakpoint(large) {
-    margin: 0 0 20px 10px;
   }
 }
 
@@ -166,12 +170,12 @@
 }
 
 .popout__image {
-  width: 100%;
-  text-align: center;
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     min-width: 175px;
-    max-width: 100%;
   }
 }
 
@@ -190,7 +194,18 @@
   height: 18px;
   width: auto;
 
-  @include breakpoint(large) {
+  &:dir(rtl) {
+  background: linear-gradient(
+    to left,
+    $low-intensity 1%,
+    $moderate-intensity 10%,
+    $high-intensity,
+    $very-high-intensity 90%,
+    $extreme-intensity 99%
+  );
+  }
+
+  @include breakpoint(large-and-up) {
     margin-top: 50px;
   }
 }
@@ -208,7 +223,7 @@
     font-size: 36px;
     top: -40px;
     position: absolute;
-    left: -17px;
+    inset-inline-start: -17px;
     text-align: center;
   }
 }
@@ -231,7 +246,7 @@
   font-size: 14px;
   font-style: italic;
   position: absolute;
-  width: 32%;
+  width: 45%;
 
   @include breakpoint(medium-and-up) {
     width: auto;
@@ -239,20 +254,21 @@
 }
 
 .intensity-caption--low {
-  left: 0;
+  inset-inline-start: 0;
 }
 
 .intensity-caption--high {
-  right: 0;
-  text-align: right;
+  inset-inline-end: 0;
+  text-align: end;
 }
 
 /* Historical photos */
 
 .past-photos {
   max-width: 100%;
+  padding: 0 25px;
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     width: 345px;
   }
 }
@@ -265,7 +281,7 @@
     max-height: 380px;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     max-height: 275px;
   }
 }
@@ -275,28 +291,28 @@
 }
 
 /* Arrows for photo slider */
-.slick-prev {
-  left: 0 !important;
-  top: 36%;
+.slick-prev,
+.slick-next {
   width: 36px;
   z-index: 9;
+
+  &:hover, &:focus {
+    border: none;
+  }
+}
+
+.slick-prev {
+  inset-inline-start: -10px !important;
 }
 
 .slick-next {
-  right: 0 !important;
-  top: 36%;
-  width: 36px;
-  z-index: 9;
+  inset-inline-end: -10px !important;
 }
 
 .slick-prev::before,
 .slick-next::before {
-  color: #ccc;
+  color: $medium-grey;
   font-size: 36px;
-
-  &:hover {
-    color: #fff;
-  }
 }
 
 @media print {

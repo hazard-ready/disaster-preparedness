@@ -28,7 +28,7 @@ button {
   cursor: pointer;
   flex-grow: 0;
   margin: 0;
-  padding: 9px 1em;
+  padding: 10px;
   transition: background-color 1s;
 
   &:focus,
@@ -60,6 +60,8 @@ input {
 
 .select {
   height: 40px;
+  padding-inline-end: 0.5rem;
+  width: max-content;
 }
 
 
@@ -70,7 +72,7 @@ h1 {
   font-size: 28px;
   line-height: $big-header-line-height;
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     font-size: 32px;
   }
 }
@@ -90,8 +92,15 @@ h2 {
   line-height: $big-header-line-height;
   padding-bottom: 20px;
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     font-size: 32px;
+  }
+
+  .description {
+    text-transform: none;
+    font-size: 24px;
+    color: $dark-grey;
+    font-family: $sans-serif;
   }
 }
 
@@ -107,7 +116,7 @@ h3 {
   font-size: 21px;
   font-weight: $font-weight-bold;
   line-height: $small-header-line-height;
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     font-size: 24px;
   }
 }
@@ -125,7 +134,7 @@ h4 {
   font-weight: $font-weight-bold;
   line-height: $small-header-line-height;
   margin-bottom: 10px;
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     font-size: 24px;
   }
 }
@@ -133,6 +142,15 @@ h4 {
 .h4--sans-serif {
   color: $bright-accent;
   font-family: $sans-serif;
+}
+
+h5 {
+  color: $soft-black;
+  font-family: $sans-serif;
+  font-size: 16px;
+  font-weight: $font-weight-bold;
+  line-height: $small-header-line-height;
+  margin: 0;
 }
 
 .caption {

@@ -93,4 +93,6 @@ $(document).ready(function() {
       }, 250)
     );
   }
+  utils.lazyLoadVideos();
+
 });

@@ -5,10 +5,12 @@
 
 {% load render_bundle from webpack_loader %}
 {% load webpack_static from webpack_loader %}
-{% get_current_language as SELECTED_LANGUAGE_CODE %}
 
-<!doctype html>
-<html class="no-js" lang="{{ SELECTED_LANGUAGE_CODE }}">
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
   {% include "head-meta.html" with file="prepare" %}
 
   <body>
@@ -63,18 +65,20 @@
                 <img class="prepare__icon" src="{% webpack_static 'build/icon-home.svg' %}" alt=""> {{ item.property_text }}
               </p>
               {% endif %}
-              {% if item.link %}
-              <div class="prepare-item__link">
-                <a href="{{ item.link }}" target="_blank" rel="noopener">
-                  {% if item.link_icon %}
-                    <img class="prepare-item__link-icon" alt="" src="{{ item.link_icon.url }}">
-                  {% endif %}
-                  {% if item.link_text %}
-                    {{ item.link_text }}
-                  {% endif %}
-                </a>
-              </div>
-              {% endif %}
+              {% with links=item.preparednesslink_set.all %}
+                  {% for link in links %}
+                    <div class="prepare-item__link">
+                      <a href="{{ link.url }}" target="_blank" rel="noopener">
+                        {% if item.link_icon %}
+                          <img class="prepare-item__link-icon" alt="" src="{{ link.url }}">
+                        {% endif %}
+                        {% if link.text %}
+                          {{ link.text }}
+                        {% endif %}
+                      </a>
+                    </div>
+                  {% endfor %}
+              {% endwith %}
             </div>
           {% endfor %}
         </div>
@@ -112,16 +116,23 @@
               <td class="center-align">{% if item.property_text %}<img class="print-table__icon" src="{% webpack_static 'build/icon-check.svg' %}" alt="{% trans 'helps protect property' %}">{% endif %}
               </td>
               <td class="center-align">{{ item.cost | show_cost }}</td>
-              <td class="resources">{% if item.link %}
-                  <a href="{{ item.link }}" target="_blank">
-                    {% if item.link_icon %}
-                      <img class="prepare-item__link-icon" alt="" src="{{ item.link_icon.url }}">
-                    {% endif %}
-                    {% if item.link_text %}
-                      {{ item.link_text }}
-                    {% endif %}
-                  </a>
-                {% endif %}
+              <td class="resources">
+                {% with links=item.preparednesslink_set.all %}
+                  <ul>
+                  {% for link in links %}
+                    <li>
+                      <a href="{{ link.url }}" target="_blank" rel="noopener">
+                        {% if item.link_icon %}
+                          <img class="prepare-item__link-icon" alt="" src="{{ link.url }}">
+                        {% endif %}
+                        {% if link.text %}
+                          {{ link.text }}
+                        {% endif %}
+                      </a>
+                    </li>
+                  {% endfor %}
+                  </ul>
+                {% endwith %}
               </td>
             </tr>
           {% endfor %}

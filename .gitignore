@@ -17,6 +17,7 @@ disasterinfosite/data/simplified/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
 
 # C extensions
 *.so
@@ -76,6 +77,25 @@ docs/_build/
 # PyBuilder
 target/
 staticfiles
+media
+
+.DS_Store
+__MACOSX/
+myenv/
+
+# Node Modules
+node_modules/
+disasterinfosite/data/~$snuggets.xlsx
+
+# Static files that we don't own
+disasterinfosite/static/admin
+disasterinfosite/static/gis
+disasterinfosite/static/modeltranslation
+
+disasterinfosite/webpack-stats.json
+
+# Data files
+disasterinfosite/data
 
 .DS_Store
 myenv/

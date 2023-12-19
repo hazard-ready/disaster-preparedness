@@ -18,7 +18,11 @@
   }
 
   button {
-    margin-right: 20px;
+    margin-inline-end: 0.5rem;
+
+    @include breakpoint(medium-and-up) {
+      margin-inline-end: 1.5rem;
+    }
   }
 }
 
@@ -28,8 +32,13 @@
   flex-grow: 2;
   padding: 10px;
 
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+
   @include breakpoint(medium-and-up) {
-    margin-right: 20px;
+    margin-inline-end: 20px;
   }
 }
 
@@ -41,10 +50,20 @@
   input {
     margin: 5px 0 10px;
     display: block;
-    width: 100%;
   }
 }
 
 .username {
+  font-weight: $font-weight-bold;
+}
+
+.user-interaction__error {
+  color: $error-red;
+  font-weight: $font-weight-bold;
+}
+
+.errorlist {
+  list-style: none;
+  color: $error-red;
   font-weight: $font-weight-bold;
 }

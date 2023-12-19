@@ -1,6 +1,7 @@
 import csv
 from django.http import HttpResponse
 
+
 def export_as_csv_action(description="Export selected objects in a CSV file", fields=None, model=None):
     def export_as_csv(modeladmin, request, queryset, fields=fields):
         opts = modeladmin.model._meta
@@ -15,7 +16,8 @@ def export_as_csv_action(description="Export selected objects in a CSV file", fi
             model_to_export = model
 
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename=%s.csv' % str(opts).replace('.', '_')
+        response['Content-Disposition'] = 'attachment; filename=%s.csv' % str(
+            opts).replace('.', '_')
 
         writer = csv.writer(response)
 

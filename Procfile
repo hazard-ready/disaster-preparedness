@@ -1,1 +1,1 @@
-web: gunicorn disasterinfosite.wsgi --log-file -
+web: gunicorn disasterinfosite.wsgi --capture-output --log-file -

@@ -3,8 +3,12 @@
   padding: 5px;
 
   @include breakpoint(medium-and-up) {
-    padding-left: 20px;
+    padding-inline-start: 20px;
   }
+}
+
+.hazard-source {
+  margin-top: 0;
 }
 
 .quake {
@@ -24,16 +28,22 @@
 }
 
 .wildfire {
+  background-color: $very-high-intensity;
+}
+
+.summer {
   background-color: $extreme-intensity;
 }
 
 .data__list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .data__image {
   padding: 0.5rem;
+  max-width: 300px;
   text-align: center;
 
   a {
@@ -47,8 +57,7 @@
   }
 }
 
-
 .data__thumbnail {
-  max-width: 200px;
+  width: 100%;
   display: block;
 }

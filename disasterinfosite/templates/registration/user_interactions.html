@@ -1,0 +1,54 @@
+{% load i18n %}
+
+{% trans "Log In" as log_in %}
+{% trans "Sign Up" as sign_up %}
+{% trans "Cancel" as cancel %}
+{% trans "Log Out" as log_out %}
+{% trans "Update My Info" as update_my_info %}
+
+
+
+<div role="form" id="user-interaction-container" aria-label="signup-login">
+  {% include "registration/login.html" %}
+
+  {% include "registration/user_signup.html" %}
+
+  {% if username and profile %}
+    {% include "registration/user_profile.html" %}
+  {% endif %}
+
+  <div id="user-info-container">
+    <p class="login-message hide">
+     {% if username %}
+        {% blocktrans %}Welcome back, <span class="username">{{ username }}</span>!{% endblocktrans %}
+     {% else %}
+       {% trans "We're logging you in. Just a moment..." %}
+     {% endif %}
+    </p>
+  </div>
+
+  <div id="user-button-container">
+    {% if username and profile %}
+      <div class="login-welcome">
+        <p><strong>{% trans "Welcome back!" %}</strong></p>
+        <p>
+          {% blocktrans %}If your username isn't <span class="username">{{ username }}</span>, you might want to log out.{% endblocktrans %}
+        </p>
+        <div class="user-interaction__buttons user--ui">
+          <button class="caps button--logout">{{ log_out }}</button>
+          <button class="caps button--update">{{ update_my_info }}</button>
+        </div>
+      </div>
+    {% else %}
+      <h4>{% trans "Receive Important Updates" %}</h4>
+      <p>
+          {% trans "Keep your family, friends, and neighbors safe. Sign up to get email updates about seasonal hazards like fires, floods, and snow storms. If a natural disaster happens in your area, we’ll send you updates so you can stay informed. We’ll ask for your email address and physical address. Your information will be secure, and we won’t contact you for any other reason." %}
+        </p>
+        <div class="user-interaction__buttons user--ui">
+          <button class="caps button--login">{{ log_in }}</button>
+          <button class="caps button--signup">{{ sign_up }}</button>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>

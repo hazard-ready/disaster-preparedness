@@ -17,7 +17,7 @@
 
   ul {
     list-style: none;
-    padding-left: 15px;
+    padding-inline-start: 15px;
   }
 
   a {
@@ -47,6 +47,6 @@
   flex: 1 0;
 
   @include breakpoint(medium-and-up) {
-    margin-left: 10px;
+    margin-inline-start: 10px;
   }
 }
