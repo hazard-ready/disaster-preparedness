@@ -19,7 +19,7 @@ snuggetFile = os.path.join(dataDir, "snuggets.xlsx")
 slideshowFilename = "slideshow.xlsx"
 
 # all other fields in snuggetFile are required.
-# Note the last field - it's a translation column.
+# Add translated columns like text-es and pop_out_txt-so here if need be
 # Add languages and language codes as you see fit!
 optionalFields = ['heading',
                   'intensity',
@@ -34,8 +34,7 @@ optionalFields = ['heading',
                   'text',
                   'image_slideshow_folder',
                   'video',
-                  'text-es',
-                  'pop_out_txt-es']
+                  ]
 
 defaults = {
     "intensity": None,
@@ -154,7 +153,8 @@ def getShapefileFilter(shapefile, filterVal):
         if shapefile.objects.filter(**kwargs).exists():
             return shapefile.objects.get(**kwargs)
         else:
-            print("Could not find a filter field for", shapefile)
+            print("Could not find a filter field named", fieldName,
+                  "with the value", filterVal, "for", shapefile)
     return None
 
 
@@ -247,11 +247,12 @@ def addSlideshow(folder, snugget):
     rowCount = 1
     for row in slides:
         rowCount += 1
-        photo = PastEventsPhoto.objects.create(
-            snugget=snugget,
-            caption=row["caption"],
-            caption_es=row["caption-es"]
-        )
+        args = {
+            'snugget': snugget,
+            'caption': row['caption']
+        }
+        kwargs = includeTranslatedFields(row, 'caption', 'caption', args)
+        photo = PastEventsPhoto.objects.create(**kwargs)
         if row["image"] != '':
             imageFile = os.path.join(folder, row["image"])
             with open(imageFile, 'rb') as f:

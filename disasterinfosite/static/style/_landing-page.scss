@@ -1,3 +1,7 @@
+.information-container--landing {
+  margin-top: 0;
+}
+
 .intro-container {
   background-color: $white;
   margin: 10px 0;
@@ -8,7 +12,7 @@
     padding: 5px 20px 20px;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     margin: 40px 0;
     padding: 5px 40px 40px;
   }
@@ -26,7 +30,17 @@
     margin: 20px 0;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     margin: 40px 0;
+  }
+}
+
+.risks-header {
+  color: $dark-accent;
+  font-size: 28px;
+  font-weight: $font-weight-semibold;
+
+  @include breakpoint(large-and-up) {
+    font-size: 32px;
   }
 }

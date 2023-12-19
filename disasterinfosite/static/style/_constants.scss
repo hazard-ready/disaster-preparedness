@@ -1,6 +1,6 @@
 /* Colors */
 $black: #000;
-$black-tint: rgba(0, 0, 0, 0.5);
+$black-tint: rgba(0, 0, 0, 0.7);
 $soft-black: #121212;
 $deep-grey: #333;
 $dark-grey: #444;
@@ -26,8 +26,8 @@ $error-red: #f03b20;
 
 /* Typography */
 
-$sans-serif: "Source Sans Pro", sans-serif;
-$serif: "Source Serif Pro", serif;
+$sans-serif: "Source Sans Pro", "Noto Sans Arabic", "Noto Sans Simplified Chinese", "Noto Sans Korean", sans-serif;
+$serif: "Source Serif Pro", "Noto Naskh Arabic", "Noto Serif Simplified Chinese", "Noto Serif Korean", serif;
 
 $font-weight-regular: 400;
 $font-weight-semibold: 600;

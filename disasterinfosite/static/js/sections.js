@@ -25,7 +25,8 @@ $(document).ready(function() {
         if ($currentSlideElement) {
           $currentSlideElement.slick({
             slidesToShow: 1,
-            variableWidth: false
+            variableWidth: false,
+            rtl: $currentSlideElement.attr("dir") == "rtl"
           });
         }
       } else {

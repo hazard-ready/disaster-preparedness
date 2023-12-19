@@ -315,7 +315,7 @@ The actual Dockerfile in this repo is a template - identical ones appear in the 
 
 In order to load data on your sites, you can follow the setup instructions for each of the child repos. You can get a shell on them from the server you're setting them up on using `docker compose exec pdx /bin/bash`, and run the relevant management tasks on them like `docker compose exec pdx python manage.py makemigrations`  - substitute the relevant child installation for `pdx` as appropriate, and the relevant management task as well.
 
-You can set up the databases for them by running commands using `docker compose exec postgres...` as well.
+You can set up the databases for them by running commands using `docker compose exec postgres...` as well. Note that you do need to create the databases, but you no longer need to create the extensions in them.
 
 ## Using data from production
 1. Dump and restore the database

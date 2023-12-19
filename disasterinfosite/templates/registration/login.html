@@ -17,13 +17,12 @@
       </label>
     </div>
     <div class="user-interaction__buttons">
-      <button class="caps button--cancel">{{ cancel }}</button>
       <button class="button--submit caps user-login__submit" type="submit">{{ log_in }}</button>
+      <button class="caps button--cancel">{{ cancel }}</button>
     </div>
   </form>
   <div class="user-interactions-help">
-    <p>
-      {% blocktrans %}Need some help (like a password reset)? <a href="mailto:help@hazardready.org">Email us.</a>{% endblocktrans %}
-    </p>
+  {% url 'password_reset' as password_url %}
+  {% blocktrans %}Did you forget your password? Reset it <a href="{{ password_url }}">here</a>.{% endblocktrans %}
   </div>
 </div>

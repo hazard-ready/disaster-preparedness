@@ -2,16 +2,28 @@ FROM python:3.12.1-slim-bookworm
 
 ARG DJANGO_SECRET_KEY
 ARG DATABASE_URL
+ARG EMAIL_HOST
+ARG EMAIL_HOST_USER
+ARG EMAIL_HOST_PASSWORD
 
-ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
-ENV DATABASE_URL=${DATABASE_URL}
+ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-"dummykeyforbuild"}
+ENV DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@localhost:5432/seattleready}
+ENV EMAIL_HOST=${EMAIL_HOST}
+ENV EMAIL_HOST_USER=${EMAIL_HOST_USER}
+ENV EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
 
 # Update C env vars so compiler can find gdal
 ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
 ENV C_INCLUDE_PATH=/usr/include/gdal
 
-# Install GDAL dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Get stuff we need to install Node and other dependencies
+RUN apt-get update && apt-get upgrade -yqq && apt-get install -yqq wget gnupg
+
+# Include PPA for latest Node version, then install GDAL and front-end dependencies
+RUN echo "deb https://deb.nodesource.com/node_19.x bullseye main" > /etc/apt/sources.list.d/nodesource.list && \
+  wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
+  apt-get update && apt-get upgrade -yqq && \
+  apt-get install -y --no-install-recommends \
     binutils          \
     libproj-dev       \
     gdal-bin          \
@@ -20,7 +32,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     g++               \
     libgdal-dev       \
     nodejs            \
-    npm               \
     postgresql-client \
     unzip             \
     zip               \
@@ -52,6 +63,7 @@ RUN rm -rf data && unzip -o data.zip
 # build front-end code
 RUN mkdir -p media/img/photos
 RUN mkdir -p media/img/data
+
 RUN npm rebuild node-sass
 RUN npm install && npm run webpack
 

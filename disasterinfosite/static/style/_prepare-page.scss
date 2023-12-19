@@ -18,16 +18,16 @@
 
 .hero__text {
   position: absolute;
-  left: 10px;
+  inset-inline-start: 10px;
   top: 0;
   width: 70%;
 
   @include breakpoint(medium) {
-    left: 20px;
+    inset-inline-start: 20px;
     width: 60%;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     top: 30px;
   }
 }
@@ -40,16 +40,18 @@
 .prepare-container {
   background-color: $white;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   margin-top: 20px;
   padding: 5px 10px;
 
   @include breakpoint(medium) {
+    flex-direction: row;
     margin-top: 30px;
     padding: 5px 20px;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
+    flex-direction: row;
     margin-top: 30px;
     padding: 5px 40px;
   }
@@ -82,15 +84,18 @@
 }
 
 .prepare-detail {
-  border-left: 2px solid $light-grey;
-  padding: 10px 0 10px 10px;
+  padding: 10px;
 
   @include breakpoint(medium) {
-    padding: 20px 0 20px 20px;
+    border-inline-start: 2px solid $light-grey;
+    padding: 20px;
+    padding-inline-end: 0;
   }
 
-  @include breakpoint(large) {
-    padding: 40px 0 40px 40px;
+  @include breakpoint(large-and-up) {
+    border-inline-start: 2px solid $light-grey;
+    padding: 40px;
+    padding-inline-end: 0;
 
   }
 }
@@ -101,7 +106,8 @@
 }
 
 .prepare-item__link {
-  text-align: right;
+  margin-bottom: 12px;
+  text-align: end;
 
   a {
     color: $soft-black;
@@ -122,6 +128,7 @@
 .print-container {
   background-color: $white;
   overflow-x: scroll;
+  margin-top: 20px;
   padding: 5px 10px;
 
   @include breakpoint(medium) {
@@ -129,7 +136,7 @@
     padding: 5px 20px;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     overflow-x: auto;
     padding: 5px 40px;
   }
@@ -137,14 +144,21 @@
 
 .print-header {
   display: flex;
-  height: 60px;
+  flex-direction: column-reverse;
   font-weight: $font-weight-bold;
+  height: auto;
+
+  @include breakpoint(medium-and-up) {
+    flex-direction: row;
+    height: 60px;
+
+  }
 }
 
 .print-button {
   cursor: pointer;
   margin-top: 12px;
-  text-align: right;
+  text-align: end;
 }
 
 .print-header__activity {
@@ -159,7 +173,7 @@
     border-bottom: 2px solid $light-grey;
     color: $dark-grey;
     padding: 10px;
-    text-align: left;
+    text-align: start;
     vertical-align: bottom;
   }
 
@@ -184,6 +198,13 @@
     color: $bright-accent;
     text-decoration: none;
   }
+
+  .resources {
+    li {
+      color: $light-accent;
+      margin-bottom: 10px;
+    }
+  }
 }
 
 .print-table__icon {
@@ -200,7 +221,7 @@
     padding: 5px 20px;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     padding: 5px 40px;
   }
 }

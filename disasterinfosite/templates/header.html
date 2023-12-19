@@ -2,17 +2,19 @@
 {% load webpack_static from webpack_loader %}
 
 <header>
-  <div class="logo__container" role="banner">
+  <div class="small-header__container" role="banner">
     <a class="link--plain" href="{{ settings.site_url }}">
-      <img class="logo--header" src="{% webpack_static 'build/logo-no-text.png' %}" alt="">
-      <div class="logo__text">
-        <h3 class="h3--sans-serif">{{ settings.site_title }}</h3>
+      <div class="logo__container">
+        <img class="logo--header" src="{% webpack_static 'build/logo-no-text.png' %}" alt="">
+        <div class="logo__text">
+          <h3 class="h3--sans-serif">{{ settings.site_title }}</h3>
+        </div>
       </div>
     </a>
-    <div class="header__about header__about--small hide-for-medium-up--flex">
-    {% block about-small %}
-      <a class="link--plain" href="{% url 'about' %}"><h5 class="about__link link--grey" role="navigation">{% trans "About" %}</h5></a>
-      {% endblock about-small %}
+    <div class="header__about header__about--small hide-for-xlarge--flex">
+      {% block links-small %}
+        {% include "header_links.html" %}
+      {% endblock links-small %}
       {% include "language_selector.html" %}
     </div>
   </div>
@@ -21,7 +23,9 @@
   {% trans "Find Me" as find_me %}
     <div class="location-form" role="search" aria-label="location-search">
       <label class="sr-only" for="location-text">{% trans "Enter your location for a personalized report on your risks and how to prepare." %}</label>
-      <input name="location-text" id="location-text" type="text" placeholder="{% trans 'Enter an address.' %}" />
+      <div class="location-text__container">
+        <input name="location-text" id="location-text" type="text" placeholder="{% trans 'Enter an address.' %}" />
+      </div>
       <button id="auto-location" class="auto-location-submit caps">
         <svg class="icon--locate-me" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" role="presentation">
           <path d="M0 0h24v24H0z" fill="none"></path>
@@ -29,16 +33,19 @@
         </svg>
         {{ find_me }}
       </button>
-      <button id="location-submit"><img class="icon--search" src="{% webpack_static 'build/icon-search.png' %}" alt="search"></button>
-      <div class="geocode-error-message hide">
+      <button id="location-submit"><img class="icon--search" src="{% webpack_static 'build/icon-search.png' %}" alt="search" title="Search at this location"></button>
+    </div>
+    <div class="geocode-error-message hide">
         <p>{% trans "We had a problem finding that location." %}</p>
       </div>
+      <div class="geocode-disabled-message hide">
+        <p>{% trans "Please allow your web browser to access your location in order to use Find Me." %}</p>
     </div>
   {% endblock search %}
-  <div class="header__about hide-for-small--flex">
-    {% block about-med-and-up %}
-    <a class="link--plain" href="{% url 'about' %}"><h5 class="about__link link--grey" role="navigation">{% trans "About" %}</h5></a>
-    {% endblock about-med-and-up %}
+  <div class="header__about hide-for-large-down--flex">
+    {% block links-med-and-up %}
+      {% include "header_links.html" %}
+    {% endblock links-med-and-up %}
     {% include "language_selector.html" %}
   </div>
 </header>

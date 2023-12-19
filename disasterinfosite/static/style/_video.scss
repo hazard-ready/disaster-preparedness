@@ -14,7 +14,7 @@
         cursor: pointer;
         position: absolute;
         top: 0;
-        left: 0;
+        inset-inline-start: 0;
     }
 
     .play-button {
@@ -28,17 +28,17 @@
         opacity: 0.8;
         position: absolute;
         top: 50%;
-        left: 50%;
+        left: 50%; // centers the button in ltr and rtl text direction
         transform: translate3d( -50%, -50%, 0 );
 
         &:before {
             content: "";
             border-style: solid;
-            border-width: 15px 0 15px 26px;
+            border-width: 15px 0 15px 26px; // play buttons are not generally flipped for an rtl language apparently
             border-color: transparent transparent transparent $white;
             position: absolute;
             top: 50%;
-            left: 50%;
+            left: 50%; // centers the button in ltr and rtl text direction
             transform: translate3d( -50%, -50%, 0 );
         }
     }
@@ -49,6 +49,7 @@
         width: 100%;
         top: 0;
         left: 0;
+        right: 0;
     }
 
     @include breakpoint(medium-and-up) {

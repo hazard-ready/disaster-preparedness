@@ -9,7 +9,7 @@
     padding: 5px 20px 20px;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     margin: 40px 0;
     padding: 5px 40px 40px;
   }
@@ -82,7 +82,7 @@
     flex-direction: row;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     margin-bottom: 40px;
     padding: 40px;
   }
@@ -115,27 +115,27 @@
 .bio__other {
   @include breakpoint(medium) {
     flex: 1 1 auto;
-    margin-left: 10px;
+    margin-inline-start: 10px;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large-and-up) {
     flex: 3 1 auto;
-    margin-left: 40px;
+    margin-inline-start: 40px;
   }
 }
 
 .bio__other--reverse {
   @include breakpoint(medium-and-up) {
-    margin-left: 0;
-    margin-right: 10px;
+    margin-inline-start: 0;
+    margin-inline-end: 10px;
 
     h4 {
-      text-align: right;
+      text-align: end;
     }
   }
 
-  @include breakpoint(large) {
-    margin-right: 40px;
+  @include breakpoint(large-and-up) {
+    margin-inline-end: 40px;
   }
 }
 
@@ -162,5 +162,5 @@
 }
 
 .bio__links--reverse {
-  text-align: right;
+  text-align: end;
 }

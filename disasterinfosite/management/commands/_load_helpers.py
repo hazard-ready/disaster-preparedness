@@ -41,11 +41,10 @@ def allRequiredFieldsPresent(optionalFields, row, rowCount):
 
 
 def includeTranslatedFields(row, columnName, fieldName, kwargs):
-    translatedField = next(
-        (k for k in row if k.startswith(columnName + '-')), "")
-    if translatedField is not None and row[translatedField] != '':
-        translatedColumn = fieldName + '_' + translatedField.split('-')[1]
-        kwargs[translatedColumn] = row[translatedField]
+    for translatedField in (k for k in row if k.startswith(columnName + '-')):
+        if translatedField is not None and row[translatedField] != '':
+            translatedColumn=fieldName + '_' + translatedField.split('-')[1]
+            kwargs[translatedColumn]=row[translatedField]
 
     return kwargs
 
@@ -54,18 +53,18 @@ def includeTranslatedFields(row, columnName, fieldName, kwargs):
 # originally from https://gist.github.com/mdellavo/853413
 # then heavily adapted first to make it work, then to simplify, and finally with suggestions from later commenters on that gist
 def XLSXDictReader(fileName, sheetName=None):
-    book = openpyxl.reader.excel.load_workbook(fileName)
+    book=openpyxl.reader.excel.load_workbook(fileName)
     # if there's no sheet name specified, try to get the active sheet.  This will work reliably for workbooks with only one sheet; unpredictably if there are multiple worksheets present.
     if sheetName is None:
-        sheet = book.active
+        sheet=book.active
     elif sheetName not in book.sheetnames:
         print(sheetName, "not found in", fileName)
         exit()
     else:
-        sheet = book[sheetName]
+        sheet=book[sheetName]
 
-    rows = sheet.max_row + 1
-    cols = sheet.max_column + 1
+    rows=sheet.max_row + 1
+    cols=sheet.max_column + 1
 
     def cleanValue(s):
         if s == None:
@@ -83,15 +82,15 @@ def XLSXDictReader(fileName, sheetName=None):
 
 
 def runLoader(config):
-    overwriteAll = False
+    overwriteAll=False
 
-    newSnuggets = XLSXDictReader(config['file'])
+    newSnuggets=XLSXDictReader(config['file'])
     # row 1 consists of field names, so row 2 is the first data row. We'll increment this before first referencing it.
-    rowCount = 1
+    rowCount=1
     for row in newSnuggets:
         rowCount += 1
         if allRequiredFieldsPresent(config['optional'], row, rowCount):
             checkHTMLTagClosures(row, rowCount)
-            overwriteAll = config['processRow'](row, overwriteAll)
+            overwriteAll=config['processRow'](row, overwriteAll)
 
     return rowCount

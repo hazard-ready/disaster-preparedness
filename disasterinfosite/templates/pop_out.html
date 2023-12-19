@@ -34,7 +34,7 @@
 
   {% if snugget.photos %}
   <!-- Right now all photo slideshows are in the popout section. If we want to have both, we'll need to make something like pop_out_image_folder in the snuggets file. -->
-    <div class="past-photos">
+    <div class="past-photos" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
     {% for photo in snugget.photos %}
     <div class="past-photo__container">
        <img alt="" title="" class="slideshow-image" src="{{ photo.image.url }}"/>

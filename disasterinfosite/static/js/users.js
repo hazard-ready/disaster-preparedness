@@ -4,6 +4,8 @@ require("formdata-polyfill");
 
 var utils = require("./utils");
 
+var $userInfoContainer = $("#user-info-container");
+
 function setValueOnFocus(el, value) {
   el.focus(function() {
     if (el.val() === "") {
@@ -39,6 +41,7 @@ function sendAjaxAuthRequest(url, data) {
 
   var csrftoken = utils.getCsrfFromCookie();
 
+  $userInfoContainer.empty()
   return $.ajax({
     crossDomain: false,
     beforeSend: function(xhr) {
@@ -56,16 +59,13 @@ $(document).ready(function() {
   var $updateForm = $("#user-profile__form");
 
   var $userButtonContainer = $("#user-button-container");
-  var $failureContainer = $("#failure-container");
   var $userSignupContainer = $("#user-signup-container");
   var $userLoginContainer = $("#user-login-container");
   var $userProfileContainer = $("#user-profile-container");
-  var $userInfoContainer = $("#user-info-container");
 
   $(".button--signup").click(function(event) {
     event.preventDefault();
     $userButtonContainer.addClass('hide');
-    $failureContainer.addClass('hide');
     $userSignupContainer.removeClass('hide');
     $('#user-signup__username').focus();
   });
@@ -73,8 +73,6 @@ $(document).ready(function() {
   $(".button--login").click(function(event) {
     event.preventDefault();
     $userButtonContainer.addClass('hide');
-    $("#user-info-container--invalid").addClass('hide');
-    $failureContainer.addClass('hide');
     $userLoginContainer.removeClass('hide');;
     $('#user-login__username').focus();
   });
@@ -83,20 +81,22 @@ $(document).ready(function() {
     event.preventDefault();
     $userSignupContainer.addClass('hide');
     $userLoginContainer.addClass('hide');
-    $userButtonContainer.removeClass('hide');;
+    $userButtonContainer.removeClass('hide');
+    $userInfoContainer.addClass('hide');
   });
 
   $(".button--cancel-update").click(function(event) {
     event.preventDefault();
     $userProfileContainer.addClass('hide');
-    $userInfoContainer.removeClass('hide');;
+    $userInfoContainer.removeClass('hide');
+    $userButtonContainer.removeClass('hide');
+    $userInfoContainer.addClass('hide');
   });
 
   $(".button--update").click(function(event) {
     event.preventDefault();
     $userInfoContainer.addClass('hide');
-    $("#user-button-container--logged-in").addClass('hide');
-    $failureContainer.addClass('hide');
+    $userButtonContainer.addClass('hide');
     $userProfileContainer.removeClass('hide');
     $('#user-profile__address1').focus();
   });
@@ -115,8 +115,7 @@ $(document).ready(function() {
       .fail(function(error) {
         console.error('Logout error:', error)
         $userInfoContainer.addClass('hide');
-        $("#user-button-container--logged-in").addClass('hide');
-        $failureContainer.removeClass('hide');
+        $(".login-welcome").addClass('hide');
       });
   });
 
@@ -124,30 +123,24 @@ $(document).ready(function() {
     event.preventDefault();
 
     sendAjaxAuthRequest(createUserApiUrl, new FormData($signupForm[0]))
-    .done(function() {
-      $("#user-signup-result-container").removeClass('hide').focus();
-    })
-    .fail(function(error) {
-      console.error("signup form error:", error)
-      $failureContainer.removeClass('hide');
-    })
-    .always(function() {
+    .done(function(data) {
+      $userInfoContainer.append(data).removeClass('hide').focus();
       $userSignupContainer.addClass('hide');
-    });
+    })
+    .fail(function(request, status, error) {
+      $userInfoContainer.append(request.responseText).removeClass('hide').focus();
+    })
   });
 
   $loginForm.submit(function(event) {
     event.preventDefault();
-
     sendAjaxAuthRequest(loginApiUrl, new FormData($loginForm[0]))
-      .done(function() {
-        location.hash = "user-interaction-container";
+      .done(function(data) {
         location.reload(true);
+        $userInfoContainer.append(data).removeClass('hide').focus();
       })
-      .fail(function(error) {
-        console.error("login form error:", error)
-        $userLoginContainer.addClass('hide');
-        $("#user-info-container--invalid").removeClass('hide');;
+      .fail(function(request, status, error) {
+        console.error("login form error:", error, "status:", status);
       });
   });
 
@@ -155,15 +148,12 @@ $(document).ready(function() {
     event.preventDefault();
 
     sendAjaxAuthRequest(updateProfileApiUrl, new FormData($updateForm[0]))
-      .done(function() {
-        $("#user-profile-result-container").removeClass('hide').focus();
-      })
-      .fail(function(error) {
-        console.error("update form error:", error)
-        $failureContainer.removeClass('hide');
-      })
-      .always(function() {
+      .done(function(data) {
+        $userInfoContainer.append(data).removeClass('hide').focus();
         $userProfileContainer.addClass('hide');
-      });
+      })
+      .fail(function(request, status, error) {
+        $userInfoContainer.append(request.responseText).removeClass('hide').focus();
+      })
   });
 });

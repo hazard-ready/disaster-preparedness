@@ -3,14 +3,16 @@
 
 {% load render_bundle from webpack_loader %}
 {% load webpack_static from webpack_loader %}
-{% get_current_language as SELECTED_LANGUAGE_CODE %}
 
-<!doctype html>
-<html class="no-js" lang="{{ SELECTED_LANGUAGE_CODE }}">
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
 {% include "head-meta.html" with file="about" %}
 
 <body>
-{% include "about-header.html" %}
+{% include "simple-header.html" %}
 
   <div class="content-container">
     <div class="about-container">
@@ -67,9 +69,8 @@
         <h3 class="caps about--hazardready">{% trans "The Hazard Ready Project" %}</h3>
         <div class="hazardready-container">
           <a href="https://hazardready.org" target="_blank" rel="noopener">
-            <img class="hazardready-logo" src="{% webpack_static 'build/logo.png' %}" alt=""><span class="sr-only">Hazard Ready homepage</span>
-          </a>
-          {{ settings.about_text | safe }}
+            <img class="hazardready-logo" src="{% webpack_static 'build/logo.png' %}" alt=""><span class="sr-only">{% trans "Hazard Ready homepage" %}</span></a>
+          <p>{{ settings.about_text | safe }}</p>
         </div>
       </div>
       <div class="about-container">

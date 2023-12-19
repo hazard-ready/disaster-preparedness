@@ -8,7 +8,7 @@
       {% csrf_token %}
       <input name="next" type="hidden" value="{{ nextPath }}" />
         {% if languages|length > 2 %}
-          <img class="hide-for-medium-down language-icon--select" src="{% webpack_static 'build/language.svg' %}" alt="">
+          <img class="language-icon--select" src="{% webpack_static 'build/language.svg' %}" alt="">
           <select id="language__select" name="language" class="select select--language caps" onchange="this.form.submit()">
             {% for language in languages %}
             <option class="select select--language" value="{{ language.code }}"

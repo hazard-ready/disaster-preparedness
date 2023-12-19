@@ -26,6 +26,7 @@
     <div id="map"></div>
   </div>
 {% endblock map-container %}
+{% block risks %}{% endblock risks %}
 {% block disclaimer %}{% endblock disclaimer %}
 {% block hazard-menu %}
   <div class="hazard-container" role="navigation">
@@ -47,7 +48,7 @@
         <div class="intensity-meter">
           <div class="sr-only">{% blocktrans with percentage=group.percentage %}An intensity meter at {{percentage}}%{% endblocktrans %}</div>
           {% localize off %}
-            <div class="intensity-marker" style="left: {{group.percentage}}%"></div>
+            <div class="intensity-marker" style="inset-inline-start: {{group.percentage}}%"></div>
           {% endlocalize %}
         </div>
         <div class="intensity-captions">
