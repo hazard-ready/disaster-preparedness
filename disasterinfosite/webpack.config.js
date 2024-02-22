@@ -15,7 +15,7 @@ module.exports = {
     ]
   },
   entry: {
-    vendor: ["leaflet", "jquery", "slick-carousel"],
+    vendor: ["leaflet", "jquery", "slick-carousel", "@geoapify/geocoder-autocomplete"],
     app: "./static/js/app.js",
     prepare: "./static/js/prepare.js",
     about: "./static/js/about.js",

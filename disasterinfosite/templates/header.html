@@ -24,7 +24,7 @@
     <div class="location-form" role="search" aria-label="location-search">
       <label class="sr-only" for="location-text">{% trans "Enter your location for a personalized report on your risks and how to prepare." %}</label>
       <div class="location-text__container">
-        <input name="location-text" id="location-text" type="text" placeholder="{% trans 'Enter an address.' %}" />
+        <div id="location-text" class="autocomplete-container"></div>
       </div>
       <button id="auto-location" class="auto-location-submit caps">
         <svg class="icon--locate-me" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" role="presentation">
