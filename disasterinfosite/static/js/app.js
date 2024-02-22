@@ -40,7 +40,8 @@ if (!String.prototype.includes) {
   };
 }
 
-const GEOAPIFY_KEY = "247a436c9e9645e8982ff35c392096f5";
+// This is the Hazard Ready base repo Geoapify key. Generate a new one!
+const GEOAPIFY_KEY = "27537688ff614f388be525f8f096ec3d";
 
 const osmUrl =
   "//{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=3a70462b44dd431586870baee15607e4";
