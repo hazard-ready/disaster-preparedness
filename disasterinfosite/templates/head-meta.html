@@ -13,6 +13,7 @@
   <meta property="og:description" content="{{ settings.site_description }} {{ settings.intro_text }} {{ meta_description }}">
 
   <!-- Google tag (gtag.js)
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y1BD1N0PXZ"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -32,9 +33,6 @@
  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Sans+KR:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
 
 {% render_bundle file 'css' %}
-
- <!-- Load MapQuest Places search styles (for autocomplete) from CDN -->
- <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css"/>
 
   <link rel="shortcut icon" href="{% webpack_static 'build/favicon.ico' %}"/>
 </head>

@@ -15,6 +15,7 @@
   var updateProfileApiUrl = "{% url "update_profile" %}"
   var prepareActionApiUrl = "{% url "prepare_action_update" %}"
 
+
   /**
   * Function that registers a click on an outbound link in Analytics.
   * This function takes a valid URL string as an argument, and uses that URL string
@@ -31,6 +32,7 @@
     return new_tab;
   }
 </script>
+<script src="{% url 'javascript-catalog' %}"></script>
 
 {% render_bundle file 'js' %}
 

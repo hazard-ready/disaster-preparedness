@@ -1,8 +1,10 @@
 require("normalize.css/normalize.css");
 require("leaflet/dist/leaflet.css");
+require("@geoapify/geocoder-autocomplete/styles/minimal.css");
 require("../style/app.scss");
 
-var boundaryShape = require("./boundary.json");
+const boundaryShape = require("./boundary.json");
+const geoapify = require("@geoapify/geocoder-autocomplete");
 
 require("../img/favicon.ico");
 require("../img/thinking.gif");
@@ -38,15 +40,14 @@ if (!String.prototype.includes) {
   };
 }
 
-// This is the base repository Mapquest key. Get your own
-// Mapquest key for a new app!
-var MAPQUEST_KEY = "b3ZxSWOID7jOlLLGb8KvPxbF4DGBMEHy";
-var osmUrl =
+const GEOAPIFY_KEY = "247a436c9e9645e8982ff35c392096f5";
+
+const osmUrl =
   "//{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=3a70462b44dd431586870baee15607e4";
-var osmAttrib =
+const osmAttrib =
   'Map data © <a href="//openstreetmap.org">OpenStreetMap</a> contributors';
 
-var boundaryStyle = {
+const boundaryStyle = {
   color: "rgb(253, 141, 60)",
   weight: 4,
   opacity: 1,
@@ -54,14 +55,32 @@ var boundaryStyle = {
   fillOpacity: 0.7,
 };
 
+const GEOAPIFY_MAP_BOUNDS = {
+  lon1: mapBounds[0][1],
+  lat1: mapBounds[0][0],
+  lon2: mapBounds[1][1],
+  lat2: mapBounds[1][0],
+};
+
+const GEOAPIFY_MAP_BOUNDS_STRING = `${GEOAPIFY_MAP_BOUNDS["lon1"]},${GEOAPIFY_MAP_BOUNDS["lat1"]},${GEOAPIFY_MAP_BOUNDS["lon2"]},${GEOAPIFY_MAP_BOUNDS["lat2"]}`;
+
 var location_query_text = "";
 var input_lat;
 var input_lng;
 var $locationInput;
 
+// the page language, as ISO 639-1
+let lang = document.documentElement.lang;
+if (lang == "cn") {
+  lang = "zh";
+}
+
 // grab the position, if possible
-var query_lat = getURLParameter("lat");
-var query_lng = getURLParameter("lng");
+const query_lat = getURLParameter("lat");
+const query_lng = getURLParameter("lng");
+
+var map;
+var mapElement = document.getElementById("map");
 
 var map;
 var mapElement = document.getElementById("map");
@@ -69,7 +88,7 @@ var mapElement = document.getElementById("map");
 // convenience function to extract url parameters
 function getURLParameter(name) {
   var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
-    window.location.href
+    window.location.href,
   );
   return results === null ? null : results[1] || 0;
 }
@@ -100,29 +119,22 @@ function reverseGeocodeLocation(lat, lng) {
   // if we don't have text for the location, reverse geocode to get it
   return $.ajax({
     type: "GET",
-    url: "https://www.mapquestapi.com/geocoding/v1/reverse",
+    url: "https://api.geoapify.com/v1/geocode/reverse",
     data: {
-      key: MAPQUEST_KEY,
-      location: lat + "," + lng,
-      outFormat: "json",
-      thumbMaps: false,
+      apiKey: GEOAPIFY_KEY,
+      lang: lang,
+      lat: lat,
+      lon: lng,
+      format: "json",
+      type: "street",
     },
   })
-    .then(function (result) {
+    .then(function (response) {
       // We have at least one result and nothing went wrong
-      if (result.info.statuscode === 0 && result.results.length > 0) {
-        var address = result.results[0].locations[0];
-        return (
-          address.street +
-          ", " +
-          address.adminArea5 +
-          ", " +
-          address.adminArea3 +
-          " " +
-          address.postalCode
-        );
+      if (response.results.length) {
+        return response.results[0].formatted;
       } else {
-        console.log("Reverse geocoding error messages", result.info.messages);
+        console.log("Reverse geocoding error; response: ", response);
       }
     })
     .catch(function (error) {
@@ -202,7 +214,7 @@ $(document).ready(function () {
     if (e.currentTarget.hostname !== location.hostname) {
       return trackOutboundLink(
         e.currentTarget.href,
-        e.currentTarget.target === "_blank"
+        e.currentTarget.target === "_blank",
       );
     }
   });
@@ -273,9 +285,9 @@ $(document).ready(function () {
   }
 
   // Set up input box
-  $locationInput = $("#location-text");
-  var $locationSubmit = $("#location-submit");
-  var $autoLocationButton = $("#auto-location");
+  const $locationContainer = $("#location-text");
+  const $locationSubmit = $("#location-submit");
+  const $autoLocationButton = $("#auto-location");
   if (mapElement) {
     if (map !== undefined && map !== null) {
       // sometimes we already have one and I don't know why
@@ -283,6 +295,19 @@ $(document).ready(function () {
     }
     setUpMap();
   }
+
+  // Set up autocomplete
+  const autocompleteInput = new geoapify.GeocoderAutocomplete(
+    $locationContainer[0],
+    GEOAPIFY_KEY,
+    {
+      filter: { rect: GEOAPIFY_MAP_BOUNDS },
+      placeholder: gettext("Enter an address."),
+    },
+  );
+
+  // geoapify adds an input element, which we need to work with
+  $locationInput = $locationContainer.find("input.geoapify-autocomplete-input");
 
   // grab and set any previously entered query text
   var loc = getURLParameter("loc");
@@ -299,23 +324,14 @@ $(document).ready(function () {
   // Hide a geocoding error message every time, if there is one
   $locationInput.on("click", hideGeocodeErrors);
 
-  // Set up autocomplete when someone clicks in the input field
-  $locationInput.one("click", function () {
-    $locationInput.prop("placeholder", "");
-    var autocomplete = placeSearch({
-      key: MAPQUEST_KEY,
-      container: $locationInput[0],
-      useDeviceLocation: !!navigator.geolocation,
-    });
-    $locationInput.focus();
-
-    autocomplete.on("change", function (event) {
-      input_lat = event.result.latlng.lat;
-      input_lng = event.result.latlng.lng;
-    });
+  autocompleteInput.on("select", function (location) {
+    if (!!location) {
+      input_lat = location.properties.lat;
+      input_lng = location.properties.lon;
+    }
   });
 
-  // hitting enter key in the textfield will trigger submit
+  //hitting enter key in the input will trigger submit
   $locationInput.keydown(function (event) {
     if (event.keyCode == 13) {
       $locationSubmit.trigger("click");
@@ -335,30 +351,31 @@ $(document).ready(function () {
       return;
     }
 
-    // Geocode our location text if we don't have a lat/lng from the autocomplete (e.g someone just typed in there and hit 'enter')
+    // Geocode our location text if we don't have a lat/lng from the autocomplete
+    // (e.g someone just typed in there and hit 'enter')
     $.ajax({
       type: "GET",
-      url: "https://www.mapquestapi.com/geocoding/v1/address",
+      url: "https://api.geoapify.com/v1/geocode/search",
       data: {
-        key: MAPQUEST_KEY,
-        location: location_query_text,
-        outFormat: "json",
-        thumbMaps: false,
-        boundingBox: mapBounds,
+        apiKey: GEOAPIFY_KEY,
+        text: location_query_text,
+        lang: lang,
+        format: "json",
+        filter: `rect:${GEOAPIFY_MAP_BOUNDS_STRING}`,
       },
     })
-      .then(function (result) {
-        if (result.info.statuscode === 0) {
-          var lat = result.results[0].locations[0].latLng.lat;
-          var lon = result.results[0].locations[0].latLng.lng;
+      .then(function (response) {
+        if (response.results.length) {
+          var lat = response.results[0].lat;
+          var lon = response.results[0].lon;
           submitLocation(lat, lon, location_query_text);
         } else {
-          console.log("Geocoding error messages", result.info.messages);
+          console.log("Geocoding error: ", response);
           showGeocodeError();
         }
       })
       .catch(function (error) {
-        console.log("error", error);
+        console.log(`Geocoding error: ${error}`);
         showGeocodeError();
       });
   });
@@ -388,7 +405,7 @@ $(document).ready(function () {
           }
           enableForm();
         },
-        { timeout: 8000 }
+        { timeout: 8000 },
       );
     }
   });
