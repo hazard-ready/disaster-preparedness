@@ -37,7 +37,7 @@ RUN echo "deb https://deb.nodesource.com/node_20.x bookworm main" > /etc/apt/sou
     zip               \
     && rm -rf /var/lib/apt/lists/*
 
-RUN np install -g npm@latest
+RUN npm install -g npm@latest
 
 RUN groupadd -r django && useradd --no-log-init -r -g django django
 RUN mkdir /home/django && chown -R django:django /home/django
