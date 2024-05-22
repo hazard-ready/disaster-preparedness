@@ -6,7 +6,7 @@ gunicorn==22.0.0
 openpyxl==3.1.2
 psycopg==3.1.8
 pyshp==2.3.1
-requests==2.32.0
+requests==2.32.2
 django-solo==2.0.0
 Pillow==10.3.0
 django-modeltranslation==0.18.9
