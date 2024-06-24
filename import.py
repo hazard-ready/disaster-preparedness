@@ -70,41 +70,39 @@ def main():
 # Code generation: one line in this function writes one line of code to be copied elsewhere
 # one block represents the code generation for each destination file
         if shapefileFound or rasterFound:
-            shapefileGroup = askUserForShapefileGroup(
-                stem, existingShapefileGroups)
-            modelsLocationsList += "            '" + stem + \
-                "': " + stem + ".objects.data_bounds(),\n"
+            shapefileGroups = askUserForShapefileGroup(stem, existingShapefileGroups)
+            modelsLocationsList += f"            '{stem}': {stem}.objects.data_bounds(),\n"
             if shapefileFound:
                 modelsClasses += modelClassGen(stem, sf, modelAttributeKeyField,
-                                               keyField, desiredSRID, shapeType, shapefileGroup)
-                modelsFilters += "    " + stem + \
-                    "_filter = models.ForeignKey(" + stem + \
-                    ", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
-                modelsGeoFilters += modelsGeoFilterGen(
-                    stem, modelAttributeKeyField)
+                                               keyField, desiredSRID, shapeType)
+                modelsFilters += f"    {stem}_filter = models.ForeignKey({stem}" \
+                    f", related_name='+', on_delete=models.PROTECT, blank=True, null=True)\n"
+
+                modelsGeoFilters += modelsGeoFilterGen(stem, modelAttributeKeyField)
             elif rasterFound:
                 # Note that for now we just automatically use band 0 of any raster.
-                modelsClasses += modelClassGenRaster(stem,
-                                                     rst, 0, shapefileGroup)
-                modelsFilters += "    " + stem + \
-                    "_filter = models.IntegerField(null=True)\n"
-                modelsGeoFilters += modelsGeoFilterGenRaster(stem)
-            if shapefileGroup not in existingShapefileGroups:
-                existingShapefileGroups.append(shapefileGroup)
-                loadGroups += "    " + shapefileGroup + \
-                    " = ShapefileGroup.objects.get_or_create(name='" + \
-                    shapefileGroup + "')\n"
-            modelsSnuggetRatings += "                '" + \
-                stem + "_rating': " + stem + "_rating,\n"
+                modelsClasses += modelClassGenRaster(stem, rst, 0)
+                modelsFilters += f"    {stem}_filter = models.IntegerField(null=True)\n"
 
-            loadImports += "    print('Loading data for " + stem + "')\n"
-            loadImports += "    from disasterinfosite.models import " + stem + "\n"
+                modelsGeoFilters += modelsGeoFilterGenRaster(stem)
+            for group in shapefileGroups:
+                if group not in existingShapefileGroups:
+                    print(existingShapefileGroups, "--" + group + "--")
+                    existingShapefileGroups.append(group)
+                    loadGroups += f"    {group} = ShapefileGroup.objects.get_or_create(name='{group}')\n"
+
+            modelsSnuggetRatings += f"                '{stem}_rating': {stem}_rating,\n"
+
+            loadImports += f"    print('Loading data for {stem}')\n" \
+                f"    from disasterinfosite.models import {stem}\n"
             if shapefileFound:
-                loadImports += "    lm_" + stem + " = LayerMapping(" + stem + ", " + stem + "_shp, " + stem + \
-                    "_mapping, transform=True, " + "encoding='" + encoding + \
-                    "', unique=['" + \
-                    modelAttributeKeyField + "'])\n"
-                loadImports += "    lm_" + stem + ".save()\n\n"
+                loadImports += f"    lm_{stem} = LayerMapping({stem}, {stem}_shp, {stem}" \
+                    f"_mapping, transform=True, encoding='{encoding}', unique=['{modelAttributeKeyField}'])\n" \
+                    f"    lm_{stem}.save()\n"
+
+                for group in shapefileGroups:
+                    loadImports += f"    lm_{stem}.add({group})\n\n"
+
                 loadMappings += stem + "_mapping = {\n"
                 loadMappings += "    '" + modelAttributeKeyField + "': '" + keyField + "',\n"
                 loadMappings += "    'geom': '" + shapeType.upper() + "'\n"
@@ -113,11 +111,8 @@ def main():
                     "os.path.abspath(os.path.join(os.path.dirname(BASE_DIR), '" + \
                     simplified + "'))\n"
             elif rasterFound:
-                loadImports += "    tileLoadRaster(" + \
-                    stem + ", " + stem + "_tif)\n\n"
-                loadPaths += stem + "_tif = " + \
-                    "os.path.abspath(os.path.join(os.path.dirname(BASE_DIR), '" + \
-                    reprojected + "'))\n"
+                loadImports += f"    tileLoadRaster({stem}, {stem}_tif)\n\n"
+                loadPaths += f"{stem}_tif = os.path.abspath(os.path.join(os.path.dirname(BASE_DIR), '{reprojected}'))\n"
             print("")
             first = False
 
@@ -142,7 +137,10 @@ def sanitiseInput(inputString):
     I chose the fastest of the solutions I found easily legible.
     The reason for anticipating so many variants of dashes and quotes is that MS Word can insert many of these without the user intending them.
     '''
-    for char in ['\\', '`', '*', ' ', '{', '}', '[', ']', '(', ')', '>', '<', '#', '№', '+', '-', '‐', '‒', '–', '—', '.', '¡', '!', '$', '\'', ',', '"', '/', '%', '‰', '‱', '‘', '’', '“', '”', '&', '@', '¿', '?', '~', '^', '=', ';', ':', '|']:
+    inputString = inputString.strip()
+    for char in ['\\', '`', '*', ' ', '{', '}', '[', ']', '(', ')', '>', '<', '#', '№', '+', '-', '‐',
+                 '‒', '–', '—', '.', '¡', '!', '$', '\'', ',', '"', '/', '%', '‰', '‱', '‘', '’', '“',
+                 '”', '&', '@', '¿', '?', '~', '^', '=', ';', ':', '|', ]:
         if char in inputString:
             inputString = inputString.replace(char, '_')
 
@@ -253,21 +251,24 @@ def askUserForShapefileGroup(stem, existingShapefileGroups):
         print("So far, you have defined the following shapefile groups:")
         print((str(existingShapefileGroups).strip("[]").replace("'", "")))
     print("If you would like to group", stem,
-          "in a tab with content from other shapefiles, type a group name here:")
+          "in one more more tabs with content from other shapefiles, type a group name"
+          " or list of group names separated by commas here:")
     print("(Leave blank to give content from this shapefile its own unique tab.)")
-    groupName = input(">> ")
-    groupName = sanitiseInput(groupName)
-    # Doing the above replacement here is somewhat wasteful, but it means that the user will consistently see the sanitised group name echoed back to them in prompts.
+    groupNames = input(">> ").split(',')
 
-    if groupName in existingShapefileGroups:
-        print("Adding", stem, "to group:", groupName)
-    else:
-        print("Creating new group", groupName, "and adding", stem, "to it.")
+    if groupNames == ['']: # we got an empty string
+        groupNames = [stem]
 
-    if groupName == "":
-        return stem
-    else:
-        return groupName
+    for i, name in enumerate(groupNames):
+        name = sanitiseInput(name)
+        groupNames[i] = name # the list does not update automatically here
+
+        if name in existingShapefileGroups:
+            print("Adding", stem, "to group:", name)
+        else:
+            print("Creating new group", name, "and adding", stem, "to it.")
+
+    return groupNames
 
 
 def detectGeometryType(sf, stem):
@@ -338,63 +339,43 @@ def findFieldType(sf, fieldName):
                 exit()
 
 
-def modelClassGen(stem, sf, modelAttributeKeyField, keyField, srs, shapeType, shapefileGroup):
-    text = "class " + stem + "(models.Model):\n"
-    text += "    def getGroup():\n"
-    text += "        return ShapefileGroup.objects.get_or_create(name='" + \
-        shapefileGroup + "')[0]\n\n"
-    text += "    " + modelAttributeKeyField + \
-        " = models." + findFieldType(sf, keyField) + "\n"
-    text += "    geom = models." + shapeType + "Field(srid=" + srs + ")\n"
-    text += "    objects = ShapeManager()\n\n"
-    text += "    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)\n"
-    text += "    def __str__(self):\n"
-    text += "        return str(self." + modelAttributeKeyField + ")\n\n"
-
-    return text
+def modelClassGen(stem, sf, modelAttributeKeyField, keyField, srs, shapeType):
+    return f"class {stem}(models.Model):\n" \
+        f"    {modelAttributeKeyField} = models.{findFieldType(sf, keyField)}\n" \
+        f"    geom = models.{shapeType}Field(srid={srs})\n" \
+        f"    objects = ShapeManager()\n\n" \
+        f"    group = models.ManyToManyField(ShapefileGroup, on_delete=models.PROTECT)\n" \
+        f"    def __str__(self):\n" \
+        f"        return str(self.{modelAttributeKeyField})\n\n"
 
 
-def modelClassGenRaster(stem, rst, bandNumber, shapefileGroup):
-    text = "class " + stem + "(models.Model):\n"
-    text += "    def getGroup():\n"
-    text += "        return ShapefileGroup.objects.get_or_create(name='" + \
-        shapefileGroup + "')[0]\n\n"
-    text += "    rast = models.RasterField(srid=" + str(rst.srs.srid) + ")\n"
-    text += "    bbox = models.PolygonField(srid=" + str(rst.srs.srid) + ")\n"
-    text += "    objects = RasterManager()\n\n"
-    text += "    group = models.ForeignKey(ShapefileGroup, default=getGroup, on_delete=models.PROTECT)\n"
-    text += "    def __str__(self):\n"
-    text += "        return str(self.rast.name) + ',\t' + str(self.bbox) \n\n"
-
-    return text
+def modelClassGenRaster(stem, rst, bandNumber):
+    return f"class {stem}(models.Model):\n" \
+        f"    rast = models.RasterField(srid={str(rst.srs.srid)})\n" \
+        f"    bbox = models.PolygonField(srid={str(rst.srs.srid)})\n" \
+        f"    objects = RasterManager()\n\n" \
+        f"    group = models.ManyToManyField(ShapefileGroup, on_delete=models.PROTECT)\n" \
+        f"    def __str__(self):\n" \
+        f"        return str(self.rast.name) + ',\t' + str(self.bbox) \n\n"
 
 
 def modelsGeoFilterGen(stem, keyField):
-    text = "        qs_" + stem + " = " + stem + \
-        ".objects.filter(geom__contains=pnt)\n"
-    text += "        " + stem + "_rating = " + "qs_" + \
-        stem + ".values_list('" + keyField + "', flat=True)\n"
-    text += "        for rating in " + stem + "_rating:\n"
-    text += "            " + stem + \
-        "_snugget = Snugget.objects.filter(" + stem + "_filter__" + keyField + \
-        "__exact=rating).order_by('order').select_subclasses()\n"
-    text += "            if " + stem + "_snugget:\n"
-    text += "                groupsDict[" + stem + \
-        ".getGroup()].extend(" + stem + "_snugget)\n\n"
-    return text
+    return f"        qs_{stem} = {stem }.objects.filter(geom__contains=pnt)\n" \
+        f"        {stem}_rating = qs_{stem}.values_list('{keyField}', flat=True)\n" \
+        f"        for rating in {stem}_rating:\n" \
+        f"            {stem}_snugget = Snugget.objects.filter({stem}_filter__{keyField}__exact=rating)" \
+        f".order_by('order').select_subclasses()\n" \
+        f"            if {stem}_snugget:\n" \
+        f"                groupsDict[{stem}.getGroup()].extend({stem}_snugget)\n\n"
 
 
 def modelsGeoFilterGenRaster(stem):
-    text = "        " + stem + "_rating = " + \
-        "rasterPointLookup(" + stem + ", lng, lat)\n"
-    text += "        if " + stem + "_rating is not None:\n"
-    text += "            " + stem + \
-        "_snugget = Snugget.objects.filter(" + stem + "_filter__exact=" + \
-        stem + "_rating).order_by('order').select_subclasses()\n"
-    text += "            if " + stem + "_snugget:\n"
-    text += "                groupsDict[" + stem + \
-        ".getGroup()].extend(" + stem + "_snugget)\n\n"
-    return text
+    return f"        {stem}_rating = rasterPointLookup({stem}, lng, lat)\n" \
+        f"        if {stem}_rating is not None:\n" \
+        f"            {stem}_snugget = Snugget.objects.filter({stem}_filter__exact={stem}_rating)" \
+        f".order_by('order').select_subclasses()\n" \
+        f"            if {stem}_snugget:\n" \
+        f"                groupsDict[{stem}.getGroup()].extend({stem}_snugget)\n\n"
 
 
 def outputGeneratedCode(code, destFile, anchor):
