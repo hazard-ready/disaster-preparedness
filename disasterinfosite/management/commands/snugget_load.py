@@ -21,20 +21,20 @@ slideshowFilename = "slideshow.xlsx"
 # all other fields in snuggetFile are required.
 # Add translated columns like text-es and pop_out_txt-so here if need be
 # Add languages and language codes as you see fit!
-optionalFields = ['heading',
-                  'intensity',
-                  'lookup_value',
-                  'txt_location',
-                  'pop_out_image',
-                  'pop_out_link',
-                  'pop_alt_txt',
-                  'pop_out_txt',
-                  'pop_out_video',
-                  'intensity_txt',
-                  'text',
-                  'image_slideshow_folder',
-                  'video',
-                  ]
+optionalFields = [
+    'intensity',
+    'lookup_value',
+    'txt_location',
+    'pop_out_image',
+    'pop_out_link',
+    'pop_alt_txt',
+    'pop_out_txt',
+    'pop_out_video',
+    'intensity_txt',
+    'text',
+    'image_slideshow_folder',
+    'video',
+]
 
 defaults = {
     "intensity": None,
@@ -68,6 +68,8 @@ def processRow(row, overwriteAll):
     setDefaults(row)
 
     order = row["txt_location"]
+    group = ShapefileGroup.objects.get(
+        name=row["heading"])
 
     if created:
         print("Created a new snugget section: ", row["section"])
@@ -78,33 +80,33 @@ def processRow(row, overwriteAll):
         # if it is blank, we'll treat it as matching all existing values
         filterVal = getShapefileFilter(shapefile, row["lookup_value"])
         oldSnugget = checkForSnugget(
-            shapefile, section, order, filterColumn, filterVal)
+            shapefile, group, section, order, filterColumn, filterVal)
         overwriteAll = askUserAboutOverwriting(row, oldSnugget, overwriteAll)
-        processSnugget(row, shapefile, section, order, filterColumn, filterVal)
+        processSnugget(row, shapefile, group, section, order, filterColumn, filterVal)
     else:
         filterVals = findAllFilterVals(shapefile)
         oldSnuggets = []
         for filterVal in filterVals:
             oldSnugget = checkForSnugget(
-                shapefile, section, order, filterColumn, filterVal)
+                shapefile, group, section, order, filterColumn, filterVal)
             if oldSnugget is not None and oldSnugget not in oldSnuggets:
                 oldSnuggets.append(oldSnugget)
             overwriteAll = askUserAboutOverwriting(
                 row, oldSnuggets, overwriteAll)
-            processSnugget(row, shapefile, section,
+            processSnugget(row, shapefile, group, section,
                            order, filterColumn, filterVal)
 
     return overwriteAll
 
 
-def processSnugget(row, shapefile, section, order, filterColumn, filterVal):
-    removeOldSnugget(shapefile, section, order, filterColumn, filterVal)
+def processSnugget(row, shapefile, group, section, order, filterColumn, filterVal):
+    removeOldSnugget(shapefile, group, section, order, filterColumn, filterVal)
     if row["image_slideshow_folder"] != '':
-        addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal)
+        addSlideshowSnugget(row, shapefile, group, section, filterColumn, filterVal)
     elif row["video"] != '':
-        addVideoSnugget(row, shapefile, section, filterColumn, filterVal)
+        addVideoSnugget(row, shapefile, group, section, filterColumn, filterVal)
     else:
-        addTextSnugget(row, shapefile, section, filterColumn, filterVal)
+        addTextSnugget(row, shapefile, group, section, filterColumn, filterVal)
 
 
 def getShapefileClass(row):
@@ -180,9 +182,7 @@ def addPopOutIfExists(row):
         return None
 
 
-def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
-    group = shapefile.getGroup()
-
+def addTextSnugget(row, shapefile, group, section, filterColumn, filterVal):
     if filterVal is not None:
         args = {
             'section': section,
@@ -199,9 +199,7 @@ def addTextSnugget(row, shapefile, section, filterColumn, filterVal):
         snugget.save()
 
 
-def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
-    group = shapefile.getGroup()
-
+def addVideoSnugget(row, shapefile, group, section, filterColumn, filterVal):
     args = {
         'section': section,
         'group': group,
@@ -217,9 +215,7 @@ def addVideoSnugget(row, shapefile, section, filterColumn, filterVal):
     snugget.save()
 
 
-def addSlideshowSnugget(row, shapefile, section, filterColumn, filterVal):
-    group = shapefile.getGroup()
-
+def addSlideshowSnugget(row, shapefile, group, section, filterColumn, filterVal):
     args = {
         'section': section,
         'group': group,
@@ -280,16 +276,16 @@ def findAllFilterVals(shapefile):
         return shapefile.objects.all()
 
 
-def checkForSnugget(shapefile, section, order, filterColumn, filterVal):
+def checkForSnugget(shapefile, group, section, order, filterColumn, filterVal):
     if filterVal is not None:
-        kwargs = {'section': section, 'order': order, filterColumn: filterVal}
+        kwargs = {'group': group, 'section': section, 'order': order, filterColumn: filterVal}
         if Snugget.objects.filter(**kwargs).exists():
             return Snugget.objects.select_subclasses().get(**kwargs)
     return None
 
 
-def removeOldSnugget(shapefile, section, order, filterColumn, filterVal):
-    kwargs = {'section': section, filterColumn: filterVal, 'order': order}
+def removeOldSnugget(shapefile, group, section, order, filterColumn, filterVal):
+    kwargs = {'group': group, 'section': section, filterColumn: filterVal, 'order': order}
     Snugget.objects.filter(**kwargs).delete()
 
 
@@ -304,7 +300,9 @@ def askUserAboutOverwriting(row, old, overwriteAll):
         if old is not None and not isinstance(old, list):
             print("In shapefile ",
                   repr(row["shapefile"]),
-                  " there is already a snugget defined for section ",
+                  " there is already a snugget defined for group ",
+                  repr(row["heading"]),
+                  ", section ",
                   repr(row["section"]),
                   ", intensity ", repr(
                       row["lookup_value"]),
@@ -317,7 +315,9 @@ def askUserAboutOverwriting(row, old, overwriteAll):
         elif old and isinstance(old, list):
             print("In shapefile ",
                   repr(row["shapefile"]),
-                  " there are existing snuggets for section",
+                  " there are existing snuggets for group ",
+                  repr(row["heading"]),
+                  ", section",
                   repr(
                       row["section"]),
                   ", txt_location",

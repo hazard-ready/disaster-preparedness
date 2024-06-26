@@ -363,10 +363,10 @@ def modelsGeoFilterGen(stem, keyField):
     return f"        qs_{stem} = {stem }.objects.filter(geom__contains=pnt)\n" \
         f"        {stem}_rating = qs_{stem}.values_list('{keyField}', flat=True)\n" \
         f"        for rating in {stem}_rating:\n" \
-        f"            {stem}_snugget = Snugget.objects.filter({stem}_filter__{keyField}__exact=rating)" \
+        f"            {stem}_snuggets = Snugget.objects.filter({stem}_filter__{keyField}__exact=rating)" \
         f".order_by('order').select_subclasses()\n" \
-        f"            if {stem}_snugget:\n" \
-        f"                groupsDict[{stem}_snugget.group].extend({stem}_snugget)\n\n"
+        f"            for s in {stem}_snuggets:\n" \
+        f"                groupsDict[s.group].append(s)\n\n"
 
 
 def modelsGeoFilterGenRaster(stem):
@@ -374,8 +374,8 @@ def modelsGeoFilterGenRaster(stem):
         f"        if {stem}_rating is not None:\n" \
         f"            {stem}_snugget = Snugget.objects.filter({stem}_filter__exact={stem}_rating)" \
         f".order_by('order').select_subclasses()\n" \
-        f"            if {stem}_snugget:\n" \
-        f"                groupsDict[{stem}_snugget.group].extend({stem}_snugget)\n\n"
+        f"            for s in {stem}_snuggets:\n" \
+        f"                groupsDict[s.group].append(s)\n\n"
 
 
 def outputGeneratedCode(code, destFile, anchor):
