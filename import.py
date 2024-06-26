@@ -87,9 +87,8 @@ def main():
                 modelsGeoFilters += modelsGeoFilterGenRaster(stem)
             for group in shapefileGroups:
                 if group not in existingShapefileGroups:
-                    print(existingShapefileGroups, "--" + group + "--")
                     existingShapefileGroups.append(group)
-                    loadGroups += f"    {group} = ShapefileGroup.objects.get_or_create(name='{group}')\n"
+                    loadGroups += f"    {group}_shapefilegroup, _ = ShapefileGroup.objects.get_or_create(name='{group}')\n"
 
             modelsSnuggetRatings += f"                '{stem}_rating': {stem}_rating,\n"
 
@@ -98,10 +97,11 @@ def main():
             if shapefileFound:
                 loadImports += f"    lm_{stem} = LayerMapping({stem}, {stem}_shp, {stem}" \
                     f"_mapping, transform=True, encoding='{encoding}', unique=['{modelAttributeKeyField}'])\n" \
-                    f"    lm_{stem}.save()\n"
+                    f"    lm_{stem}.save()\n" \
+                    f"    for instance in {stem}.objects.all():\n"
 
                 for group in shapefileGroups:
-                    loadImports += f"    lm_{stem}.add({group})\n\n"
+                    loadImports += f"        instance.groups.add({group}_shapefilegroup)\n"
 
                 loadMappings += stem + "_mapping = {\n"
                 loadMappings += "    '" + modelAttributeKeyField + "': '" + keyField + "',\n"
@@ -344,7 +344,7 @@ def modelClassGen(stem, sf, modelAttributeKeyField, keyField, srs, shapeType):
         f"    {modelAttributeKeyField} = models.{findFieldType(sf, keyField)}\n" \
         f"    geom = models.{shapeType}Field(srid={srs})\n" \
         f"    objects = ShapeManager()\n\n" \
-        f"    group = models.ManyToManyField(ShapefileGroup, on_delete=models.PROTECT)\n" \
+        f"    groups = models.ManyToManyField(ShapefileGroup)\n" \
         f"    def __str__(self):\n" \
         f"        return str(self.{modelAttributeKeyField})\n\n"
 
@@ -354,7 +354,7 @@ def modelClassGenRaster(stem, rst, bandNumber):
         f"    rast = models.RasterField(srid={str(rst.srs.srid)})\n" \
         f"    bbox = models.PolygonField(srid={str(rst.srs.srid)})\n" \
         f"    objects = RasterManager()\n\n" \
-        f"    group = models.ManyToManyField(ShapefileGroup, on_delete=models.PROTECT)\n" \
+        f"    groups = models.ManyToManyField(ShapefileGroup, on_delete=models.PROTECT)\n" \
         f"    def __str__(self):\n" \
         f"        return str(self.rast.name) + ',\t' + str(self.bbox) \n\n"
 
@@ -366,7 +366,7 @@ def modelsGeoFilterGen(stem, keyField):
         f"            {stem}_snugget = Snugget.objects.filter({stem}_filter__{keyField}__exact=rating)" \
         f".order_by('order').select_subclasses()\n" \
         f"            if {stem}_snugget:\n" \
-        f"                groupsDict[{stem}.getGroup()].extend({stem}_snugget)\n\n"
+        f"                groupsDict[{stem}_snugget.group].extend({stem}_snugget)\n\n"
 
 
 def modelsGeoFilterGenRaster(stem):
@@ -375,7 +375,7 @@ def modelsGeoFilterGenRaster(stem):
         f"            {stem}_snugget = Snugget.objects.filter({stem}_filter__exact={stem}_rating)" \
         f".order_by('order').select_subclasses()\n" \
         f"            if {stem}_snugget:\n" \
-        f"                groupsDict[{stem}.getGroup()].extend({stem}_snugget)\n\n"
+        f"                groupsDict[{stem}_snugget.group].extend({stem}_snugget)\n\n"
 
 
 def outputGeneratedCode(code, destFile, anchor):
