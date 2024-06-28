@@ -108,6 +108,14 @@ The parts that have `snugget_load` and `prepare_load` are to import text that wi
 1. If this is your first time through, or you emptied the database before loading new data: `python manage.py createsuperuser` and follow the instructions to add a Django admin user
 1. If you don't already have web hosting set up, you can test your work on localhost:8000 with `python manage.py runserver`
 
+#### Making your boundary.json
+You probably have a shapefile that encompasses the whole area that this instance of Hazard Ready has data for. If you open it in QGIS, you can use that to make your boundary.json file:
+
+1. Make a rectangle larger than the area in QGIS, as an in-memory layer
+1. Then use QGIS to crop the area of interest out of that rectangle
+1. Save the result as a geojson
+1. Then open the geojson in a text editor and replace the first set of coordinates (which will be for the rectangle) with [ [ -180.0, 90.0 ], [ 180.0, 90.0 ], [ 180.0, -90.0 ], [ -180.0, -90.0 ], [ -180.0, 90.0 ] ] to make the rectangle fill the world.
+
 # This instance of Hazard Ready uses Webpack to bundle its static files. For that reason, you need these additional steps to set it up:
 
 1. Make sure that you have [Node and NPM installed](https://www.npmjs.com/get-npm)
