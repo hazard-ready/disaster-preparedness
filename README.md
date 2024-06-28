@@ -111,10 +111,17 @@ The parts that have `snugget_load` and `prepare_load` are to import text that wi
 #### Making your boundary.json
 You probably have a shapefile that encompasses the whole area that this instance of Hazard Ready has data for. If you open it in QGIS, you can use that to make your boundary.json file:
 
-1. Make a rectangle larger than the area in QGIS, as an in-memory layer
+1. Make a rectangle larger than the area in QGIS, as a temporary layer
+   1. Layer > New Temporary Scratch Layer
+   2. Add Polygon Feature > draw a simple polygon that full covers the outline
+   3. Toggle Editing on the scratch layer, and say to save changes 
 1. Then use QGIS to crop the area of interest out of that rectangle
-1. Save the result as a geojson
+    1. Processing Toolbox > Vector overlay > Symmetrical Difference.  Doesn't matter which layer is which in the options
+1. Export the symmetrical difference layer as a geojson
+    1.  Set the CRS to EPSG:4326.
+    2.  Set coordinate_precision lower than 15 and deselect all fields for file size reasons.   
 1. Then open the geojson in a text editor and replace the first set of coordinates (which will be for the rectangle) with [ [ -180.0, 90.0 ], [ 180.0, 90.0 ], [ 180.0, -90.0 ], [ -180.0, -90.0 ], [ -180.0, 90.0 ] ] to make the rectangle fill the world.
+2. Change the file extension to `.json`.
 
 # This instance of Hazard Ready uses Webpack to bundle its static files. For that reason, you need these additional steps to set it up:
 
