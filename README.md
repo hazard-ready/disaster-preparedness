@@ -113,7 +113,7 @@ You probably have a shapefile that encompasses the whole area that this instance
 
 1. Make a rectangle larger than the area in QGIS, as a temporary layer
    1. Layer > New Temporary Scratch Layer
-   2. Add Polygon Feature > draw a simple polygon that full covers the outline
+   2. Add Polygon Feature > draw a simple polygon that fully covers the outline (right click to STOP drawing the polygon)
    3. Toggle Editing on the scratch layer, and say to save changes 
 1. Then use QGIS to crop the area of interest out of that rectangle
     1. Processing Toolbox > Vector overlay > Symmetrical Difference.  Doesn't matter which layer is which in the options
