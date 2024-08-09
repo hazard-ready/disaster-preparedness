@@ -96,12 +96,24 @@
   }
 }
 
+.bio--melinda {
+  background-color: $moderate-intensity;
+
+  @include breakpoint(medium-and-up) {
+    flex-direction: row-reverse;
+  }
+}
+
 .bio--carson {
   background-color: $extreme-intensity;
 }
 
 .bio--grant {
   background-color: $high-intensity;
+}
+
+.bio--courtenay {
+  background-color: $low-intensity;
 }
 
 .bio__image {
