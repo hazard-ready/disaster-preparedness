@@ -23,11 +23,11 @@ module.exports = {
   },
 
   output: {
-    path: path.resolve("static/build/"),
+    path: path.resolve(path.join("static", "build")),
     filename: "[name].js"
   },
   plugins: [
-    new BundleTracker({ filename: "./webpack-stats.json" }),
+    new BundleTracker({ filename: "webpack-stats.json" }),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery"
@@ -58,7 +58,7 @@ module.exports = {
       },
       {
         test: /\.(png|gif|jpe?g|svg|ttf|eot|ico|pdf)(\?v=\d+\.\d+\.\d+)?$/i,
-        exclude: path.join(__dirname, "node_modules/leaflet/"), // Leaflet default marker icons
+        exclude: path.join(__dirname, "node_modules","leaflet"), // Leaflet default marker icons
         type: 'asset/resource',
         generator : {
           filename : '[name][ext]',

@@ -53,7 +53,7 @@ USER django
 # Install dependencies:
 COPY requirements.txt .
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --no-warn-script-location -r requirements.txt
 
 # verify pip install
 RUN pip list
@@ -66,7 +66,6 @@ RUN rm -rf data && unzip -o data.zip
 RUN mkdir -p media/img/photos
 RUN mkdir -p media/img/data
 
-RUN npm rebuild node-sass
 RUN npm install && npm run webpack
 
 # build translated files
