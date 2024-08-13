@@ -337,7 +337,7 @@ You can set up the databases for them by running commands using `docker compose 
    1. User data: On production, for each of the databases, do the equivalent of `pg_dump --column-inserts --verbose -a -t "^auth*" -t "disasterinfosite_userprofile" -Fc -f missoula_ready_users.sql aftershock`
    1. Site settings, snugget sections, and shapefile groups (aka all of the things you would otherwise have to enter manually): `pg_dump --column-inserts --verbose -a -t "disasterinfosite_sitesettings" -t "disasterinfosite_shapefilegroup" -t "disasterinfosite_snuggetsection" -Fc -f missoula_ready_settings.sql aftershock`
    1. Copy that file to your test instance using `scp`
-   1. On each of the child images (currently Seattle, Missoula and Portland), create the database and the extensions as the instructions state above. You can get on them using `docker-compose exec {name} /bin/bash`
+   1. On each of the child images (currently Seattle, Montana and Portland), create the database and the extensions as the instructions state above. You can get on them using `docker-compose exec {name} /bin/bash`
    1. Make and run migrations
    1. Exit the child image and use `pg_restore` to restore each database, for example `docker-compose exec -T postgres pg_restore --verbose --clean -U postgres -d aftershock < ~/missoula.sql`
 1. Copying Past Events Photos from production
