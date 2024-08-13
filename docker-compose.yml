@@ -86,15 +86,15 @@ services:
     depends_on:
       - init
       - postgres
-  missoula:
+  montana:
     build: ../missoula-ready
     restart: always
     environment:
-      - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY_MISSOULA
-      - DATABASE_URL=$DATABASE_URL_MISSOULA
+      - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY_MONTANA
+      - DATABASE_URL=$DATABASE_URL_MONTANA
       - VIRTUAL_HOST=$VIRTUAL_HOST
       - VIRTUAL_PORT=8000
-      - VIRTUAL_PATH=$VIRTUAL_PATH_MISSOULA
+      - VIRTUAL_PATH=$VIRTUAL_PATH_MONTANA
       - VIRTUAL_DEST=/
       - LETSENCRYPT_HOST=$VIRTUAL_HOST
       - LETSENCRYPT_EMAIL=$DEFAULT_EMAIL
