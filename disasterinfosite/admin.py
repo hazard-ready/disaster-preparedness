@@ -4,13 +4,15 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from .models import SnuggetSection, SiteSettings, ShapefileGroup, PastEventsPhoto, DataOverviewImage, UserProfile
 from .actions import export_as_csv_action
-from modeltranslation.admin import TranslationAdmin
+
+# Uncomment to enable translated snuggets and site content in Django Admin.
+# from modeltranslation.admin import TranslationAdmin
 
 
-admin.site.register(SnuggetSection, TranslationAdmin)
-admin.site.register(ShapefileGroup, TranslationAdmin)
-admin.site.register(PastEventsPhoto, TranslationAdmin)
-admin.site.register(DataOverviewImage, TranslationAdmin)
+# admin.site.register(SnuggetSection, TranslationAdmin)
+# admin.site.register(ShapefileGroup, TranslationAdmin)
+# admin.site.register(PastEventsPhoto, TranslationAdmin)
+# admin.site.register(DataOverviewImage, TranslationAdmin)
 
 
 class UserProfileInline(admin.StackedInline):
