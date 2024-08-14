@@ -68,10 +68,10 @@ RUN mkdir -p media/img/data
 
 RUN npm install && npm run webpack
 
-# build translated files
-RUN python ../manage.py makemessages -a
-RUN python ../manage.py makemessages -a -d djangojs
-RUN python ../manage.py compilemessages
+# uncomment to build translated files
+# RUN python ../manage.py makemessages -a
+# RUN python ../manage.py makemessages -a -d djangojs
+# RUN python ../manage.py compilemessages
 
 WORKDIR /app
 
