@@ -38,7 +38,10 @@ class GeoNoEditAdmin(admin.GeoModelAdmin):
     modifiable = False
 
 
-class SiteSettingsAdmin(SingletonModelAdmin, TranslationAdmin):
+
+# class SiteSettingsAdmin(SingletonModelAdmin, TranslationAdmin):
+# Use the line above (instead of the one below) for translated site-wide content.
+class SiteSettingsAdmin(SingletonModelAdmin):
     pass
 
 
