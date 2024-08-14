@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   nginx-proxy:
     image: jwilder/nginx-proxy:1.5
@@ -11,6 +9,12 @@ services:
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - type: bind
+        source: ./missoula_proxy.conf
+        target: /etc/nginx/vhost.d/testing.hazardready.org
+      - type: bind
+        source: ./missoula_proxy.conf
+        target: /etc/nginx/vhost.d/test.hazardready.org
     restart: always
     labels:
       com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: true
