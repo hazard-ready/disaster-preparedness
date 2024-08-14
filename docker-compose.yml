@@ -11,10 +11,10 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - type: bind
         source: ./missoula_proxy.conf
-        target: /etc/nginx/vhost.d/testing.hazardready.org
+        target: /etc/nginx/vhost.d/$VIRTUAL_HOST_A
       - type: bind
         source: ./missoula_proxy.conf
-        target: /etc/nginx/vhost.d/test.hazardready.org
+        target: /etc/nginx/vhost.d/$VIRTUAL_HOST_B
     restart: always
     labels:
       com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: true
