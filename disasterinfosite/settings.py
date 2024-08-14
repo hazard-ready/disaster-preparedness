@@ -69,19 +69,19 @@ WSGI_APPLICATION = 'disasterinfosite.wsgi.application'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
-LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
-LANGUAGE_CODE = 'en'
-USE_L10N = True
+# LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
+# LANGUAGE_CODE = 'en'
+# USE_L10N = True
 
-def gettext(s): return s
+# def gettext(s): return s
 
-LANGUAGES = ()
+# LANGUAGES = ()
 
 # MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 
-USE_I18N = True
-TIME_ZONE = 'UTC'
-USE_TZ = True
+# USE_I18N = True
+# TIME_ZONE = 'UTC'
+# USE_TZ = True
 
 TEMPLATES = [
     {
