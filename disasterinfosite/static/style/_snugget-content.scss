@@ -84,10 +84,11 @@
   ul {
     margin: 5px 0;
 
+    padding-inline-start: 0;
+
     @include breakpoint(large-and-up) {
       margin: 10px 0;
     }
-    padding-inline-start: 0;
   }
 
   li {
