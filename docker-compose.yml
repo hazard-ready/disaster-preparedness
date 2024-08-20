@@ -107,7 +107,7 @@ services:
       - EMAIL_HOST_PASSWORD=$EMAIL_HOST_PASSWORD
     image: missoula-ready:${VERSION}
     expose:
-     - 8000
+     - "8000"
     depends_on:
       - init
       - postgres
