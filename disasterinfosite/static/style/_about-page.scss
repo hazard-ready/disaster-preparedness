@@ -72,28 +72,32 @@
   max-width: 800px;
 }
 
-.bio {
+.bio-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
-  padding: 10px;
+  flex-wrap: wrap;
+  justify-content: space-around;
 
   @include breakpoint(medium-and-up) {
     flex-direction: row;
   }
+}
 
-  @include breakpoint(large-and-up) {
-    margin-bottom: 40px;
-    padding: 40px;
-  }
+.bio {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 350px;
+  margin: 10px;
+  max-width: 350px;
+  padding: 16px;
 }
 
 .bio--becks {
   background-color: $very-high-intensity;
+}
 
-  @include breakpoint(medium-and-up) {
-    flex-direction: row-reverse;
-  }
+.bio--melinda {
+  background-color: $moderate-intensity;
 }
 
 .bio--carson {
@@ -104,63 +108,33 @@
   background-color: $high-intensity;
 }
 
-.bio__image {
-  flex: 1 1 250px;
+.bio--courtenay {
+  background-color: $low-intensity;
+}
 
-  @include breakpoint(medium-and-up) {
-    flex: 0 1 850px;
-  }
+.bio__image {
+  padding-bottom: 10px;
 }
 
 .bio__other {
-  @include breakpoint(medium) {
-    flex: 1 1 auto;
-    margin-inline-start: 10px;
-  }
-
-  @include breakpoint(large-and-up) {
-    flex: 3 1 auto;
-    margin-inline-start: 40px;
-  }
-}
-
-.bio__other--reverse {
-  @include breakpoint(medium-and-up) {
-    margin-inline-start: 0;
-    margin-inline-end: 10px;
-
-    h4 {
-      text-align: end;
-    }
-  }
-
-  @include breakpoint(large-and-up) {
-    margin-inline-end: 40px;
-  }
+  background-color: $white;
+  flex: 1 1 250px;
 }
 
 .bio__name {
-  border-bottom: 2px solid #ccc;
+  border-bottom: 2px solid $light-grey;
   margin-top: 12px;
 }
 
 .bio__text {
-  background-color: $white;
-  padding: 10px 20px;
+  padding: 5px 20px;
 }
 
 .bio__links {
-  margin: 15px 20px 5px;
-
-  @include breakpoint(medium-and-up) {
-    margin: 16px 0;
-  }
-
-  .link-icon {
-    vertical-align: top;
-  }
+  margin: 0;
 }
 
-.bio__links--reverse {
-  text-align: end;
+.linkedin-logo {
+  background-color: $soft-black;
+  border: 2px solid $soft-black;
 }
