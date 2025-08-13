@@ -10,6 +10,12 @@ services:
       - html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - type: bind
+        source: ./empty.conf
+        target: /etc/nginx/vhost.d/${VIRTUAL_HOST_A}_location
+      - type: bind
+        source: ./empty.conf
+        target: /etc/nginx/vhost.d/${VIRTUAL_HOST_B}_location
+      - type: bind
         source: ./missoula_proxy.conf
         target: /etc/nginx/vhost.d/$VIRTUAL_HOST_A
       - type: bind
