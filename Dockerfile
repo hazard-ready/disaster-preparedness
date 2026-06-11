@@ -1,81 +1,81 @@
 FROM python:3.12-slim-bookworm
 
-# ARG DJANGO_SECRET_KEY
-# ARG DATABASE_URL
-# ARG EMAIL_HOST
-# ARG EMAIL_HOST_USER
-# ARG EMAIL_HOST_PASSWORD
+ARG DJANGO_SECRET_KEY
+ARG DATABASE_URL
+ARG EMAIL_HOST
+ARG EMAIL_HOST_USER
+ARG EMAIL_HOST_PASSWORD
 
-# ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-"dummykeyforbuild"}
-# ENV DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@localhost:5432/disasterpreparedness}
-# ENV EMAIL_HOST=${EMAIL_HOST}
-# ENV EMAIL_HOST_USER=${EMAIL_HOST_USER}
-# ENV EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-"dummykeyforbuild"}
+ENV DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@localhost:5432/disasterpreparedness}
+ENV EMAIL_HOST=${EMAIL_HOST}
+ENV EMAIL_HOST_USER=${EMAIL_HOST_USER}
+ENV EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
 
 # Update C env vars so compiler can find gdal
-# ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
-# ENV C_INCLUDE_PATH=/usr/include/gdal
+ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
+ENV C_INCLUDE_PATH=/usr/include/gdal
 
 # install GDAL and front-end dependencies
-# RUN apt-get update && apt-get upgrade -yqq && \
-#  apt-get install -y --no-install-recommends \
-#    binutils          \
-#    build-essential   \
-#    libproj-dev       \
-#    gdal-bin          \
-#    libjpeg-dev       \
-#    gettext           \
-#    libgdal-dev       \
-#    nodejs            \
-#    npm               \
-#    postgresql-client \
-#    unzip             \
-#    zip               \
-#    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get upgrade -yqq && \
+  apt-get install -y --no-install-recommends \
+    binutils          \
+    build-essential   \
+    libproj-dev       \
+    gdal-bin          \
+    libjpeg-dev       \
+    gettext           \
+    libgdal-dev       \
+    nodejs            \
+    npm               \
+    postgresql-client \
+    unzip             \
+    zip               \
+    && rm -rf /var/lib/apt/lists/*
 
-# RUN apt-get install --only-upgrade nodejs npm
-# RUN npm update -g npm
+RUN apt-get install --only-upgrade nodejs npm
+RUN npm update -g npm
 
-# RUN groupadd -r django && useradd --no-log-init -r -g django django
-# RUN mkdir /home/django && chown -R django:django /home/django
-# RUN mkdir /app
+RUN groupadd -r django && useradd --no-log-init -r -g django django
+RUN mkdir /home/django && chown -R django:django /home/django
+RUN mkdir /app
 
 # copy the application to the container:
-# COPY . /app
-# RUN chown -R django:django /app
-# WORKDIR /app
+COPY . /app
+RUN chown -R django:django /app
+WORKDIR /app
 
-# USER django
+USER django
 
 # Install dependencies:
-# COPY requirements.txt .
-# RUN pip install --upgrade pip
-# RUN pip install --no-cache-dir --no-warn-script-location -r requirements.txt
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir --no-warn-script-location -r requirements.txt
 
 # verify pip install
-# RUN pip list
+RUN pip list
 
 # unzip data
-# WORKDIR /app/disasterinfosite
-# RUN rm -rf data && unzip -o data.zip
+WORKDIR /app/disasterinfosite
+RUN rm -rf data && unzip -o data.zip
 
 # build front-end code
-# RUN mkdir -p media/img/photos
-# RUN mkdir -p media/img/data
+RUN mkdir -p media/img/photos
+RUN mkdir -p media/img/data
 
-# RUN npm install && npm run webpack
+RUN npm install && npm run webpack
 
 # build translated files (not needed for this project right now)
 # RUN python ../manage.py makemessages -a
 # RUN python ../manage.py makemessages -a -d djangojs
 # RUN python ../manage.py compilemessages
 
-# WORKDIR /app
+WORKDIR /app
 
-# RUN python manage.py collectstatic --noinput
+RUN python manage.py collectstatic --noinput
 
-# EXPOSE 8000
+EXPOSE 8000
 
 # Run the application:
-# ENTRYPOINT ["/home/django/.local/bin/gunicorn"]
-# CMD ["--log-file=-", "--bind", ":8000", "--workers", "3", "disasterinfosite.wsgi:application"]
+ENTRYPOINT ["/home/django/.local/bin/gunicorn"]
+CMD ["--log-file=-", "--bind", ":8000", "--workers", "3", "disasterinfosite.wsgi:application"]
