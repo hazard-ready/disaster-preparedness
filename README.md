@@ -332,6 +332,9 @@ In order to load data on your sites, you can follow the setup instructions for e
 
 You can set up the databases for them by running commands using `docker compose exec postgres...` as well. Note that you do need to create the databases, but you no longer need to create the extensions in them.
 
+## Patching and upgrading
+Run `docker compose up -d --build --no-deps` to only build the image that you are concerned with and not any others.
+
 ## Using data from production
 1. Dump and restore the database
    1. User data: On production, for each of the databases, do the equivalent of `docker compose exec postgres pg_dump --column-inserts --verbose -a -t "^auth*" -t "disasterinfosite_userprofile" -Fc missoulaready > ~/missoulaready_users.sql`
