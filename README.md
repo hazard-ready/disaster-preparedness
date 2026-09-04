@@ -1,3 +1,6 @@
+
+# This repository has been archived as of September 2026. You're welcome to contact the maintainers with any questions you may have.
+
 # Disaster Preparedness Web Interactive
 
 The project will explore traditional and qualitative scoring assessments of “risk/resiliency factors” associated with regional crisis preparedness and demonstrate how actionable steps in community engagement can create a different portrait of resiliency. It is based on [a pioneering project from Oregon](https://github.com/Oregon-Public-Broadcasting/earthquake-preparedness) but has been generalized to make it easy to clone and tailor to other regions.
